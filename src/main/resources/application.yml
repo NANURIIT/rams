@@ -1,0 +1,46 @@
+server:
+  port: 8080
+  servlet:
+    session:
+      timeout: 30m
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  ## redirection http 현상 제거 ##
+  tomcat:
+    remoteip:
+      protocol-header: x-forwarded-proto
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mappers/**/*.xml
+
+logging:
+  config: classpath:logback.xml
+  
+spring:
+  application:
+    name: NANURI IT Corp Risk Management System
+  
+  datasource:
+    url: jdbc:log4jdbc:mysql://nanuriit.com:7706/rams?serverTimezone=Asia/Seoul
+    username: rams
+    password: Nanuriwork1!
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+      port: 35729

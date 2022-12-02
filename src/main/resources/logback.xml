@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+    <contextName>local</contextName>
+
+    <property name="logHome" value="logs" />
+	
+	<!-- Appenders -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%d %5p [%c] %m%n</Pattern>
+		</encoder>
+		
+	</appender>
+
+	<appender name="console-dblog" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%d %5p %m%n</Pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%mdc] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+	
+    <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logHome}/%d{yyyyMMdd}/nanuri-rams-dev.%d{yyyyMMdd}.%i.log</fileNamePattern>
+            <maxFileSize>15MB</maxFileSize>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} %thread %X{req.remoteHost} %X{req.requestURI} %X{req.queryString} %-5level %logger{36} - %msg%n
+            </Pattern>
+        </encoder>
+    </appender>
+	
+	<!-- Logger -->
+	<logger name="com.nanuri.rams" level="DEBUG" appender-ref="console" />
+	<logger name="jdbc.sqlonly" level="INFO" appender-ref="console-dblog" />
+	<logger name="jdbc.resultsettable" level="INFO" appender-ref="console-dblog" />
+	<logger name="org.apache.http" level="DEBUG" />
+    <!-- 탐색하는 jar 파일 목록 출력-->
+    <logger name="org.apache.catalina.startup.ContextConfig" level="INFO"/>
+    <!-- TLD 관련 로그 출력-->
+    <logger name="org.apache.jasper.servlet.TldScanner" level="INFO"/>
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="org.hibernate" level="ERROR"/>
+    <logger name="org.hibernate.SQL" level="DEBUG"/>
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="DEBUG"/>
+    <root level="ERROR">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="fileAppender" />
+    </root>
+    
+</configuration>
