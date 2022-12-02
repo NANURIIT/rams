@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<!-- 우측 네비 st -->
+	<nav th:fragment="leftFragment" class="navbar-static-side border-right white-bg" role="navigation">
+		<div class="sidebar-collapse">
+			<ul class="nav metismenu" id="side-menu">
+				<li class="logo-wrap border-bottom">
+					<div class="profile-element">
+						<a th:href="@{/dshbr/getMain.do}"><h1 class="logo">Senior Care</h1></a>
+					</div>
+				<div class="logo-element  p-0">
+					<h1 class="logo">SC</h1>
+				</div>
+				</li>
+					<li th:classappend="${#httpServletRequest.requestURI.contains('/dshbr/getMain.do')}?'active':''">
+						<a th:href="@{/dshbr/getMain.do}">
+							<i class="bi bi-display"></i>
+							<span class="nav-label">응급상황판</span>
+						</a>
+					</li>
+					<li th:classappend="${#httpServletRequest.requestURI.contains('/mmbr/trgtInqry.do')}?'active':''">
+						<a th:href="@{/mmbr/trgtInqry.do}">
+							<i class="bi bi-person-fill"></i>
+							<span class="nav-label">회원관리</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="bi bi-info-circle"></i>
+							<span class="nav-label">정보관리 ></span>
+						</a>
+						<ul class="nav nav-second-level collapse" th:classappend="${#httpServletRequest.requestURI.contains('/infrm')}?'in':''">
+							<li th:classappend="${#httpServletRequest.requestURI.contains('/infrm/getCmprhInfrm.do')}?'active':''"><a th:href="@{/infrm/getCmprhInfrm.do}">- 종합정보</a></li>
+							<li th:classappend="${#httpServletRequest.requestURI.contains('/infrm/getAgrmnMng.do')}?'active':''"><a th:href="@{/infrm/getAgrmnMng.do}">- 동의서</a></li>
+						</ul>
+					</li>
+					<li th:classappend="${#httpServletRequest.requestURI.contains('/alr/list.do')}?'active':''">
+						<a th:href="@{/alr/list.do}">
+							<i class="bi bi-alarm-fill"></i>
+							<span class="nav-label">알람관리</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="bi bi-shield-check"></i>
+							<span class="nav-label">중재관리 ></span>
+						</a>
+						<ul class="nav nav-second-level collapse" th:classappend="${#httpServletRequest.requestURI.contains('/tdysWrk')}?'in':''">
+							<li th:classappend="${#httpServletRequest.requestURI.contains('/tdysWrk/getPrfmStts.do')} or ${#httpServletRequest.requestURI.contains('/tdysWrk/getPrfrmSttsMng.do')} ?'active':''"><a th:href="@{/tdysWrk/getPrfmStts.do}">- 오늘의 할 일</a></li>
+							<li th:classappend="${#httpServletRequest.requestURI.contains('/tdysWrk/getAdmSch.do')} or ${#httpServletRequest.requestURI.contains('/tdysWrk/getAdmSchMng.do')} ?'active':''"><a th:href="@{/tdysWrk/getAdmSch.do}">- 일정관리</a></li>
+							<li th:classappend="${#httpServletRequest.requestURI.contains('/tdysWrk/getVdCls.do')} ?'active':''"><a th:href="@{/tdysWrk/getVdCls.do}">- 실시간 화상수업</a></li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">
+							<i class="bi bi-star-fill"></i>
+							<span class="nav-label">인센티브 ></span>
+						</a>
+                        <ul class="nav nav-second-level collapse" th:classappend="${#httpServletRequest.requestURI.contains('/incnt')}?'in':''">
+                            <li th:classappend="${#httpServletRequest.requestURI.contains('/incnt/getAcmltStts.do')} or ${#httpServletRequest.requestURI.contains('/incnt/getAcmltSttsMng.do')} ?'active':''"><a th:href="@{/incnt/getAcmltStts.do}">- 일일 목표달성 </a></li>
+                            <li th:classappend="${#httpServletRequest.requestURI.contains('/incnt/getAcmltSttsCml.do')}?'active':''"><a th:href="@{/incnt/getAcmltSttsCml.do}">- 누적달성</a></li>
+                        </ul>
+					</li>
+					<li>
+						<a href="#">
+							<i class="bi bi-calendar"></i>
+							<span class="nav-label">이야기 마당 ></span>
+						</a>
+						<ul class="nav nav-second-level collapse" th:classappend="${#httpServletRequest.requestURI.contains('/stryrd')}?'in':''">
+							<li th:classappend="${#httpServletRequest.requestURI.contains('/stryrd/getCmntyRcrd.do')} or ${#httpServletRequest.requestURI.contains('/stryrd/getCmntyRcrdMmbrDtl.do')} or ${#httpServletRequest.requestURI.contains('/stryrd/getCmntyRcrdDtl.do')} ?'active':''"><a th:href="@{/stryrd/getCmntyRcrd.do}">- 대상자별 기록</a></li>
+							<li th:classappend="${#httpServletRequest.requestURI.contains('/stryrd/getStrYrd.do')} or ${#httpServletRequest.requestURI.contains('/stryrd/getStrYrdDtl.do')}?'active':''"><a th:href="@{/stryrd/getStrYrd.do}">- 이야기마당 목록</a></li>
+						</ul>
+					</li>
+					<li th:classappend="${#httpServletRequest.requestURI.contains('/dvcs/getDvcsMng.do')}?'active':''">
+						<a th:href="@{/dvcs/getDvcsMng.do}">
+							<i class="bi bi-device-ssd-fill"></i>
+							<span class="nav-label">디바이스 관리</span>
+						</a>
+					</li>
+					<li th:classappend="${#httpServletRequest.requestURI.contains('/oprtr/getOprtrMng.do')}?'active':''">
+						<a th:href="@{/oprtr/getOprtrMng.do}">
+							<i class="bi bi-people-fill"></i>
+							<span class="nav-label">운영자 관리</span>
+						</a>
+					</li>
+			</ul>
+		</div>
+	</nav>
+	<!-- 우측 네비 ed -->
+</html>
