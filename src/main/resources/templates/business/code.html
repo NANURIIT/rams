@@ -1,105 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>공통코드관리</title>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/style.css">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-    <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/accordion.js"></script>
-</head>
+<!-- 공통헤드 -->
+
+<head th:replace="layout/fragments/basic/head :: headFragment"></head>
+
 <body>
     <div class="wrap">
         <div class="main">
-            <header class="header">
-                <div class="header_wrap">
-                    <div class="login_info">
-                        홍길동
-                    </div>
-                    <div class="header_button_wrap">
-                        <button>로그아웃</button>
-                    </div>
-                </div>
-            </header>
+
+            <!-- 공통헤더 -->
+            <header th:replace="layout/fragments/basic/header :: headerFragment"></header>
+
             <main>
                 <div class="main_wrap">
-                    <div class="sidenav">
-                        <div class="aside_list_wrap accordion_container">
-                            <!--<div class="aside_list_box">
-                                <a class="aside_list_title" href="#">1depth</a>
-                            </div>-->
-                            <div class="aside_list_box">
-                                <div class="accordion_section">
-                                    <div>
-                                        <a class="aside_list_title" href="#">심사정보</a>
-                                    </div>
-                                    <button class="accordion_open"></button>
-                                    <div class="accordion_content">
-                                        <div class="aside_product_list">
-                                            <a href="#">IB/PI안건 심사요청</a>
-                                        </div>
-                                        <div class="aside_product_list">
-                                            <a href="#">심사안건조회 및 배정</a>
-                                        </div>
-                                        <div class="aside_product_list">
-                                            <a href="#">심사배정안건조회</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="aside_list_box">
-                                <div class="accordion_section">
-                                    <div>
-                                        <a class="aside_list_title" href="#">심사협의체</a>
-                                    </div>
-                                    <button class="accordion_open"></button>
-                                    <div class="accordion_content">
-                                        <div class="aside_product_list">
-                                            <a href="#">협의체부의 및 결과</a>
-                                        </div>
-                                        <div class="aside_product_list">
-                                            <a href="#">협의체 사전준비</a>
-                                        </div>
-                                        <div class="aside_product_list">
-                                            <a href="#">협의체 결과</a>
-                                        </div>
-                                        <div class="aside_product_list">
-                                            <a href="#">협의체 회의자료</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="aside_list_box">
-                                <div class="accordion_section">
-                                    <div>
-                                        <a class="aside_list_title" href="#">안건관리</a>
-                                    </div>
-                                    <button class="accordion_open"></button>
-                                    <div class="accordion_content">
-                                        <div class="aside_product_list">
-                                            <a href="#">안건 진행정보관리</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="aside_list_box">
-                                <div class="accordion_section">
-                                    <div>
-                                        <a class="aside_list_title" href="#">IT관리자</a>
-                                    </div>
-                                    <button class="accordion_open"></button>
-                                    <div class="accordion_content">
-                                        <div class="aside_product_list">
-                                            <a href="#">공통코드관리</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- 공통 사이드바 -->
+                    <div th:replace="layout/fragments/basic/left :: leftFragment"></div>
+
+                    <!-- code.html st -->
                     <div class="main_container">
                         <div class="search_wrap">
                             <table class="search_table search_top">
@@ -143,20 +61,20 @@
                                     <col style="width: 7%;">
                                 </colgroup>
                                 <thead>
-                                <tr>
-                                    <th>삭제</th>
-                                    <th>그룹코드</th>
-                                    <th>그룹명</th>
-                                    <th>코드성격</th>
-                                    <th>코드길이</th>
-                                    <th>코드관리</th>
-                                    <th>참조그룹코드</th>
-                                    <th>설명</th>
-                                    <th>사용여부</th>
-                                    <th>등록일</th>
-                                    <th>처리일</th>
-                                    <th>처리자</th>
-                                </tr>
+                                    <tr>
+                                        <th>삭제</th>
+                                        <th>그룹코드</th>
+                                        <th>그룹명</th>
+                                        <th>코드성격</th>
+                                        <th>코드길이</th>
+                                        <th>코드관리</th>
+                                        <th>참조그룹코드</th>
+                                        <th>설명</th>
+                                        <th>사용여부</th>
+                                        <th>등록일</th>
+                                        <th>처리일</th>
+                                        <th>처리자</th>
+                                    </tr>
                                 </thead>
                             </table>
                             <div class="grid_wrap">
@@ -177,90 +95,90 @@
                                             <col style="width: 7%;">
                                         </colgroup>
                                         <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>수신계좌조회구분코드</td>
-                                            <td>DPS_ACCO_IQRY_DIV</td>
-                                            <td>1</td>
-                                            <td>Field</td>
-                                            <td>0</td>
-                                            <td></td>
-                                            <td>Varchar</td>
-                                            <td></td>
-                                            <td>10</td>
-                                            <td>2</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>수신계좌조회구분코드</td>
-                                            <td>DPS_ACCO_IQRY_DIV</td>
-                                            <td>1</td>
-                                            <td>Field</td>
-                                            <td>0</td>
-                                            <td></td>
-                                            <td>Varchar</td>
-                                            <td></td>
-                                            <td>10</td>
-                                            <td>2</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>수신계좌조회구분코드</td>
-                                            <td>DPS_ACCO_IQRY_DIV</td>
-                                            <td>1</td>
-                                            <td>Field</td>
-                                            <td>0</td>
-                                            <td></td>
-                                            <td>Varchar</td>
-                                            <td></td>
-                                            <td>10</td>
-                                            <td>2</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>수신계좌조회구분코드</td>
-                                            <td>DPS_ACCO_IQRY_DIV</td>
-                                            <td>1</td>
-                                            <td>Field</td>
-                                            <td>0</td>
-                                            <td></td>
-                                            <td>Varchar</td>
-                                            <td></td>
-                                            <td>10</td>
-                                            <td>2</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>수신계좌조회구분코드</td>
-                                            <td>DPS_ACCO_IQRY_DIV</td>
-                                            <td>1</td>
-                                            <td>Field</td>
-                                            <td>0</td>
-                                            <td></td>
-                                            <td>Varchar</td>
-                                            <td></td>
-                                            <td>10</td>
-                                            <td>2</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>수신계좌조회구분코드</td>
-                                            <td>DPS_ACCO_IQRY_DIV</td>
-                                            <td>1</td>
-                                            <td>Field</td>
-                                            <td>0</td>
-                                            <td></td>
-                                            <td>Varchar</td>
-                                            <td></td>
-                                            <td>10</td>
-                                            <td>2</td>
-                                            <td></td>
-                                        </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>수신계좌조회구분코드</td>
+                                                <td>DPS_ACCO_IQRY_DIV</td>
+                                                <td>1</td>
+                                                <td>Field</td>
+                                                <td>0</td>
+                                                <td></td>
+                                                <td>Varchar</td>
+                                                <td></td>
+                                                <td>10</td>
+                                                <td>2</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>수신계좌조회구분코드</td>
+                                                <td>DPS_ACCO_IQRY_DIV</td>
+                                                <td>1</td>
+                                                <td>Field</td>
+                                                <td>0</td>
+                                                <td></td>
+                                                <td>Varchar</td>
+                                                <td></td>
+                                                <td>10</td>
+                                                <td>2</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>수신계좌조회구분코드</td>
+                                                <td>DPS_ACCO_IQRY_DIV</td>
+                                                <td>1</td>
+                                                <td>Field</td>
+                                                <td>0</td>
+                                                <td></td>
+                                                <td>Varchar</td>
+                                                <td></td>
+                                                <td>10</td>
+                                                <td>2</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>수신계좌조회구분코드</td>
+                                                <td>DPS_ACCO_IQRY_DIV</td>
+                                                <td>1</td>
+                                                <td>Field</td>
+                                                <td>0</td>
+                                                <td></td>
+                                                <td>Varchar</td>
+                                                <td></td>
+                                                <td>10</td>
+                                                <td>2</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>수신계좌조회구분코드</td>
+                                                <td>DPS_ACCO_IQRY_DIV</td>
+                                                <td>1</td>
+                                                <td>Field</td>
+                                                <td>0</td>
+                                                <td></td>
+                                                <td>Varchar</td>
+                                                <td></td>
+                                                <td>10</td>
+                                                <td>2</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>수신계좌조회구분코드</td>
+                                                <td>DPS_ACCO_IQRY_DIV</td>
+                                                <td>1</td>
+                                                <td>Field</td>
+                                                <td>0</td>
+                                                <td></td>
+                                                <td>Varchar</td>
+                                                <td></td>
+                                                <td>10</td>
+                                                <td>2</td>
+                                                <td></td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </form>
@@ -286,18 +204,18 @@
                                     <col style="width: 7%;">
                                 </colgroup>
                                 <thead>
-                                <tr>
-                                    <th>삭제</th>
-                                    <th>코드</th>
-                                    <th>코드명</th>
-                                    <th>변환후코드</th>
-                                    <th>순서</th>
-                                    <th>사용여부</th>
-                                    <th>등록일</th>
-                                    <th>등록자</th>
-                                    <th>처리일</th>
-                                    <th>처리자</th>
-                                </tr>
+                                    <tr>
+                                        <th>삭제</th>
+                                        <th>코드</th>
+                                        <th>코드명</th>
+                                        <th>변환후코드</th>
+                                        <th>순서</th>
+                                        <th>사용여부</th>
+                                        <th>등록일</th>
+                                        <th>등록자</th>
+                                        <th>처리일</th>
+                                        <th>처리자</th>
+                                    </tr>
                                 </thead>
                             </table>
                             <div class="grid_wrap">
@@ -335,8 +253,10 @@
                         </div>
                     </div>
                 </div>
+                <!-- code.html ed -->
             </main>
         </div>
     </div>
 </body>
+
 </html>

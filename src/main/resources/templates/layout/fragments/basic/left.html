@@ -1,7 +1,86 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-	<!-- 우측 네비 st -->
-	<nav th:fragment="leftFragment" class="navbar-static-side border-right white-bg" role="navigation">
+
+<!-- 좌측 네비 st -->
+<nav th:fragment="leftFragment"><!--  class="navbar-static-side border-right white-bg" role="navigation"> -->
+	<div class="sidenav">
+		<div class="aside_list_wrap accordion_container">
+			<!--<div class="aside_list_box">
+						<a class="aside_list_title" href="#">1depth</a>
+					</div>-->
+			<div class="aside_list_box">
+				<div class="accordion_section">
+					<div>
+						<a class="aside_list_title" href="#">심사정보</a>
+					</div>
+					<button class="accordion_open"></button>
+					<div class="accordion_content">
+						<div class="aside_product_list">
+							<a th:href="@{/ibpi}">IB/PI안건 심사요청</a>
+						</div>
+						<div class="aside_product_list">
+							<a href="#">심사안건조회 및 배정</a>
+						</div>
+						<div class="aside_product_list">
+							<a href="#">심사배정안건조회</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="aside_list_box">
+				<div class="accordion_section">
+					<div>
+						<a class="aside_list_title" href="#">심사협의체</a>
+					</div>
+					<button class="accordion_open"></button>
+					<div class="accordion_content">
+						<div class="aside_product_list">
+							<a href="#">협의체부의 및 결과</a>
+						</div>
+						<div class="aside_product_list">
+							<a href="#">협의체 사전준비</a>
+						</div>
+						<div class="aside_product_list">
+							<a href="#">협의체 결과</a>
+						</div>
+						<div class="aside_product_list">
+							<a href="#">협의체 회의자료</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="aside_list_box">
+				<div class="accordion_section">
+					<div>
+						<a class="aside_list_title" href="#">안건관리</a>
+					</div>
+					<button class="accordion_open"></button>
+					<div class="accordion_content">
+						<div class="aside_product_list">
+							<a href="#">안건 진행정보관리</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="aside_list_box">
+				<div class="accordion_section">
+					<div>
+						<a class="aside_list_title" href="#">IT관리자</a>
+					</div>
+					<button class="accordion_open"></button>
+					<div class="accordion_content">
+						<div class="aside_product_list">
+							<a href="#">공통코드관리</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</nav>
+<!-- 좌측 네비 ed -->
+<!-- 우측 네비 st -->
+<!-- <nav th:fragment="leftFragment" class="navbar-static-side border-right white-bg" role="navigation">
 		<div class="sidebar-collapse">
 			<ul class="nav metismenu" id="side-menu">
 				<li class="logo-wrap border-bottom">
@@ -85,6 +164,7 @@
 					</li>
 			</ul>
 		</div>
-	</nav>
-	<!-- 우측 네비 ed -->
+	</nav> -->
+<!-- 우측 네비 ed -->
+
 </html>
