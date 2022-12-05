@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
-<!-- 
-<th:block layout:fragment="title"><title>IB/PI안건 심사요청</title></th:block>
- -->
-<script th:src="@{/js/business/assignmentInquiry.js}"></script>
- 
+<th:block layout:fragment="script">
+	<script th:src="@{js/tab.js}"></script>
+	<script th:src="@{/js/business/assignmentInquiry.js}"></script>
+</th:block>
+
 <th:block layout:fragment="customContent">
 	<div class="main_container">
 		<div class="search_wrap">
