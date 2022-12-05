@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-	<!-- 공통헤드 -->
-	<head th:replace="layout/fragments/basic/head :: headFragment">
-		<title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Risk Management System</title>
-	</head>
+<!-- 공통헤드 -->
+<th:block th:replace="layout/fragments/head :: headFragment"></th:block>
 	
-<body class="pace-done">
+<body>
 	<div id="wrapper">
 	
-		<div th:replace="layout/fragments/left :: leftFragment"></div>
-	
-		<div th:replace="layout/fragments/header :: headerFragment"></div>
+		<th:block th:replace="layout/fragments/left :: leftFragment"></th:block>
 		
-		<div id="rightcolumn">
-        	<th:block layout:fragment="customContent"></th:block>
-        </div>
-	
-		<!-- footer  -->
-		<div th:replace="layout/fragments/footer :: footerFragment"></div>
-		 
-	</div><!-- wrapper ed -->
+		<div id="content-wrapper" class="d-flex flex-column">
+			<div id="content">
+				<th:block th:replace="layout/fragments/header :: headerFragment"></th:block>
+		
+		        <th:block layout:fragment="customContent"></th:block>
+			
+				<th:block th:replace="layout/fragments/footer :: footerFragment"></th:block>
+			</div>
+		</div>
+		
+	</div>
 </body>
 </html>
