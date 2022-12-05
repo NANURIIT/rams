@@ -1,5 +1,5 @@
 package com.nanuri.rams.business.casemanagement.controller;
 
-public class ExamReqController {
+public class TestControllerFile {
 
 }

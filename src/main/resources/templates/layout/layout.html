@@ -1,38 +1,25 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-	<!-- 헤더 -->
-	<head th:replace="layout/fragments/header :: headerFragment">
+	<!-- 공통헤드 -->
+	<head th:replace="layout/fragments/basic/head :: headFragment">
 		<title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Risk Management System</title>
 	</head>
-<body class="pace-done">
-<div id="wrapper">
 	
-	<!-- left.html -->
-	<nav th:replace="layout/fragments/left :: leftFragment"></nav>
-	<!-- left.html ed -->
-
-
-	<!-- 좌측 메인 페이지 st -->
-	<div id="page-wrapper">
-
-		<!-- top.html-->
-		<header th:replace="layout/fragments/top :: topFragment"></header>
-		<!-- top.html ed-->
-
-
-		<!-- 메인화면 ed -->
-		<main id="mainArea">
-			<th:block layout:fragment="contentPage"></th:block>
-		</main>
-		<!-- 메인화면 -->
+<body class="pace-done">
+	<div id="wrapper">
+	
+		<div th:replace="layout/fragments/left :: leftFragment"></div>
+	
+		<div th:replace="layout/fragments/header :: headerFragment"></div>
 		
-		<!-- footer video 영역 -->
-		<footer th:replace="layout/fragments/footer :: footerFragment"></footer>
-		<!-- //footer video 영역 -->
-		
-	</div>
-</div><!-- wrapper ed -->
-
+		<div id="rightcolumn">
+        	<th:block layout:fragment="customContent"></th:block>
+        </div>
+	
+		<!-- footer  -->
+		<div th:replace="layout/fragments/footer :: footerFragment"></div>
+		 
+	</div><!-- wrapper ed -->
 </body>
 </html>

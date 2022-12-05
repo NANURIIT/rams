@@ -1,5 +1,5 @@
 package com.nanuri.rams.business.casemanagement.service;
 
-public class InquiryAssignmentService {
+public class TestServiceFile {
 
 }

@@ -1,5 +1,5 @@
 package com.nanuri.rams.business.examinfo.controller;
 
-public class TestControllerFile {
+public class AssignmentInquiryAPIContorller {
 
 }

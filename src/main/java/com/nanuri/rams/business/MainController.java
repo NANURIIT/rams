@@ -15,9 +15,4 @@ public class MainController {
     public String home() {
         return "business/code";
     }
-
-    @GetMapping(value = "/ibpi")
-    public String ibpi() {
-        return "business/ibpi";
-    }
 }

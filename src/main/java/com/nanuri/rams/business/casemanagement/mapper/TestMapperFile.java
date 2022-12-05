@@ -1,5 +1,5 @@
 package com.nanuri.rams.business.casemanagement.mapper;
 
-public class AssignmentInquiryMapper {
+public class TestMapperFile {
 
 }
