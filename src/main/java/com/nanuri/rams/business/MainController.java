@@ -11,8 +11,8 @@ import lombok.RequiredArgsConstructor;
 public class MainController {
 
 
-    @GetMapping(value = {"/"})
-    public String home() {
-        return "business/code";
-    }
+    // @GetMapping(value = {"/"})
+    // public String home() {
+    //     return "business/code";
+    // }
 }

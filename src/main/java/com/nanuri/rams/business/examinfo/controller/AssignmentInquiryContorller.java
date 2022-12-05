@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class AssignmentInquiryContorller {
 
-	@GetMapping(value = "/assignmentInquiry")
+	@GetMapping(value = {"/", "/assignmentInquiry"})
     public String assignmentInquiry() {
         return "business/assignmentInquiry";
     }
