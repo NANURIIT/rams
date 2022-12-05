@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 
-<!-- Content의 CSS와 JS 추가 -->
+<!-- Content의 CSS와 JS 추가 
 <th:block layout:fragment="css"></th:block>
 <th:block layout:fragment="script"></th:block>
+-->
+
+<script th:src="@{/js/business/sample.js}"></script>
 
 <th:block layout:fragment="customContent">
 	<div class="main_container">
