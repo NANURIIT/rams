@@ -23,13 +23,13 @@ public class AssignmentInquiryAPIContorller {
 	// deal list 가져오기
 	@GetMapping(value = "/dealList")
 	public List<DealDto> getDealList(String dealNo, String def) {
-		return assignmentInquiryService.findDealList(dealNo, def);
+		return assignmentInquiryService.getDealList(dealNo, def);
 	}
 
 	// deal 상세정보 가져오기
 	@GetMapping(value = "/dealDetails")
 	public DealDto getDealDetails(String dealNo) {
-		return assignmentInquiryService.findDealDetails(dealNo);
+		return assignmentInquiryService.getDealDetails(dealNo);
 	}
 	
 	// deal 정보 등록
