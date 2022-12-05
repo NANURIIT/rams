@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-    <head th:fragment="headFragment">
+    <th:block th:fragment="headFragment">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" th:href="@{css/reset.css}">
@@ -10,7 +10,7 @@
         
         <script th:src="@{js/jquery-3.1.1.min.js}"></script>
         <script th:src="@{js/accordion.js}"></script>
-        <title>공통코드관리</title>
-    </head>
+        <title>Risk Management System</title>
+    </th:block>
     
 </html>
