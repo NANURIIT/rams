@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
 
 <th:block layout:fragment="script">
 	<script th:src="@{js/tab.js}"></script>
 	<script th:src="@{/js/business/assignmentInquiry.js}"></script>
+	<script defer src="js/modal.js"></script>
 </th:block>
 
 <th:block layout:fragment="customContent">
@@ -37,7 +40,6 @@
 				</tr>
 			</table>
 		</div>
-		<!-- contents_box -->
 		<div class="contents_box">
 			<table class="table_header">
 				<colgroup>
@@ -83,16 +85,15 @@
 					</table>
 				</form>
 			</div>
-		</div><!-- end of contents_box -->
-		<!-- contents_box -->
+		</div>
 		<div class="contents_box">
 			<div class="tab_wrap">
 				<div class="tabs-nav">
 					<ul>
 						<li class="active"><a href="#tab1">안건구조</a></li>
 						<li><a href="#tab2">관련문서</a></li>
-						<li><a href="#tab3">(보증)기초자산</a></li>
-						<li><a href="#tab4">거래상대방</a></li>
+						<li><a href="#tab3">기초자산</a></li>
+						<li><a href="#tab4">관계사</a></li>
 						<li><a href="#tab5">내부등급</a></li>
 						<li><a href="#tab6">담보</a></li>
 						<li><a href="#tab7">보증</a></li>
@@ -470,16 +471,671 @@
 							<button>저장</button>
 						</div>
 					</div>
-					<div id="tab2" class="tab">2</div>
-					<div id="tab3" class="tab">3</div>
-					<div id="tab4" class="tab">4</div>
-					<div id="tab5" class="tab">5</div>
-					<div id="tab6" class="tab">6</div>
-					<div id="tab7" class="tab">7</div>
-					<div id="tab8" class="tab">8</div>
+					<div id="tab2" class="tab">
+						<div class="contents_box">
+							<table class="table_header">
+								<colgroup>
+									<col style="width: 50%;">
+									<col style="width: 50%;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>문서번호</th>
+										<th>최종문서여부</th>
+									</tr>
+								</thead>
+							</table>
+							<div class="grid_wrap grid_wrap245">
+								<form>
+									<table>
+										<colgroup>
+											<col style="width: 50%;">
+											<col style="width: 50%;">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>2</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap9">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">문서</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">문서번호</div>
+								<div class="contents_list_desc contents_list_descL">
+									<input type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">최종문서여부</div>
+								<div class="contents_list_desc contents_list_descL">
+									<select>
+										<option value="1">1</option>
+										<option value="1">2</option>
+										<option value="1">3</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button>초기화</button>
+							<button>삭제</button>
+							<button>저장</button>
+						</div>
+					</div>
+					<div id="tab3" class="tab">
+						<div class="contents_box">
+							<table class="table_header">
+								<colgroup>
+									<col style="width: 20%;">
+									<col style="width: 20%;">
+									<col style="width: 20%;">
+									<col style="width: 20%;">
+									<col style="width: 20%;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>기초자산유형</th>
+										<th>기초자산명</th>
+										<th>기초자산평가액</th>
+										<th>법인번호</th>
+										<th>법인명</th>
+									</tr>
+								</thead>
+							</table>
+							<div class="grid_wrap grid_wrap245">
+								<form>
+									<table>
+										<colgroup>
+											<col style="width: 20%;">
+											<col style="width: 20%;">
+											<col style="width: 20%;">
+											<col style="width: 20%;">
+											<col style="width: 20%;">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>2</td>
+												<td>3</td>
+												<td>4</td>
+												<td>5</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap9">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">기초자산정보</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">기초자산종류</div>
+								<div class="contents_list_desc">
+									<select>
+										<option value="1">1</option>
+										<option value="1">2</option>
+										<option value="1">3</option>
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">기초자산명</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">기초자산 평가액</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap15">
+							<div class="contents_list">
+								<div class="contents_list_title">기초자산발행사법인번호</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">법인명</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button>초기화</button>
+							<button>삭제</button>
+							<button>저장</button>
+						</div>
+					</div>
+					<div id="tab4" class="tab">
+						<div class="contents_box">
+							<table class="table_header">
+								<colgroup>
+									<col style="width: 33%;">
+									<col style="width: 33%;">
+									<col style="width: 33%;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>형태</th>
+										<th>법인명</th>
+										<th>법인번호</th>
+									</tr>
+								</thead>
+							</table>
+							<div class="grid_wrap grid_wrap245">
+								<form>
+									<table>
+										<colgroup>
+											<col style="width: 33%;">
+											<col style="width: 33%;">
+											<col style="width: 33%;">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>2</td>
+												<td>3</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap9">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">관계사정보</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">법인형태</div>
+								<div class="contents_list_desc">
+									<select>
+										<option value="1">1</option>
+										<option value="1">2</option>
+										<option value="1">3</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap16">
+							<div class="contents_list">
+								<div class="contents_list_title">법인번호</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">법인명</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button>초기화</button>
+							<button>삭제</button>
+							<button>저장</button>
+						</div>
+					</div>
+					<div id="tab5" class="tab">
+						<div class="contents_box">
+							<table class="table_header">
+								<colgroup>
+									<col style="width: 16.6%;">
+									<col style="width: 16.6%;">
+									<col style="width: 16.6%;">
+									<col style="width: 16.6%;">
+									<col style="width: 16.6%;">
+									<col style="width: 16.6%;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>내부등급대상여부</th>
+										<th>SL대상여부</th>
+										<th>SL번호</th>
+										<th>내부등급</th>
+										<th>차주 법인번호</th>
+										<th>내부등급</th>
+									</tr>
+								</thead>
+							</table>
+							<div class="grid_wrap grid_wrap245">
+								<form>
+									<table>
+										<colgroup>
+											<col style="width: 16.6%;">
+											<col style="width: 16.6%;">
+											<col style="width: 16.6%;">
+											<col style="width: 16.6%;">
+											<col style="width: 16.6%;">
+											<col style="width: 16.6%;">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>2</td>
+												<td>3</td>
+												<td>4</td>
+												<td>5</td>
+												<td>6</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+						<div
+							class="contents_list_wrap contents_list_wrap9 contents_list_wrap17">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">내부등급 정보</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">내부등급대상여부</div>
+								<div class="contents_list_desc">
+									<select>
+										<option value="1">1</option>
+										<option value="1">2</option>
+										<option value="1">3</option>
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">SL대상여부</div>
+								<div class="contents_list_desc">
+									<select>
+										<option value="1">1</option>
+										<option value="1">2</option>
+										<option value="1">3</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap10">
+							<div class="content_list_caption_wrap content_list_caption_wrapS">
+								<div class="content_list_caption content_list_captionS">SL대상</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">법인번호</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">법인명</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap18">
+							<div class="content_list_caption_wrap content_list_caption_wrapS">
+								<div class="content_list_caption content_list_captionS">SL대상아닌경우</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">법인번호</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">법인명</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button>초기화</button>
+							<button>삭제</button>
+							<button>저장</button>
+						</div>
+					</div>
+					<div id="tab6" class="tab">
+						<div class="contents_box">
+							<table class="table_header">
+								<colgroup>
+									<col style="width: 33%;">
+									<col style="width: 33%;">
+									<col style="width: 33%;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>담보종류</th>
+										<th>담보명</th>
+										<th>담보평가액</th>
+									</tr>
+								</thead>
+							</table>
+							<div class="grid_wrap grid_wrap245">
+								<form>
+									<table>
+										<colgroup>
+											<col style="width: 33%;">
+											<col style="width: 33%;">
+											<col style="width: 33%;">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>2</td>
+												<td>3</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap9">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">담보</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">담보종류</div>
+								<div class="contents_list_desc">
+									<select>
+										<option value="1">1</option>
+										<option value="1">2</option>
+										<option value="1">3</option>
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">담보명</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap16">
+							<div class="contents_list">
+								<div class="contents_list_title">담보평가액</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">권리순위</div>
+								<div class="contents_list_desc">
+									<select>
+										<option value="1">1</option>
+										<option value="1">2</option>
+										<option value="1">3</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button>초기화</button>
+							<button>삭제</button>
+							<button>저장</button>
+						</div>
+					</div>
+					<div id="tab7" class="tab">
+						<div class="contents_box">
+							<table class="table_header">
+								<colgroup>
+									<col style="width: 20%;">
+									<col style="width: 20%;">
+									<col style="width: 20%;">
+									<col style="width: 40%;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>법인번호</th>
+										<th>기관명</th>
+										<th>보증금액</th>
+										<th>보증내용</th>
+									</tr>
+								</thead>
+							</table>
+							<div class="grid_wrap grid_wrap245">
+								<form>
+									<table>
+										<colgroup>
+											<col style="width: 20%;">
+											<col style="width: 20%;">
+											<col style="width: 20%;">
+											<col style="width: 40%;">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>2</td>
+												<td>3</td>
+												<td>4</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap9">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">보증기관정보</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">법인번호</div>
+								<div class="contents_list_desc">
+									<div class="contents_list_desc">
+										<input type="text">
+									</div>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">기관명</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap16">
+							<div class="contents_list">
+								<div class="contents_list_title">보증금액</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">보증내용</div>
+								<div class="contents_list_desc">
+									<div class="contents_list_desc">
+										<input type="text">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button>초기화</button>
+							<button>삭제</button>
+							<button>저장</button>
+						</div>
+					</div>
+					<div id="tab8" class="tab">
+						<div class="contents_box">
+							<table class="table_header">
+								<colgroup>
+									<col style="width: 25%;">
+									<col style="width: 25%;">
+									<col style="width: 25%;">
+									<col style="width: 25%;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>법인번호</th>
+										<th>기관명</th>
+										<th>미이행시의무</th>
+										<th>손해배상 최대범위</th>
+									</tr>
+								</thead>
+							</table>
+							<div class="grid_wrap grid_wrap245">
+								<form>
+									<table>
+										<colgroup>
+											<col style="width: 25%;">
+											<col style="width: 25%;">
+											<col style="width: 25%;">
+											<col style="width: 25%;">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>2</td>
+												<td>3</td>
+												<td>4</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap9">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">책임준공기관정보</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">법인번호</div>
+								<div class="contents_list_desc">
+									<div class="contents_list_desc">
+										<input type="text">
+									</div>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">기관명</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap15">
+							<div class="contents_list">
+								<div class="contents_list_title">미이행시의무</div>
+								<div class="contents_list_desc">
+									<select>
+										<option value="1">1</option>
+										<option value="1">2</option>
+										<option value="1">3</option>
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">손해배상 최대범위</div>
+								<div class="contents_list_desc">
+									<div class="contents_list_desc">
+										<input type="text">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button>초기화</button>
+							<button>삭제</button>
+							<button>저장</button>
+						</div>
+					</div>
 				</section>
 			</div>
-		</div><!-- end of contents_box -->
+		</div>
+	</div>
+
+	<!-- modal -->
+	<div id="modal" class="modal_wrap">
+
+		<div class="modal_content">
+			<span class="modal_close">&times;</span>
+			<div class="wrap">
+				<div class="main">
+					<main>
+						<div class="main_wrap">
+							<div class="main_container">
+								<div class="search_wrap">
+									<table class="search_table search_top">
+										<colgroup>
+											<col style="width: 10%;">
+											<col style="width: 15%;">
+											<col style="width: 10%;">
+											<col style="width: 15%;">
+											<col style="width: 10%;">
+											<col style="width: 40%;">
+										</colgroup>
+										<tr>
+											<th>Deal번호</th>
+											<td><input type="text"></td>
+											<th>Deal명</th>
+											<td><input type="text"></td>
+											<th>DSC일자</th>
+											<td class="etc_td"><input type="text">
+												<div id="open_modal" class="button_etc_wrap">
+													<button type="button">조회</button>
+												</div></td>
+										</tr>
+									</table>
+								</div>
+								<div class="contents_box">
+									<table class="table_header">
+										<colgroup>
+											<col style="width: 5%;">
+											<col style="width: 15%;">
+											<col style="width: 15%;">
+											<col style="width: 5%;">
+											<col style="width: 7%;">
+											<col style="width: 7%;">
+										</colgroup>
+										<thead>
+											<tr>
+												<th>삭제</th>
+												<th>그룹코드</th>
+												<th>그룹명</th>
+												<th>코드성격</th>
+												<th>코드길이</th>
+												<th>코드관리</th>
+											</tr>
+										</thead>
+									</table>
+									<div class="grid_wrap grid_wrapS">
+										<form>
+											<table>
+												<colgroup>
+													<col style="width: 5%;">
+													<col style="width: 15%;">
+													<col style="width: 15%;">
+													<col style="width: 5%;">
+													<col style="width: 7%;">
+													<col style="width: 7%;">
+												</colgroup>
+												<tbody>
+													<tr>
+														<td>1</td>
+														<td>수신계좌조회구분코드</td>
+														<td>DPS_ACCO_IQRY_DIV</td>
+														<td>1</td>
+														<td>Field</td>
+														<td>0</td>
+													</tr>
+												</tbody>
+											</table>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</main>
+				</div>
+			</div>
+		</div>
 	</div>
 </th:block>
 </html>
