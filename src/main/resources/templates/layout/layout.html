@@ -5,20 +5,29 @@
 <th:block th:replace="layout/fragments/head :: headFragment"></th:block>
 	
 <body>
-	<div id="wrapper">
-	
-		<th:block th:replace="layout/fragments/left :: leftFragment"></th:block>
+	<div class="wrap">
+		<div class="main">
 		
-		<div id="content-wrapper" class="d-flex flex-column">
-			<div id="content">
-				<th:block th:replace="layout/fragments/header :: topFragment"></th:block>
-		
-		        <th:block layout:fragment="customContent"></th:block>
+			<!-- topFragment -->
+			<th:block th:replace="layout/fragments/top :: topFragment"></th:block>
 			
-				<th:block th:replace="layout/fragments/footer :: footerFragment"></th:block>
-			</div>
-		</div>
+			<main>
+				<div class="main_wrap">
+					
+					<!-- leftFragment -->
+					<th:block th:replace="layout/fragments/left :: leftFragment"></th:block>
+					
+					<!-- customContent -->
+					<th:block layout:fragment="customContent"></th:block>
+					
+					<!-- footerFragment -->
+					<th:block th:replace="layout/fragments/footer :: footerFragment"></th:block>
+					
+				</div>
+			</main>
 		
+		</div>
 	</div>
 </body>
+
 </html>
