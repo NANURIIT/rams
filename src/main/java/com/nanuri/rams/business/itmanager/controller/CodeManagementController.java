@@ -6,8 +6,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class CodeManagementController {
 	
-	@GetMapping(value = {"/codeManagement"})
+	@GetMapping(value = {"/AC01010S"})
     public String codeManagement() {
-        return "business/codeManagement";
+        return "business/AC01010S";
     }
+	
+    @GetMapping(value = {"/AC01110S"})
+    public String userManagement() {
+        return "business/AC01110S";   
+    }
+    
+    @GetMapping(value = {"/AC01210S"})
+    public String authMenuManage() {
+        return "business/AC01210S";   
+    }
+
 }
