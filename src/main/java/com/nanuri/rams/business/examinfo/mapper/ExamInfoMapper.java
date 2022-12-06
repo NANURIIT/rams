@@ -7,8 +7,11 @@ import org.apache.ibatis.annotations.Mapper;
 import com.nanuri.rams.business.examinfo.dto.DealDto;
 
 @Mapper
-// 심사 요청 페이지 Mapper
-public interface AS03210SMapper {
+public interface ExamInfoMapper {
+	
+	/* 심사 요청 페이지
+	 * 
+	 */
 	
 	public List<DealDto> getDealList(String DealNo, String def);					// deal list 가져오기
 
@@ -17,4 +20,17 @@ public interface AS03210SMapper {
 	public void registDealDetails(DealDto dealDto);									// deal 정보 등록
 	
 	public void updateDealDetails(DealDto dealDto);									// deal 정보 수정
+	
+	/* 안건조회 및 배정 페이지
+	 * 
+	 * */
+	
+	//TODO
+	
+	
+	/* 배정안건조회 페이지
+	 * 
+	 * */
+	
+	//TODO
 }
