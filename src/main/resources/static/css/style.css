@@ -102,6 +102,9 @@
 .grid_wrap245 {
     height: 245px;
 }
+.grid_harf {
+    width: calc(48% + 17px);
+}
 .grid_wrap tr th,
 .grid_wrap tr td {
     text-align: center;
@@ -213,6 +216,25 @@
 .contents_list_wrap18 {
     left: 670px;
 }
+/* 안건 진행정보 관리 */
+.contents_list_wrap19 {
+    top: 20px;
+    left: 20px;
+}
+.contents_list_wrap20 {
+    top: 20px;
+    left: 370px;
+}
+.contents_list_wrap21 {
+    top: 220px;
+    left: 20px;
+}
+.contents_list_wrap19 .contents_list .contents_list_title,
+.contents_list_wrap20 .contents_list .contents_list_title,
+.contents_list_wrap21 .contents_list .contents_list_title {
+    width: 150px;
+}
+
 .content_list_caption_wrap {
     position: relative;
     padding-bottom: 7px;
