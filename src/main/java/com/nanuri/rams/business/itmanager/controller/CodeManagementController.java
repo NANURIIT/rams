@@ -17,8 +17,13 @@ public class CodeManagementController {
     }
     
     @GetMapping(value = {"/AC01210S"})
-    public String authMenuManage() {
+    public String ManageAuth() {
         return "business/AC01210S";   
+    }
+
+    @GetMapping(value = {"/AC01310S"})
+    public String ManageMenu() {
+        return "business/AC01310S";   
     }
 
 }
