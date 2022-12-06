@@ -140,7 +140,7 @@
 }
 .contents_list_wrap3 {
     top: 20px;
-    left: 1020px;
+    left: 1070px;
 }
 .contents_list_wrap4 {
     top: 100px;
@@ -152,15 +152,15 @@
 }
 .contents_list_wrap6 {
     top: 100px;
-    left: 670px;
+    left: 720px;
 }
 .contents_list_wrap7 {
     top: 100px;
-    left: 1020px;
+    left: 1070px;
 }
 .contents_list_wrap8 {
     top: 240px;
-    left: 1020px;
+    left: 1070px;
 }
 .contents_list_wrap9 {
     top: 320px;
@@ -172,18 +172,19 @@
 }
 .contents_list_wrap11 {
     top: 320px;
-    left: 670px;
+    left: 720px;
 }
 .contents_list_wrap12 {
     top: 320px;
-    left: 1020px;
+    left: 1070px;
 }
-.contents_list_wrap13 .contents_list .contents_list_descT {
-    width: 500px;
+.contents_list_wrap13 .contents_list .contents_list_descT,
+.contents_list_wrap14 .contents_list .contents_list_descT {
+    width: 600px;
 }
 .contents_list_wrap13 .contents_list .contents_list_descT textarea,
 .contents_list_wrap14 .contents_list .contents_list_descT textarea {
-    width: 600px;
+    width: 100%;
     height: 40px;
     resize: none;
 }
@@ -193,14 +194,24 @@
 }
 .contents_list_wrap14 {
     top: 470px;
-    left: 670px;
+    left: 720px;
 }
 .contents_list_wrap15 {
     top: 357px;
     left: 370px;
 }
+.contents_list_wrap16 {
+    top: 357px;
+    left: 370px;
+}
 .contents_list_wrap15 .contents_list .contents_list_title {
     width: 160px;
+}
+.contents_list_wrap17 .contents_list .contents_list_title {
+    width: 150px;
+}
+.contents_list_wrap18 {
+    left: 670px;
 }
 .content_list_caption_wrap {
     position: relative;
@@ -222,6 +233,12 @@
     position: absolute;
     top: 0;
     left: 0;
+}
+.content_list_caption_wrapS {
+    text-align: center;
+}
+.content_list_caption_wrap .content_list_captionS::after {
+    content: none;
 }
 .content_list_caption_wrap .content_list_button {
     position: absolute;
@@ -261,12 +278,12 @@
     height: 25px;
 }
 
-.contents_list  .contents_list_descL {
-    width: 450px;
+.contents_list .contents_list_descL {
+    width: 500px;
 }
 .contents_list  .contents_list_descL select,
 .contents_list  .contents_list_descL input {
-    width: 450px;
+    width: 100%;
 }
 
 
@@ -293,4 +310,49 @@
     font-size: 13px;
     padding: 2px 5px;
     margin-left: 5px;
+}
+
+
+/*심사의뢰_딜번호찾기(팝업)*/
+.modal_wrap {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+.modal_content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1280px;
+    padding: 50px 20px 20px;
+    background-color: #fff;
+    border: 1px solid #777;
+}
+.modal_close {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: #777;
+    font-size: 30px;
+    cursor: pointer;
+}
+.modal_content .wrap {
+    width: calc(100% - 20px);
+}
+.modal_content .main {
+    min-width: auto;
+}
+.modal_content .main_container {
+    margin: 0;
+    padding: 0;
+}
+.modal_content table tr td input,
+.modal_content table tr td select {
+    width: 150px;
 }

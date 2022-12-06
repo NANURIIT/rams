@@ -6,7 +6,6 @@
 <th:block layout:fragment="script">
 	<script th:src="@{js/tab.js}"></script>
 	<script th:src="@{/js/business/assignmentInquiry.js}"></script>
-	<script defer src="js/modal.js"></script>
 </th:block>
 
 <th:block layout:fragment="customContent">
@@ -29,7 +28,7 @@
 						<button type="button">조회</button></td>
 					<th>Deal 번호</th>
 					<td class="etc_td"><input type="text">
-						<button type="button">조회</button>
+						<button type="button" id="open_modal">조회</button>
 						<button type="button">DSC안건가져오기</button>
 						<div class="button_etc_wrap">
 							<button type="button">조회</button>
@@ -1047,93 +1046,6 @@
 						</div>
 					</div>
 				</section>
-			</div>
-		</div>
-	</div>
-
-	<!-- modal -->
-	<div id="modal" class="modal_wrap">
-
-		<div class="modal_content">
-			<span class="modal_close">&times;</span>
-			<div class="wrap">
-				<div class="main">
-					<main>
-						<div class="main_wrap">
-							<div class="main_container">
-								<div class="search_wrap">
-									<table class="search_table search_top">
-										<colgroup>
-											<col style="width: 10%;">
-											<col style="width: 15%;">
-											<col style="width: 10%;">
-											<col style="width: 15%;">
-											<col style="width: 10%;">
-											<col style="width: 40%;">
-										</colgroup>
-										<tr>
-											<th>Deal번호</th>
-											<td><input type="text"></td>
-											<th>Deal명</th>
-											<td><input type="text"></td>
-											<th>DSC일자</th>
-											<td class="etc_td"><input type="text">
-												<div id="open_modal" class="button_etc_wrap">
-													<button type="button">조회</button>
-												</div></td>
-										</tr>
-									</table>
-								</div>
-								<div class="contents_box">
-									<table class="table_header">
-										<colgroup>
-											<col style="width: 5%;">
-											<col style="width: 15%;">
-											<col style="width: 15%;">
-											<col style="width: 5%;">
-											<col style="width: 7%;">
-											<col style="width: 7%;">
-										</colgroup>
-										<thead>
-											<tr>
-												<th>삭제</th>
-												<th>그룹코드</th>
-												<th>그룹명</th>
-												<th>코드성격</th>
-												<th>코드길이</th>
-												<th>코드관리</th>
-											</tr>
-										</thead>
-									</table>
-									<div class="grid_wrap grid_wrapS">
-										<form>
-											<table>
-												<colgroup>
-													<col style="width: 5%;">
-													<col style="width: 15%;">
-													<col style="width: 15%;">
-													<col style="width: 5%;">
-													<col style="width: 7%;">
-													<col style="width: 7%;">
-												</colgroup>
-												<tbody>
-													<tr>
-														<td>1</td>
-														<td>수신계좌조회구분코드</td>
-														<td>DPS_ACCO_IQRY_DIV</td>
-														<td>1</td>
-														<td>Field</td>
-														<td>0</td>
-													</tr>
-												</tbody>
-											</table>
-										</form>
-									</div>
-								</div>
-							</div>
-						</div>
-					</main>
-				</div>
 			</div>
 		</div>
 	</div>
