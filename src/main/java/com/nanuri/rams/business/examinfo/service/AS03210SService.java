@@ -8,7 +8,7 @@ import com.nanuri.rams.business.examinfo.dto.DealDto;
 
 @Service
 // 심사 요청 페이지 Service
-public interface ExamReqService {
+public interface AS03210SService {
 	
 	public List<DealDto> getDealList(String DealNo, String def);					// deal list 가져오기
 

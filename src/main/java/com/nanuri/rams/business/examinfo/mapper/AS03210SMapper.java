@@ -8,7 +8,7 @@ import com.nanuri.rams.business.examinfo.dto.DealDto;
 
 @Mapper
 // 심사 요청 페이지 Mapper
-public interface ExamReqMapper {
+public interface AS03210SMapper {
 	
 	public List<DealDto> getDealList(String DealNo, String def);					// deal list 가져오기
 
