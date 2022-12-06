@@ -6,7 +6,9 @@
     <title>사용자관리</title>
 </th:block>
 
-<script th:src="@{/js/business/codeManagement.js}"></script>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/business/AC01110S.js}"></script>
+</th:block>
 
 <!-- code.html st -->
 <th:block layout:fragment="customContent">
@@ -44,7 +46,7 @@
         </div>
         <div class="contents_box">
             <div class="button_wrap">
-                <button type="button">사용자추가</button>
+                <button type="button" id="open_modal">사용자추가</button>
                 <!-- <button type="button">행삭제</button>
                 <button type="button">저장</button> -->
             </div>
