@@ -7,7 +7,7 @@ $(document).ready(function($) {
 });
 
 function setOpenModal(){
-	let Modal = document.getElementById('modal');
+	let Modal = document.getElementById('AS02020P');
 	let OpenModal = document.getElementById("open_modal");
 	let CloseModal = document.getElementsByClassName("modal_close")[0];
 	
