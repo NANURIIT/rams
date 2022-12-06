@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<!-- 
+<th:block layout:fragment="script">
+</th:block>
+ -->
+ 
+<th:block layout:fragment="customContent">
+	<div class="main_container">
+		<div class="search_wrap">
+			<table class="search_table search_top">
+				<colgroup>
+					<col style="width: 5%;">
+					<col style="width: 15%;">
+					<col style="width: 5%;">
+					<col style="width: 15%;">
+					<col style="width: 5%;">
+					<col style="width: 15%;">
+					<col style="width: 40%;">
+				</colgroup>
+				<tr>
+					<th>DSC일자</th>
+					<td>
+						<div>
+							<input type="text">~<input type="text">
+						</div>
+					</td>
+					<th>부서</th>
+					<td>
+						<select>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+						</select>
+					</td>
+					<th>통화</th>
+					<td>
+						<select>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+						</select>
+					</td>
+					<td>
+						<button type="button">조회</button>
+					</td>
+				</tr>
+				<tr>
+					<th>단위</th>
+					<td>
+						<select>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+						</select>
+					</td>
+					<th>deal명</th>
+					<td>
+						<input type="text">
+					</td>
+					<td colspan="3"></td>
+				</tr>
+			</table>
+		</div>
+		<div class="contents_box">
+			<table class="table_header">
+				<colgroup>
+					<col>
+					<col>
+					<col>
+					<col>
+					<col>
+					<col>
+					<col>
+					<col>
+					<col>
+					<col>
+					<col>
+				</colgroup>
+				<thead>
+					<tr>
+						<th>deal번호</th>
+						<th>DSC일자</th>
+						<th>deal명</th>
+						<th>참여금액</th>
+						<th>기표일(예정)</th>
+						<th>만기일(예정)</th>
+						<th>본부</th>
+						<th>부서</th>
+						<th>직원</th>
+						<th>협업유형</th>
+						<th>전체수익</th>
+					</tr>
+				</thead>
+			</table>
+			<div class="grid_wrap grid_wrapS">
+				<form>
+					<table>
+						<colgroup>
+							<col>
+							<col>
+							<col>
+							<col>
+							<col>
+							<col>
+							<col>
+							<col>
+							<col>
+							<col>
+							<col>
+						</colgroup>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+								<td>5</td>
+								<td>6</td>
+								<td>7</td>
+								<td>8</td>
+								<td>9</td>
+								<td>10</td>
+								<td>11</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+		<div class="contents_box">
+			<table>
+				<colgroup>
+					<col style="width: 10%;">
+					<col style="width: 23%;">
+					<col style="width: 10%;">
+					<col style="width: 23%;">
+					<col style="width: 10%;">
+					<col style="width: 23%;">
+				</colgroup>
+				<thead>
+					<tr>
+						<td>key정보</td>
+						<td></td>
+						<td>거래담당</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<th>deal번호</th>
+						<td><input type="text"></td>
+						<th>본부</th>
+						<td><input type="text"></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<th>신규/재부의정보</th>
+						<td><input type="text"></td>
+						<th>부서</th>
+						<td><input type="text"></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<th>부수안전정보</th>
+						<td><input type="text"></td>
+						<th>직원</th>
+						<td><input type="text"></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<th>deal명</th>
+						<td><input type="text"></td>
+						<th>협업유형</th>
+						<td><input type="text"></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>심사역</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<th>심사역</th>
+						<td>
+							<select>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+							</select>
+						</td>
+						<th>전결협의체</th>
+						<td>
+							<select>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+							</select>
+						</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<th>접수배정일</th>
+						<td><input type="text"></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</thead>
+			</table>
+			<div>
+				<button type="button">접수</button>
+				<button type="button">반송</button>
+			</div>
+		</div>
+	</div>
+</th:block>
+</html>

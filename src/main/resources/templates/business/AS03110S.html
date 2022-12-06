@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<!-- 
+<th:block layout:fragment="script">
+</th:block>
+ -->
+ 
+<th:block layout:fragment="customContent">
+	<div class="main_container">
+		<div class="search_wrap">
+			<table class="search_table search_top">
+				<colgroup>
+					<col style="width: 5%;">
+					<col style="width: 15%;">
+					<col>
+				</colgroup>
+				<tr>
+					<th>접수배정일</th>
+					<td>
+						<div>
+							<input type="text">~<input type="text">
+						</div>
+					</td>
+					<td>
+						<button type="button">조회</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="contents_box">
+			<table class="table_header">
+				<colgroup>
+					<col>
+					<col>
+					<col>
+					<col>
+					<col>
+					<col>
+					<col>
+					<col>
+					<col>
+					<col>
+				</colgroup>
+				<thead>
+					<tr>
+						<th>접수배정일</th>
+						<th>deal번호</th>
+						<th>신규/재부의</th>
+						<th>부수안건</th>
+						<th>안건명</th>
+						<th>심사역</th>
+						<th>본부</th>
+						<th>부서</th>
+						<th>직원</th>
+						<th>현업유형</th>
+					</tr>
+				</thead>
+			</table>
+			<div class="grid_wrap grid_wrapS">
+				<form>
+					<table>
+						<colgroup>
+							<col>
+							<col>
+							<col>
+							<col>
+							<col>
+							<col>
+							<col>
+							<col>
+							<col>
+							<col>
+						</colgroup>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+								<td>5</td>
+								<td>6</td>
+								<td>7</td>
+								<td>8</td>
+								<td>9</td>
+								<td>10</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+</th:block>
+</html>
