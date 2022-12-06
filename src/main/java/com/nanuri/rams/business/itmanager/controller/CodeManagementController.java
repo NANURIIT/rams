@@ -15,5 +15,10 @@ public class CodeManagementController {
     public String userManagement() {
         return "business/AC01110S";   
     }
+    
+    @GetMapping(value = {"/AC01210S"})
+    public String authMenuManage() {
+        return "business/AC01210S";   
+    }
 
 }
