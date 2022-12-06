@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/layout}">
+
+<th:block layout:fragment="title">
+    <title>사용자관리</title>
+</th:block>
+
+<script th:src="@{/js/business/codeManagement.js}"></script>
+
+<!-- code.html st -->
+<th:block layout:fragment="customContent">
+    <div class="main_container">
+        <div class="search_wrap">
+            <table class="search_table search_top">
+                <colgroup>
+                    <col style="width: 5%;">
+                    <col style="width: 20%;">
+                    <col style="width: 7%;">
+                    <col style="width: 20%;">
+                    <col style="width: 50%;">
+                    <!-- </colgroup> -->
+                <tr>
+                    <th>권한구분</th>
+                    <td>
+                        <select>
+                            <option value="1">전체</option>
+                            <option value="1">해당부서</option>
+                            <!-- <option value="1">3</option> -->
+                        </select>
+                    </td>
+                    <th>직원명(사번)</th>
+                    <td>
+                        <input type="text">
+                    </td>
+                    <td class="etc_td">
+                        <input type="checkbox" style="width:15px"> 과거이력포함
+                        <div class="button_etc_wrap">
+                            <button type="button">조회</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="contents_box">
+            <div class="button_wrap">
+                <button type="button">사용자추가</button>
+                <!-- <button type="button">행삭제</button>
+                <button type="button">저장</button> -->
+            </div>
+            <table class="table_header">
+                <colgroup>
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>사용자구분</th>
+                        <th>사번</th>
+                        <th>직원명</th>
+                        <th>직책</th>
+                        <th>권한</th>
+                        <th>적용시작일</th>
+                        <th>회수(예정)일</th>
+                        <th>등록사유</th>
+                        <th>등록자</th>
+                        <th>회수자</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="grid_wrap">
+                <form>
+                    <table>
+                        <colgroup>
+                            <col style="width: 10%;">
+                            <col style="width: 10%;">
+                            <col style="width: 10%;">
+                            <col style="width: 10%;">
+                            <col style="width: 10%;">
+                            <col style="width: 10%;">
+                            <col style="width: 10%;">
+                            <col style="width: 10%;">
+                            <col style="width: 10%;">
+                            <col style="width: 10%;">
+                        </colgroup>
+                        <tr>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        <!-- <tr>
+                                <td>1</td>
+                                <td>수신계좌조회구분코드</td>
+                                <td>DPS_ACCO_IQRY_DIV</td>
+                                <td>1</td>
+                                <td>Field</td>
+                                <td>0</td>
+                                <td></td>
+                                <td>Varchar</td>
+                                <td></td>
+                                <td>10</td>
+                                <td>2</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>수신계좌조회구분코드</td>
+                                <td>DPS_ACCO_IQRY_DIV</td>
+                                <td>1</td>
+                                <td>Field</td>
+                                <td>0</td>
+                                <td></td>
+                                <td>Varchar</td>
+                                <td></td>
+                                <td>10</td>
+                                <td>2</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>수신계좌조회구분코드</td>
+                                <td>DPS_ACCO_IQRY_DIV</td>
+                                <td>1</td>
+                                <td>Field</td>
+                                <td>0</td>
+                                <td></td>
+                                <td>Varchar</td>
+                                <td></td>
+                                <td>10</td>
+                                <td>2</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>수신계좌조회구분코드</td>
+                                <td>DPS_ACCO_IQRY_DIV</td>
+                                <td>1</td>
+                                <td>Field</td>
+                                <td>0</td>
+                                <td></td>
+                                <td>Varchar</td>
+                                <td></td>
+                                <td>10</td>
+                                <td>2</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>수신계좌조회구분코드</td>
+                                <td>DPS_ACCO_IQRY_DIV</td>
+                                <td>1</td>
+                                <td>Field</td>
+                                <td>0</td>
+                                <td></td>
+                                <td>Varchar</td>
+                                <td></td>
+                                <td>10</td>
+                                <td>2</td>
+                                <td></td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+        <!-- <div class="contents_box">
+            <div class="button_wrap">
+                <button type="button">행추가</button>
+                <button type="button">행삭제</button>
+                <button type="button">저장</button>
+            </div>
+            <table class="table_header">
+                <colgroup>
+                    <col style="width: 5%;">
+                    <col style="width: 15%;">
+                    <col style="width: 30%;">
+                    <col style="width: 5%;">
+                    <col style="width: 7%;">
+                    <col style="width: 7%;">
+                    <col style="width: 10%;">
+                    <col style="width: 7%;">
+                    <col style="width: 7%;">
+                    <col style="width: 7%;">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>삭제</th>
+                        <th>코드</th>
+                        <th>코드명</th>
+                        <th>변환후코드</th>
+                        <th>순서</th>
+                        <th>사용여부</th>
+                        <th>등록일</th>
+                        <th>등록자</th>
+                        <th>처리일</th>
+                        <th>처리자</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="grid_wrap">
+                <form>
+                    <table>
+                        <colgroup>
+                            <col style="width: 5%;">
+                            <col style="width: 15%;">
+                            <col style="width: 30%;">
+                            <col style="width: 5%;">
+                            <col style="width: 7%;">
+                            <col style="width: 7%;">
+                            <col style="width: 10%;">
+                            <col style="width: 7%;">
+                            <col style="width: 7%;">
+                            <col style="width: 7%;">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td>
+                                <td>4</td>
+                                <td>5</td>
+                                <td>6</td>
+                                <td>7</td>
+                                <td>8</td>
+                                <td>9</td>
+                                <td>10</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div> -->
+    </div>
+    <!-- code.html ed -->
+</th:block>
+
+</html>
