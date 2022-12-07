@@ -103,7 +103,7 @@
     height: 245px;
 }
 .grid_harf {
-    width: calc(48% + 17px);
+    width: calc(48%);
 }
 .grid_wrap tr th,
 .grid_wrap tr td {
@@ -216,11 +216,11 @@
 .contents_list_wrap18 {
     left: 670px;
 }
-
 /* 안건 진행정보 관리 */
 .contents_list_wrap19 {
     top: 20px;
     left: 20px;
+    right: 20px;
 }
 .contents_list_wrap20 {
     top: 20px;
@@ -229,11 +229,6 @@
 .contents_list_wrap21 {
     top: 220px;
     left: 20px;
-}
-.contents_list_wrap19 .contents_list .contents_list_title,
-.contents_list_wrap20 .contents_list .contents_list_title,
-.contents_list_wrap21 .contents_list .contents_list_title {
-    width: 150px;
 }
 
 /* 협의체부의 및 결과 */
@@ -264,6 +259,35 @@
 .contents_list_wrap28 {
     top: 390px;
     left: 500px;
+}
+
+/* 안건 진행정보관리 */
+.contents_list_wrap29 {
+    top: 20px;
+    left: calc(48% + 17px);
+}
+.contents_list_wrap30 {
+    top: 70px;
+    left: 20px;
+    right: 20px;
+}
+.contents_list_wrap31 {
+    top: 70px;
+    left: calc(48% + 17px);
+}
+.contents_list_wrap32 {
+    top: 397px;
+    left: 20;
+}
+.contents_list_wrap33 {
+    top: 397px;
+    left: calc(48% + 17px);
+}
+
+.contents_list_wrap19 .contents_list .contents_list_title,
+.contents_list_wrap20 .contents_list .contents_list_title,
+.contents_list_wrap21 .contents_list .contents_list_title {
+    width: 150px;
 }
 
 .content_list_caption_wrap {
@@ -327,12 +351,12 @@
 }
 .contents_list  .contents_list_desc select,
 .contents_list  .contents_list_desc input {
-    width: 300px;
+    width: 150px;
     height: 25px;
 }
 
 .contents_list .contents_list_descL {
-    width: 500px;
+    width: 300px;
 }
 .contents_list  .contents_list_descL select,
 .contents_list  .contents_list_descL input {
@@ -359,10 +383,16 @@
     bottom: 15px;
     right: 20px;
 }
-.tab_button_wrap > button {
+.tab_button_wrap > button,
+.tab_button_wrap2 > button {
     font-size: 13px;
     padding: 2px 5px;
     margin-left: 5px;
+}
+.tab_button_wrap2 {
+    position: absolute;
+    bottom: 15px;
+    right: calc(51% + 5px);
 }
 
 
