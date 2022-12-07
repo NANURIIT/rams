@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<th:block layout:fragment="title">
+	<title>협의체 사전준비</title>
+</th:block>
+
+<th:block layout:fragment="script">
+	<script th:src="@{js/tab.js}"></script>
+	<script th:src="@{/js/business/AS04010S.js}"></script>
+	<script th:src="@{/js/datepicker.js}"></script>
+	<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js}"></script>
+	<script th:src="@{https://code.jquery.com/ui/1.8.18/jquery-ui.min.js}"></script>
+</th:block>
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{css/plugins/datepicker/bootstrap-datepicker3.css.map}" />
+	<link rel="stylesheet" th:href="@{css/plugins/datepicker/datepicker3.css}" />
+	<link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css}" />
+</th:block>
+
+<th:block layout:fragment="customContent">
+	<div class="main_container">
+		<div class="search_wrap">
+			<table class="search_table search_top">
+				<colgroup>
+					<!-- <col style="width: 7%">
+					<col style="width: 15%">
+					<col style="width: 7%">
+					<col style="width: 15%">
+					<col style="width: 7%">
+					<col style="width: 15%">
+					<col style="width: 7%">
+					<col style="width: 15%"> -->
+				</colgroup>
+				<tr>
+					<th>전결협의체</th>
+					<td>
+						<select name="" id="">
+							<option value="1">리스크관리위원회</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+						</select>
+					</td>
+					<th>
+						결의년도
+					</th>
+					<td>
+						<input type="number" name="" id="" min="2020" max="2030" value="2022" />
+					</td>
+					<th>회차정보</th>
+					<td>
+						<input type="text" name="" id="" />
+					</td>
+					<th>결의일</th>
+					<td>
+						<div class="datepicker_wrap">
+							<input type="text" class="datepicker" id="datepicker4">
+						</div>
+					</td>
+					<td class="etc_td">
+						<div class="button_etc_wrap">
+							<button type="button">조회</button>
+							<button type="button">초기화</button>
+							<button type="button" disabled>임시저장</button>
+							<button type="button" disabled>준비확정</button>
+							<button type="button" disabled>준비취소</button>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="">
+			<table class="">
+				<colgroup>
+					<!-- <col style="width: 7%">
+					<col style="width: 15%">
+					<col style="width: 7%">
+					<col style="width: 15%">
+					<col style="width: 7%">
+					<col style="width: 15%">
+					<col style="width: 7%">
+					<col style="width: 15%"> -->
+				</colgroup>
+				<tr>
+					<div style="font-weight: bold; font-size: 17px; padding-bottom: 10px;">기본정보</div>
+					<th>전결협의체</th>
+					<td>
+						<select name="" id="">
+							<option value="1">리스크관리위원회</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+						</select>
+					</td>
+					<th>회차정보</th>
+					<td>
+						<input type="text" name="" id="" />
+					</td>
+					<th>결의일</th>
+					<td>
+						<div class="datepicker_wrap">
+							<input type="text" class="datepicker" id="datepicker4">
+						</div>
+					</td>
+					<th>시간</th>
+					<td>
+						<input type="time" name="" id="" />
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="contents_box" style="width: 50%; padding-top: 50px;">
+			<div style="font-weight: bold; font-size: 17px; padding-bottom: 10px;">위원정보
+				<div style="position: relative; vertical-align: middle; float: right;">
+					<button type="button">행추가</button>
+					<button type="button">행삭제</button>
+				</div>
+			</div>
+			<table class="table_header">
+				<colgroup>
+					<col>
+					<col>
+					<col>
+					<col>
+				</colgroup>
+				<thead>
+					<tr>
+						<th></th>
+						<th>위원구분</th>
+						<th>위원명</th>
+						<th>대리참석위원</th>
+					</tr>
+				</thead>
+			</table>
+			<div class="grid_wrap grid_wrapS">
+				<form>
+					<table>
+						<colgroup>
+							<col>
+							<col>
+							<col>
+							<col>
+						</colgroup>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+		<div class="contents_box">
+			<div style="font-weight: bold; font-size: 17px; padding-bottom: 10px;">안건
+				<div style="position: relative; vertical-align: middle; float: right;">
+					<button type="button">안건추가</button>
+					<button type="button">안건삭제</button>
+					<button type="button" disabled>확정쪽지</button>
+					<button type="button" disabled>취소쪽지</button>
+				</div>
+			</div>
+			<table class="table_header">
+				<colgroup>
+					<col>
+					<col>
+					<col>
+					<col>
+					<col>
+					<col>
+					<col>
+					<col>
+				</colgroup>
+				<thead>
+					<tr>
+						<th></th>
+						<th>순서정보</th>
+						<th>안건명</th>
+						<th>신규/재부의정보</th>
+						<th>부수안건정보</th>
+						<th>부서</th>
+						<th>직원</th>
+						<th>심사역</th>
+					</tr>
+				</thead>
+			</table>
+			<div class="grid_wrap grid_wrapS">
+				<form>
+					<table>
+						<colgroup>
+							<col>
+							<col>
+							<col>
+							<col>
+							<col>
+							<col>
+							<col>
+							<col>
+						</colgroup>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+								<td>5</td>
+								<td>6</td>
+								<td>7</td>
+								<td>8</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+</html>
