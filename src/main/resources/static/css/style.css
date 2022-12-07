@@ -327,7 +327,7 @@
 }
 .contents_list  .contents_list_desc select,
 .contents_list  .contents_list_desc input {
-    width: 150px;
+    width: 300px;
     height: 25px;
 }
 
@@ -408,4 +408,15 @@
 .modal_content table tr td input,
 .modal_content table tr td select {
     width: 150px;
+}
+
+/* 달력 입력을 위한 datePicker */
+.datepicker_wrap {
+    position: relative;
+    width: 400px;
+}
+.datepicker_wrap .datepicker {
+    cursor: pointer;
+    vertical-align: middle;
+    width: 280px;
 }
