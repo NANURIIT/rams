@@ -8,7 +8,7 @@
 
 <th:block layout:fragment="script">
 	<script th:src="@{js/tab.js}"></script>
-	<script th:src="@{/js/business/AS04010S.js}"></script>
+	<script th:src="@{/js/business/AS04110S.js}"></script>
 	<script th:src="@{/js/datepicker.js}"></script>
 	<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js}"></script>
 	<script th:src="@{https://code.jquery.com/ui/1.8.18/jquery-ui.min.js}"></script>
@@ -167,7 +167,7 @@
 		<div class="contents_box">
 			<div style="font-weight: bold; font-size: 17px; padding-bottom: 10px;">안건
 				<div style="position: relative; vertical-align: middle; float: right;">
-					<button type="button">안건추가</button>
+					<button type="button" id="open_modal">안건추가</button>
 					<button type="button">안건삭제</button>
 					<button type="button" disabled>확정쪽지</button>
 					<button type="button" disabled>취소쪽지</button>
