@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<th:block layout:fragment="title">
+	<title>협의체 회의자료</title>
+</th:block>
+
+<th:block layout:fragment="script">
+	<script th:src="@{js/tab.js}"></script>
+	<script th:src="@{/js/business/AS04310S.js}"></script>
+	<script th:src="@{/js/datepicker.js}"></script>
+	<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js}"></script>
+	<script th:src="@{https://code.jquery.com/ui/1.8.18/jquery-ui.min.js}"></script>
+</th:block>
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{css/plugins/datepicker/bootstrap-datepicker3.css.map}" />
+	<link rel="stylesheet" th:href="@{css/plugins/datepicker/datepicker3.css}" />
+	<link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css}" />
+</th:block>
+
+<th:block layout:fragment="customContent">
+	<div class="main_container">
+		<div class="search_wrap">
+			<table class="search_table search_top">
+				<colgroup>
+					<!-- <col style="width: 7%">
+					<col style="width: 15%">
+					<col style="width: 7%">
+					<col style="width: 15%">
+					<col style="width: 7%">
+					<col style="width: 15%">
+					<col style="width: 7%">
+					<col style="width: 15%"> -->
+				</colgroup>
+				<tr>
+					<th>결의협의체</th>
+					<td>
+						<select name="" id="">
+							<option value="">선택</option>
+							<option value="">1</option>
+							<option value="">2</option>
+							<option value="">3</option>
+						</select>
+					</td>
+					<th>결의년도</th>
+					<td>
+						<input type="number" name="" id="" min="2020" max="2030" value="2022" />
+					</td>
+					<th>회차정보</th>
+					<td><input type="text" name="" id="" /></td>
+					<th>결의일</th>
+					<td>
+						<div class="datepicker_wrap">
+							<input type="text" class="datepicker" id="datepicker4">
+						</div>
+					</td>
+					<td class="etc_td">
+						<div class="button_etc_wrap">
+							<button type="button">조회</button>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="contents_box">
+			<div style="font-weight: bold; font-size: 17px; padding-bottom: 10px;">안건정보
+				<div style="float: right;">
+					<button> Excel</button>
+				</div>
+			</div>
+			<table class="table_header">
+				<colgroup>
+					<!-- <col style=" width: 7%">
+						<col style="width: 15%">
+						<col style="width: 7%">
+						<col style="width: 15%">
+						<col style="width: 7%">
+						<col style="width: 15%">
+						<col style="width: 7%">
+						<col style="width: 15%"> -->
+				</colgroup>
+				<thead>
+					<tr>
+						<th>Deal 번호</th>
+						<th>안건명</th>
+						<th>신규/재부의정보</th>
+						<th>부수안건정보</th>
+						<th>전결항목</th>
+						<th>투자기간(개월)</th>
+						<th>부의예정일</th>
+						<th>전결협의체</th>
+						<th>부의금액(원)</th>
+						<th>결의일</th>
+					</tr>
+				</thead>
+			</table>
+			<div class="grid_wrap grid_wrapS">
+				<form>
+					<table>
+						<tbody>
+							<colgroup>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+							</colgroup>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+								<td>5</td>
+								<td>6</td>
+								<td>7</td>
+								<td>8</td>
+								<td>9</td>
+								<td>10</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+</html>

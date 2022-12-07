@@ -18,8 +18,8 @@ public class examConsultativeController {
     public String resultConsultative() {
         return "business/AS04210S";
     }
-    // @GetMapping(value = {"/AS04310S"})
-    // public String MeetingMaterial() {
-    //     return "business/AS04310S";
-    // }
+    @GetMapping(value = {"/AS04310S"})
+    public String MeetingMaterial() {
+        return "business/AS04310S";
+    }
 }
