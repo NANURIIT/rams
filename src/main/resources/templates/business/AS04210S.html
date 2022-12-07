@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<th:block layout:fragment="title">
+	<title>협의체 결과</title>
+</th:block>
+
+<th:block layout:fragment="script">
+	<script th:src="@{js/tab.js}"></script>
+	<script th:src="@{/js/business/AS04210S.js}"></script>
+	<script th:src="@{/js/datepicker.js}"></script>
+	<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js}"></script>
+	<script th:src="@{https://code.jquery.com/ui/1.8.18/jquery-ui.min.js}"></script>
+</th:block>
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{css/plugins/datepicker/bootstrap-datepicker3.css.map}" />
+	<link rel="stylesheet" th:href="@{css/plugins/datepicker/datepicker3.css}" />
+	<link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css}" />
+</th:block>
+
+<th:block layout:fragment="customContent">
+	<div class="main_container">
+		<div class="search_wrap">
+			<table class="search_table search_top">
+				<colgroup>
+					<!-- <col style="width: 7%">
+					<col style="width: 15%">
+					<col style="width: 7%">
+					<col style="width: 15%">
+					<col style="width: 7%">
+					<col style="width: 15%">
+					<col style="width: 7%">
+					<col style="width: 15%"> -->
+				</colgroup>
+				<tr>
+					<th>결의협의체</th>
+					<td>
+						<select name="" id="">
+							<option value="">선택</option>
+							<option value="">1</option>
+							<option value="">2</option>
+							<option value="">3</option>
+						</select>
+					</td>
+					<th>결의년도</th>
+					<td>
+						<input type="number" name="" id="" min="2020" max="2030" value="2022" />
+					</td>
+					<th>회차</th>
+					<td><input type="text" name="" id="" /></td>
+					<th>결의일</th>
+					<td>
+						<div class="datepicker_wrap">
+							<input type="text" class="datepicker" id="datepicker4">
+						</div>
+					</td>
+					<td>
+						<input type="checkbox" name="" id="" />전체(종료건 포함)
+					</td>
+					<td class="etc_td">
+						<div class="button_etc_wrap">
+							<button type="button">조회</button>
+							<button type="button" disabled>쪽지발송</button>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>위원</th>
+					<td class="etc_td">
+						<input type="text" name="" id="" />
+						<div class="button_etc_wrap">
+							<button>조회</button>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="contents_box">
+			<div style="font-weight: bold; font-size: 17px; padding-bottom: 10px;">안건
+				<div style="float: right;">
+					<button>안건제외</button>
+				</div>
+			</div>
+			<table class="table_header">
+				<colgroup>
+					<!-- <col style=" width: 7%">
+						<col style="width: 15%">
+						<col style="width: 7%">
+						<col style="width: 15%">
+						<col style="width: 7%">
+						<col style="width: 15%">
+						<col style="width: 7%">
+						<col style="width: 15%"> -->
+				</colgroup>
+				<thead>
+					<tr>
+						<th>결의협의체</th>
+						<th>회차</th>
+						<th>안건번호</th>
+						<th>안건명</th>
+						<th>참여금액(원)</th>
+						<th>결의일자</th>
+						<th>결의시간</th>
+						<th>부서</th>
+						<th>직원</th>
+						<th>심사역</th>
+					</tr>
+				</thead>
+			</table>
+			<div class="grid_wrap grid_wrapS">
+				<form>
+					<table>
+						<tbody>
+							<colgroup>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+							</colgroup>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+								<td>5</td>
+								<td>6</td>
+								<td>7</td>
+								<td>8</td>
+								<td>9</td>
+								<td>10</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+		<div class="contents_box">
+			<div style="font-weight: bold; font-size: 17px; padding-bottom: 10px;">의결내용
+				<div style="float: right;">
+					<button disabled>확정</button>
+					<button disabled>확정취소</button>
+				</div>
+			</div>
+			<table class="table_header">
+				<colgroup>
+					<!-- <col style=" width: 7%">
+						<col style="width: 15%">
+						<col style="width: 7%">
+						<col style="width: 15%">
+						<col style="width: 7%">
+						<col style="width: 15%">
+						<col style="width: 7%">
+						<col style="width: 15%"> -->
+				</colgroup>
+				<thead>
+					<tr>
+						<th colspan="2">참석위원</th>
+						<th colspan="2">대리참석자</th>
+						<th rowspan="2">참석여부</th>
+						<th rowspan="2">찬반</th>
+						<th rowspan="2">심의의견</th>
+						<th rowspan="2">등록연월</th>
+					</tr>
+					<tr>
+						<th>직원번호</th>
+						<th>성명</th>
+						<th>직원번호</th>
+						<th>성명</th>
+					</tr>
+				</thead>
+			</table>
+			<div class="grid_wrap grid_wrapS">
+				<form>
+					<table>
+						<tbody>
+							<colgroup>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+							</colgroup>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+								<td>5</td>
+								<td>6</td>
+								<td>7</td>
+								<td>8</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+		<div class="contents_box">
+			<div style="font-weight: bold; font-size: 17px; padding-bottom: 10px;">협의결과
+			</div>
+			<table class="table_header">
+				<colgroup>
+					<!-- <col style=" width: 7%">
+						<col style="width: 15%">
+						<col style="width: 7%">
+						<col style="width: 15%">
+						<col style="width: 7%">
+						<col style="width: 15%">
+						<col style="width: 7%">
+						<col style="width: 15%"> -->
+				</colgroup>
+				<thead>
+					<tr>
+						<th rowspan="2">안건명</th>
+						<th rowspan="2">신규/재부의정보</th>
+						<th rowspan="2">부수안건정보</th>
+						<th rowspan="2">참여금액(원)</th>
+						<th rowspan="2">결의결과</th>
+						<th rowspan="2">승인금액(원)</th>
+						<th colspan="2">승인조건</th>
+						<th rowspan="2">리스트승인번호</th>
+					</tr>
+					<tr>
+						<th>셀다운</th>
+						<th>기타</th>
+					</tr>
+				</thead>
+			</table>
+			<div class="grid_wrap grid_wrapS">
+				<form>
+					<table>
+						<tbody>
+							<colgroup>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+								<col>
+							</colgroup>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+								<td>5</td>
+								<td>6</td>
+								<td>7</td>
+								<td>8</td>
+								<td>9</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+		<div class="contents_box">
+			<table class="table_header">
+				<colgroup>
+					<!-- <col style=" width: 7%">
+						<col style="width: 15%">
+						<col style="width: 7%">
+						<col style="width: 15%">
+						<col style="width: 7%">
+						<col style="width: 15%">
+						<col style="width: 7%">
+						<col style="width: 15%"> -->
+				</colgroup>
+				<tr>
+					<th>결의결과</th>
+					<td><input type="text" name="" id="" /></td>
+					<th>승인금액(원)</th>
+					<td><input type="text" name="" id="" /></td>
+					<th>승인조건(셀다운)</th>
+					<td><input type="text" name="" id="" /></td>
+					<th>승인조건(기타)</th>
+					<td><input type="text" name="" id="" /></td>
+				</tr>
+			</table>
+			<div style="text-align: right; padding: 15px 0 50px;">
+				<button disabled>확정</button>
+				<button disabled>확정취소</button>
+			</div>
+		</div>
+	</div>
+</th:block>
+
+</html>
