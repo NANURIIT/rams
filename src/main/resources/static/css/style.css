@@ -233,6 +233,29 @@
 .contents_list_wrap20 .contents_list .contents_list_title,
 .contents_list_wrap21 .contents_list .contents_list_title {
     width: 150px;
+    left: 500px;
+}
+
+/* 협의체부의 및 결과 */
+.contents_list_wrap22 {
+    top: 20px;
+    left: 960px;
+}
+.contents_list_wrap23 {
+    top: 200px;
+    left: 20px;
+}
+.contents_list_wrap24 {
+    top: 200px;
+    left: 1000px;
+}
+.contents_list_wrap25 {
+    top: 390px;
+    left: 20px;
+}
+.contents_list_wrap26 {
+    top: 390px;
+    left: 500px;
 }
 
 .content_list_caption_wrap {
