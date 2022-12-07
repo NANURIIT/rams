@@ -355,9 +355,13 @@
     height: 25px;
 }
 
-.contents_list .contents_list_descL {
+.contents_list .contents_list_desc500 {
+    width: 500px;
+}
+.contents_list .contents_list_desc300 {
     width: 300px;
 }
+
 .contents_list  .contents_list_descL select,
 .contents_list  .contents_list_descL input {
     width: 100%;
