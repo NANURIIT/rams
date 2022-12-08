@@ -8,7 +8,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CodeInfoDto extends CommonDTO {
+    
     /* 공통코드정보 */
+    
     private String cmnsCdGrp;               /* 공통코드그룹 */
     private String cdVlId;                  /* 코드값ID */
     private String cdVlNm;                  /* 코드값명 */
