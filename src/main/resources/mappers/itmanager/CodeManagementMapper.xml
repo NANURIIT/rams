@@ -6,6 +6,8 @@
         SELECT
             cmns_cd_nm
         FROM RAA90B
+        GROUP BY
+            cmns_cd_nm
     </select>
 
     <select id="getGroupCodeInfoList" resultType="com.nanuri.rams.business.itmanager.dto.GroupCodeInfoDto" parameterType="String">
@@ -19,7 +21,10 @@
             , use_f                         <!-- 사용여부 -->
         <include refid="CommonMapper.commonDto" />
         FROM RAA90B
-        WHERE cmns_cd_nm = #{cmnsCdNm}
+        WHERE 1=1
+        <if test="cmnsCdNm != null and cmnsCdNm !=''">
+            AND cmns_cd_nm = #{cmnsCdNm}
+        </if>
     </select>
 
     <select id="selectTotalCount" resultType="int">
