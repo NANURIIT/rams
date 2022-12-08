@@ -19,11 +19,9 @@ mybatis:
 
 logging:
   config: classpath:logback.xml
-  
 spring:
   application:
     name: NANURI IT Corp Risk Management System
-  
   datasource:
     url: jdbc:log4jdbc:mysql://nanuriit.com:7706/rams?serverTimezone=Asia/Seoul
     username: rams
@@ -37,6 +35,8 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+    pathmatch:
+      matching-strategy: ant-path-matcher
 
   devtools:
     restart:

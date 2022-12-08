@@ -63,8 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	http.addFilterBefore(filter, CsrfFilter.class);
 
     	http.authorizeRequests()
-				.antMatchers("/login", "/", "/*"/* , "/sub01", "/sub02", "/sub03", "/sub04",
-						"/investment_main", "/investment_interface", "/investment_layout", "/investment_interest" */)
+				.antMatchers("/login", "/", "/**")
 				.permitAll()
     			// .antMatchers("/admin/employeeAdd").hasAnyRole("ADMIN", "ASSISTANT", "EMPLOYEE")
     			// .antMatchers("/admin/employeeList").hasAnyRole("ADMIN", "EMPLOYEE", "ASSISTANT")
@@ -75,7 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     			// .antMatchers("/mobile/noticeWrite").hasAnyRole("ADMIN", "EMPLOYEE", "ASSISTANT")
     			// .antMatchers("/mobile/dutyConfirm").hasAnyRole("ADMIN", "ASSISTANT")
     			// .antMatchers("/mobile/dutyConfirmDetail").hasAnyRole("ADMIN", "ASSISTANT")
-    			.antMatchers("**").authenticated()
+    			/* .antMatchers("**").authenticated()
     			.and()
     		.formLogin()
     			.loginPage("/login")
@@ -88,7 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     		.logout()
 	    		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 	            .logoutSuccessUrl("/")
-    			.invalidateHttpSession(true);
+    			.invalidateHttpSession(true) */;
     	//hasAnyAuthority("OP") //권한정책 필요시
     	//.logoutSuccessHandler(customLogoutSuccessHandler) //로그아웃 성공시 handler
 

@@ -2,4 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.itmanager.mapper.CodeManagementMapper">
 
+    <select id="getCommonCodeName" resultType="Map">
+            cmns_cd_nm
+        FROM RAA90B
+    </select>
+
+    <select id="getGroupCodeInfoList" resultType="com.nanuri.rams.business.itmanager.dto.GroupCodeInfoDto" parameterType="String">
+        SELECT
+            cmns_cd_grp                     <!-- 공통코드그룹 -->
+            , cmns_cd_nm                    <!-- 공통코드명 -->
+            , cmns_cd_clsf                  <!-- 공통코드구분 -->
+            , cd_lngth                      <!-- 코드길이 -->
+            , trnsfrm_aft_cd_grp            <!-- 변환후코드그룹 -->
+            , cmns_cd_grp_expl              <!-- 공통코드그룹설명 -->
+            , use_f                         <!-- 사용여부 -->
+        <include refid="CommonMapper.commonDto" />
+        FROM RAA90B
+        WHERE cmns_cd_nm = #{cmnsCdNm}
+    </select>
+
 </mapper>

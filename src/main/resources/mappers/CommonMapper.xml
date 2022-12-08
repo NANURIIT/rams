@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CommonMapper">
+
+    <sql id="commonDto">
+        , rgst_dt                       <!-- 등록일자 -->
+        , rgst_tm                       <!-- 등록시간 -->
+        , rgst_p_eno                    <!-- 등록자사번 -->
+        , hndl_dy_tm                    <!-- 처리일시 -->
+        , hndl_dprt_cd                  <!-- 처리부점코드 -->
+        , hndl_p_eno                    <!-- 처리자사번 -->   
+    </sql>
+
+</mapper>

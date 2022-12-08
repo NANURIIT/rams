@@ -18,12 +18,12 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class CodeManagementAPIController {
 
-	private CodeManagementService codeManagementService;
+	private final CodeManagementService codeManagementService;
 
 	// 그룹코드정보 리스트 가져오기
 	@GetMapping(value = "/groupCodeInfoList")
-	public List<GroupCodeInfoDto> getGroupCodeInfoList(String groupCode) {
-		return codeManagementService.getGroupCodeInfoList(groupCode);
+	public List<GroupCodeInfoDto> getGroupCodeInfoList(String cmnsCdNm) {
+		return codeManagementService.getGroupCodeInfoList(cmnsCdNm);
 	}
 
 	// 코드정보 가져오기

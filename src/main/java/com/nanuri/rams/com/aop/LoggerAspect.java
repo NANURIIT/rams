@@ -12,11 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 @Aspect
 public class LoggerAspect {
 	
-	@Around("execution(* com.nanuri.work.business..controller.*Controller.*(..)) and "
-			+ "!execution(* com.nanuri.work.business..controller.LoginController.*(..)) or "
-			+ "execution(* com.nanuri.work.business..service.*Service.*(..)) or "
-			+ "execution(* com.nanuri.work.business..repository.*Repository.*(..)) or "
-			+ "execution(* com.nanuri.work.business..mapper.*Mapper.*(..))")
+	@Around("execution(* com.nanuri.rams.business..controller.*Controller.*(..)) and "
+			+ "!execution(* com.nanuri.rams.business..controller.LoginController.*(..)) or "
+			+ "execution(* com.nanuri.rams.business..service.*Service.*(..)) or "
+			// + "execution(* com.nanuri.rams.business..repository.*Repository.*(..)) or "
+			+ "execution(* com.nanuri.rams.business..mapper.*Mapper.*(..))")
 	public Object printLog(ProceedingJoinPoint joinPoint) throws Throwable {
 
 		String type = "";
