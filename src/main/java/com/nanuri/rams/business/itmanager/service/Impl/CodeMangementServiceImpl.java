@@ -29,10 +29,14 @@ public class CodeMangementServiceImpl implements CodeManagementService {
 
     @Override
     public List<GroupCodeInfoDto> getGroupCodeInfoList(String cmnsCdNm) {   // TODO 코드구분 값을 파라미터로 넣어야 하나 데이터가 없어 임시로 지정
-        
+
+        List<GroupCodeInfoDto> list = new ArrayList<>();
         List<GroupCodeInfoDto> groupCodeInfoDto = codeManagementMapper.getGroupCodeInfoList(cmnsCdNm);
+        for(GroupCodeInfoDto dto : groupCodeInfoDto){
+            list.add(dto);
+        }
         
-        return groupCodeInfoDto;
+        return list;
     }
 
     @Override

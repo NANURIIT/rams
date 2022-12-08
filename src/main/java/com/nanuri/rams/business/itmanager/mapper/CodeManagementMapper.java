@@ -19,5 +19,6 @@ public interface CodeManagementMapper {
 	public void registCodeInfo(CodeInfoDto codeInfoDto);								// 코드정보 등록하기
 
 
-	public List<String> getCommonCodeName();											// 조회할 코드구분(코드이름) 가져오기
+	public List<String> getCommonCodeName();
+	public int selectTotalCount();											// 조회할 코드구분(코드이름) 가져오기
 }

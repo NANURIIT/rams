@@ -3,6 +3,7 @@
 <mapper namespace="com.nanuri.rams.business.itmanager.mapper.CodeManagementMapper">
 
     <select id="getCommonCodeName" resultType="Map">
+        SELECT
             cmns_cd_nm
         FROM RAA90B
     </select>
@@ -19,6 +20,12 @@
         <include refid="CommonMapper.commonDto" />
         FROM RAA90B
         WHERE cmns_cd_nm = #{cmnsCdNm}
+    </select>
+
+    <select id="selectTotalCount" resultType="int">
+        SELECT
+            count(*)
+        FROM RAA90B
     </select>
 
 </mapper>
