@@ -2,8 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.itmanager.mapper.CodeManagementMapper">
 
-    <select id="getCommonCodeName" resultType="Map">
-        SELECT DISTINCT (cmns_cd_nm)
+    <select id="getCommonCodeName" resultType="com.nanuri.rams.business.itmanager.dto.CommonCodeInfoDto">
+        SELECT DISTINCT (cmns_cd_nm),
+                        cmns_cd_grp,
+                        cmns_cd_grp_expl
           FROM RAA90B
          ORDER BY cmns_cd_grp ASC
     </select>
@@ -16,13 +18,25 @@
              , trnsfrm_aft_cd_grp			<!-- 변환후코드그룹 -->
              , cmns_cd_grp_expl				<!-- 공통코드그룹설명 -->
              , use_f						<!-- 사용여부 -->
+             , rgst_dt
  		<include refid="CommonMapper.commonDto" />
           FROM RAA90B
          WHERE 1=1
-		<if test="cmnsCdNm != null and cmnsCdNm !=''">
-           AND cmns_cd_nm = #{cmnsCdNm}
+		<if test="cmns_cd_grp != null and cmns_cd_grp !=''">
+           AND cmns_cd_grp = #{cmnsCdGrp}
 		</if>
 	</select>
+
+    <select id="getCodeInfoList" resultType="com.nanuri.rams.business.itmanager.dto.CodeInfoDto" parameterType="String">
+        SELECT cd_vl_id
+             , cd_vl_nm
+             , rslt_cd_vl
+             , cd_sq
+             , use_f
+        <include refid="CommonMapper.commonDto" />
+          FROM RAA91B
+         WHERE cmns_cd_grp = #{cmnsCdGrp}
+    </select>
 
     <select id="selectTotalCount" resultType="int">
         SELECT
