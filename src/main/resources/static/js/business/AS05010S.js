@@ -32,7 +32,7 @@ function getEmpList() {
 	var dprtCd = $("#dprtCd").val();
 	var dprtNm = $("#dprtNm").val();
 
-	var data = {
+	var dtoParam = {
 		"empNm": empNm
 		, "eno": eno
 		, "dprtCd": dprtCd
@@ -47,19 +47,41 @@ function getEmpList() {
 	$.ajax({
 		type: "GET",
 		url: "/findEmpList",
-		data: data,
+		data: dtoParam,
 		dataType: "json",
-		success: function(empList) {
+		success: function(data) {
 			var a = '';
-			$('#listContent').html(a);
-			console.log(empList);
-			//rebuildTable(empList);
+			$('#tbodyEmpList').html(a);
+			//console.log(data);
+			rebuildTable(data);
 		}
 	});
-	
+
 }
 
-function rebuildTable(empList){
-	
+function rebuildTable(data) {
+	var html = '';
+	var empList = data;
+
+	if (empList.length > 0) {
+		$.each(empList, function(key, value) {
+			console.log(value);
+			html += '<tr>';
+			html += '<td>' + value.ENO + '</td>';
+			html += '<td>' + value.EMP_NM + '</td>';
+			html += '<td>' + value.DPRT_CD + '</td>';
+			html += '<td>' + value.DPRT_NM + '</td>';
+			html += '<td>' + value.HDQT_CD + '</td>';
+			html += '<td>' + value.HDQT_NM + '</td>';
+			html += '</tr>';
+		})
+	} else {
+		html += '<tr>';
+		html += '<td colspan="6" style="text-align: center">데이터가 없습니다.</td>';
+		html += '</tr>';
+	}
+	console.log(html);
+	$('#tbodyEmpList').html(html);
+
 };
 
