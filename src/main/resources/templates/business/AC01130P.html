@@ -3,17 +3,22 @@
 
 <th:block layout:fragment="script">
 	<script th:src="@{/js/business/AC01130P.js}"></script>
+	<script th:src="@{/js/datepicker.js}"></script>
+	<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js}"></script>
+	<script th:src="@{https://code.jquery.com/ui/1.8.18/jquery-ui.min.js}"></script>
 </th:block>
 
 <th:block layout:fragment="css">
-	<script th:src="@{/css/AC01130P.css}"></script>
+	<link rel="stylesheet" th:href="@{css/plugins/datepicker/bootstrap-datepicker3.css.map}" />
+	<link rel="stylesheet" th:href="@{css/plugins/datepicker/datepicker3.css}" />
+	<link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css}" />
 </th:block>
 
 <th:block th:fragment="AC01130P">
 	<!-- modal -->
 	<div id="AC01130P" class="modal_wrap">
 		<div class="modal_content">
-			<span class="modal_close">&times;</span>
+			<span class="modal_close1">&times;</span>
 			<div class="wrap">
 				<div class="main">
 					<main>
@@ -37,7 +42,7 @@
 											</tr>
 											<tr>
 												<th>사원번호</th>
-												<td><input type="input"></td>
+												<td id="setEno"></td>
 												<td><button id="open_modal2">조회</button></td>
 												<th>사용자명</th>
 												<td><input type="input"></td>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanuri.rams.business.itmanager.mapper.UserManagementMapper">
+
+<select id="getEnoList" resultType="com.nanuri.rams.business.itmanager.dto.UserInfo">
+    <!-- 사용자 추가를 위한 사번 목록 조회 -->
+    SELECT ENO
+         , EMP_NM
+      FROM RAA99A
+</select>
+
+<select id="getLastSq" resultType="int">
+    <!-- 사용자 추가를 위한 총 건수 조회(SQ) -->
+    SELECT COUNT(SQ)
+      FROM RAA92B
+</select>
+
+<insert id="insertUser" parameterType="com.nanuri.rams.business.itmanager.dto.UserManageDTO">
+    <!-- 사용자 추가 -->
+    INSERT INTO RAA92B
+              ( ENO                             <!-- 사번 -->
+              , SQ                              <!-- 일련번호 -->
+              , EMP_NM                          <!-- 사원명 -->
+              , RGHT_CD                         <!-- 권한코드 -->
+              , DPRT_CD                         <!-- 부점코드 -->
+              , RGST_RSN                        <!-- 등록사유 -->
+              , APLC_STRT_DT                    <!-- 적용시작일자 -->
+              , APLC_END_DT                     <!-- 적용종료일자 -->
+              , DLT_F                           <!-- 삭제여부 -->
+              , DLT_DT                          <!-- 삭제일자 -->
+              , DLT_TM                          <!-- 삭제자시간 -->
+              , DLT_P_ENO                       <!-- 삭제자사번 -->
+                <include refid="CommonMapper.commonDto" />
+              )
+         VALUES (
+                #{eno}
+              , #{sq}
+              , #{empNm}
+              , #{rghtCd}
+              , NULL                            <!-- , #{dprtCd} 부점코드 -->
+              , #{aplcStrtDt}
+              , #{aplcEndDt}
+              , DATE_FORMAT(NOW(), '%Y%m%d')
+              , DATE_FORMAT(NOW(), '%H%i%s')
+              , #{rgstPEno}
+              , 'N'
+              , NULL
+              , NULL
+              , NULL
+              , NOW()
+              , NULL                            <!-- , #{hndlDprtCd} 처리부점코드 -->
+              , #{hndlPEno}
+         )
+</insert>
+
+
+</mapper>

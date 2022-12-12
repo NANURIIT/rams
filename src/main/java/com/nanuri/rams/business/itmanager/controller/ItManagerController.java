@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class CodeManagementController {
+public class ItManagerController {
 	
 	@GetMapping(value = {"/AC01010S"})
     public String codeManagement() {
