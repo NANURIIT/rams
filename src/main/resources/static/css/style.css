@@ -430,6 +430,22 @@
     font-size: 30px;
     cursor: pointer;
 }
+.modal_close1 {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: #777;
+    font-size: 30px;
+    cursor: pointer;
+}
+.modal_close2 {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: #777;
+    font-size: 30px;
+    cursor: pointer;
+}
 .modal_content .wrap {
     width: calc(100% - 20px);
 }

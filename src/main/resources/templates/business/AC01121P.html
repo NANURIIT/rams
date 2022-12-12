@@ -1,6 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{css/style.css}">
+</th:block>
+
+<th:block layout:fragment="script">
+	<script th:src="@{js/business/AC01121P.js}"></script>
+</th:block>
 
 <th:block th:fragment="AC01121P">
 	<!-- modal -->
@@ -14,82 +21,24 @@
 							<div class="main_container">
 								<div class="search_wrap">
 									<table class="search_table search_top">
-										<colgroup>
-											<col style="width: 10%;">
-											<col style="width: 15%;">
-											<col style="width: 10%;">
-											<col>
-										</colgroup>
-										<tr>
-											<th>직원한글성명</th>
-											<td><input type="text"></td>
-											<th>직원번호</th>
-											<td class="etc_td">
-												<input type="text">
-												<div class="button_etc_wrap">
-													<button type="button">초기화</button>
-													<button type="button">조회</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<th>부점명</th>
-											<td><input type="text"></td>
-											<th>부점코드</th>
-											<td><input type="text"></td>
-										</tr>
-									</table>
-								</div><!-- end of search_wrap -->
-								<div class="contents_box">
-									<div class="content_list_caption_wrap">
-										<div class="content_list_caption">직원정보코드찾기</div>
-										<!-- TODO : 총 0 건 -->
-									</div>
-									<table class="table_header">
-										<colgroup>
-											<col>
-											<col>
-											<col>
-											<col>
-											<col>
-											<col>
-										</colgroup>
 										<thead>
+											<colgroup>
+												<col>
+												<col>
+											</colgroup>
 											<tr>
-												<th>직원번호</th>
-												<th>직원한글성명</th>
-												<th>부점명</th>
-												<th>부점코드</th>
-												<th>본부코드</th>
-												<th>본부명</th>
+												<th>사원번호</th>
+												<th>사원명</th>
 											</tr>
 										</thead>
+										<tbody id="userInfo">
+											<colgroup>
+												<col>
+												<col>
+											</colgroup>
+										</tbody>
 									</table>
-									<div class="grid_wrap grid_wrapS">
-										<form>
-											<table>
-												<colgroup>
-													<col>
-													<col>
-													<col>
-													<col>
-													<col>
-													<col>
-												</colgroup>
-												<tbody>
-													<tr>
-														<td>1</td>
-														<td>2</td>
-														<td>3</td>
-														<td>4</td>
-														<td>5</td>
-														<td>6</td>
-													</tr>
-												</tbody>
-											</table>
-										</form>
-									</div>
-								</div><!-- end of contents_box -->
+								</div><!-- end of search_wrap -->
 							</div><!-- end of main container -->
 						</div><!-- end of main_wrap -->
 					</main>
@@ -99,4 +48,5 @@
 	</div><!-- end of modal -->
 	<!-- modal -->
 </th:block>
+
 </html>
