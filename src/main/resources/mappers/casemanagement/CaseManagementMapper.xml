@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanuri.rams.business.casemanagement.mapper.CaseManagementMapper">
+
+	<!-- 직원검색 -->
+	<select id="findEmpList" parameterType="com.nanuri.rams.business.casemanagement.dto.EmpDto" resultType="java.util.HashMap">
+		SELECT * 
+		  FROM RAA99A
+		 WHERE 1=1
+		 <if test="eno != ''">
+		   AND ENO LIKE CONCAT('%', #{eno}, '%')
+		 </if>
+		 <if test="empNm != ''">
+		   AND EMP_NM LIKE ('%', #{empNm}, '%')
+		 </if>
+		 <if test="dprtCd != ''">
+		   AND DPRT_CD LIKE ('%', #{dprtCd}, '%')
+		 </if>
+		 <if test="dprtNm != ''">
+		   AND DPRT_NM LIKE ('%', #{dprtNm}, '%')
+		 </if>
+	</select>
+
+</mapper>

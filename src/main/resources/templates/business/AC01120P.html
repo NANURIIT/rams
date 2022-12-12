@@ -22,21 +22,21 @@
 										</colgroup>
 										<tr>
 											<th>직원한글성명</th>
-											<td><input type="text"></td>
+											<td><input type="text" id="empNm"></td>
 											<th>직원번호</th>
 											<td class="etc_td">
-												<input type="text">
+												<input type="text" id="eno">
 												<div class="button_etc_wrap">
 													<button type="button">초기화</button>
-													<button type="button">조회</button>
+													<button type="button" onclick="getEmpList();">조회</button>
 												</div>
 											</td>
 										</tr>
 										<tr>
 											<th>부점명</th>
-											<td><input type="text"></td>
+											<td><input type="text" id="dprtNm"></td>
 											<th>부점코드</th>
-											<td><input type="text"></td>
+											<td><input type="text" id="dprtCd"></td>
 										</tr>
 									</table>
 								</div><!-- end of search_wrap -->
