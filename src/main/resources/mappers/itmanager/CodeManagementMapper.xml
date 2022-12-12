@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.itmanager.mapper.CodeManagementMapper">
 
+    <!--  select박스에 담을 공통코드 호출  -->
     <select id="getCommonCodeName" resultType="com.nanuri.rams.business.itmanager.dto.CommonCodeInfoDto">
         SELECT DISTINCT (cmns_cd_nm),
                         cmns_cd_grp,
@@ -10,6 +11,7 @@
          ORDER BY cmns_cd_grp ASC
     </select>
 
+    <!--  그룹코드 호출  -->
 	<select id="getGroupCodeInfoList" resultType="com.nanuri.rams.business.itmanager.dto.GroupCodeInfoDto" parameterType="String">
         SELECT cmns_cd_grp					<!-- 공통코드그룹 -->
              , cmns_cd_nm					<!-- 공통코드명 -->
@@ -27,6 +29,7 @@
 		</if>
 	</select>
 
+    <!--  상세코드 호출  -->
     <select id="getCodeInfoList" resultType="com.nanuri.rams.business.itmanager.dto.CodeInfoDto" parameterType="String">
         SELECT cd_vl_id
              , cd_vl_nm
