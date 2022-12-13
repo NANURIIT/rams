@@ -24,7 +24,7 @@ function setAC01121P(){
 	}
 	}
 let setEno = function(eno) {
-	console.log(typeof(eno))
+	//console.log(typeof(eno))
 	$('#setEno').html(eno);
 	$('#AC01121P').css('display', 'none');
 }
@@ -38,9 +38,9 @@ let getEnoList = function () {
         let userInfoHTML = '';
         for (idx in userInfo) {
 			let row = userInfo[idx];
-			let stringEno = row.eno + "";
-			console.log(stringEno);
-            userInfoHTML += '<tr><td>' + stringEno + '<button onclick="setEno('+ stringEno +');">선택</button></td><td>'+ row.empNm +'</td></tr>';
+			let stringEno = row.eno;
+			//console.log(stringEno);
+            userInfoHTML += '<tr><td>' + stringEno + '<button onclick="setEno('+ "'" + stringEno + "'" + ');">선택</button></td><td>'+ row.empNm +'</td></tr>';
         }
         $('#userInfo').append(userInfoHTML);
     });
