@@ -43,6 +43,15 @@
          WHERE cmns_cd_grp = #{cmnsCdGrp}
     </select>
 
+    <update id="deleteGroupCodeInfo" parameterType="java.util.List">
+        UPDATE RAA90B
+           SET USE_F = 'N'
+         WHERE cmns_cd_grp IN
+        <foreach collection="list" item="cmnsCdGrp" index="index" open="(" separator="," close=")">
+            #{cmnsCdGrp}
+        </foreach>
+    </update>
+
     <!--  상세코드 호출  -->
     <select id="getCodeInfoList" resultType="com.nanuri.rams.business.itmanager.dto.CodeInfoDto" parameterType="String">
         SELECT cd_vl_id

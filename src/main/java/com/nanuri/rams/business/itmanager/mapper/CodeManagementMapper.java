@@ -15,6 +15,7 @@ public interface CodeManagementMapper {
 	
 	public List<GroupCodeInfoDto> getGroupCodeInfoList(String cmnsCdGrp);				// 그룹코드정보 리스트 가져오기
 	public Optional<GroupCodeInfoDto> getGroupCodeInfo(String cmnsCdGrp);
+	public int deleteGroupCodeInfo(List<String> cmnsCdGrp);
 
 	public List<CodeInfoDto> getCodeInfoList(String cmnsCdGrp);
 

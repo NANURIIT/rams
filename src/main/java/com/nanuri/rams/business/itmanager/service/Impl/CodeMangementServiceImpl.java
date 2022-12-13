@@ -59,6 +59,12 @@ public class CodeMangementServiceImpl implements CodeManagementService {
     }
 
     @Override
+    public boolean deleteCodeInfo(List<String> cmnsCdGrp) {
+        int count = codeManagementMapper.deleteGroupCodeInfo(cmnsCdGrp);
+        return count > 0;
+    }
+
+    @Override
     public void registCodeInfo(CodeInfoDto codeInfoDto) {
         
     }

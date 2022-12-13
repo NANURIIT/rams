@@ -16,6 +16,7 @@ public interface CodeManagementService {
 	public List<GroupCodeInfoDto> getGroupCodeInfoList(String cmnsCdGrp) throws ParseException;				// 그룹코드정보 리스트 가져오기
 
 	public List<CodeInfoDto> getCodeInfoList(String cmnsCdGrp) throws ParseException;
+	public boolean deleteCodeInfo(List<String> cmnsCdGrp);
 
 	public List<CodeInfoDto> getCodeInfoList(GroupCodeInfoDto groupCodeInfoDto);		// 코드정보 가져오기
 

@@ -5,10 +5,7 @@ import java.util.List;
 
 import com.nanuri.rams.business.itmanager.dto.CommonCodeInfoDto;
 import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
 import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoDto;
@@ -34,6 +31,11 @@ public class CodeManagementAPIController {
 	@GetMapping(value = "/groupCodeInfo")
 	public List<CodeInfoDto> getGroupCodeInfo(String cmnsCdGrp) throws ParseException {
 		return codeManagementService.getCodeInfoList(cmnsCdGrp);
+	}
+
+	@PatchMapping(value = "/deleteGroupCodeInfo")
+	public boolean deleteGroupCodeInfo(@RequestBody List<String> cmnsCdGrp) {
+		return codeManagementService.deleteCodeInfo(cmnsCdGrp);
 	}
 
 	@GetMapping(value = "/commonCodeInfo")

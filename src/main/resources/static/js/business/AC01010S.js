@@ -37,8 +37,21 @@ $(function () {
         $('#groupCodeListTable').append(ROW_HTML);
     });
 
+
     $(document).on('click', '#delete_group_row', function () {
-        console.log('click 행 삭제1');
+        let groupCodeList = new Array();
+        let tr = $('#groupCodeListTable').children();
+        
+        for (let i = 0; i < tr.length; i++) {
+            let deleteCheckBox = $(tr[i]).find("td:eq(0)").find("input")
+            if(deleteCheckBox.is(":checked")){
+                groupCodeList.push(deleteCheckBox.attr("id"));
+            }
+        }
+        
+        if(groupCodeList.length != 0) {
+            deleteGroupCode(groupCodeList);
+        }
     });
 
     $(document).on('click', '#save_group', function () {
@@ -91,7 +104,7 @@ $(function () {
         ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
         ROW_HTML += '   <td></td>';
         ROW_HTML += '   <td></td>';
-        ROW_HTML += '   <td></td>';
+        ROW_HTML += '   <td><input style="width:100%" type="checkbox"></td>';
         ROW_HTML += '   <td></td>';
         ROW_HTML += '   <td></td>';
         ROW_HTML += '   <td></td>';
@@ -204,6 +217,22 @@ var saveGroupCode = function (groupCodeList) {
         error: function(response) {
             let message = response.responseJSON.message;
             alert(message);
+        }
+    });
+}
+
+var deleteGroupCode = function(groupCodeList) {
+    $.ajax({
+        method : 'PATCH', 
+        url : '/deleteGroupCodeInfo', 
+        data : JSON.stringify(groupCodeList), 
+        contentType: 'application/json; charset=UTF-8', 
+        dataType: 'json', 
+        success : function() {
+            getGroupCodeInfoList();
+        }, 
+        error: function(response) {
+            
         }
     });
 }
