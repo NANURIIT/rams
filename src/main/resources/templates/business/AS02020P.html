@@ -24,14 +24,18 @@
 										</colgroup>
 										<tr>
 											<th>Deal번호</th>
-											<td><input type="text"></td>
+											<td><input type="text" id="AS02020P_dealNo"></td>
 											<th>Deal명</th>
-											<td><input type="text"></td>
+											<td><input type="text" id="AS02020P_dealNm"></td>
 											<th>DSC일자</th>
-											<td class="etc_td"><input type="text">
+											<td class="etc_td">
+												<div class="datepicker_wrap">
+													<input type="text" class="datepicker width150" id="AS02020P_datepicker1">
+												</div>
 												<div class="button_etc_wrap">
-													<button type="button">조회</button>
-												</div></td>
+													<button type="button" onclick="getDealInfo();">조회</button>
+												</div>
+											</td>
 										</tr>
 									</table>
 								</div><!-- end of search_wrap -->
