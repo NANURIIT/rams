@@ -91,8 +91,8 @@
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">약정일</div>
-								<div class="contents_list_desc">
-									<input type="text">
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker width150" id="tab1_datepicker1">
 								</div>
 							</div>
 							<div class="contents_list">
@@ -118,14 +118,14 @@
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">기표일</div>
-								<div class="contents_list_desc">
-									<input type="text">
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker width150" id="tab1_datepicker2">
 								</div>
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">만기일</div>
-								<div class="contents_list_desc">
-									<input type="text">
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker width150" id="tab1_datepicker3">
 								</div>
 							</div>
 							<div class="contents_list">
@@ -143,9 +143,10 @@
 								<div class="contents_list_title">구분</div>
 								<div class="contents_list_desc">
 									<select>
-										<option value="1">1</option>
-										<option value="1">2</option>
-										<option value="1">3</option>
+										<option value="0" selected>미진행(부의전철회)</option>
+										<option value="1">미진행(부결/보류)</option>
+										<option value="2">미진행(가결,약정전철회)</option>
+										<option value="3">진행(가결,약정/기표)</option>
 									</select>
 								</div>
 							</div>
@@ -169,24 +170,26 @@
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">EXIT날짜</div>
-								<div class="contents_list_desc">
-									<input type="text">
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker width280" id="tab2_datepicker1">
 								</div>
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">사유</div>
 								<div class="contents_list_desc">
-									<select>
-										<option value="1">1</option>
-										<option value="1">2</option>
-										<option value="1">3</option>
+									<select class="width280">
+										<option value="0" selected>N</option>
+										<option value="1">만기상환</option>
+										<option value="2">조기상환</option>
+										<option value="3">매각</option>
+										<option value="4">기타</option>
 									</select>
 								</div>
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">수신 문서번호</div>
 								<div class="contents_list_desc">
-									<input type="text">
+									<input class="width280" type="text">
 								</div>
 							</div>
 						</div>
@@ -289,33 +292,33 @@
 							<div class="contents_list">
 								<div class="contents_list_title">의무금액</div>
 								<div class="contents_list_desc">
-									<input type="text">
+									<input class="width280" type="text">
 								</div>
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">적용기한일</div>
-								<div class="contents_list_desc">
-									<input type="text">
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker width280" id="tab3_datepicker1">
 								</div>
 							</div>
 						</div>
 						<div class="contents_list_wrap contents_list_wrap33">
 							<div class="contents_list">
 								<div class="contents_list_title">해소일</div>
-								<div class="contents_list_desc">
-									<input type="text">
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker width280" id="tab3_datepicker2">
 								</div>
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">해소금액</div>
 								<div class="contents_list_desc">
-									<input type="text">
+									<input class="width280" type="text">
 								</div>
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">미해소잔액</div>
 								<div class="contents_list_desc">
-									<input type="text">
+									<input class="width280" type="text">
 								</div>
 							</div>
 						</div>
@@ -379,25 +382,25 @@
 							<div class="contents_list">
 								<div class="contents_list_title">의무내용</div>
 								<div class="contents_list_desc">
-									<input type="text">
+									<input class="width280" type="text">
 								</div>
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">적용기한일</div>
-								<div class="contents_list_desc">
-									<input type="text">
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker width280" id="tab4_datepicker1">
 								</div>
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">해소일</div>
-								<div class="contents_list_desc">
-									<input type="text">
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker width280" id="tab4_datepicker2">
 								</div>
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">해소여부</div>
 								<div class="contents_list_desc">
-									<input type="text">
+									<input class="width280" type="text">
 								</div>
 							</div>
 						</div>
@@ -456,20 +459,20 @@
 							<div class="contents_list">
 								<div class="contents_list_title">직원명</div>
 								<div class="contents_list_desc">
-									<input type="text" id="rcvdEmpNm" readonly>
+									<input class="width280" type="text" id="rcvdEmpNm" readonly>
 									<button type="button" id="open_modal_AC01120P">icon</button>
 								</div>
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">변경일</div>
-								<div class="contents_list_desc">
-									<input type="text">
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker" id="tab5_datepicker1">
 								</div>
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">변경사유</div>
 								<div class="contents_list_desc">
-									<input type="text">
+									<input class="width280" type="text">
 								</div>
 							</div>
 						</div>
@@ -483,8 +486,8 @@
 						<div class="contents_list_wrap contents_list_wrap19">
 							<div class="contents_list">
 								<div class="contents_list_title">기준일자</div>
-								<div class="contents_list_desc">
-									<input type="text">
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker width280" id="tab6_datepicker1">
 								</div>
 							</div>
 							<div class="tab_button_wrap">
