@@ -13,9 +13,99 @@ $(function () {
         getGroupCodeInfo($(this).attr('id'));
     });
 
-    $(document).on('dblclick', 'td', function () {
-        tdInputHTML = '<input style="width: 100%;" type="text" value="' + $(this).text() + '">'
+    $(document).on('dblclick', '.update_column', function () {
+        let trClass = $(this).attr('class').split(' ')[1]
+        tdInputHTML = '<input class="' + trClass + '_input" style="width: 100%;" type="text" value="' + $(this).text() + '">'
         $(this).html(tdInputHTML);
+    });
+
+    $(document).on('click', '#add_group_row', function () {
+        let ROW_HTML = '';
+        ROW_HTML += '<tr>';
+        ROW_HTML += '   <td><input style="width:100%" type="checkbox"></td>';
+        ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
+        ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
+        ROW_HTML += '   <td></td>';
+        ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
+        ROW_HTML += '   <td></td>';
+        ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
+        ROW_HTML += '   <td><input style="width:100%" type="checkbox"></td>';
+        ROW_HTML += '   <td></td>';
+        ROW_HTML += '   <td></td>';
+        ROW_HTML += '   <td></td>';
+        ROW_HTML += '</tr>';
+        $('#groupCodeListTable').append(ROW_HTML);
+    });
+
+    $(document).on('click', '#delete_group_row', function () {
+        console.log('click 행 삭제1');
+    });
+
+    $(document).on('click', '#save_group', function () {
+
+        let groupCodeList = new Array();
+
+        let tr = $('#groupCodeListTable').children();
+
+        for (let i = 0; i < tr.length; i++) {
+            let groupCode = new Object();
+
+            let groupCodeInput = $(tr[i]).find("td:eq(1)").find("input");
+            let groupCodeNameInput = $(tr[i]).find("td:eq(2)").find("input");
+            let groupCodeLengthInput = $(tr[i]).find("td:eq(4)").find("input");
+            let groupCodeUseYn = $(tr[i]).find("td:eq(7)").find(".group_code_use_yn").prop("checked");
+            let groupCodeUseYnCheck = $(tr[i]).find("td:eq(7)").find(".hidden_yn").val();
+
+            if (groupCodeInput.length == 1) {
+                groupCode.cmnsCdGrp = groupCodeInput.val();
+            }
+
+            if (groupCodeNameInput.length == 1) {
+                groupCode.cmnsCdNm = groupCodeNameInput.val();
+            }
+
+            if (groupCodeLengthInput.length == 1) {
+                groupCode.cdLngth = groupCodeLengthInput.val();
+            }
+
+            if (!groupCodeUseYnCheck || (groupCodeUseYn && groupCodeUseYnCheck === 'n') || (!groupCodeUseYn && groupCodeUseYnCheck === 'y')) {
+                groupCode.useF = $(tr[i]).find("td:eq(7)").find(".group_code_use_yn").prop("checked") ? 'Y' : 'N';
+            }
+
+            if (!(Object.keys(groupCode).length === 0)) {
+                groupCode.oldCmnsCdGrp = $(tr[i]).find("td:eq(0)").find("input").attr("id")
+                groupCodeList.push(groupCode);
+            }
+        }
+
+        if(groupCodeList.length != 0) {
+            saveGroupCode(groupCodeList);
+        }
+    });
+
+    $(document).on('click', '#add_row', function () {
+        let ROW_HTML = '';
+        ROW_HTML += '<tr>';
+        ROW_HTML += '   <td><input style="width:100%" type="checkbox"></td>';
+        ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
+        ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
+        ROW_HTML += '   <td></td>';
+        ROW_HTML += '   <td></td>';
+        ROW_HTML += '   <td></td>';
+        ROW_HTML += '   <td></td>';
+        ROW_HTML += '   <td></td>';
+        ROW_HTML += '   <td></td>';
+        ROW_HTML += '   <td></td>';
+        ROW_HTML += '</tr>';
+        $('#codeListTable').append(ROW_HTML);
+    });
+
+    $(document).on('click', '#delete_row', function () {
+        console.log('click 행 삭제2');
+    });
+
+    $(document).on('click', '#save', function () {
+        console.log('click 저장2');
     });
 });
 
@@ -34,8 +124,14 @@ var getCommonCodeInfo = function () {
 }
 
 var getGroupCodeInfoList = function (cmnsCdGrp) {
+    let _url = '/groupCodeInfoList';
+
+    if(cmnsCdGrp) {
+        _url += '?cmnsCdGrp=' + cmnsCdGrp;
+    }
+
     $.ajax({
-        url: '/groupCodeInfoList?cmnsCdGrp=' + cmnsCdGrp,
+        url: _url,
         method: 'GET',
         dataType: 'json'
     }).done(function (groupCodeInfoList) {
@@ -43,19 +139,18 @@ var getGroupCodeInfoList = function (cmnsCdGrp) {
         for (idx in groupCodeInfoList) {
             let groupCodeInfo = groupCodeInfoList[idx];
             groupCodeInfoHTML += '<tr>';
-            groupCodeInfoHTML += '  <td><input style="width:100%" type="checkbox"></td>';
-            groupCodeInfoHTML += '  <td>' + groupCodeInfo.cmnsCdGrp + '</td>';
-            groupCodeInfoHTML += '  <td>' + groupCodeInfo.cmnsCdNm + '</td>';
+            groupCodeInfoHTML += '  <td><input id="' + groupCodeInfo.cmnsCdGrp + '" style="width:100%" type="checkbox"></td>';
+            groupCodeInfoHTML += '  <td class="update_column group_code">' + groupCodeInfo.cmnsCdGrp + '</td>';
+            groupCodeInfoHTML += '  <td class="update_column group_code_name">' + groupCodeInfo.cmnsCdNm + '</td>';
             groupCodeInfoHTML += '  <td></td>';
-            groupCodeInfoHTML += '  <td>' + groupCodeInfo.cdLngth + '</td>';
+            groupCodeInfoHTML += '  <td class="update_column group_code_length">' + groupCodeInfo.cdLngth + '</td>';
             groupCodeInfoHTML += '  <td><button class="groupCodeDetail" id="' + groupCodeInfo.cmnsCdGrp + '">↓상세</button></td>';
             groupCodeInfoHTML += '  <td>' + groupCodeInfo.cmnsCdGrpExpl + '</td>';
             if (groupCodeInfo.useF === 'Y') {
-                groupCodeInfoHTML += '  <td><input style="width:100%" type="checkbox" checked></td>';
+                groupCodeInfoHTML += '  <td><input style="width:100%" class="group_code_use_yn" type="checkbox" checked><input class="hidden_yn" type="hidden" value="y"></td>';
             } else {
-                groupCodeInfoHTML += '  <td><input style="width:100%" type="checkbox"></td>';
+                groupCodeInfoHTML += '  <td><input style="width:100%" class="group_code_use_yn" type="checkbox"><input class="hidden_yn" type="hidden" value="n"></td>';
             }
-
             groupCodeInfoHTML += '  <td>' + groupCodeInfo.rgstDt + '</td>';
             groupCodeInfoHTML += '  <td></td>';
             groupCodeInfoHTML += '  <td></td>';
@@ -75,9 +170,9 @@ var getGroupCodeInfo = function (cmnsCdGrp) {
         for (idx in codeInfoList) {
             let codeInfo = codeInfoList[idx];
             codeInfoHTML += '<tr>';
-            codeInfoHTML += '   <td><input style="width:100%" type="checkbox"></td>';
-            codeInfoHTML += '   <td>' + codeInfo.cdVlId + '</td>';
-            codeInfoHTML += '   <td>' + codeInfo.cdVlNm + '</td>';
+            codeInfoHTML += '   <td><input id="' + codeInfo.cdVlId + '" style="width:100%" type="checkbox"></td>';
+            codeInfoHTML += '   <td class="update_column">' + codeInfo.cdVlId + '</td>';
+            codeInfoHTML += '   <td class="update_column">' + codeInfo.cdVlNm + '</td>';
             codeInfoHTML += '   <td></td>';
             codeInfoHTML += '   <td>' + codeInfo.cdSq + '</td>';
             if (codeInfo.useF === 'Y') {
@@ -93,5 +188,22 @@ var getGroupCodeInfo = function (cmnsCdGrp) {
         }
 
         $('#codeListTable').html(codeInfoHTML);
+    });
+}
+
+var saveGroupCode = function (groupCodeList) {
+    $.ajax({
+        method : 'POST', 
+        url : '/registGroupCodeInfo', 
+        data : JSON.stringify(groupCodeList), 
+        contentType: "application/json; charset=UTF-8", 
+        dataType: 'json',
+        success : function() {
+            getGroupCodeInfoList();
+        }, 
+        error: function(response) {
+            let message = response.responseJSON.message;
+            alert(message);
+        }
     });
 }

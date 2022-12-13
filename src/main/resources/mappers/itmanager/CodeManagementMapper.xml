@@ -29,6 +29,20 @@
 		</if>
 	</select>
 
+    <select id="getGroupCodeInfo" parameterType="String" resultType="com.nanuri.rams.business.itmanager.dto.GroupCodeInfoDto">
+        SELECT cmns_cd_grp					<!-- 공통코드그룹 -->
+             , cmns_cd_nm					<!-- 공통코드명 -->
+             , cmns_cd_clsf					<!-- 공통코드구분 -->
+             , cd_lngth						<!-- 코드길이 -->
+             , trnsfrm_aft_cd_grp			<!-- 변환후코드그룹 -->
+             , cmns_cd_grp_expl				<!-- 공통코드그룹설명 -->
+             , use_f						<!-- 사용여부 -->
+             , rgst_dt
+        <include refid="CommonMapper.commonDto" />
+          FROM RAA90B
+         WHERE cmns_cd_grp = #{cmnsCdGrp}
+    </select>
+
     <!--  상세코드 호출  -->
     <select id="getCodeInfoList" resultType="com.nanuri.rams.business.itmanager.dto.CodeInfoDto" parameterType="String">
         SELECT cd_vl_id
@@ -46,5 +60,24 @@
             count(*)
         FROM RAA90B
     </select>
+
+    <update id="registGroupCodeInfo" parameterType="com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto">
+        UPDATE RAA90B
+        <set>
+            <if test="cmnsCdGrp != null and cmnsCdGrp !=''">
+                cmns_cd_grp = #{cmnsCdGrp},
+            </if>
+            <if test="cmnsCdNm != null and cmnsCdNm !=''">
+                cmns_cd_nm = #{cmnsCdNm},
+            </if>
+            <if test="cdLngth != null and cdLngth !=''">
+                cd_lngth = #{cdLngth},
+            </if>
+            <if test="useF != null and useF !=''">
+                use_f = #{useF},
+            </if>
+        </set>
+        WHERE cmns_cd_grp = #{oldCmnsCdGrp}
+    </update>
 
 </mapper>

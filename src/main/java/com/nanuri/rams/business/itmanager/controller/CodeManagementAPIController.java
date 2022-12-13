@@ -4,8 +4,10 @@ import java.text.ParseException;
 import java.util.List;
 
 import com.nanuri.rams.business.itmanager.dto.CommonCodeInfoDto;
+import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
@@ -46,8 +48,9 @@ public class CodeManagementAPIController {
 
 	// 그룹코드정보 등록하기
 	@PostMapping(value = "/registGroupCodeInfo")
-	public void registGroupCodeInfo(GroupCodeInfoDto groupCodeInfoDto) {
-		codeManagementService.registGroupCodeInfo(groupCodeInfoDto);
+	public boolean registGroupCodeInfo(@RequestBody List<GroupCodeInfoSaveRequestDto> requestDtos) {
+		log.debug("requestDtos : {}", requestDtos);
+		return codeManagementService.registGroupCodeInfo(requestDtos);
 	}
 
 	// 코드정보 등록하기
