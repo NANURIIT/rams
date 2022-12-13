@@ -174,7 +174,7 @@ var getGroupCodeInfo = function (cmnsCdGrp) {
             codeInfoHTML += '   <td class="update_column">' + codeInfo.cdVlId + '</td>';
             codeInfoHTML += '   <td class="update_column">' + codeInfo.cdVlNm + '</td>';
             codeInfoHTML += '   <td></td>';
-            codeInfoHTML += '   <td>' + codeInfo.cdSq + '</td>';
+            codeInfoHTML += '   <td class="update_column">' + codeInfo.cdSq + '</td>';
             if (codeInfo.useF === 'Y') {
                 codeInfoHTML += '   <td><input style="width:100%" type="checkbox" checked></td>';
             } else {
