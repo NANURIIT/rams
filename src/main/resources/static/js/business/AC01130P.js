@@ -1,4 +1,4 @@
-$(document).ready(function($) {
+$(document).ready(function() {
     
     setAC01121P();
 	
@@ -7,8 +7,8 @@ $(document).ready(function($) {
 function setAC01121P(){
 	getEnoList();
 	let Modal = document.getElementById('AC01121P');
-	let OpenModal = document.getElementById("open_modal2");
-	let CloseModal = document.getElementsByClassName("modal_close2")[0];
+	let OpenModal = document.getElementById("open_modal_AC01121P");
+	let CloseModal = document.getElementsByClassName("modal_close_AC01121P")[0];
 	
 	OpenModal.onclick = function() {
 		Modal.style.display = "block";

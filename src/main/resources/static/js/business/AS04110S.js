@@ -1,4 +1,4 @@
-$(document).ready(function($) {
+$(document).ready(function() {
 	
 	setOpenModal();
 	
@@ -6,8 +6,8 @@ $(document).ready(function($) {
 
 function setOpenModal(){
 	let Modal = document.getElementById('AS04120P');
-	let OpenModal = document.getElementById("open_modal");
-	let CloseModal = document.getElementsByClassName("modal_close")[0];
+	let OpenModal = document.getElementById("open_modal_AS04120P");
+	let CloseModal = document.getElementsByClassName("modal_close_AS04120P")[0];
 	
 	OpenModal.onclick = function() {
 	    Modal.style.display = "block";

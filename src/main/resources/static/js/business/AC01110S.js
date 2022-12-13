@@ -1,4 +1,4 @@
-$(document).ready(function($) {
+$(document).ready(function() {
 	
 	setAC01130P();
 	
@@ -6,8 +6,8 @@ $(document).ready(function($) {
 
 function setAC01130P(){
 	let Modal = document.getElementById('AC01130P');
-	let OpenModal = document.getElementById("open_modal");
-	let CloseModal1 = document.getElementsByClassName("modal_close1")[0];
+	let OpenModal = document.getElementById("open_modal_AC01130P");
+	let CloseModal1 = document.getElementsByClassName("modal_close_AC01130P")[0];
 	
 	OpenModal.onclick = function() {
 	    Modal.style.display = "block";
