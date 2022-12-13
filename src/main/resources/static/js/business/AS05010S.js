@@ -2,29 +2,47 @@ $(document).ready(function() {
 
 	setOpenModal();
 
-	//getEmpList();
-
+	setKeyDownFunction();
+	
 });
 
+// modal controll function
 function setOpenModal() {
 	let Modal = document.getElementById('AC01120P');
 	let OpenModal = document.getElementById("open_modal_AC01120P");
 	let CloseModal = document.getElementsByClassName("modal_close_AC01120P")[0];
-
+	
+	// open modal
 	OpenModal.onclick = function() {
 		Modal.style.display = "block";
+		reset_AC01120P();
 	}
 
+	// close modal
 	CloseModal.onclick = function() {
 		Modal.style.display = "none";
 	}
+	
+	// close modal
 	window.onclick = function(event) {
 		if (event.target === Modal) {
 			Modal.style.display = "none";
 		}
 	}
+
+	// close modal
+	$(document).keydown(function(e) {
+		//keyCode 구 브라우저, which 현재 브라우저
+		var code = e.keyCode || e.which;
+		if (code == 27) { // 27은 ESC 키번호
+			Modal.style.display = "none";
+		}
+
+	});
+
 }
 
+// get employee list
 function getEmpList() {
 
 	var empNm = $("#empNm").val();
@@ -41,7 +59,6 @@ function getEmpList() {
 		, "hdqtNm": ""
 	}
 
-	//alert(data);
 	//console.log(data);
 
 	$.ajax({
@@ -59,14 +76,15 @@ function getEmpList() {
 
 }
 
+// draw modal table employee 
 function rebuildTable(data) {
 	var html = '';
 	var empList = data;
 
 	if (empList.length > 0) {
 		$.each(empList, function(key, value) {
-			console.log(value);
-			html += '<tr>';
+			//console.log(value);
+			html += '<tr onclick="setEmpNm();">';
 			html += '<td>' + value.ENO + '</td>';
 			html += '<td>' + value.EMP_NM + '</td>';
 			html += '<td>' + value.DPRT_CD + '</td>';
@@ -80,8 +98,66 @@ function rebuildTable(data) {
 		html += '<td colspan="6" style="text-align: center">데이터가 없습니다.</td>';
 		html += '</tr>';
 	}
-	console.log(html);
+	//console.log(html);
 	$('#tbodyEmpList').html(html);
 
 };
+
+// when page loaded
+function setKeyDownFunction() {
+	keyDownEnter();
+}
+
+// search employee or deal
+function keyDownEnter() {
+
+	$("input[id=empNm]").keydown(function(key) {
+		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
+			getEmpList();
+		}
+	});
+
+	$("input[id=eno]").keydown(function(key) {
+		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
+			getEmpList();
+		}
+	});
+
+	$("input[id=dprtCd]").keydown(function(key) {
+		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
+			getEmpList();
+		}
+	});
+
+	$("input[id=dprtNm]").keydown(function(key) {
+		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
+			getEmpList();
+		}
+	});
+}
+
+// reset AC01120P
+function reset_AC01120P() {
+	$('#tbodyEmpList').html("");
+	$('#empNm').val("");
+	$('#eno').val("");
+	$('#dprtCd').val("");
+	$('#dprtNm').val("");
+}
+
+// close modal
+function modalClose(){
+	let Modal = document.getElementById('AC01120P');
+	Modal.style.display = "none";
+}
+
+// send to #rcvdEmpNm
+function setEmpNm(){
+	var tr = event.currentTarget;
+	var td = $(tr).children();
+	var empNm = td.eq(1).text();
+	
+	$('#rcvdEmpNm').val(empNm);
+	modalClose();
+}
 
