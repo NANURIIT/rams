@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.nanuri.rams.business.itmanager.dto.CommonCodeInfoDto;
+import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,13 +59,31 @@ public class CodeMangementServiceImpl implements CodeManagementService {
     }
 
     @Override
+    public boolean deleteCodeInfo(List<String> cmnsCdGrp) {
+        int count = codeManagementMapper.deleteGroupCodeInfo(cmnsCdGrp);
+        return count > 0;
+    }
+
+    @Override
     public void registCodeInfo(CodeInfoDto codeInfoDto) {
         
     }
 
     @Override
-    public void registGroupCodeInfo(GroupCodeInfoDto groupCodeInfoDto) {
-        
+    public boolean registGroupCodeInfo(List<GroupCodeInfoSaveRequestDto> requestDtos) {
+        int count = 0;
+        for (GroupCodeInfoSaveRequestDto requestDto : requestDtos) {
+            if (codeManagementMapper.getGroupCodeInfo(requestDto.getCmnsCdGrp()).isPresent()) {
+                throw new IllegalArgumentException("해당 그룹코드가 존재합니다. " + requestDto.getCmnsCdGrp());
+            }
+
+            if (codeManagementMapper.getGroupCodeInfo(requestDto.getOldCmnsCdGrp()).isEmpty()) {
+                // TODO -> 신규 등록 코드
+            } else {
+                count += codeManagementMapper.registGroupCodeInfo(requestDto);
+            }
+        }
+        return count > 0;
     }
 
 

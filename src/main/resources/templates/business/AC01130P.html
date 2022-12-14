@@ -1,17 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<th:block layout:fragment="script">
-	<script th:src="@{/js/business/AC01130P.js}"></script>
-	<script th:src="@{/js/datepicker.js}"></script>
-	<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js}"></script>
-	<script th:src="@{https://code.jquery.com/ui/1.8.18/jquery-ui.min.js}"></script>
-</th:block>
-
 <th:block layout:fragment="css">
-	<link rel="stylesheet" th:href="@{css/plugins/datepicker/bootstrap-datepicker3.css.map}" />
-	<link rel="stylesheet" th:href="@{css/plugins/datepicker/datepicker3.css}" />
-	<link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css}" />
+
 </th:block>
 
 <th:block th:fragment="AC01130P">
@@ -59,8 +50,8 @@
 												<th>부여기간</th>
 												<td colspan="4">
 													<div class="datepicker_wrap">
-														<input type="text" class="datepicker" id="datepicker1">~<input
-															type="text" class="datepicker" id="datepicker2">
+														<input type="text" class="datepicker" id="AC01130P_datepicker1">~<input
+															type="text" class="datepicker" id="AC01130P_datepicker2">
 															<div style="float: right;">
 																<button>즉시회수</button>
 															</div>

@@ -13,13 +13,7 @@ public interface ExamInfoMapper {
 	 * 
 	 */
 	
-	public List<DealDto> getDealList(String DealNo, String def);					// deal list 가져오기
-
-	public DealDto getDealDetails(String dealNo);									// deal 상세정보 가져오기
-
-	public void registDealDetails(DealDto dealDto);									// deal 정보 등록
-	
-	public void updateDealDetails(DealDto dealDto);									// deal 정보 수정
+	public List<DealDto> getDealList(DealDto dealDto);								// deal list 가져오기
 	
 	/* 안건조회 및 배정 페이지
 	 * 

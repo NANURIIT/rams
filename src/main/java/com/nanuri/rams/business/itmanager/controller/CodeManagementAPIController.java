@@ -4,9 +4,8 @@ import java.text.ParseException;
 import java.util.List;
 
 import com.nanuri.rams.business.itmanager.dto.CommonCodeInfoDto;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto;
+import org.springframework.web.bind.annotation.*;
 
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
 import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoDto;
@@ -14,6 +13,7 @@ import com.nanuri.rams.business.itmanager.service.CodeManagementService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,6 +33,11 @@ public class CodeManagementAPIController {
 		return codeManagementService.getCodeInfoList(cmnsCdGrp);
 	}
 
+	@PatchMapping(value = "/deleteGroupCodeInfo")
+	public boolean deleteGroupCodeInfo(@RequestBody List<String> cmnsCdGrp) {
+		return codeManagementService.deleteCodeInfo(cmnsCdGrp);
+	}
+
 	@GetMapping(value = "/commonCodeInfo")
 	public List<CommonCodeInfoDto> getCommonCodeInfo() {
 		return codeManagementService.getCommonCodeName();
@@ -46,8 +51,9 @@ public class CodeManagementAPIController {
 
 	// 그룹코드정보 등록하기
 	@PostMapping(value = "/registGroupCodeInfo")
-	public void registGroupCodeInfo(GroupCodeInfoDto groupCodeInfoDto) {
-		codeManagementService.registGroupCodeInfo(groupCodeInfoDto);
+	public boolean registGroupCodeInfo(@RequestBody List<GroupCodeInfoSaveRequestDto> requestDtos) {
+		log.debug("requestDtos : {}", requestDtos);
+		return codeManagementService.registGroupCodeInfo(requestDtos);
 	}
 
 	// 코드정보 등록하기

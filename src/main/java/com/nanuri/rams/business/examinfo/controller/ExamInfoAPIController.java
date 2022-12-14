@@ -19,34 +19,16 @@ import lombok.extern.slf4j.Slf4j;
 public class ExamInfoAPIController {
 
 	
-	private ExamInfoService examInfoService;
+	private final ExamInfoService examInfoService;
 
 	/* 심사 요청 페이지
 	 * 
 	 */
 	
 	// deal list 가져오기
-	@GetMapping(value = "/dealList")
-	public List<DealDto> getDealList(String dealNo, String def) {
-		return examInfoService.getDealList(dealNo, def);
-	}
-
-	// deal 상세정보 가져오기
-	@GetMapping(value = "/dealDetails")
-	public DealDto getDealDetails(String dealNo) {
-		return examInfoService.getDealDetails(dealNo);
-	}
-
-	// deal 정보 등록
-	@PostMapping(value = "/dealDetails")
-	public void registDealDetails(DealDto dealDto) {
-		examInfoService.registDealDetails(dealDto);
-	}
-
-	// deal 정보 수정
-	@PatchMapping(value = "/dealDetails")
-	public void updateDealDetails(DealDto dealDto) {
-		examInfoService.updateDealDetails(dealDto);
+	@GetMapping(value = "/getDealList")
+	public List<DealDto> getDealList(DealDto dealDto) {
+		return examInfoService.getDealList(dealDto);
 	}
 	
 	/* 안건조회 및 배정 페이지

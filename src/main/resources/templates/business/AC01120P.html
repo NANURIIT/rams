@@ -2,10 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<th:block layout:fragment="script">
-	<script th:src="@{/js/business/AC01120P.js}"></script>
-</th:block>
-
 <th:block th:fragment="AC01120P">
 	<!-- modal -->
 	<div id="AC01120P" class="modal_wrap">
@@ -31,7 +27,7 @@
 											<td class="etc_td">
 												<input type="text" id="eno">
 												<div class="button_etc_wrap">
-													<button type="button">초기화</button>
+													<button type="button" onclick="reset_AC01120P();">초기화</button>
 													<button type="button" onclick="getEmpList();">조회</button>
 												</div>
 											</td>
@@ -82,12 +78,6 @@
 												</colgroup>
 												<tbody id="tbodyEmpList">
 													<tr>
-														<td>1</td>
-														<td>2</td>
-														<td>3</td>
-														<td>4</td>
-														<td>5</td>
-														<td>6</td>
 													</tr>
 												</tbody>
 											</table>
