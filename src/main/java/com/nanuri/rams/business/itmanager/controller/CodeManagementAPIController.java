@@ -3,12 +3,9 @@ package com.nanuri.rams.business.itmanager.controller;
 import java.text.ParseException;
 import java.util.List;
 
-import com.nanuri.rams.business.itmanager.dto.CommonCodeInfoDto;
-import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto;
+import com.nanuri.rams.business.itmanager.dto.*;
 import org.springframework.web.bind.annotation.*;
 
-import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
-import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoDto;
 import com.nanuri.rams.business.itmanager.service.CodeManagementService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,7 +32,13 @@ public class CodeManagementAPIController {
 
 	@PatchMapping(value = "/deleteGroupCodeInfo")
 	public boolean deleteGroupCodeInfo(@RequestBody List<String> cmnsCdGrp) {
-		return codeManagementService.deleteCodeInfo(cmnsCdGrp);
+		return codeManagementService.deleteGroupCodeInfo(cmnsCdGrp);
+	}
+
+	@PatchMapping(value = "/deleteCodeInfo")
+	public boolean deleteCodeInfo(@RequestBody CodeInfoDeleteRequestDto requestDto) {
+		log.debug("requestDto : {}", requestDto);
+		return codeManagementService.deleteCodeInfo(requestDto);
 	}
 
 	@GetMapping(value = "/commonCodeInfo")
@@ -52,14 +55,13 @@ public class CodeManagementAPIController {
 	// 그룹코드정보 등록하기
 	@PostMapping(value = "/registGroupCodeInfo")
 	public boolean registGroupCodeInfo(@RequestBody List<GroupCodeInfoSaveRequestDto> requestDtos) {
-		log.debug("requestDtos : {}", requestDtos);
 		return codeManagementService.registGroupCodeInfo(requestDtos);
 	}
 
 	// 코드정보 등록하기
 	@PostMapping(value = "/registCodeInfo")
-	public void registCodeInfo(CodeInfoDto codeInfoDto) {
-		codeManagementService.registCodeInfo(codeInfoDto);
+	public boolean registCodeInfo(@RequestBody List<CodeInfoSaveRequestDto> requestDtos) {
+		return codeManagementService.registCodeInfo(requestDtos);
 	}
 
 }

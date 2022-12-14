@@ -7,13 +7,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.nanuri.rams.business.itmanager.dto.CommonCodeInfoDto;
-import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto;
+import com.nanuri.rams.business.itmanager.dto.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
-import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoDto;
 import com.nanuri.rams.business.itmanager.mapper.CodeManagementMapper;
 import com.nanuri.rams.business.itmanager.service.CodeManagementService;
 
@@ -59,14 +56,23 @@ public class CodeMangementServiceImpl implements CodeManagementService {
     }
 
     @Override
-    public boolean deleteCodeInfo(List<String> cmnsCdGrp) {
+    public boolean deleteGroupCodeInfo(List<String> cmnsCdGrp) {
         int count = codeManagementMapper.deleteGroupCodeInfo(cmnsCdGrp);
         return count > 0;
     }
 
     @Override
-    public void registCodeInfo(CodeInfoDto codeInfoDto) {
-        
+    public boolean registCodeInfo(List<CodeInfoSaveRequestDto> requestDtos) {
+        int count = 0;
+        for (CodeInfoSaveRequestDto requestDto : requestDtos) {
+            count += codeManagementMapper.registCodeInfo(requestDto);
+        }
+        return count > 0;
+    }
+
+    @Override
+    public boolean deleteCodeInfo(CodeInfoDeleteRequestDto requestDto) {
+        return codeManagementMapper.deleteCodeInfo(requestDto.getCmnsCdGrp(), requestDto.getCdVlIds()) > 0;
     }
 
     @Override
@@ -85,7 +91,6 @@ public class CodeMangementServiceImpl implements CodeManagementService {
         }
         return count > 0;
     }
-
 
     // 공통코드 조회하는 페이지가 로딩되면서 데이터베이스에 있는 데이터 중 해당 값을 조회목록에 넣어준다.
     @Override

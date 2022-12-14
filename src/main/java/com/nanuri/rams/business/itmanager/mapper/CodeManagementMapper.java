@@ -3,12 +3,9 @@ package com.nanuri.rams.business.itmanager.mapper;
 import java.util.List;
 import java.util.Optional;
 
-import com.nanuri.rams.business.itmanager.dto.CommonCodeInfoDto;
-import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto;
+import com.nanuri.rams.business.itmanager.dto.*;
 import org.apache.ibatis.annotations.Mapper;
-
-import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
-import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoDto;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface CodeManagementMapper {
@@ -23,7 +20,9 @@ public interface CodeManagementMapper {
 
 	public int registGroupCodeInfo(GroupCodeInfoSaveRequestDto requestDto);					// 그룹코드정보 등록하기
 
-	public void registCodeInfo(CodeInfoDto codeInfoDto);								// 코드정보 등록하기
+	public int registCodeInfo(CodeInfoSaveRequestDto requestDto);								// 코드정보 등록하기
+	public int deleteCodeInfo(@Param(value = "cmnsCdGrp") String cmnsCdGrp
+							, @Param(value = "cdVlIds") List<String> cdVlIds);
 
 	public List<CommonCodeInfoDto> getCommonCodeName();
 

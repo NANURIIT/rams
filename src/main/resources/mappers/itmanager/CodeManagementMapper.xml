@@ -89,4 +89,30 @@
         WHERE cmns_cd_grp = #{oldCmnsCdGrp}
     </update>
 
+    <update id="registCodeInfo" parameterType="com.nanuri.rams.business.itmanager.dto.CodeInfoSaveRequestDto">
+        UPDATE RAA91B
+        <set>
+            <if test="cdVlId != null and cdVlId !=''">
+                cd_vl_id = #{cdVlId},
+            </if>
+            <if test="cdVlNm != null and cdVlNm !=''">
+                cd_vl_nm = #{cdVlNm},
+            </if>
+            <if test="useF != null and useF !=''">
+                use_f = #{useF},
+            </if>
+        </set>
+        WHERE cmns_cd_grp = #{cmnsCdGrp}
+          AND cd_vl_id = #{oldCdVlId}
+    </update>
+
+    <update id="deleteCodeInfo">
+        UPDATE RAA91B
+           SET use_f = 'N'
+         WHERE cmns_cd_grp = #{cmnsCdGrp}
+           AND cd_vl_id IN
+        <foreach collection="cdVlIds" item="cdVlId" index="index" open="(" separator="," close=")">
+            #{cdVlId}
+        </foreach>
+    </update>
 </mapper>
