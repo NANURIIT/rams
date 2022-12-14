@@ -4,7 +4,22 @@ $(document).ready(function() {
 
 	setKeyDownFunction();
 	
+	setDatePicker();
+	
 });
+
+function setDatePicker(){
+	
+	$('#tab1_datepicker1').daterangepicker({
+		singleDatePicker: true,
+		autoApply: true,
+		locale: {
+			"format": 'YYYY-MM-DD',
+			"daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
+			"monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+		}
+	});
+}
 
 // modal controll function
 function setOpenModal() {
