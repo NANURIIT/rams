@@ -20,8 +20,10 @@
     font-size: 13px;
 }
 .header .header_wrap .header_button_wrap button {
+	font-size: 13px;
     vertical-align: baseline;
     padding: 0 3px;
+    height: 25px;
 }
 
 .sidenav {
@@ -64,6 +66,7 @@
     text-align: left;
 }
 .search_wrap .search_table tr td button {
+	font-size: 13px;
     height: 25px;
     line-height: 1;
     padding: 0 3px;
@@ -87,6 +90,7 @@
     padding: 20px 0 10px;
 }
 .button_wrap button {
+	font-size: 13px;
 	height : 25px;
 	line-height: 1;
     padding: 0 3px;
@@ -325,6 +329,7 @@
     right: 0;
 }
 .content_list_caption_wrap .content_list_button button {
+	font-size: 13px;
     height: 30px;
     line-height: 1;
     padding: 0 3px;
@@ -349,6 +354,7 @@
 }
 
 .contents_list  .contents_list_desc button {
+	font-size: 13px;
     height: 25px;
     line-height: 1;
     padding: 0 3px;
@@ -448,11 +454,9 @@
 .modal_content table tr td select {
     width: 150px;
 }
-
 .datepicker{
 	height:25px;
 }
-
 /* width */
 .width150{
 	width: 150px !important; 
