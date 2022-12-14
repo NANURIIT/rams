@@ -87,6 +87,8 @@
     padding: 20px 0 10px;
 }
 .button_wrap button {
+	height : 25px;
+	line-height: 1;
     padding: 0 3px;
 }
 
@@ -445,6 +447,10 @@
 .modal_content table tr td input,
 .modal_content table tr td select {
     width: 150px;
+}
+
+.datepicker{
+	height:25px;
 }
 
 /* width */
