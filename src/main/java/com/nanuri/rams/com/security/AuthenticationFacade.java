@@ -4,18 +4,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-// import com.nanuri.rams.com.login.vo.UserDetailsVO;
+import com.nanuri.rams.com.security.vo.EmpDetailsVO;
 
-// @Component
-// public class AuthenticationFacade {
+@Component
+public class AuthenticationFacade {
 	
-// 	public Authentication getAuthentication() {
-//         return SecurityContextHolder.getContext().getAuthentication();
-//     }
+	public Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
+    }
 
-//     public UserDetailsVO getDetails() {
-//         Authentication auth = getAuthentication();
-//         return (UserDetailsVO)auth.getPrincipal();
-//     }
+    public EmpDetailsVO getDetails() {
+        Authentication auth = getAuthentication();
+        return (EmpDetailsVO)auth.getPrincipal();
+    }
 
-// }
+}

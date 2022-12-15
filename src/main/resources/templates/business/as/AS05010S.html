@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<th:block layout:fragment="script">
+	<script th:src="@{js/tab.js}"></script>
+	<script th:src="@{/js/business/AS05010S.js}"></script>
+</th:block>
+
+<th:block layout:fragment="customContent">
+	<div class="main_container">
+		<div class="search_wrap">
+			<table class="search_table search_top">
+				<colgroup>
+					<col style="width: 7%;">
+					<col style="width: 22%;">
+					<col>
+				</colgroup>
+				<tr>
+					<th>deal번호</th>
+					<td>
+						<input type="text">
+					</td>
+					<td>
+						<button type="button">조회</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="contents_box">
+			<table class="table_header">
+				<colgroup>
+					<col>
+					<col>
+					<col>
+					<col>
+					<col>
+				</colgroup>
+				<thead>
+					<tr>
+						<th>deal번호</th>
+						<th>안건명</th>
+						<th>신규/재부의정보</th>
+						<th>심사역</th>
+						<th>부수안건정보</th>
+					</tr>
+				</thead>
+			</table>
+			<div class="grid_wrap grid_wrapS">
+				<form>
+					<table>
+						<colgroup>
+							<col>
+							<col>
+							<col>
+							<col>
+							<col>
+						</colgroup>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>2</td>
+								<td>3</td>
+								<td>4</td>
+								<td>5</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+		<div class="contents_box">
+			<div class="tab_wrap">
+				<div class="tabs-nav">
+					<ul>
+						<li class="active"><a href="#tab1">약정/기표/철회</a></li>
+						<li><a href="#tab2">EXIT</a></li>
+						<li><a href="#tab3">셀다운의무</a></li>
+						<li><a href="#tab4">기타의무</a></li>
+						<li><a href="#tab5">관리직원</a></li>
+						<li><a href="#tab6">신용사건발생</a></li>
+					</ul>
+				</div>
+
+				<section class="tabs-content">
+					<div id="tab1" class="tab">
+						<div class="contents_list_wrap contents_list_wrap19">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">약정정보</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">약정일</div>
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker width150" id="tab1_datepicker1">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">약정금액</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">체크리스트 문서번호</div>
+								<div class="contents_list_desc">
+									<select>
+										<option value="1">1</option>
+										<option value="1">2</option>
+										<option value="1">3</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap20">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">기표/인가정보</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">기표일</div>
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker width150" id="tab1_datepicker2">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">만기일</div>
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker width150" id="tab1_datepicker3">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">기표금액</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap21">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">진행구분</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">구분</div>
+								<div class="contents_list_desc">
+									<select>
+										<option value="0" selected>미진행(부의전철회)</option>
+										<option value="1">미진행(부결/보류)</option>
+										<option value="2">미진행(가결,약정전철회)</option>
+										<option value="3">진행(가결,약정/기표)</option>
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">사유</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button>초기화</button>
+							<button>삭제</button>
+							<button>저장</button>
+						</div>
+					</div>
+					<div id="tab2" class="tab">
+						<div class="contents_list_wrap contents_list_wrap19">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">EXIT정보</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">EXIT날짜</div>
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker width280" id="tab2_datepicker1">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">사유</div>
+								<div class="contents_list_desc">
+									<select class="width280">
+										<option value="0" selected>N</option>
+										<option value="1">만기상환</option>
+										<option value="2">조기상환</option>
+										<option value="3">매각</option>
+										<option value="4">기타</option>
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">수신 문서번호</div>
+								<div class="contents_list_desc">
+									<input class="width280" type="text">
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button>저장</button>
+						</div>
+					</div>
+					<div id="tab3" class="tab">
+						<div class="contents_list_wrap contents_list_wrap19">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">의무정보</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap29">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">해소정보</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap30">
+							<div class="grid_wrap_h grid_harf">
+								<div class="contents_box">
+									<table class="table_header">
+										<colgroup>
+											<col style="width: 20%;">
+											<col style="width: 40%;">
+											<col style="width: 40%;">
+										</colgroup>
+										<thead>
+											<tr>
+												<th>NO</th>
+												<th>의무금액</th>
+												<th>적용기한일</th>
+											</tr>
+										</thead>
+									</table>
+									<div class="grid_wrap245">
+										<form>
+											<table>
+												<colgroup>
+													<col style="width: 20%;">
+													<col style="width: 40%;">
+													<col style="width: 40%;">
+												</colgroup>
+												<tbody>
+													<tr>
+														<td>1</td>
+														<td>2</td>
+														<td>3</td>
+													</tr>
+												</tbody>
+											</table>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap31">
+							<div class="grid_wrap_h">
+								<div class="contents_box">
+									<table class="table_header">
+										<colgroup>
+											<col style="width: 19%;">
+											<col style="width: 27%;">
+											<col style="width: 27%;">
+											<col style="width: 27%;">
+										</colgroup>
+										<thead>
+											<tr>
+												<th>NO</th>
+												<th>해소일</th>
+												<th>해소금액</th>
+												<th>미해소잔액</th>
+											</tr>
+										</thead>
+									</table>
+									<div class="grid_wrap245">
+										<form>
+											<table>
+												<colgroup>
+													<col style="width: 19%;">
+													<col style="width: 27%;">
+													<col style="width: 27%;">
+													<col style="width: 27%;">
+												</colgroup>
+												<tbody>
+													<tr>
+														<td>1</td>
+														<td>2</td>
+														<td>3</td>
+														<td>4</td>
+													</tr>
+												</tbody>
+											</table>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap32">
+							<div class="contents_list">
+								<div class="contents_list_title">의무금액</div>
+								<div class="contents_list_desc">
+									<input class="width280" type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">적용기한일</div>
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker width280" id="tab3_datepicker1">
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap33">
+							<div class="contents_list">
+								<div class="contents_list_title">해소일</div>
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker width280" id="tab3_datepicker2">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">해소금액</div>
+								<div class="contents_list_desc">
+									<input class="width280" type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">미해소잔액</div>
+								<div class="contents_list_desc">
+									<input class="width280" type="text">
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap2">
+							<button>초기화1</button>
+							<button>삭제</button>
+							<button>저장</button>
+						</div>
+						<div class="tab_button_wrap">
+							<button>초기화2</button>
+							<button>삭제</button>
+							<button>저장</button>
+						</div>
+					</div>
+					<div id="tab4" class="tab">
+						<div class="contents_list_wrap contents_list_wrap19">
+							<div class="contents_box">
+								<table class="table_header">
+									<colgroup>
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+									</colgroup>
+									<thead>
+										<tr>
+											<th>NO</th>
+											<th>의무내용</th>
+											<th>적용기한일</th>
+											<th>해소일</th>
+											<th>해소여부</th>
+										</tr>
+									</thead>
+								</table>
+								<div class="grid_wrap_none_scroll">
+									<form>
+										<table>
+											<colgroup>
+												<col style="width: 20%;">
+												<col style="width: 20%;">
+												<col style="width: 20%;">
+												<col style="width: 20%;">
+												<col style="width: 20%;">
+											</colgroup>
+											<tbody>
+												<tr>
+													<td>1</td>
+													<td>2</td>
+													<td>3</td>
+													<td>4</td>
+													<td>5</td>
+												</tr>
+											</tbody>
+										</table>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap25">
+							<div class="contents_list">
+								<div class="contents_list_title">의무내용</div>
+								<div class="contents_list_desc">
+									<input class="width280" type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">적용기한일</div>
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker width280" id="tab4_datepicker1">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">해소일</div>
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker width280" id="tab4_datepicker2">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">해소여부</div>
+								<div class="contents_list_desc">
+									<input class="width280" type="text">
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button>초기화</button>
+							<button>삭제</button>
+							<button>저장</button>
+						</div>
+					</div>
+					<div id="tab5" class="tab">
+						<div class="contents_list_wrap contents_list_wrap19">
+							<div class="contents_box">
+								<table class="table_header">
+									<colgroup>
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+										<col style="width: 20%;">
+									</colgroup>
+									<thead>
+										<tr>
+											<th>NO</th>
+											<th>사번</th>
+											<th>성명</th>
+											<th>변경일</th>
+											<th>변경사유</th>
+										</tr>
+									</thead>
+								</table>
+								<div class="grid_wrap_none_scroll">
+									<form>
+										<table>
+											<colgroup>
+												<col style="width: 20%;">
+												<col style="width: 20%;">
+												<col style="width: 20%;">
+												<col style="width: 20%;">
+												<col style="width: 20%;">
+											</colgroup>
+											<tbody>
+												<tr>
+													<td>1</td>
+													<td>2</td>
+													<td>3</td>
+													<td>4</td>
+													<td>5</td>
+												</tr>
+											</tbody>
+										</table>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap25">
+							<div class="contents_list">
+								<div class="contents_list_title">직원명</div>
+								<div class="contents_list_desc">
+									<input class="width280" type="text" id="rcvdEmpNm" readonly>
+									<button type="button" id="open_modal_AC01120P">icon</button>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">변경일</div>
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker" id="tab5_datepicker1">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">변경사유</div>
+								<div class="contents_list_desc">
+									<input class="width280" type="text">
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button>초기화</button>
+							<button>삭제</button>
+							<button>저장</button>
+						</div>
+					</div>
+					<div id="tab6" class="tab">
+						<div class="contents_list_wrap contents_list_wrap19">
+							<div class="contents_list">
+								<div class="contents_list_title">기준일자</div>
+								<div class="datepicker_wrap">
+									<input type="text" class="datepicker width280" id="tab6_datepicker1">
+								</div>
+							</div>
+							<div class="tab_button_wrap">
+								<button>조회</button>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap30">
+							<div class="contents_box">
+								<table class="table_header">
+									<colgroup>
+										<col>
+										<col>
+										<col>
+										<col>
+										<col>
+										<col>
+										<col>
+										<col>
+										<col>
+									</colgroup>
+									<thead>
+										<tr>
+											<th>NO</th>
+											<th>법인명</th>
+											<th>법인번호</th>
+											<th>구분</th>
+											<th>상세항목</th>
+											<th>체크기준</th>
+											<th>기준값</th>
+											<th>결과</th>
+											<th>내역</th>
+										</tr>
+									</thead>
+								</table>
+								<div class="grid_wrap_none_scroll grid_wrap245">
+									<form>
+										<table>
+											<colgroup>
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+												<col>
+											</colgroup>
+											<tbody>
+												<tr>
+													<td>1</td>
+													<td>2</td>
+													<td>3</td>
+													<td>4</td>
+													<td>5</td>
+													<td>6</td>
+													<td>7</td>
+													<td>8</td>
+													<td>9</td>
+												</tr>
+											</tbody>
+										</table>
+									</form>
+								</div>
+							</div>	
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
+</th:block>
+</html>
