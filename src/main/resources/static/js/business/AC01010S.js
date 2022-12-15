@@ -33,7 +33,6 @@ function clickDetailButton() {
 
 function doubleClickColumn() {
     $(document).on('dblclick', '.update_column', function () {
-        // refactoring
         let trClass = $(this).attr('class').split(' ')[1]
         tdInputHTML = '<input class="' + trClass + '_input" style="width: 100%;" type="text" value="' + $(this).text() + '">'
         $(this).html(tdInputHTML);
@@ -42,7 +41,6 @@ function doubleClickColumn() {
 
 function addGroupCodeRow() {
     $(document).on('click', '#add_group_row', function () {
-        // refactoring
         let ROW_HTML = '';
         ROW_HTML += '<tr>';
         ROW_HTML += '   <td><input style="width:100%" type="checkbox"></td>';
@@ -63,7 +61,6 @@ function addGroupCodeRow() {
 
 function deleteGroupCodeRow() {
     $(document).on('click', '#delete_group_row', function () {
-        // refactoring
         let groupCodeList = new Array();
         let tr = $('#groupCodeListTable').children();
 
@@ -82,7 +79,6 @@ function deleteGroupCodeRow() {
 
 function clickSaveGroupCode() {
     $(document).on('click', '#save_group', function () {
-        // refactoring
         let groupCodeList = new Array();
 
         let tr = $('#groupCodeListTable').children();
