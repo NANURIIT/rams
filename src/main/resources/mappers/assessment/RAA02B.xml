@@ -1,10 +1,185 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nanuri.rams.business.common.mapper.RAA02BMapper">
+<mapper namespace="com.nanuri.rams.business.casemanagement.mapper.CaseManagementMapper">
 
 	<!-- deal 정보 검색 -->
 	<select id="getDealList" parameterType="com.nanuri.rams.business.common.dto.RAA02BDto" resultType="java.util.HashMap">
 		SELECT 1+1 FROM DUAL;
 	</select>
+	
+	<!-- 신규 안건 생성 -->
+	<!-- 임시 -->
+	<sql id="AS03220_INSERT_RAA02B">
+		INSERT INTO RAA02B
+		       ( 
+		         IB_DEAL_NO								<!-- IBDEAL번호 -->
+		       , RISK_INSPCT_CCD
+		       , LST_C_CASE_CCD
+		       , RA_DEAL_CCD
+		       , FST_RGST_P_DPRT_CD
+		       , RA_STD_YR_MM
+		       , RA_DEAL_SQ
+		       , RISK_RCG_NO
+		       , IB_DEAL_NM								<!-- IBDEAL명 -->
+		       , OWN_P_ENO
+		       , FST_RGST_DT
+		       , UPT_P_ENO
+		       , UPT_RSN_CNTNT
+		       , RE_RGST_DT
+		       , HDQT CD								<!-- 본부코드 -->
+		       , DPRT_CD								<!-- 부점코드 -->
+		       , CHRG_P_ENO								<!-- 담당자사번 -->
+		       , COPRTN_TYP_CD							<!-- 협업유형코드 -->
+		       , PTCP_AMT								<!-- 참여금액 -->
+		       , INVST_NTN_CD							<!-- 투자국가코드 -->
+		       , INVST_CRNCY_CD							<!-- 투자통화코드 -->
+		       , CRNCY_AMT								<!-- 통화금액 -->
+		       , INVST_PRD_DY_C
+		       , PY_EXPT_DT
+		       , CC_EXPT_DT
+		       , TL_ERN_AMT								<!-- 총수익금액 -->
+		       , WRT_ERN_AMT							<!-- 기표수익금액 -->
+		       , RCVBL_ERN_AMT							<!-- 미수수익금액 -->
+		       , INVST_GDS_LDVD_CD						<!-- 투자상품대분류코드 -->
+			   , INVST_GDS_MDVD_CD						<!-- 투자상품중분류코드 -->
+			   , INVST_GDS_SDVD_CD						<!-- 투자상품소분류코드 -->
+			   , INVST_GDS_DTLS_DVD_CD					<!-- 투자상품상세분류코드 -->
+			   , MNG_DRCTG_APP_F
+			   , IND_TYP_DVD_CD
+			   , CHECK_ITEM_CD
+			   , MRTG_OFR_F
+			   , ENSR_F
+			   , RSPSB_CMPL_CCD
+			   , RISK_INSPCT_RSLTN_CCD
+			   , FST_CNFRNC_F
+			   , RPR_STRT_DT
+			   , OFCL_DOC_ACPT_DT
+			   , APLC_EXPT_DT
+			   , INSPCT_PRGRS_ST_CD
+			   , NHNDL_RSN_CNTNT
+			   , AGR_DT
+			   , AGR_AMT
+			   , RQS_DOC_NO
+			   , WRT_DT
+			   , MTRT_DT
+			   , CSH_NTR_ASTS_WRT_AMT
+			   , END_DT
+			   , OPTNL_END_CCD
+			   , END_BSS_CNTNT
+			   , INSPCT_CNCL_HNDL_CCD
+			   , IB_DEAL_SNM_NM
+			   , UPTA_INSPCT_PRGRS_ST_CD
+			   , FNC_GDS_DVD_CD
+			   , RA_BSNS_ZONE_CD
+			   , INVST_THING_CCD
+			   , INVST_THING_DTLS_CCD
+			   , UPT_DT
+			   , BSNS_DPRT_CMMT_RMRK1
+			   , INSPCT_DPRT_CMMT_RMRK2
+			   , RSLTN_CNFRNC_CCD
+			   , CFMT_DBT
+			   , WM_GDS_ETC
+			   , RA_RSLTN_CCD
+			   , MAIN_INVST_TRGT_NM
+			   , RA_FND_RSK_GRD_CD
+			   , MKTG_FEE_R
+			   , TL_RCPS_R
+			   , TRUST_RCPS_R
+			   , DL_DPRT_CD1
+			   , DL_DPRT_CD2
+			   , DL_DPRT_CD3
+			   , ASTS_VAL_AMT
+			   , MIN_MRTG_RT
+			   , STD_DY_MRTG_RT
+			   , ETC_FNC_CNDT
+			   , APLC_EXCH_R
+			   , RA_ETC_FEE_R
+			   , RA_LSRT_FEE_R
+			   , RA_UDWRT_FEE_R
+			   , UDWRT_FNC_ISNG_DT
+			   , UDWRT_FNC_SBMS_DT
+			   , UDWRT_FNC_SBS_DT
+			   , TRSNS_INVST_F
+			   , BSNS_STTS_CCD
+			   , BSC_ASTS_INPT_EXPT_F
+			   , INS_GRD_INPT_EXPT_F
+			   , CFMT_ENTP_NM
+			   , ADVTCNQ_GDS_F
+			   , JN_QLFCT
+			   , MN_JN_AMT
+			   , WM_OTCM_RCPS_R
+			   , AC_MRTG_RT
+			   , INSPCT_DPRT_CCD
+			   , CNC_CMPNY_INPT_EXPT_F
+			   , HNDL_DY_TM
+			   , HNDL_DPRT_CD
+			   , HNDL_P_ENO
+			   )
+		VALUES (
+				 #{IB_DEAL_NO}
+			   , #{RISK_INSPCT_CD}
+			   )
+			   
+			   
+		       
+		       
+		       , DSC_DT									<!-- DSC일자 -->
+		       , 
+		       , TL_AMT									<!-- 총금액 -->
+		       , 
+		       , 
+		       , 
+		       , 
+		       , ENTP_RNM								<!-- 업체실명 -->
+		       , CRDT_GRD_CD							<!-- 신용등급코드 -->
+		       , WRT_DT									<!-- 기표일자 -->
+		       , MTRT_DT								<!-- 만기일자 -->
+		       , 
+		       , 
+		       , 
+			   , 
+			   , 
+			   , 
+			   , 
+			   , 
+			   , WTHLD_TBL_NM							<!-- 원천테이블명 -->
+			   , FNL UPT_DY_TM							<!-- 최종변경일시 -->
+			   , HNDL_DY_TM								<!-- 처리일시 -->
+			   , HNDL_DPRT_CD							<!-- 처리부점코드 -->
+			   , HNDL_P_ENO								<!-- 처리자사번 -->
+		       )
+		VALUES (
+		         #{IB_DEAL_NO}							<!-- IBDEAL번호 -->
+		       , TO_CHAR(SYSDATE, 'YYYYMMDD')			<!-- DSC일자 -->
+		       , TRIM(#{IB_DEAL_NM})					<!-- IBDEAL명 -->
+		       , TO_NUMBER(NVL(#{TL_AMT, 0}))			<!-- 총금액 -->
+		       , TO_NUMBER(NVL(#{PTCP_AMT, 0}))			<!-- 참여금액 -->
+		       , TO_NUMBER(NVL(#{TL_ERN_AMT, 0}))		<!-- 총수익금액 -->
+		       , TO_NUMBER(NVL(#{WRT_ERN_AMT, 0}))		<!-- 기표수익금액 -->
+		       , TO_NUMBER(NVL(#{RCVBL_ERN_AMT, 0}))	<!-- 미수수익금액 -->
+		       , TRIM(#{ENTP_RNM})						<!-- 업체실명 -->
+		       , ''										<!-- 신용등급코드 -->
+		       , #{WRT_DT}								<!-- 기표일자 -->
+		       , #{MTRT_DT}								<!-- 만기일자 -->
+		       , #{INVST_NTN_CD}						<!-- 투자국가코드 -->
+		       , #{INVST_CRNCY_CD}						<!-- 투자통화코드 -->
+		       , NVL(#{CRNCY_AMT}, 0)					<!-- 통화금액 -->
+		       , #{INVST_GDS_LDVD_CD}					<!-- 투자상품대분류코드 -->
+		       , #{INVST_GDS_MDVD_CD}					<!-- 투자상품중분류코드 -->
+		       , #{INVST_GDS_SDVD_CD}					<!-- 투자상품소분류코드 -->
+		       , ''										<!-- 투자상품상세분류코드 -->
+		       , #{COPRTN_TYP_CD}						<!-- 협업유형코드 -->
+		       , #{HDQT_CD}								<!-- 본부코드 -->
+		       , #{DPRT_CD}								<!-- 부점코드 -->
+		       , TRIM(#{CHRG_P_ENO})					<!-- 담당자사번 -->
+		       , ''										<!-- 원천테이블명 -->
+		       , SYSDATE								<!-- 최종변경일시 -->
+		       , SYSDATE								<!-- 처리일시 -->
+		       , #{HNDL_DPRT_CD}						<!-- 처리부점코드 -->
+		       , #{HNDL_P_ENO}							<!-- 처리자사번 -->
+		       )
+	</sql>
+
+
 
 </mapper>
