@@ -457,6 +457,11 @@
 .datepicker{
 	height:25px;
 }
+.daterange{
+	display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
 /* width */
 .width150{
 	width: 150px !important; 
@@ -464,4 +469,6 @@
 .width280{
 	width: 280px !important; 
 }
-
+.width80{
+	width: 80px !important; 
+}
