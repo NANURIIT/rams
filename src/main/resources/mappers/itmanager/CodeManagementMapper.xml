@@ -89,4 +89,74 @@
         WHERE cmns_cd_grp = #{oldCmnsCdGrp}
     </update>
 
+    <insert id="insertGroupCodeInfo" parameterType="com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto">
+        INSERT INTO RAA90B (
+            cmns_cd_grp,
+            cmns_cd_nm,
+            cd_lngth,
+            use_f,
+            rgst_dt
+        ) VALUES (
+            #{cmnsCdGrp},
+            #{cmnsCdNm},
+            #{cdLngth},
+            #{useF},
+            DATE_FORMAT(now(), '%Y%m%d')
+        )
+    </insert>
+
+    <update id="registCodeInfo" parameterType="com.nanuri.rams.business.itmanager.dto.CodeInfoSaveRequestDto">
+        UPDATE RAA91B
+        <set>
+            <if test="cdVlId != null and cdVlId !=''">
+                cd_vl_id = #{cdVlId},
+            </if>
+            <if test="cdVlNm != null and cdVlNm !=''">
+                cd_vl_nm = #{cdVlNm},
+            </if>
+            <if test="useF != null and useF !=''">
+                use_f = #{useF},
+            </if>
+        </set>
+        WHERE cmns_cd_grp = #{cmnsCdGrp}
+          AND cd_vl_id = #{oldCdVlId}
+    </update>
+
+    <insert id="insertCodeInfo" parameterType="com.nanuri.rams.business.itmanager.dto.CodeInfoSaveRequestDto">
+        INSERT INTO RAA91B (
+            cmns_cd_grp,
+            cd_vl_id,
+            cd_vl_nm,
+            use_f,
+            rgst_dt
+        ) VALUES (
+            #{cmnsCdGrp},
+            #{cdVlId},
+            #{cdVlNm},
+            #{useF},
+            DATE_FORMAT(now(), '%Y%m%d')
+        )
+    </insert>
+
+    <select id="getCodeInfo" resultType="com.nanuri.rams.business.itmanager.dto.CodeInfoDto">
+        SELECT cd_vl_id
+             , cd_vl_nm
+             , rslt_cd_vl
+             , cd_sq
+             , use_f
+        <include refid="CommonMapper.commonDto" />
+          FROM RAA91B
+         WHERE cmns_cd_grp = #{cmnsCdGrp}
+           AND cd_vl_id = #{cdVlId}
+    </select>
+
+    <update id="deleteCodeInfo">
+        UPDATE RAA91B
+           SET use_f = 'N'
+         WHERE cmns_cd_grp = #{cmnsCdGrp}
+           AND cd_vl_id IN
+        <foreach collection="cdVlIds" item="cdVlId" index="index" open="(" separator="," close=")">
+            #{cdVlId}
+        </foreach>
+    </update>
 </mapper>
