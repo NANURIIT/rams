@@ -3,6 +3,7 @@ $(function () {
     getCommonCodeInfo();
     getGroupCodeInfoList(cmnsCdGrp);
 
+    // select박스 선택
     $(document).on('click', '#commonCodeSearch', function () {
         cmnsCdGrp = $('#commonCodeInfo option:selected').val()
         getGroupCodeInfoList(cmnsCdGrp);
@@ -14,6 +15,7 @@ $(function () {
         getGroupCodeInfo($(this).attr('id'));
     });
 
+    // 더블클릭 인풋박스 활성화
     $(document).on('dblclick', '.update_column', function () {
         // refactoring
         let trClass = $(this).attr('class').split(' ')[1]
@@ -21,6 +23,7 @@ $(function () {
         $(this).html(tdInputHTML);
     });
 
+    // 그룹 코드 행 추가
     $(document).on('click', '#add_group_row', function () {
         // refactoring
         let ROW_HTML = '';
@@ -31,8 +34,8 @@ $(function () {
         ROW_HTML += '   <td></td>';
         ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
         ROW_HTML += '   <td></td>';
-        ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
-        ROW_HTML += '   <td><input style="width:100%" type="checkbox"></td>';
+        ROW_HTML += '   <td></td>';
+        ROW_HTML += '   <td><input class="group_code_use_yn" style="width:100%" type="checkbox"></td>';
         ROW_HTML += '   <td></td>';
         ROW_HTML += '   <td></td>';
         ROW_HTML += '   <td></td>';
@@ -41,6 +44,7 @@ $(function () {
     });
 
 
+    // 그룹 코드 행 삭제
     $(document).on('click', '#delete_group_row', function () {
         // refactoring
         let groupCodeList = new Array();
@@ -58,6 +62,7 @@ $(function () {
         }
     });
 
+    // 그룹 코드 저장
     $(document).on('click', '#save_group', function () {
         // refactoring
         let groupCodeList = new Array();
@@ -100,6 +105,7 @@ $(function () {
         }
     });
 
+    // 코드 행 추가
     $(document).on('click', '#add_row', function () {
         // refactoring
         let ROW_HTML = '';
@@ -109,7 +115,7 @@ $(function () {
         ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
         ROW_HTML += '   <td></td>';
         ROW_HTML += '   <td></td>';
-        ROW_HTML += '   <td><input style="width:100%" type="checkbox"></td>';
+        ROW_HTML += '   <td><input class="code_use_yn" style="width:100%" type="checkbox"></td>';
         ROW_HTML += '   <td></td>';
         ROW_HTML += '   <td></td>';
         ROW_HTML += '   <td></td>';
@@ -118,13 +124,13 @@ $(function () {
         $('#codeListTable').append(ROW_HTML);
     });
 
+    // 코드 행 삭제
     $(document).on('click', '#delete_row', function () {
         let request = new Object();
         let codeList = new Array();
         let tr = $('#codeListTable').children();
 
         for (let i = 0; i < tr.length; i++) {
-            let code = new Object();
             let deleteCheckBox = $(tr[i]).find('input');
 
             if (deleteCheckBox.prop('checked')) {
@@ -132,17 +138,17 @@ $(function () {
             }
         }
 
-        if(codeList.length > 0) {
+        if (codeList.length > 0) {
             request.cmnsCdGrp = $(tr[0]).attr('id')
-            request.cdVlIds = codeList; 
+            request.cdVlIds = codeList;
         }
 
-        if(Object.keys(request).length > 0) {
+        if (Object.keys(request).length > 0) {
             deleteCode(request);
         }
     });
 
-
+    // 코드 저장 버튼 클릭
     $(document).on('click', '#save', function () {
         let codeList = new Array();
         let tr = $('#codeListTable').children();
@@ -167,6 +173,7 @@ $(function () {
             if (!codeUseYnCheck || (codeUseYn && codeUseYnCheck === 'n') || (!codeUseYn && codeUseYnCheck === 'y')) {
                 code.useF = codeUseYn ? 'Y' : 'N';
             }
+            
             if (!(Object.keys(code).length === 0)) {
                 code.oldCdVlId = oldCodeId;
                 code.cmnsCdGrp = groupCodeId;
@@ -307,17 +314,18 @@ var saveCode = function (codeList) {
             getGroupCodeInfo(cmnsCdGrp);
         },
         error: function (response) {
-            console.log(response);
+            let message = response.responseJSON.message;
+            alert(message);
         }
     });
 }
 
-var deleteCode = function(request) {
+var deleteCode = function (request) {
     let cmnsCdGrp = request.cmnsCdGrp;
     $.ajax({
-        method: 'PATCH', 
-        url: '/deleteCodeInfo', 
-        data: JSON.stringify(request), 
+        method: 'PATCH',
+        url: '/deleteCodeInfo',
+        data: JSON.stringify(request),
         contentType: 'application/json; charset=UTF-8',
         dataType: 'json',
         success: function () {

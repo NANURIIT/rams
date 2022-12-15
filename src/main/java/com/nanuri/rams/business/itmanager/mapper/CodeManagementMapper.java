@@ -20,7 +20,12 @@ public interface CodeManagementMapper {
 
 	public int registGroupCodeInfo(GroupCodeInfoSaveRequestDto requestDto);					// 그룹코드정보 등록하기
 
+	public int insertGroupCodeInfo(GroupCodeInfoSaveRequestDto requestDto);
+
 	public int registCodeInfo(CodeInfoSaveRequestDto requestDto);								// 코드정보 등록하기
+	public int insertCodeInfo(CodeInfoSaveRequestDto requestDto);
+	public Optional<CodeInfoDto> getCodeInfo(@Param(value = "cmnsCdGrp") String cmnsCdGrp
+										   , @Param(value = "cdVlId") String cdVlId);
 	public int deleteCodeInfo(@Param(value = "cmnsCdGrp") String cmnsCdGrp
 							, @Param(value = "cdVlIds") List<String> cdVlIds);
 

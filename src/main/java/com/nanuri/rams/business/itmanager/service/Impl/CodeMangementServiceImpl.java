@@ -43,6 +43,30 @@ public class CodeMangementServiceImpl implements CodeManagementService {
     }
 
     @Override
+    public boolean registGroupCodeInfo(List<GroupCodeInfoSaveRequestDto> requestDtos) {
+        int count = 0;
+        for (GroupCodeInfoSaveRequestDto requestDto : requestDtos) {
+            if (codeManagementMapper.getGroupCodeInfo(requestDto.getCmnsCdGrp()).isPresent()) {
+                throw new IllegalArgumentException("해당 그룹코드가 존재합니다. " + requestDto.getCmnsCdGrp());
+            }
+
+            if (codeManagementMapper.getGroupCodeInfo(requestDto.getOldCmnsCdGrp()).isEmpty()) {
+                // TODO -> 신규 등록 코드
+                count += codeManagementMapper.insertGroupCodeInfo(requestDto);
+            } else {
+                count += codeManagementMapper.registGroupCodeInfo(requestDto);
+            }
+        }
+        return count > 0;
+    }
+
+    @Override
+    public boolean deleteGroupCodeInfo(List<String> cmnsCdGrp) {
+        int count = codeManagementMapper.deleteGroupCodeInfo(cmnsCdGrp);
+        return count > 0;
+    }
+
+    @Override
     public List<CodeInfoDto> getCodeInfoList(String cmnsCdGrp) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -56,16 +80,20 @@ public class CodeMangementServiceImpl implements CodeManagementService {
     }
 
     @Override
-    public boolean deleteGroupCodeInfo(List<String> cmnsCdGrp) {
-        int count = codeManagementMapper.deleteGroupCodeInfo(cmnsCdGrp);
-        return count > 0;
-    }
-
-    @Override
     public boolean registCodeInfo(List<CodeInfoSaveRequestDto> requestDtos) {
         int count = 0;
         for (CodeInfoSaveRequestDto requestDto : requestDtos) {
-            count += codeManagementMapper.registCodeInfo(requestDto);
+            if (codeManagementMapper.getCodeInfo(requestDto.getCmnsCdGrp(), requestDto.getCdVlId()).isPresent()) {
+                throw new IllegalArgumentException("해당 코드가 존재합니다. " + requestDto.getCmnsCdGrp() + " : " + requestDto.getCdVlId());
+            }
+
+            if (codeManagementMapper.getCodeInfo(requestDto.getCmnsCdGrp(), requestDto.getOldCdVlId()).isEmpty()) {
+                // TODO => 신규등록
+                log.debug("신규 코드 등록 로그");
+                count += codeManagementMapper.insertCodeInfo(requestDto);
+            } else {
+                count += codeManagementMapper.registCodeInfo(requestDto);
+            }
         }
         return count > 0;
     }
@@ -73,23 +101,6 @@ public class CodeMangementServiceImpl implements CodeManagementService {
     @Override
     public boolean deleteCodeInfo(CodeInfoDeleteRequestDto requestDto) {
         return codeManagementMapper.deleteCodeInfo(requestDto.getCmnsCdGrp(), requestDto.getCdVlIds()) > 0;
-    }
-
-    @Override
-    public boolean registGroupCodeInfo(List<GroupCodeInfoSaveRequestDto> requestDtos) {
-        int count = 0;
-        for (GroupCodeInfoSaveRequestDto requestDto : requestDtos) {
-            if (codeManagementMapper.getGroupCodeInfo(requestDto.getCmnsCdGrp()).isPresent()) {
-                throw new IllegalArgumentException("해당 그룹코드가 존재합니다. " + requestDto.getCmnsCdGrp());
-            }
-
-            if (codeManagementMapper.getGroupCodeInfo(requestDto.getOldCmnsCdGrp()).isEmpty()) {
-                // TODO -> 신규 등록 코드
-            } else {
-                count += codeManagementMapper.registGroupCodeInfo(requestDto);
-            }
-        }
-        return count > 0;
     }
 
     // 공통코드 조회하는 페이지가 로딩되면서 데이터베이스에 있는 데이터 중 해당 값을 조회목록에 넣어준다.
