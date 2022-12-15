@@ -17,41 +17,51 @@
 
 <insert id="insertUser" parameterType="com.nanuri.rams.business.itmanager.dto.UserManageDTO">
     /* 사용자 추가 */
-    INSERT INTO RAA92B
-              ( ENO                             								<!-- 사번 -->
-              , SQ                              								<!-- 일련번호 -->
-              , EMP_NM                          								<!-- 사원명 -->
-              , RGHT_CD                         								<!-- 권한코드 -->
-              , DPRT_CD                         								<!-- 부점코드 -->
-              , RGST_RSN                        								<!-- 등록사유 -->
-              , APLC_STRT_DT                    								<!-- 적용시작일자 -->
-              , APLC_END_DT                     								<!-- 적용종료일자 -->
-              , DLT_F                           								<!-- 삭제여부 -->
-              , DLT_DT                          								<!-- 삭제일자 -->
-              , DLT_TM                          								<!-- 삭제자시간 -->
-              , DLT_P_ENO                       								<!-- 삭제자사번 -->
-                <include refid="CommonMapper.commonDto" />
-              )
-         VALUES (
-                #{eno}
-              , #{sq}
-              , #{empNm}
-              , #{rghtCd}
-              , NULL                            <!-- , #{dprtCd} 부점코드 -->
-			  , #{rgstRsn}
-              , #{aplcStrtDt}
-              , #{aplcEndDt}
-              , 'N'
-              , NULL
-              , NULL
-              , NULL
-              , DATE_FORMAT(NOW(), '%Y%m%d')
-              , DATE_FORMAT(NOW(), '%H%i%s')
-              , #{rgstPEno}
-              , NOW()
-              , NULL                            <!-- , #{hndlDprtCd} 처리부점코드 -->
-              , #{hndlPEno}
+    INSERT INTO RAA92B ( 
+		   ENO                             					<!-- 사번 -->
+         , SQ                              				<!-- 일련번호 -->
+         , EMP_NM                          				<!-- 사원명 -->
+         , RGHT_CD                         				<!-- 권한코드 -->
+         , DPRT_CD                         				<!-- 부점코드 -->
+         , RGST_RSN                        				<!-- 등록사유 -->
+         , APLC_STRT_DT                    				<!-- 적용시작일자 -->
+         , APLC_END_DT                     				<!-- 적용종료일자 -->
+         , DLT_F                           				<!-- 삭제여부 -->
+         , DLT_DT                          				<!-- 삭제일자 -->
+         , DLT_TM                          				<!-- 삭제자시간 -->
+         , DLT_P_ENO                       				<!-- 삭제자사번 -->
+        <include refid="CommonMapper.commonDto" />
          )
+	VALUES (
+		   #{eno}
+		 , #{sq}
+		 , #{empNm}
+		 , #{rghtCd}
+		 , NULL                            <!-- , #{dprtCd} 부점코드 -->
+		 , #{rgstRsn}
+		 , #{aplcStrtDt}
+		 , #{aplcEndDt}
+		 , 'N'
+		 , NULL
+		 , NULL
+		 , NULL
+		 , DATE_FORMAT(NOW(), '%Y%m%d')
+		 , DATE_FORMAT(NOW(), '%H%i%s')
+		 , #{rgstPEno}
+		 , NOW()
+		 , NULL                            <!-- , #{hndlDprtCd} 처리부점코드 -->
+		 , #{hndlPEno}
+		)
+	  	<!-- ON DUPLICATE KEY
+    UPDATE ENO 				= #{eno}
+	     , SQ 				= #{sq}
+	     , EMP_NM 			= #{empNm}
+	     , RGHT_CD 			= #{rghtCd}
+	     , RGST_RSN 		= #{rgstRsn}
+	     , APLC_STRT_DT 	= #{aplcStrtDt}
+	     , APLC_END_DT 		= #{aplcEndDt}
+	     , HNDL_DY_TM 		= NOW()
+	     , HNDL_P_ENO 		= #{hndlPEno} -->
 </insert>
 
 <select id="selectUser" resultType="com.nanuri.rams.business.itmanager.dto.UserListDto">

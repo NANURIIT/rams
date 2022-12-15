@@ -89,6 +89,7 @@ function rebuildTable(data) {
 		html += '<td colspan="10" style="text-align: center">데이터가 없습니다.</td>';
 		html += '</tr>';
 	}
+	//console.log(html);
 	$('#tbodyUserList').html(html);
 
 };

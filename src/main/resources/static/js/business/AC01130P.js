@@ -55,9 +55,50 @@ function setAC01121P() {
 		}
 	}
 }
+
+var resetTable = function () {
+	$('#setEno').text("");
+	$('#empName').val("");
+	$('#rghtCd').val("");
+	$('#AC01130P_datepicker1').val("");
+	$('#AC01130P_datepicker2').val("");
+	$('#rgstRsn').val("");
+	$('#rgstPEno').text("");
+	$('#rgstDt').text("");
+	$('#hndlPEno').text("");
+	$('#hndlDyTm').text("");
+};
+
 let setEno = function (eno) {
+	resetTable();
 	$('#setEno').text(eno);
 	$('#AC01121P').css('display', 'none');
+
+	$.ajax({
+		url: '/getUserList',
+		method: 'GET',
+		dataType: 'json',
+		// data: dtoParam,
+	}).done(function (userInfo) {
+		console.log(userInfo);
+		for(idx in userInfo) {
+			var data = userInfo[idx];
+			console.log(data.eno == eno && data.dltF == 'N');
+			if(data.eno == eno && data.dltF == 'N') {
+				$('#setEno').text(data.eno);
+				$('#empName').val(data.empNm);
+				$('#rghtCd').val(data.rghtCd);
+				$('#AC01130P_datepicker1').val(data.aplcStrtDt);
+				$('#AC01130P_datepicker2').val(data.aplcEndDt);
+				$('#rgstRsn').val(data.rgstRsn);
+				$('#rgstPEno').text(data.rgstPEno);
+				$('#rgstDt').text(data.rgstDt.substr(0, 4) + '-' + data.rgstDt.substr(4, 2) + '-' + data.rgstDt.substr(6, 2));
+				$('#hndlPEno').text(data.hndlPEno);
+				$('#hndlDyTm').text(data.hndlDyTm);
+				break;
+			};
+		};
+	});
 }
 
 var getEnoList = function () {
@@ -87,7 +128,7 @@ var saveUserData = function () {
 	let day = today.getDay();
 
 	let eno = $('#setEno').text();
-	let empNm = $('#empNm').val();
+	let empNm = $('#empName').val();
 	let rghtCd = $('#rghtCd option:selected').val();
 	let aplcStrtDt = $('#AC01130P_datepicker1').val();
 	let aplcEndDt = $('#AC01130P_datepicker2').val();
@@ -98,11 +139,10 @@ var saveUserData = function () {
 	let hndlDyTm = today; 						/* 수정한 시간(Date타입) */
 
 	let dtoParam = {
-		"usrC": null
-		, "eno": eno
+		"eno": eno
 		, "empNm": empNm
-		, "pstn": null
 		, "rghtCd": rghtCd
+		, "dprtCd": ""
 		, "rgstRsn": rgstRsn
 		, "aplcStrtDt": aplcStrtDt
 		, "aplcEndDt": aplcEndDt
@@ -110,23 +150,25 @@ var saveUserData = function () {
 		, "rgstDt": rgstDt
 		, "hndlPEno": hndlPEno
 		, "hndlDyTm": hndlDyTm
+		, "dltF": ""
+		, "dltDt": ""
+		, "dltTm": ""
+		, "dltPEno": ""
+		, "rgstTm": ""
+		, "hndlDprtCd": ""
 	}
 
     $.ajax({
         method : 'POST', 
         url : '/insertUser', 
-        data : JSON.stringify(dtoParam), 
+        data : JSON.stringify(dtoParam),
         contentType: "application/json; charset=UTF-8", 
-        dataType: 'json',
-        success : function(data) {
-			console.log("Data Commit Completed");
-			console.log(data);
+        // dataType: 'json',
+        success : function(response) {
+				alert(response);
         }, 
-        error: function(response) {
-            let message = response.responseJSON;
-			console.log(response);
-			console.log(message);
-            alert(message);
+        error: function(request, status, error) {
+            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
         }
     });
 }

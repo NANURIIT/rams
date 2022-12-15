@@ -19,15 +19,17 @@
 									<table class="search_table search_top">
 										<colgroup>
 											<!-- <col style="width: 15%;">
-											<col style="width: 15%;">
-											<col style="width: 15%;">
-											<col style="width: 15%;">
-											<col style="width: 40%;"> -->
+												<col style="width: 15%;">
+												<col style="width: 15%;">
+												<col style="width: 15%;">
+												<col style="width: 40%;"> -->
 										</colgroup>
 										<thead>
 											<tr>
 												<td class="etc_td" colspan="5">
-													<div class="button_etc_wrap"><button id="saveButton">저장</button><button>삭제</button>
+													<div class="button_etc_wrap">
+														<button id="saveButton">저장</button>
+														<button>삭제</button>
 													</div>
 												</td>
 											</tr>
@@ -36,7 +38,7 @@
 												<td id="setEno"></td>
 												<td><button id="open_modal_AC01121P">조회</button></td>
 												<th>사용자명</th>
-												<td><input id="empNm" type="text"></td>
+												<td><input id="empName"></td>
 											</tr>
 											<tr>
 												<th>권한구분</th>
@@ -68,15 +70,17 @@
 									<table>
 										<tr>
 											<th>등록자</th>
-											<td><input id="rgstPEno" type="text"></td>
+											<td id="rgstPEno"></td>
+											<!-- <td><input id="rgstPEno" type="text"></td> -->
 											<th>등록일</th>
-											<td><input type="text"></td>
+											<td id="rgstDt"></td>
 										</tr>
 										<tr>
 											<th>최종처리자</th>
-											<td><input id="hndlPEno" type="text"></td>
+											<td id="hndlPEno"></td>
+											<!-- <td><input id="hndlPEno" type="text"></td> -->
 											<th>최종처리일</th>
-											<td><input type="text"></td>
+											<td id="hndlDyTm"></td>
 										</tr>
 									</table>
 								</div><!-- end of search_wrap -->
