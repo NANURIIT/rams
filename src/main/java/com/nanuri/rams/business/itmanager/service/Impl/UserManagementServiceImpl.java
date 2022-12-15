@@ -1,11 +1,14 @@
 package com.nanuri.rams.business.itmanager.service.Impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nanuri.rams.business.itmanager.dto.UserInfo;
+import com.nanuri.rams.business.itmanager.dto.UserListDto;
 import com.nanuri.rams.business.itmanager.dto.UserManageDTO;
 import com.nanuri.rams.business.itmanager.mapper.UserManagementMapper;
 import com.nanuri.rams.business.itmanager.service.UserManagementService;
@@ -32,6 +35,26 @@ public class UserManagementServiceImpl implements UserManagementService {
     public void insertUser(UserManageDTO userManageDTO) {
         String sq =  String.valueOf(userManagementMapper.getLastSq()+1);
         userManageDTO.setSq(sq);
+        userManageDTO.setAplcStrtDt(userManageDTO.getAplcStrtDt().replace("-", ""));
+        userManageDTO.setAplcEndDt(userManageDTO.getAplcEndDt().replace("-", ""));
+        userManagementMapper.insertUser(userManageDTO);
+    }
+
+    /* 사용자 목록 */
+    @Override
+    public List<UserListDto> getUserList() {
+        return userManagementMapper.selectUser();
+    }
+
+    @Override
+    public void deleteUser(UserManageDTO userManageDTO) {
+        userManagementMapper.deleteUser(userManageDTO);
+    }
+
+    @Override
+    public void updateUser(UserManageDTO userManageDTO) {
+        userManageDTO.setAplcStrtDt(userManageDTO.getAplcStrtDt().replace("-", ""));
+        userManageDTO.setAplcEndDt(userManageDTO.getAplcEndDt().replace("-", ""));
         userManagementMapper.insertUser(userManageDTO);
     }
     

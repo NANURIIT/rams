@@ -3,55 +3,103 @@
 <mapper namespace="com.nanuri.rams.business.itmanager.mapper.UserManagementMapper">
 
 <select id="getEnoList" resultType="com.nanuri.rams.business.itmanager.dto.UserInfo">
-    <!-- 사용자 추가를 위한 사번 목록 조회 -->
+	/* 사용자 추가를 위한 사번 목록 조회 */
     SELECT ENO
          , EMP_NM
       FROM RAA99A
 </select>
 
 <select id="getLastSq" resultType="int">
-    <!-- 사용자 추가를 위한 총 건수 조회(SQ) -->
+    /* 사용자 추가를 위한 총 건수 조회(SQ) */
     SELECT COUNT(SQ)
       FROM RAA92B
 </select>
 
 <insert id="insertUser" parameterType="com.nanuri.rams.business.itmanager.dto.UserManageDTO">
-    <!-- 사용자 추가 -->
-    INSERT INTO RAA92B
-              ( ENO                             <!-- 사번 -->
-              , SQ                              <!-- 일련번호 -->
-              , EMP_NM                          <!-- 사원명 -->
-              , RGHT_CD                         <!-- 권한코드 -->
-              , DPRT_CD                         <!-- 부점코드 -->
-              , RGST_RSN                        <!-- 등록사유 -->
-              , APLC_STRT_DT                    <!-- 적용시작일자 -->
-              , APLC_END_DT                     <!-- 적용종료일자 -->
-              , DLT_F                           <!-- 삭제여부 -->
-              , DLT_DT                          <!-- 삭제일자 -->
-              , DLT_TM                          <!-- 삭제자시간 -->
-              , DLT_P_ENO                       <!-- 삭제자사번 -->
-                <include refid="CommonMapper.commonDto" />
-              )
-         VALUES (
-                #{eno}
-              , #{sq}
-              , #{empNm}
-              , #{rghtCd}
-              , NULL                            <!-- , #{dprtCd} 부점코드 -->
-              , #{aplcStrtDt}
-              , #{aplcEndDt}
-              , DATE_FORMAT(NOW(), '%Y%m%d')
-              , DATE_FORMAT(NOW(), '%H%i%s')
-              , #{rgstPEno}
-              , 'N'
-              , NULL
-              , NULL
-              , NULL
-              , NOW()
-              , NULL                            <!-- , #{hndlDprtCd} 처리부점코드 -->
-              , #{hndlPEno}
+    /* 사용자 추가 */
+    INSERT INTO RAA92B ( 
+		   ENO                             				<!-- 사번 -->
+         , SQ                              				<!-- 일련번호 -->
+         , EMP_NM                          				<!-- 사원명 -->
+         , RGHT_CD                         				<!-- 권한코드 -->
+         , DPRT_CD                         				<!-- 부점코드 -->
+         , RGST_RSN                        				<!-- 등록사유 -->
+         , APLC_STRT_DT                    				<!-- 적용시작일자 -->
+         , APLC_END_DT                     				<!-- 적용종료일자 -->
+         , DLT_F                           				<!-- 삭제여부 -->
+         , DLT_DT                          				<!-- 삭제일자 -->
+         , DLT_TM                          				<!-- 삭제자시간 -->
+         , DLT_P_ENO                       				<!-- 삭제자사번 -->
+        <include refid="CommonMapper.commonDto" />
          )
+	VALUES (
+		   #{eno}
+		 , #{sq}
+		 , #{empNm}
+		 , #{rghtCd}
+		 , NULL                            <!-- , #{dprtCd} 부점코드 -->
+		 , #{rgstRsn}
+		 , #{aplcStrtDt}
+		 , #{aplcEndDt}
+		 , 'N'
+		 , NULL
+		 , NULL
+		 , NULL
+		 , DATE_FORMAT(NOW(), '%Y%m%d')
+		 , DATE_FORMAT(NOW(), '%H%i%s')
+		 , #{rgstPEno}
+		 , NOW()
+		 , NULL                            <!-- , #{hndlDprtCd} 처리부점코드 -->
+		 , #{hndlPEno}
+		)
+	  	<!-- ON DUPLICATE KEY
+    UPDATE ENO 				= #{eno}
+	     , SQ 				= #{sq}
+	     , EMP_NM 			= #{empNm}
+	     , RGHT_CD 			= #{rghtCd}
+	     , RGST_RSN 		= #{rgstRsn}
+	     , APLC_STRT_DT 	= #{aplcStrtDt}
+	     , APLC_END_DT 		= #{aplcEndDt}
+	     , HNDL_DY_TM 		= NOW()
+	     , HNDL_P_ENO 		= #{hndlPEno} -->
 </insert>
 
+<select id="selectUser" resultType="com.nanuri.rams.business.itmanager.dto.UserListDto">
+	/* 사용자 목록 조회 */
+	SELECT IFNULL(ENO, '')              			AS ENO              <!-- 사번 -->
+           , IFNULL(SQ, '')             			AS SQ               <!-- 일련번호 -->
+           , IFNULL(EMP_NM, '')         			AS EMP_NM           <!-- 사원명 -->
+           , IFNULL(RGHT_CD, '')        			AS RGHT_CD          <!-- 권한코드 -->
+           , IFNULL(DPRT_CD, '')        			AS DPRT_CD          <!-- 부점코드 -->
+           , IFNULL(RGST_RSN, '')       			AS RGST_RSN         <!-- 등록사유 -->
+           , IFNULL(APLC_STRT_DT, '')   			AS APLC_STRT_DT     <!-- 적용시작일자 -->
+           , IFNULL(APLC_END_DT, '')    			AS APLC_END_DT      <!-- 적용종료일자 -->
+           , IFNULL(DLT_F, '')          			AS DLT_F            <!-- 삭제여부 -->
+           , IFNULL(DLT_DT, '')         			AS DLT_DT           <!-- 삭제일자 -->
+           , IFNULL(DLT_TM, '')         			AS DLT_TM           <!-- 삭제자시간 -->
+           , IFNULL((SELECT EMP_NM 						
+		   		FROM RAA99A										
+			   WHERE ENO = A.DLT_P_ENO), '') 		AS DLT_P_ENO 		<!-- 삭제자사번 -->
+           , IFNULL((SELECT USR_C  					
+		   		FROM RAA99A 								
+			   WHERE ENO = A.ENO), '') 				AS USR_C			<!-- 사용자구분 -->
+           , IFNULL((SELECT PSTN  					
+		   		FROM RAA99A 								
+			   WHERE ENO = A.ENO), '') 				AS PSTN				<!-- 직책 -->
+		<include refid="CommonMapper.aCommonDto" />
+      FROM RAA92B A
+  ORDER BY SQ ASC
+</select>
+
+<update id="deleteUser" parameterType="com.nanuri.rams.business.itmanager.dto.UserManageDTO">
+        UPDATE RAA92B
+           SET DLT_F = 'Y'
+         WHERE ENO = #{eno}
+</update>
+
+<update id="updateUser" parameterType="com.nanuri.rams.business.itmanager.dto.UserManageDTO">
+	UPDATE RAA92B
+		APLC_END_DT = #{aplcEndDt}
+</update>
 
 </mapper>

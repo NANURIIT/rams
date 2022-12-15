@@ -19,63 +19,68 @@
 									<table class="search_table search_top">
 										<colgroup>
 											<!-- <col style="width: 15%;">
-											<col style="width: 15%;">
-											<col style="width: 15%;">
-											<col style="width: 15%;">
-											<col style="width: 40%;"> -->
+												<col style="width: 15%;">
+												<col style="width: 15%;">
+												<col style="width: 15%;">
+												<col style="width: 40%;"> -->
 										</colgroup>
 										<thead>
 											<tr>
 												<td class="etc_td" colspan="5">
-													<div class="button_etc_wrap"><button>저장</button><button>삭제</button>
+													<div class="button_etc_wrap">
+														<button id="saveButton">저장</button>
+														<button id="deleteUser">삭제</button>
 													</div>
 												</td>
 											</tr>
 											<tr>
 												<th>사원번호</th>
 												<td id="setEno"></td>
-												<td><button id="open_modal_AC01121P">조회</button></td>
+												<td><button id="open_modal_AC01120P">조회</button></td>
 												<th>사용자명</th>
-												<td><input type="input"></td>
+												<td><input id="empName"></td>
 											</tr>
 											<tr>
 												<th>권한구분</th>
-												<td colspan="4"><select name="" id="">
-														<option>전체</option>
-														<option value="">1</option>
-														<option value="">2</option>
+												<td colspan="4"><select id="rghtCd">
+														<option value="1">해당부서</option>
+														<option value="2" selected>전체</option>
+														<option value="3">해당본부</option>
 													</select></td>
 											</tr>
 											<tr>
 												<th>부여기간</th>
 												<td colspan="4">
 													<div class="datepicker_wrap">
-														<input type="text" class="datepicker" id="AC01130P_datepicker1">~<input
-															type="text" class="datepicker" id="AC01130P_datepicker2">
-															<div style="float: right;">
-																<button>즉시회수</button>
-															</div>
+														<input type="text" class="datepicker"
+															id="AC01130P_datepicker1">~<input type="text"
+															class="datepicker" id="AC01130P_datepicker2">
+														<div style="float: right;">
+															<button id="recall">즉시회수</button>
+														</div>
 													</div>
 												</td>
 											</tr>
 											<tr>
 												<th>부여사유</th>
-												<td colspan="4"><input type="text"></td>
+												<td colspan="4"><input id="rgstRsn" type="text"></td>
 											</tr>
 										</thead>
 									</table>
 									<table>
 										<tr>
 											<th>등록자</th>
-											<td><input type="text"></td>
+											<td id="rgstPEno"></td>
+											<!-- <td><input id="rgstPEno" type="text"></td> -->
 											<th>등록일</th>
-											<td><input type="text"></td>
+											<td id="rgstDt"></td>
 										</tr>
 										<tr>
 											<th>최종처리자</th>
-											<td><input type="text"></td>
+											<td id="hndlPEno"></td>
+											<!-- <td><input id="hndlPEno" type="text"></td> -->
 											<th>최종처리일</th>
-											<td><input type="text"></td>
+											<td id="hndlDyTm"></td>
 										</tr>
 									</table>
 								</div><!-- end of search_wrap -->

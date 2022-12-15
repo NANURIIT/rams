@@ -2,18 +2,20 @@ package com.nanuri.rams.business.itmanager.controller;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nanuri.rams.business.itmanager.dto.UserInfo;
+import com.nanuri.rams.business.itmanager.dto.UserListDto;
 import com.nanuri.rams.business.itmanager.dto.UserManageDTO;
 import com.nanuri.rams.business.itmanager.service.UserManagementService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 
 
 @Slf4j
@@ -34,4 +36,13 @@ public class UserManagementAPIController {
         userManagementService.insertUser(userManageDTO);
     };
 
+    @GetMapping(value="/getUserList")
+    public List<UserListDto> getUserList() {
+        return userManagementService.getUserList();
+    }
+    
+    @PatchMapping(value = "/deleteUser")
+	public void deleteUser(@RequestBody UserManageDTO userManageDTO) {
+		userManagementService.deleteUser(userManageDTO);
+	}
 }
