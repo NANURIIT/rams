@@ -4,7 +4,9 @@ $(document).ready(function () {
 	setDatePicker();
 
 	$('#saveButton').on('click', function () {
-		saveUserData();
+		var sq = $('#saveButton').val();
+		console.log("button: " + sq);
+		saveUserData(sq);
 	});
 
 });
@@ -208,9 +210,10 @@ let setEno = function (eno) {
 	resetTable();
 	deleteUser(eno);
 	recall();
+	updateUser(eno, recallDay);
 	$('#setEno').text(eno);
 	$('#AC01120P').css('display', 'none');
-
+	
 	$.ajax({
 		url: '/getUserList',
 		method: 'GET',
@@ -229,6 +232,7 @@ let setEno = function (eno) {
 				$('#rgstDt').text(data.rgstDt.substr(0, 4) + '-' + data.rgstDt.substr(4, 2) + '-' + data.rgstDt.substr(6, 2));
 				$('#hndlPEno').text(data.hndlPEno);
 				$('#hndlDyTm').text(data.hndlDyTm);
+				$('#saveButton').val(data.sq);
 				break;
 			};
 		};
@@ -248,7 +252,7 @@ var getEnoList = function () {
 		for (idx in userInfo) {
 			let row = userInfo[idx];
 			//console.log(stringEno);
-			userInfoHTML += '<tr><td>' + row.eno + '<button onclick="setEno(' + "'" + row.eno + "'" + ');">선택</button></td><td>' + row.empNm + '</td></tr>';
+			userInfoHTML += '<tr><td>' + row.eno + '<button onclick="setEno(' + "'" + row.eno + "','" + row.sq + "'" + ');">선택</button></td><td>' + row.empNm + '</td></tr>';
 		}
 		$('#userInfo').html(userInfoHTML);
 	});
@@ -259,8 +263,9 @@ var today = new Date();
 var year = today.getFullYear();
 var month = today.getMonth() + 1;
 var day = today.getDate();
+var recallDay = year + "-" + month + "-" + day;
 
-var saveUserData = function () {
+var saveUserData = function (param) {
 
 	let eno = $('#setEno').text();
 	let empNm = $('#empName').val();
@@ -272,6 +277,7 @@ var saveUserData = function () {
 	let rgstDt = year + month + day;			/* 8자리의 날짜 */
 	let hndlPEno = $('#hndlPEno').val();		/* 수정자의 세션 */
 	let hndlDyTm = today; 						/* 수정한 시간(Date타입) */
+	let sq = Number(param);
 
 	let dtoParam = {
 		"eno": eno
@@ -291,6 +297,7 @@ var saveUserData = function () {
 		, "dltPEno": ""
 		, "rgstTm": ""
 		, "hndlDprtCd": ""
+		, "sq": sq
 	}
 
 	$.ajax({
@@ -311,22 +318,6 @@ var saveUserData = function () {
 var deleteUser = function (eno) {
 	let dtoParam = {
 		"eno": eno
-		, "empNm": ""
-		, "rghtCd": ""
-		, "dprtCd": ""
-		, "rgstRsn": ""
-		, "aplcStrtDt": ""
-		, "aplcEndDt": ""
-		, "rgstPEno": ""
-		, "rgstDt": ""
-		, "hndlPEno": ""
-		, "hndlDyTm": ""
-		, "dltF": ""
-		, "dltDt": "Y"
-		, "dltTm": ""
-		, "dltPEno": ""
-		, "rgstTm": ""
-		, "hndlDprtCd": ""
 	}
 
 	$('#deleteUser').on('click', function () {
@@ -340,9 +331,24 @@ var deleteUser = function (eno) {
 	});
 };
 
-var recall = function () {
+var updateUser = function (eno, recallDay) {
+	let dtoParam = {
+		"eno": eno
+		, "aplcStrtDt": recallDay
+	}
 
-	var recallDay = year + "-" + month + "-" + day;
+	$('#updateUser').on('click', function () {
+		$.ajax({
+			url: '/updateUser',
+			method: 'PATCH',
+			data: JSON.stringify(dtoParam),
+			contentType: 'application/json; charset=UTF-8',
+			// dataType: 'json',
+		});
+	});
+};
+
+var recall = function () {
 
 	$('#recall').on('click', function () {
 		$('#AC01130P_datepicker2').val(recallDay);

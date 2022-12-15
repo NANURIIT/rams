@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
-    
+
     private final UserManagementMapper userManagementMapper;
 
     /* 사용자 추가를 위한 사번 목록 조회 */
@@ -33,8 +33,13 @@ public class UserManagementServiceImpl implements UserManagementService {
     /* 사용자 추가 */
     @Override
     public void insertUser(UserManageDTO userManageDTO) {
-        String sq =  String.valueOf(userManagementMapper.getLastSq()+1);
-        userManageDTO.setSq(sq);
+        String sq = String.valueOf(userManagementMapper.getLastSq() + 1);
+        System.out.println("        SQ : "+userManageDTO.getSq());
+        if (userManageDTO.getSq() == null) {
+            userManageDTO.setSq(sq);
+        }else{
+            userManageDTO.setSq(userManageDTO.getSq());
+        }
         userManageDTO.setAplcStrtDt(userManageDTO.getAplcStrtDt().replace("-", ""));
         userManageDTO.setAplcEndDt(userManageDTO.getAplcEndDt().replace("-", ""));
         userManagementMapper.insertUser(userManageDTO);
@@ -57,5 +62,5 @@ public class UserManagementServiceImpl implements UserManagementService {
         userManageDTO.setAplcEndDt(userManageDTO.getAplcEndDt().replace("-", ""));
         userManagementMapper.insertUser(userManageDTO);
     }
-    
+
 }

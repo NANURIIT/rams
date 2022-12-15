@@ -70,19 +70,22 @@ function rebuildUserManageTable(data) {
 	if (userList.length > 0) {
 		$.each(userList, function (key, value) {
 			rghtCd = (value.rghtCd == "1") ? "해당부서" : (value.rghtCd == "2") ? "전체" : "해당본부"
+			if (value.dltF == "Y") {
 
-			html += '<tr>';
-			html += '<td>' + value.usrC + '</td>';
-			html += '<td>' + value.eno + '</td>';
-			html += '<td>' + value.empNm + '</td>';
-			html += '<td>' + value.pstn + '</td>';
-			html += '<td>' + rghtCd + '</td>';
-			html += '<td>' + value.aplcStrtDt + '</td>';
-			html += '<td>' + value.aplcEndDt + '</td>';
-			html += '<td>' + value.rgstRsn + '</td>';
-			html += '<td>' + value.rgstPEno + '</td>';
-			html += '<td>' + value.hndlPEno + '</td>';
-			html += '</tr>';
+			}else{
+				html += '<tr>';
+				html += '<td>' + value.usrC + '</td>';
+				html += '<td>' + value.eno + '</td>';
+				html += '<td>' + value.empNm + '</td>';
+				html += '<td>' + value.pstn + '</td>';
+				html += '<td>' + rghtCd + '</td>';
+				html += '<td>' + value.aplcStrtDt + '</td>';
+				html += '<td>' + value.aplcEndDt + '</td>';
+				html += '<td>' + value.rgstRsn + '</td>';
+				html += '<td>' + value.rgstPEno + '</td>';
+				html += '<td>' + value.hndlPEno + '</td>';
+				html += '</tr>';
+			}
 		})
 	} else {
 		html += '<tr>';

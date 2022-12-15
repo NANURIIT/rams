@@ -52,16 +52,10 @@
 		 , NULL                            <!-- , #{hndlDprtCd} 처리부점코드 -->
 		 , #{hndlPEno}
 		)
-	  	<!-- ON DUPLICATE KEY
-    UPDATE ENO 				= #{eno}
-	     , SQ 				= #{sq}
-	     , EMP_NM 			= #{empNm}
-	     , RGHT_CD 			= #{rghtCd}
-	     , RGST_RSN 		= #{rgstRsn}
-	     , APLC_STRT_DT 	= #{aplcStrtDt}
-	     , APLC_END_DT 		= #{aplcEndDt}
-	     , HNDL_DY_TM 		= NOW()
-	     , HNDL_P_ENO 		= #{hndlPEno} -->
+	  	ON DUPLICATE KEY
+    UPDATE 
+	       APLC_END_DT = #{aplcEndDt}
+		 , DLT_F = 'Y'
 </insert>
 
 <select id="selectUser" resultType="com.nanuri.rams.business.itmanager.dto.UserListDto">
@@ -100,6 +94,7 @@
 <update id="updateUser" parameterType="com.nanuri.rams.business.itmanager.dto.UserManageDTO">
 	UPDATE RAA92B
 		APLC_END_DT = #{aplcEndDt}
+	 WHERE ENO = #{eno}
 </update>
 
 </mapper>
