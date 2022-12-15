@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-	setAC01121P();
+	setOpenModal();
 	setDatePicker();
 
 	$('#saveButton').on('click', function () {
@@ -25,36 +25,171 @@ function setDatePicker() {
 	});
 
 	// btn apply
-	$('.datepicker').on('apply.daterangepicker', function(ev, picker) {
+	$('.datepicker').on('apply.daterangepicker', function (ev, picker) {
 		$(this).val(picker.startDate.format('YYYY-MM-DD'));
 	});
 
 	// btn clear
-	$('.datepicker').on('cancel.daterangepicker', function(ev, picker) {
+	$('.datepicker').on('cancel.daterangepicker', function (ev, picker) {
 		$(this).val('');
 	});
 
 }
 
-function setAC01121P() {
-	let Modal = document.getElementById('AC01121P');
-	let OpenModal = document.getElementById("open_modal_AC01121P");
-	let CloseModal = document.getElementsByClassName("modal_close_AC01121P")[0];
-	
+// modal controll function
+function setOpenModal() {
+	let Modal = document.getElementById('AC01120P');
+	let OpenModal = document.getElementById("open_modal_AC01120P");
+	let CloseModal = document.getElementsByClassName("modal_close_AC01120P")[0];
+
+	// open modal
 	OpenModal.onclick = function () {
-		getEnoList();
 		Modal.style.display = "block";
+		reset_AC01120P();
 	}
 
+	// close modal
 	CloseModal.onclick = function () {
 		Modal.style.display = "none";
 	}
+
+	// close modal
 	window.onclick = function (event) {
 		if (event.target === Modal) {
 			Modal.style.display = "none";
 		}
 	}
+
+	// close modal
+	$(document).keydown(function (e) {
+		//keyCode 구 브라우저, which 현재 브라우저
+		var code = e.keyCode || e.which;
+		if (code == 27) { // 27은 ESC 키번호
+			Modal.style.display = "none";
+		}
+
+	});
+
 }
+
+// get employee list
+function getEmpList() {
+
+	var empNm = $("#empNm").val();
+	var eno = $("#eno").val();
+	var dprtCd = $("#dprtCd").val();
+	var dprtNm = $("#dprtNm").val();
+
+	var dtoParam = {
+		"empNm": empNm
+		, "eno": eno
+		, "dprtCd": dprtCd
+		, "dprtNm": dprtNm
+		, "hdqtCd": ""
+		, "hdqtNm": ""
+	}
+
+	//console.log(data);
+
+	$.ajax({
+		type: "GET",
+		url: "/findEmpList",
+		data: dtoParam,
+		dataType: "json",
+		success: function (data) {
+			var a = '';
+			$('#tbodyEmpList').html(a);
+			//console.log(data);
+			rebuildTable(data);
+		}
+	});
+
+}
+
+// draw modal table employee 
+function rebuildTable(data) {
+	var html = '';
+	var empList = data;
+
+	if (empList.length > 0) {
+		$.each(empList, function (key, value) {
+			//console.log(value);
+			html += '<tr onclick="setEno(' + "'" + value.ENO + "'" + ');">';
+			html += '<td>' + value.ENO + '</td>';
+			html += '<td>' + value.EMP_NM + '</td>';
+			html += '<td>' + value.DPRT_CD + '</td>';
+			html += '<td>' + value.DPRT_NM + '</td>';
+			html += '<td>' + value.HDQT_CD + '</td>';
+			html += '<td>' + value.HDQT_NM + '</td>';
+			html += '</tr>';
+		})
+	} else {
+		html += '<tr>';
+		html += '<td colspan="6" style="text-align: center">데이터가 없습니다.</td>';
+		html += '</tr>';
+	}
+	//console.log(html);
+	$('#tbodyEmpList').html(html);
+
+};
+
+// when page loaded
+function setKeyDownFunction() {
+	keyDownEnter();
+}
+
+// search employee or deal
+function keyDownEnter() {
+
+	$("input[id=empNm]").keydown(function (key) {
+		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
+			getEmpList();
+		}
+	});
+
+	$("input[id=eno]").keydown(function (key) {
+		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
+			getEmpList();
+		}
+	});
+
+	$("input[id=dprtCd]").keydown(function (key) {
+		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
+			getEmpList();
+		}
+	});
+
+	$("input[id=dprtNm]").keydown(function (key) {
+		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
+			getEmpList();
+		}
+	});
+}
+
+// reset AC01120P
+function reset_AC01120P() {
+	$('#tbodyEmpList').html("");
+	$('#empNm').val("");
+	$('#eno').val("");
+	$('#dprtCd').val("");
+	$('#dprtNm').val("");
+}
+
+// close modal
+function modalClose() {
+	let Modal = document.getElementById('AC01120P');
+	Modal.style.display = "none";
+}
+
+// // send to #rcvdEmpNm
+// function setEmpNm(){
+// 	var tr = event.currentTarget;
+// 	var td = $(tr).children();
+// 	var empNm = td.eq(1).text();
+
+// 	$('#rcvdEmpNm').val(empNm);
+// 	modalClose();
+// }
 
 var resetTable = function () {
 	$('#setEno').text("");
@@ -71,25 +206,24 @@ var resetTable = function () {
 
 let setEno = function (eno) {
 	resetTable();
+	deleteUser(eno);
+	recall();
 	$('#setEno').text(eno);
-	$('#AC01121P').css('display', 'none');
+	$('#AC01120P').css('display', 'none');
 
 	$.ajax({
 		url: '/getUserList',
 		method: 'GET',
 		dataType: 'json',
-		// data: dtoParam,
 	}).done(function (userInfo) {
-		console.log(userInfo);
-		for(idx in userInfo) {
+		for (idx in userInfo) {
 			var data = userInfo[idx];
-			console.log(data.eno == eno && data.dltF == 'N');
-			if(data.eno == eno && data.dltF == 'N') {
+			if (data.eno == eno && data.dltF == 'N') {
 				$('#setEno').text(data.eno);
 				$('#empName').val(data.empNm);
 				$('#rghtCd').val(data.rghtCd);
-				$('#AC01130P_datepicker1').val(data.aplcStrtDt);
-				$('#AC01130P_datepicker2').val(data.aplcEndDt);
+				$('#AC01130P_datepicker1').val(data.aplcStrtDt.substr(0, 4) + '-' + data.aplcStrtDt.substr(4, 2) + '-' + data.aplcStrtDt.substr(6, 2));
+				$('#AC01130P_datepicker2').val(data.aplcEndDt.substr(0, 4) + '-' + data.aplcEndDt.substr(4, 2) + '-' + data.aplcEndDt.substr(6, 2));
 				$('#rgstRsn').val(data.rgstRsn);
 				$('#rgstPEno').text(data.rgstPEno);
 				$('#rgstDt').text(data.rgstDt.substr(0, 4) + '-' + data.rgstDt.substr(4, 2) + '-' + data.rgstDt.substr(6, 2));
@@ -120,12 +254,13 @@ var getEnoList = function () {
 	});
 }
 
-var saveUserData = function () {
+// 오늘의 날짜
+var today = new Date();
+var year = today.getFullYear();
+var month = today.getMonth() + 1;
+var day = today.getDate();
 
-	let today = new Date();
-	let year = today.getFullYear();
-	let month = today.getMonth();
-	let day = today.getDay();
+var saveUserData = function () {
 
 	let eno = $('#setEno').text();
 	let empNm = $('#empName').val();
@@ -158,20 +293,58 @@ var saveUserData = function () {
 		, "hndlDprtCd": ""
 	}
 
-    $.ajax({
-        method : 'POST', 
-        url : '/insertUser', 
-        data : JSON.stringify(dtoParam),
-        contentType: "application/json; charset=UTF-8", 
-        // dataType: 'json',
-        success : function(response) {
-				alert(response);
-        }, 
-        error: function(request, status, error) {
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        }
-    });
+	$.ajax({
+		method: 'POST',
+		url: '/insertUser',
+		data: JSON.stringify(dtoParam),
+		contentType: "application/json; charset=UTF-8",
+		// dataType: 'json',
+		success: function (response) {
+			alert(response);
+		},
+		error: function (request, status, error) {
+			alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		}
+	});
 }
 
+var deleteUser = function (eno) {
+	let dtoParam = {
+		"eno": eno
+		, "empNm": ""
+		, "rghtCd": ""
+		, "dprtCd": ""
+		, "rgstRsn": ""
+		, "aplcStrtDt": ""
+		, "aplcEndDt": ""
+		, "rgstPEno": ""
+		, "rgstDt": ""
+		, "hndlPEno": ""
+		, "hndlDyTm": ""
+		, "dltF": ""
+		, "dltDt": "Y"
+		, "dltTm": ""
+		, "dltPEno": ""
+		, "rgstTm": ""
+		, "hndlDprtCd": ""
+	}
 
+	$('#deleteUser').on('click', function () {
+		$.ajax({
+			url: '/deleteUser',
+			method: 'PATCH',
+			data: JSON.stringify(dtoParam),
+			contentType: 'application/json; charset=UTF-8',
+			// dataType: 'json',
+		});
+	});
+};
 
+var recall = function () {
+
+	var recallDay = year + "-" + month + "-" + day;
+
+	$('#recall').on('click', function () {
+		$('#AC01130P_datepicker2').val(recallDay);
+	})
+};

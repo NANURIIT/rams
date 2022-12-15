@@ -58,12 +58,12 @@ function getUserList() {
 		success: function (data) {
 			var a = '';
 			$('#tbodyUserList').html(a);
-			rebuildTable(data);
+			rebuildUserManageTable(data);
 		}
 	});
 }
 
-function rebuildTable(data) {
+function rebuildUserManageTable(data) {
 	var html = '';
 	var userList = data;
 

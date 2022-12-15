@@ -45,5 +45,17 @@ public class UserManagementServiceImpl implements UserManagementService {
     public List<UserListDto> getUserList() {
         return userManagementMapper.selectUser();
     }
+
+    @Override
+    public void deleteUser(UserManageDTO userManageDTO) {
+        userManagementMapper.deleteUser(userManageDTO);
+    }
+
+    @Override
+    public void updateUser(UserManageDTO userManageDTO) {
+        userManageDTO.setAplcStrtDt(userManageDTO.getAplcStrtDt().replace("-", ""));
+        userManageDTO.setAplcEndDt(userManageDTO.getAplcEndDt().replace("-", ""));
+        userManagementMapper.insertUser(userManageDTO);
+    }
     
 }

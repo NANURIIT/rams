@@ -15,4 +15,7 @@ public interface UserManagementMapper {
     public int getLastSq();
     public void insertUser(UserManageDTO userManageDTO);    // 사용자 추가
     public List<UserListDto> selectUser();                  // 사용자 목록 조회
+    public void deleteUser(UserManageDTO userManageDTO);
+    public void updateUser(UserManageDTO userManageDTO);    // 사용자 업데이트
+    
 }
