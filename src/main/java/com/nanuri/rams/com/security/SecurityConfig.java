@@ -20,6 +20,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import com.nanuri.rams.com.security.handler.AuthenticationAccessDeniedHandler;
+import com.nanuri.rams.com.security.handler.AuthenticationLogoutSuccessHandler;
 
 import lombok.AllArgsConstructor;
 
@@ -31,26 +32,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private final AuthenticationFailureHandler customFailureHandler;
 
 	private final AuthenticationSuccessHandler customSuccessHandler;
+	
+	private final AuthenticationLogoutSuccessHandler customLogoutSuccessHandler;
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 	
-	// @Override
-	// protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-	// 	auth.authenticationProvider(authenticationProvider());
-	// }
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.authenticationProvider(authenticationProvider());
+	}
 
-	// @Bean
-    // public AuthenticationProvider authenticationProvider() {
-    //     return new AdminAuthenticationProvider();
-    // }
+	@Bean
+    public AuthenticationProvider authenticationProvider() {
+        return new EmpAuthenticationProvider();
+    }
 
 	//정적 자원에 대해서는 Security 적용 안함.
 	@Override
     public void configure(WebSecurity web) {
-		//web.ignoring().mvcMatchers("/therapist/signup");
 		web.ignoring().mvcMatchers("/sample/**", "/business/**", "/img/**");
 		web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 	}
@@ -74,12 +76,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     			// .antMatchers("/mobile/noticeWrite").hasAnyRole("ADMIN", "EMPLOYEE", "ASSISTANT")
     			// .antMatchers("/mobile/dutyConfirm").hasAnyRole("ADMIN", "ASSISTANT")
     			// .antMatchers("/mobile/dutyConfirmDetail").hasAnyRole("ADMIN", "ASSISTANT")
-    			/* .antMatchers("**").authenticated()
+    			.antMatchers("**").authenticated()
     			.and()
     		.formLogin()
     			.loginPage("/login")
-    			.defaultSuccessUrl("/", true)
-    			.usernameParameter("loginId").passwordParameter("pwd")
+    			.defaultSuccessUrl("/AS03210S", true)
+    			.usernameParameter("eno").passwordParameter("pwd")
     			.successHandler(customSuccessHandler)
     			.failureHandler(customFailureHandler)
     			.permitAll()
@@ -87,9 +89,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     		.logout()
 	    		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 	            .logoutSuccessUrl("/")
-    			.invalidateHttpSession(true) */;
-    	//hasAnyAuthority("OP") //권한정책 필요시
-    	//.logoutSuccessHandler(customLogoutSuccessHandler) //로그아웃 성공시 handler
+	            .logoutSuccessHandler(customLogoutSuccessHandler) //로그아웃 성공시 handler
+    			.invalidateHttpSession(true);
 
     	http.csrf().disable();
 
@@ -106,11 +107,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    // @Bean
-    // @Override
-    // public AuthenticationManager authenticationManagerBean() throws Exception {
-    //     return super.authenticationManagerBean();
-    // }
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
     private AccessDeniedHandler accessDeniedHandler() {
     	AuthenticationAccessDeniedHandler accessDeniedHandler = new AuthenticationAccessDeniedHandler();

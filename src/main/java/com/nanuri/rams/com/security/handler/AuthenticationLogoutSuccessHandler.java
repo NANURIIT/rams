@@ -26,10 +26,10 @@ public class AuthenticationLogoutSuccessHandler implements LogoutSuccessHandler 
             }
         }
 
-		/*
-		 * response.setStatus(HttpServletResponse.SC_OK);
-		 * response.sendRedirect("/login");
-		 */
+		
+		response.setStatus(HttpServletResponse.SC_OK);
+		response.sendRedirect("/login");
+		
     }
 
 }
