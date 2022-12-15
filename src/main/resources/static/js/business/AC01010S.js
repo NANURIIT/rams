@@ -2,28 +2,50 @@ $(function () {
     let cmnsCdGrp = ''
     getCommonCodeInfo();
     getGroupCodeInfoList(cmnsCdGrp);
+    
+    selectCommonCode();
 
-    // select박스 선택
-    $(document).on('click', '#commonCodeSearch', function () {
-        cmnsCdGrp = $('#commonCodeInfo option:selected').val()
-        getGroupCodeInfoList(cmnsCdGrp);
+    clickDetailButton();
+    doubleClickColumn();
+    addGroupCodeRow();
+    deleteGroupCodeRow();
+    clickSaveGroupCode();
+    
+    addCodeRow();
+
+    $(document).on('click', '#delete_row', function () {
+        console.log('click 행 삭제2');
     });
 
-    // 코드관리 상세버튼 클릭
+    $(document).on('click', '#save', function () {
+        console.log('click 저장2');
+    });
+});
+
+function selectCommonCode() {
+    $(document).on('click', '#commonCodeSearch', function () {
+        let cmnsCdGrp = $('#commonCodeInfo option:selected').val()
+        getGroupCodeInfoList(cmnsCdGrp);
+    });
+}
+
+function clickDetailButton() {
     $(document).on('click', '.groupCodeDetail', function (e) {
         e.preventDefault();
         getGroupCodeInfo($(this).attr('id'));
     });
+}
 
-    // 더블클릭 인풋박스 활성화
+function doubleClickColumn() {
     $(document).on('dblclick', '.update_column', function () {
         // refactoring
         let trClass = $(this).attr('class').split(' ')[1]
         tdInputHTML = '<input class="' + trClass + '_input" style="width: 100%;" type="text" value="' + $(this).text() + '">'
         $(this).html(tdInputHTML);
     });
+}
 
-    // 그룹 코드 행 추가
+function addGroupCodeRow() {
     $(document).on('click', '#add_group_row', function () {
         // refactoring
         let ROW_HTML = '';
@@ -42,9 +64,9 @@ $(function () {
         ROW_HTML += '</tr>';
         $('#groupCodeListTable').append(ROW_HTML);
     });
+}
 
-
-    // 그룹 코드 행 삭제
+function deleteGroupCodeRow() {
     $(document).on('click', '#delete_group_row', function () {
         // refactoring
         let groupCodeList = new Array();
@@ -61,8 +83,9 @@ $(function () {
             deleteGroupCode(groupCodeList);
         }
     });
+}
 
-    // 그룹 코드 저장
+function clickSaveGroupCode() {
     $(document).on('click', '#save_group', function () {
         // refactoring
         let groupCodeList = new Array();
@@ -104,8 +127,9 @@ $(function () {
             saveGroupCode(groupCodeList);
         }
     });
+}
 
-    // 코드 행 추가
+function addCodeRow() {
     $(document).on('click', '#add_row', function () {
         // refactoring
         let ROW_HTML = '';
@@ -123,69 +147,7 @@ $(function () {
         ROW_HTML += '</tr>';
         $('#codeListTable').append(ROW_HTML);
     });
-
-    // 코드 행 삭제
-    $(document).on('click', '#delete_row', function () {
-        let request = new Object();
-        let codeList = new Array();
-        let tr = $('#codeListTable').children();
-
-        for (let i = 0; i < tr.length; i++) {
-            let deleteCheckBox = $(tr[i]).find('input');
-
-            if (deleteCheckBox.prop('checked')) {
-                codeList.push(deleteCheckBox.attr('id'));
-            }
-        }
-
-        if (codeList.length > 0) {
-            request.cmnsCdGrp = $(tr[0]).attr('id')
-            request.cdVlIds = codeList;
-        }
-
-        if (Object.keys(request).length > 0) {
-            deleteCode(request);
-        }
-    });
-
-    // 코드 저장 버튼 클릭
-    $(document).on('click', '#save', function () {
-        let codeList = new Array();
-        let tr = $('#codeListTable').children();
-        for (let i = 0; i < tr.length; i++) {
-            let code = new Object();
-
-            let groupCodeId = tr.attr('id');
-            let oldCodeId = $(tr[i]).find("td:eq(0)").find("input").attr('id');
-            let codeInput = $(tr[i]).find("td:eq(1)").find("input");
-            let codeNameInput = $(tr[i]).find("td:eq(2)").find("input");
-            let codeUseYn = $(tr[i]).find("td:eq(5)").find(".code_use_yn").prop("checked");
-            let codeUseYnCheck = $(tr[i]).find("td:eq(5)").find(".hidden_yn").val();
-
-            if (codeInput.length == 1) {
-                code.cdVlId = codeInput.val();
-            }
-
-            if (codeNameInput.length == 1) {
-                code.cdVlNm = codeNameInput.val();
-            }
-
-            if (!codeUseYnCheck || (codeUseYn && codeUseYnCheck === 'n') || (!codeUseYn && codeUseYnCheck === 'y')) {
-                code.useF = codeUseYn ? 'Y' : 'N';
-            }
-            
-            if (!(Object.keys(code).length === 0)) {
-                code.oldCdVlId = oldCodeId;
-                code.cmnsCdGrp = groupCodeId;
-                codeList.push(code);
-            }
-        }
-
-        if (codeList.length > 0) {
-            saveCode(codeList);
-        }
-    });
-});
+}
 
 var getCommonCodeInfo = function () {
     $.ajax({
