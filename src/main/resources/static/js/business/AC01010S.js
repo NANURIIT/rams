@@ -9,6 +9,9 @@ $(function () {
     doubleClickColumn();
 });
 
+/**
+ * 코드구분 select박스 선택
+ */
 function selectCommonCode() {
     $(document).on('click', '#commonCodeSearch', function () {
         let cmnsCdGrp = $('#commonCodeInfo option:selected').val()
@@ -16,6 +19,9 @@ function selectCommonCode() {
     });
 }
 
+/**
+ * 그룹코드의 코드관리 상세버튼 클릭
+ */
 function clickDetailButton() {
     $(document).on('click', '.groupCodeDetail', function (e) {
         e.preventDefault();
@@ -23,6 +29,9 @@ function clickDetailButton() {
     });
 }
 
+/**
+ * 변경 가능한 컬럼 더블클릭 했을시 input박스 생성
+ */
 function doubleClickColumn() {
     $(document).on('dblclick', '.update_column', function () {
         let trClass = $(this).attr('class').split(' ')[1]
@@ -31,6 +40,9 @@ function doubleClickColumn() {
     });
 }
 
+/**
+ * 그룹코드 행추가 버튼 클릭
+ */
 function addGroupCodeRow() {
     let ROW_HTML = '';
     ROW_HTML += '<tr>';
@@ -49,6 +61,9 @@ function addGroupCodeRow() {
     $('#groupCodeListTable').append(ROW_HTML);
 }
 
+/**
+ * 그룹코드 행삭제 버튼 클릭
+ */
 function deleteGroupCodeRow() {
     let groupCodeList = new Array();
     let tr = $('#groupCodeListTable').children();
@@ -65,6 +80,9 @@ function deleteGroupCodeRow() {
     }
 }
 
+/**
+ * 그룹코드 저장 버튼 클릭
+ */
 function clickSaveGroupCode() {
     let groupCodeList = new Array();
 
@@ -106,6 +124,9 @@ function clickSaveGroupCode() {
     }
 }
 
+/**
+ * 코드 행추가 버튼 클릭
+ */
 function addCodeRow() {
     let ROW_HTML = '';
     ROW_HTML += '<tr>';
@@ -123,6 +144,9 @@ function addCodeRow() {
     $('#codeListTable').append(ROW_HTML);
 }
 
+/**
+ * 코드 행삭제 버튼 클릭
+ */
 function deleteGroupRow() {
     let request = new Object();
     let codeList = new Array();
@@ -146,6 +170,9 @@ function deleteGroupRow() {
     }
 }
 
+/**
+ * 코드 저장 버튼 클릭
+ */
 function clickSaveCode() {
     let codeList = new Array();
     let tr = $('#codeListTable').children();
@@ -183,6 +210,9 @@ function clickSaveCode() {
     }
 }
 
+/**
+ * select박스 코드 그룹 호출 함수
+ */
 var getCommonCodeInfo = function () {
     $.ajax({
         url: '/commonCodeInfo',
@@ -198,6 +228,10 @@ var getCommonCodeInfo = function () {
     });
 }
 
+/**
+ * 그룹코드 리스트 호출
+ * @param {string} cmnsCdGrp 그룹코드
+ */
 var getGroupCodeInfoList = function (cmnsCdGrp) {
     let _url = '/groupCodeInfoList';
 
@@ -235,6 +269,10 @@ var getGroupCodeInfoList = function (cmnsCdGrp) {
     });
 }
 
+/**
+ * 그룹코드 상세보기 데이터 호출
+ * @param {string} cmnsCdGrp 그룹코드
+ */
 var getGroupCodeInfo = function (cmnsCdGrp) {
     $.ajax({
         url: 'groupCodeInfo?cmnsCdGrp=' + cmnsCdGrp,
@@ -265,6 +303,10 @@ var getGroupCodeInfo = function (cmnsCdGrp) {
     });
 }
 
+/**
+ * 그룹코드 저장 처리
+ * @param {list} groupCodeList 그룹코드 리스트
+ */
 var saveGroupCode = function (groupCodeList) {
     $.ajax({
         method: 'POST',
@@ -283,6 +325,10 @@ var saveGroupCode = function (groupCodeList) {
     });
 }
 
+/**
+ * 그룹코드 행 삭제 처리
+ * @param {list} groupCodeList 그룹코드 리스트
+ */
 var deleteGroupCode = function (groupCodeList) {
     $.ajax({
         method: 'PATCH',
@@ -299,6 +345,10 @@ var deleteGroupCode = function (groupCodeList) {
     });
 }
 
+/**
+ * 코드 저장 처리
+ * @param {list} codeList 코드 리스트
+ */
 var saveCode = function (codeList) {
     let cmnsCdGrp = codeList[0].cmnsCdGrp;
     $.ajax({
@@ -317,6 +367,10 @@ var saveCode = function (codeList) {
     });
 }
 
+/**
+ * 코드 삭제 처리
+ * @param {list} request 삭제코드 리스트
+ */
 var deleteCode = function (request) {
     let cmnsCdGrp = request.cmnsCdGrp;
     $.ajax({
@@ -334,6 +388,9 @@ var deleteCode = function (request) {
     });
 }
 
+/**
+ * 엔터키 입력 이벤트 삭제
+ */
 function deleteEnterEvent() {
     $(document).keypress(function(e) {
         if(e.keyCode == 13) {
