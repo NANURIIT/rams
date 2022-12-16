@@ -89,7 +89,7 @@ function getDealInfo(){
 	
 	$.ajax({
 		type: "GET",
-		url: "/getDealList",
+		url: "/getDealInfo",
 		data: dtoParam,
 		dataType: "json",
 		success: function(data) {

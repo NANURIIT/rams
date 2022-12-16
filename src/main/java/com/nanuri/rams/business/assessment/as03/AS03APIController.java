@@ -5,7 +5,8 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nanuri.rams.business.common.dto.RAA02BDto;
+import com.nanuri.rams.business.common.dto.RAA01BDto;
+import com.nanuri.rams.business.common.vo.RAA01BVo.DealInfo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +23,9 @@ public class AS03APIController {
 	 * @param dealDto
 	 * @return
 	 */
-	@GetMapping(value = "/getDealList")
-	public List<RAA02BDto> getDealList(RAA02BDto dealDto) {
-		return as03Service.getDealList(dealDto);
+	@GetMapping(value = "/getDealInfo")
+	public List<RAA01BDto> getDealInfo(DealInfo dealDto) {
+		return as03Service.getDealInfo(dealDto);
 	}
 
 }
