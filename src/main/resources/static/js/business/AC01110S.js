@@ -70,19 +70,22 @@ function rebuildUserManageTable(data) {
 	if (userList.length > 0) {
 		$.each(userList, function (key, value) {
 			rghtCd = (value.rghtCd == "1") ? "해당부서" : (value.rghtCd == "2") ? "전체" : "해당본부"
+			if (value.dltF == "Y") {
 
-			html += '<tr>';
-			html += '<td>' + value.usrC + '</td>';
-			html += '<td>' + value.eno + '</td>';
-			html += '<td>' + value.empNm + '</td>';
-			html += '<td>' + value.pstn + '</td>';
-			html += '<td>' + rghtCd + '</td>';
-			html += '<td>' + value.aplcStrtDt + '</td>';
-			html += '<td>' + value.aplcEndDt + '</td>';
-			html += '<td>' + value.rgstRsn + '</td>';
-			html += '<td>' + value.rgstPEno + '</td>';
-			html += '<td>' + value.hndlPEno + '</td>';
-			html += '</tr>';
+			}else{
+				html += '<tr>';
+				html += '<td>' + value.usrC + '</td>';
+				html += '<td>' + value.eno + '</td>';
+				html += '<td>' + value.empNm + '</td>';
+				html += '<td>' + value.pstn + '</td>';
+				html += '<td>' + rghtCd + '</td>';
+				html += '<td>' + value.aplcStrtDt + '</td>';
+				html += '<td>' + value.aplcEndDt + '</td>';
+				html += '<td>' + value.rgstRsn + '</td>';
+				html += '<td>' + value.rgstPEno + '</td>';
+				html += '<td>' + value.hndlPEno + '</td>';
+				html += '</tr>';
+			}
 		})
 	} else {
 		html += '<tr>';
@@ -94,18 +97,18 @@ function rebuildUserManageTable(data) {
 
 };
 
-// when page loaded
-function setKeyDownFunction() {
-	keyDownEnter();
-}
+// // when page loaded
+// function setKeyDownFunction() {
+// 	keyDownEnter();
+// }
 
-// search employee or deal
-function keyDownEnter() {
+// // search employee or deal
+// function keyDownEnter() {
 
-	$("input[id=empNm]").keydown(function (key) {
-		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
-			getUserList();
-		}
-	});
+// 	$("input[id=empNm]").keydown(function (key) {
+// 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
+// 			getUserList();
+// 		}
+// 	});
 
-}
+// }
