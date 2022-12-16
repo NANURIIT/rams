@@ -26,7 +26,7 @@
                 <tr>
                     <th>권한구분</th>
                     <td>
-                        <select>
+                        <select id="AC01110S_rghtCd">
                             <option value="2">전체</option>
                             <option value="1">해당부서</option>
                             <option value="3">해당본부</option>
@@ -34,12 +34,12 @@
                     </td>
                     <th>직원명(사번)</th>
                     <td>
-                        <input id="empNm">
+                        <input id="AC01110S_empNm">
                     </td>
                     <td class="etc_td">
-                        <input type="checkbox" style="width:15px"> 과거이력포함
+                        <input type="checkbox" style="width:15px" id="AC01110S_dltY"> 과거이력포함
                         <div class="button_etc_wrap">
-                            <button oneclick="getUserList();">조회</button>
+                            <button onclick="runFindUser();">조회</button>
                         </div>
                     </td>
                 </tr>
@@ -92,7 +92,7 @@
                             <col>
                             <col>
                         </colgroup>
-                        <tbody id="tbodyUserList">
+                        <tbody id="AC01110S_tbodyUserList">
                         </tbody>
                     </table>
                 </form>

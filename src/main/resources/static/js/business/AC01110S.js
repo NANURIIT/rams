@@ -25,6 +25,53 @@ function setAC01130P() {
 	}
 }
 
+var runFindUser = function (){
+	let empNm = $("#AC01110S_empNm").val();
+	let rghtCd = $("#AC01110S_rghtCd").val();
+	let dltY = $("#AC01110S_dltY").val();
+	findUser(empNm, rghtCd, dltY);
+}
+
+
+var findUser= function (a, b, c) {
+	let usrC = $("#usrC").val();					/* 사용자구분 */
+	let eno = $("#eno").val();					/* 사번 */
+	let pstn = $("#pstn").val();					/* 직책 */
+	let rgstRsn = $("#rgstRsn").val();			/* 등록사유 */
+	let aplcStrtDt = $("#aplcStrtDt").val();		/* 적용시작일 */
+	let aplcEndDt = $("#aplcEndDt").val();		/* 회수(예정)일 */
+	let rgstPEno = $("#rgstPEno").val();			/* 등록자사번 */
+	let hndlPEno = $("#hndlPEno").val();			/* 회수자사번 */
+
+	let dtoParam = {
+		"usrC": usrC
+		, "eno": eno
+		, "pstn": pstn
+		, "rgstRsn": rgstRsn
+		, "aplcStrtDt": aplcStrtDt
+		, "aplcEndDt": aplcEndDt
+		, "rgstPEno": rgstPEno
+		, "hndlPEno": hndlPEno
+	}
+
+	$.ajax({
+		type: "GET",
+		url: "/getUserList",
+		data: {
+			dtoParam
+			, "rghtCd": a
+			, "empNm": b
+			, "dltY": c
+		},
+		dataType: "json",
+		success: function (data) {
+			var a = '';
+			$('#AC01110S_tbodyUserList').html(a);
+			rebuildUserManageTable(data);
+		}
+	});
+}
+
 function getUserList() {
 	let usrC = $("#usrC").val();					/* 사용자구분 */
 	let eno = $("#eno").val();					/* 사번 */
@@ -57,7 +104,7 @@ function getUserList() {
 		dataType: "json",
 		success: function (data) {
 			var a = '';
-			$('#tbodyUserList').html(a);
+			$('#AC01110S_tbodyUserList').html(a);
 			rebuildUserManageTable(data);
 		}
 	});
@@ -70,9 +117,7 @@ function rebuildUserManageTable(data) {
 	if (userList.length > 0) {
 		$.each(userList, function (key, value) {
 			rghtCd = (value.rghtCd == "1") ? "해당부서" : (value.rghtCd == "2") ? "전체" : "해당본부"
-			if (value.dltF == "Y") {
-
-			}else{
+			if (value.dltF == "N") {
 				html += '<tr>';
 				html += '<td>' + value.usrC + '</td>';
 				html += '<td>' + value.eno + '</td>';
@@ -93,7 +138,7 @@ function rebuildUserManageTable(data) {
 		html += '</tr>';
 	}
 	//console.log(html);
-	$('#tbodyUserList').html(html);
+	$('#AC01110S_tbodyUserList').html(html);
 
 };
 

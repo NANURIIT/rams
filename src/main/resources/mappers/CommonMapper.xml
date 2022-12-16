@@ -11,7 +11,7 @@
            , hndl_p_eno                    <!-- 처리자사번 --> 
     </sql>
 
-    <sql id="aCommonDto">
+    <sql id="selectCommonDto">
            , IFNULL(rgst_dt, '')       				AS rgst_dt          <!-- 등록일자 -->
            , IFNULL(rgst_tm, '')       				AS rgst_tm          <!-- 등록시간 -->
            , IFNULL((SELECT EMP_NM

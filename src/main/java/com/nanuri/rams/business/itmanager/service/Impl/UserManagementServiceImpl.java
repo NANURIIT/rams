@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nanuri.rams.business.itmanager.dto.FindUserVo;
 import com.nanuri.rams.business.itmanager.dto.UserInfo;
 import com.nanuri.rams.business.itmanager.dto.UserListDto;
 import com.nanuri.rams.business.itmanager.dto.UserManageDTO;
@@ -52,8 +53,8 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     /* 사용자 목록 */
     @Override
-    public List<UserListDto> getUserList(String empNm) {
-        return userManagementMapper.selectUser(empNm);
+    public List<UserListDto> getUserList(FindUserVo userVo) {
+        return userManagementMapper.selectUser(userVo);
     }
 
     @Override
