@@ -3,17 +3,9 @@ $(document).ready(function () {
 	setOpenModal();
 	setDatePicker();
 
-	setAAAA();
+	// setAAAA();
 
 });
-
-function setAAAA(){
-	$('#AC01130P_saveButton').on('click', function () {
-		var sq = $('#AC01130P_saveButton').val();
-		console.log("button: " + sq);
-		saveUserData(sq);
-	});
-}
 
 
 function setDatePicker() {
@@ -154,12 +146,6 @@ function keyDownEnter() {
 		}
 	});
 
-	$("input[id=AC01110S_empNm]").keydown(function (key) {
-		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
-			runFindUser();
-		}
-	});
-
 	$("input[id=AC01121P_eno]").keydown(function (key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
 			getEmpList();
@@ -194,9 +180,10 @@ function modalClose() {
 	Modal.style.display = "none";
 }
 
+// AC01130P 팝업 페이지 초기화
 var resetTable = function () {
 	$('#AC01130P_setEno').text("");
-	$('#AC01130P_empName').val("");
+	$('#AC01130P_empNm').val("");
 	$('#AC01130P_rghtCd').val("");
 	$('#AC01130P_datepicker1').val("");
 	$('#AC01130P_datepicker2').val("");
@@ -207,10 +194,11 @@ var resetTable = function () {
 	$('#AC01130P_hndlDyTm').text("");
 };
 
+// 사용자 조회 (더블 클릭 및 사용자 추가에서 사용)
 let setEno = function (eno, empNm) {
 	resetTable();
 	$('#AC01130P_setEno').text(eno);
-	$('#AC01130P_empName').val(empNm);
+	$('#AC01130P_empNm').val(empNm);
 	modalClose();
 }
 
@@ -221,19 +209,19 @@ var month = today.getMonth() + 1;
 var day = today.getDate();
 var recallDay = year + "-" + month + "-" + day;
 
-var saveUserData = function (param) {
-
+// 권한 저장
+var saveUserData = function () {
 	let eno = $('#AC01130P_setEno').text();
-	let empNm = $('#AC01130P_empName').val();
+	let empNm = $('#AC01130P_empNm').val();
 	let rghtCd = $('#AC01130P_rghtCd option:selected').val();
 	let aplcStrtDt = $('#AC01130P_datepicker1').val();
 	let aplcEndDt = $('#AC01130P_datepicker2').val();
 	let rgstRsn = $('#AC01130P_rgstRsn').val();
 	let rgstPEno = $('#AC01130P_rgstPEno').val();		/* 등록자는 로그인 한 사원의 세션 */
-	let rgstDt = year + month + day;			/* 8자리의 날짜 */
+	let rgstDt = year + month + day;					/* 8자리의 날짜 */
 	let hndlPEno = $('#AC01130P_hndlPEno').val();		/* 수정자의 세션 */
-	let hndlDyTm = today; 						/* 수정한 시간(Date타입) */
-	let sq = Number(param);
+	let hndlDyTm = today; 								/* 수정한 시간(Date타입) */
+	let sq = Number($('#AC01130P_sq').val());
 
 	let dtoParam = {
 		"eno": eno
@@ -271,18 +259,28 @@ var saveUserData = function (param) {
 	});
 }
 
-var deleteUser = function (eno, sq) {
-	
-		$.ajax({
-			url: '/deleteUser',
-			data : param
-			method: 'PATCH',
-			data: JSON.stringify(dtoParam),
-			contentType: 'application/json; charset=UTF-8',
-			// dataType: 'json',
-		});
+
+// 사용자 삭제(사원 퇴사)
+var deleteUser = function () {
+
+	let eno = $('#AC01130P_setEno').val();
+	let sq = $('#AC01130P_sq').val();
+	var param = {
+		"eno": eno
+		, "sq": sq
+	}
+
+	$.ajax({
+		url: '/deleteUser',
+		data: param,
+		method: 'PATCH',
+		data: JSON.stringify(dtoParam),
+		contentType: 'application/json; charset=UTF-8',
+		// dataType: 'json',
+	});
 };
 
+// 권한 회수
 var recall = function () {
 
 	$('#AC01130P_recall').on('click', function () {
@@ -290,8 +288,8 @@ var recall = function () {
 	})
 };
 
-
-function aaasdasdA(){
+// 권한 부여(사용자 추가)
+function aaasdasdA() {
 	/*$.ajax({
 		url: '/getUserList',
 		method: 'GET',
@@ -301,7 +299,7 @@ function aaasdasdA(){
 			var data = userInfo[idx];
 			if (data.eno == eno && data.dltF == 'N') {
 				$('#AC01130P_setEno').text(data.eno);
-				$('#AC01130P_empName').val(data.empNm);
+				$('#AC01130P_empNm').val(data.empNm);
 				$('#AC01130P_rghtCd').val(data.rghtCd);
 				$('#AC01130P_datepicker1').val(data.aplcStrtDt.substr(0, 4) + '-' + data.aplcStrtDt.substr(4, 2) + '-' + data.aplcStrtDt.substr(6, 2));
 				$('#AC01130P_datepicker2').val(data.aplcEndDt.substr(0, 4) + '-' + data.aplcEndDt.substr(4, 2) + '-' + data.aplcEndDt.substr(6, 2));
@@ -315,5 +313,5 @@ function aaasdasdA(){
 			};
 		};
 	});*/
-	
+
 }

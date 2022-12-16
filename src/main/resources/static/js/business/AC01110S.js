@@ -2,7 +2,7 @@ $(document).ready(function () {
 
 	setAC01130P();
 	setKeyDownFunction();
-	
+	findKeydown();
 });
 
 
@@ -28,7 +28,8 @@ function setAC01130P() {
 var runFindUser = function (){
 	let empNm = $("#AC01110S_empNm").val();
 	let rghtCd = $("#AC01110S_rghtCd").val();
-	let dltY = $("#AC01110S_dltY").val();
+	let dltY = $('#AC01110S_dltY:checked').length;
+	console.log(typeof(dltY));
 	findUser(empNm, rghtCd, dltY);
 }
 
@@ -98,7 +99,6 @@ function rebuildUserManageTable(data) {
 	if (userList.length > 0) {
 		$.each(userList, function (key, value) {
 			//rghtCd = (value.rghtCd == "1") ? "해당부서" : (value.rghtCd == "2") ? "전체" : "해당본부"
-			if (value.dltF == "N") {
 				html += '<tr>';
 				html += '<td>' + value.usrC + '</td>';
 				html += '<td>' + value.eno + '</td>';
@@ -111,7 +111,6 @@ function rebuildUserManageTable(data) {
 				html += '<td>' + value.rgstPEno + '</td>';
 				html += '<td>' + value.hndlPEno + '</td>';
 				html += '</tr>';
-			}
 		})
 	} else {
 		html += '<tr>';
@@ -121,3 +120,12 @@ function rebuildUserManageTable(data) {
 	$('#AC01110S_tbodyUserList').html(html);
 
 };
+
+var findKeydown = function(){
+	$("input[id=AC01110S_empNm]").keydown(function (key) {
+		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
+			console.log($('#AC01110S_dltY:checked').length);
+			runFindUser();
+		}
+	});
+}

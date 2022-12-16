@@ -89,7 +89,10 @@
        AND (EMP_NM LIKE CONCAT('%', #{empNm}, '%')
 	        OR ENO LIKE CONCAT('%', #{empNm}, '%'))
    		</if>
-    	<if test=" dltY == 'on'">
+    	<if test=" dltY == 0">
+       AND DLT_F  ='N'
+   		</if>
+    	<if test=" dltY == 1">
        AND (DLT_F = 'Y' OR DLT_F  ='N')
    		</if>
   	 ORDER BY SQ ASC
