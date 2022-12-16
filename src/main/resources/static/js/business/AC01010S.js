@@ -98,14 +98,37 @@ function clickSaveGroupCode() {
         let groupCodeUseYnCheck = $(tr[i]).find("td:eq(7)").find(".hidden_yn").val();
 
         if (groupCodeInput.length == 1) {
+            if(groupCodeInput.val().length > 4) {
+                alert("그룹코드는 4자리 이하여야 합니다.");
+                groupCodeInput.focus();
+                return;
+            } else if(!groupCodeInput.val()) {
+                alert("그룹코드를 입력해주세요");
+                groupCodeInput.focus();
+                return;
+            }
             groupCode.cmnsCdGrp = groupCodeInput.val();
         }
 
         if (groupCodeNameInput.length == 1) {
+            if(!groupCodeNameInput.val()) {
+                alert("그룹명을 입력해주세요");
+                groupCodeNameInput.focus();
+                return;
+            }
             groupCode.cmnsCdNm = groupCodeNameInput.val();
         }
 
         if (groupCodeLengthInput.length == 1) {
+            if(!groupCodeLengthInput.val()) {
+                alert("코드 길이를 입력해주세요.");
+                groupCodeLengthInput.focus();
+                return;
+            } else if(isNaN(groupCodeLengthInput.val())) {
+                alert("코드 길이를 숫자로 입력해주세요.");
+                groupCodeLengthInput.focus();
+                return;
+            }
             groupCode.cdLngth = groupCodeLengthInput.val();
         }
 
@@ -114,7 +137,7 @@ function clickSaveGroupCode() {
         }
 
         if (!(Object.keys(groupCode).length === 0)) {
-            groupCode.oldCmnsCdGrp = $(tr[i]).find("td:eq(0)").find("input").attr("id")
+            groupCode.oldCmnsCdGrp = $(tr[i]).find("td:eq(0)").find("input").attr("id");
             groupCodeList.push(groupCode);
         }
     }
@@ -187,10 +210,24 @@ function clickSaveCode() {
         let codeUseYnCheck = $(tr[i]).find("td:eq(5)").find(".hidden_yn").val();
 
         if (codeInput.length == 1) {
+            if(!codeInput.val()) {
+                alert("코드를 입력해주세요");
+                codeInput.focus();
+                return;
+            } else if(codeInput.val().length()) {
+                alert("코드는 4자리 이하로 입력해주세요.");
+                codeInput.focus();
+                return;
+            }
             code.cdVlId = codeInput.val();
         }
 
         if (codeNameInput.length == 1) {
+            if(!codeNameInput.val()) {
+                alert("코드명을 입력해주세요.");
+                codeNameInput.focus();
+                return;
+            }
             code.cdVlNm = codeNameInput.val();
         }
 
