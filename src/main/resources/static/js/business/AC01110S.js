@@ -97,18 +97,18 @@ function rebuildUserManageTable(data) {
 
 };
 
-// when page loaded
-function setKeyDownFunction() {
-	keyDownEnter();
-}
+// // when page loaded
+// function setKeyDownFunction() {
+// 	keyDownEnter();
+// }
 
-// search employee or deal
-function keyDownEnter() {
+// // search employee or deal
+// function keyDownEnter() {
 
-	$("input[id=empNm]").keydown(function (key) {
-		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
-			getUserList();
-		}
-	});
+// 	$("input[id=empNm]").keydown(function (key) {
+// 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
+// 			getUserList();
+// 		}
+// 	});
 
-}
+// }

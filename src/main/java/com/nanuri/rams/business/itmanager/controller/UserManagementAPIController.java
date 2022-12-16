@@ -37,8 +37,8 @@ public class UserManagementAPIController {
     };
 
     @GetMapping(value="/getUserList")
-    public List<UserListDto> getUserList() {
-        return userManagementService.getUserList();
+    public List<UserListDto> getUserList(String empNm) {
+        return userManagementService.getUserList(empNm);
     }
     
     @PatchMapping(value = "/deleteUser")

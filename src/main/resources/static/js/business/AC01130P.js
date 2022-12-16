@@ -77,7 +77,7 @@ function setOpenModal() {
 // get employee list
 function getEmpList() {
 
-	var empNm = $("#empNm").val();
+	var empNm = $("#empNmPop").val();
 	var eno = $("#eno").val();
 	var dprtCd = $("#dprtCd").val();
 	var dprtNm = $("#dprtNm").val();
@@ -143,9 +143,16 @@ function setKeyDownFunction() {
 // search employee or deal
 function keyDownEnter() {
 
-	$("input[id=empNm]").keydown(function (key) {
+	$("input[id=empNmPop]").keydown(function (key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
 			getEmpList();
+		}
+	});
+
+	$("input[id=empNm]").keydown(function (key) {
+		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
+			console.log($('#empNm').val());
+			getUserList();
 		}
 	});
 
@@ -171,7 +178,7 @@ function keyDownEnter() {
 // reset AC01120P
 function reset_AC01120P() {
 	$('#tbodyEmpList').html("");
-	$('#empNm').val("");
+	$('#empNmPop').val("");
 	$('#eno').val("");
 	$('#dprtCd').val("");
 	$('#dprtNm').val("");
