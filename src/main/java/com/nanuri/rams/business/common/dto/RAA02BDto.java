@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class RAA02BDto {
 	
-	private String dealNo;				//	사원번호
-    private String dealNm;				//	직원명
-    private String dscDate;				//	부점코드
+	private String dealNo;				//	IBDEAL번호
+    private String dealNm;				//	IBDEA명
+    private String dscDate;				//	DSC일자
 }

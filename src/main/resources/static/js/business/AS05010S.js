@@ -74,10 +74,10 @@ function setOpenModal() {
 // get employee list
 function getEmpList() {
 
-	var empNm = $("#empNm").val();
-	var eno = $("#eno").val();
-	var dprtCd = $("#dprtCd").val();
-	var dprtNm = $("#dprtNm").val();
+	var empNm = $("#AC01120P_empNm").val();
+	var eno = $("#AC01120P_eno").val();
+	var dprtCd = $("#AC01120P_dprtCd").val();
+	var dprtNm = $("#AC01120P_dprtNm").val();
 
 	var dtoParam = {
 		"empNm": empNm
@@ -97,7 +97,7 @@ function getEmpList() {
 		dataType: "json",
 		success: function(data) {
 			var a = '';
-			$('#tbodyEmpList').html(a);
+			$('#AC01120P_tbodyEmpList').html(a);
 			//console.log(data);
 			rebuildTable(data);
 		}
@@ -128,7 +128,7 @@ function rebuildTable(data) {
 		html += '</tr>';
 	}
 	//console.log(html);
-	$('#tbodyEmpList').html(html);
+	$('#AC01120P_tbodyEmpList').html(html);
 
 };
 
@@ -140,25 +140,25 @@ function setKeyDownFunction() {
 // search employee or deal
 function keyDownEnter() {
 
-	$("input[id=empNm]").keydown(function(key) {
+	$("input[id=AC01120P_empNm]").keydown(function(key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
 			getEmpList();
 		}
 	});
 
-	$("input[id=eno]").keydown(function(key) {
+	$("input[id=AC01120P_eno]").keydown(function(key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
 			getEmpList();
 		}
 	});
 
-	$("input[id=dprtCd]").keydown(function(key) {
+	$("input[id=AC01120P_dprtCd]").keydown(function(key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
 			getEmpList();
 		}
 	});
 
-	$("input[id=dprtNm]").keydown(function(key) {
+	$("input[id=AC01120P_dprtNm]").keydown(function(key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
 			getEmpList();
 		}
@@ -167,11 +167,11 @@ function keyDownEnter() {
 
 // reset AC01120P
 function reset_AC01120P() {
-	$('#tbodyEmpList').html("");
-	$('#empNm').val("");
-	$('#eno').val("");
-	$('#dprtCd').val("");
-	$('#dprtNm').val("");
+	$('#AC01120P_tbodyEmpList').html("");
+	$('#AC01120P_empNm').val("");
+	$('#AC01120P_eno').val("");
+	$('#AC01120P_dprtCd').val("");
+	$('#AC01120P_dprtNm').val("");
 }
 
 // close modal
@@ -186,7 +186,7 @@ function setEmpNm(){
 	var td = $(tr).children();
 	var empNm = td.eq(1).text();
 	
-	$('#rcvdEmpNm').val(empNm);
+	$('#AS05010S_rcvdEmpNm').val(empNm);
 	modalClose();
 }
 
