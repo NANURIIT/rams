@@ -1,20 +1,12 @@
 $(function () {
-    let cmnsCdGrp = ''
     getCommonCodeInfo();
-    getGroupCodeInfoList(cmnsCdGrp);
-    
+    getGroupCodeInfoList();
+    deleteEnterEvent();
+
     selectCommonCode();
 
     clickDetailButton();
     doubleClickColumn();
-
-    addGroupCodeRow();
-    deleteGroupCodeRow();
-    clickSaveGroupCode();
-    
-    addCodeRow();
-    deleteGroupRow();
-    clickSaveCode();
 });
 
 function selectCommonCode() {
@@ -40,167 +32,155 @@ function doubleClickColumn() {
 }
 
 function addGroupCodeRow() {
-    $(document).on('click', '#add_group_row', function () {
-        let ROW_HTML = '';
-        ROW_HTML += '<tr>';
-        ROW_HTML += '   <td><input style="width:100%" type="checkbox"></td>';
-        ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
-        ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
-        ROW_HTML += '   <td></td>';
-        ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
-        ROW_HTML += '   <td></td>';
-        ROW_HTML += '   <td></td>';
-        ROW_HTML += '   <td><input class="group_code_use_yn" style="width:100%" type="checkbox"></td>';
-        ROW_HTML += '   <td></td>';
-        ROW_HTML += '   <td></td>';
-        ROW_HTML += '   <td></td>';
-        ROW_HTML += '</tr>';
-        $('#groupCodeListTable').append(ROW_HTML);
-    });
+    let ROW_HTML = '';
+    ROW_HTML += '<tr>';
+    ROW_HTML += '   <td><input style="width:100%" type="checkbox"></td>';
+    ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
+    ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
+    ROW_HTML += '   <td></td>';
+    ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
+    ROW_HTML += '   <td></td>';
+    ROW_HTML += '   <td></td>';
+    ROW_HTML += '   <td><input class="group_code_use_yn" style="width:100%" type="checkbox"></td>';
+    ROW_HTML += '   <td></td>';
+    ROW_HTML += '   <td></td>';
+    ROW_HTML += '   <td></td>';
+    ROW_HTML += '</tr>';
+    $('#groupCodeListTable').append(ROW_HTML);
 }
 
 function deleteGroupCodeRow() {
-    $(document).on('click', '#delete_group_row', function () {
-        let groupCodeList = new Array();
-        let tr = $('#groupCodeListTable').children();
+    let groupCodeList = new Array();
+    let tr = $('#groupCodeListTable').children();
 
-        for (let i = 0; i < tr.length; i++) {
-            let deleteCheckBox = $(tr[i]).find("td:eq(0)").find("input");
-            if (deleteCheckBox.is(":checked")) {
-                groupCodeList.push(deleteCheckBox.attr("id"));
-            }
+    for (let i = 0; i < tr.length; i++) {
+        let deleteCheckBox = $(tr[i]).find("td:eq(0)").find("input");
+        if (deleteCheckBox.is(":checked")) {
+            groupCodeList.push(deleteCheckBox.attr("id"));
         }
+    }
 
-        if (groupCodeList.length != 0) {
-            deleteGroupCode(groupCodeList);
-        }
-    });
+    if (groupCodeList.length != 0) {
+        deleteGroupCode(groupCodeList);
+    }
 }
 
 function clickSaveGroupCode() {
-    $(document).on('click', '#save_group', function () {
-        let groupCodeList = new Array();
+    let groupCodeList = new Array();
 
-        let tr = $('#groupCodeListTable').children();
+    let tr = $('#groupCodeListTable').children();
 
-        for (let i = 0; i < tr.length; i++) {
-            let groupCode = new Object();
+    for (let i = 0; i < tr.length; i++) {
+        let groupCode = new Object();
 
-            let groupCodeInput = $(tr[i]).find("td:eq(1)").find("input");
-            let groupCodeNameInput = $(tr[i]).find("td:eq(2)").find("input");
-            let groupCodeLengthInput = $(tr[i]).find("td:eq(4)").find("input");
-            let groupCodeUseYn = $(tr[i]).find("td:eq(7)").find(".group_code_use_yn").prop("checked");
-            let groupCodeUseYnCheck = $(tr[i]).find("td:eq(7)").find(".hidden_yn").val();
+        let groupCodeInput = $(tr[i]).find("td:eq(1)").find("input");
+        let groupCodeNameInput = $(tr[i]).find("td:eq(2)").find("input");
+        let groupCodeLengthInput = $(tr[i]).find("td:eq(4)").find("input");
+        let groupCodeUseYn = $(tr[i]).find("td:eq(7)").find(".group_code_use_yn").prop("checked");
+        let groupCodeUseYnCheck = $(tr[i]).find("td:eq(7)").find(".hidden_yn").val();
 
-            if (groupCodeInput.length == 1) {
-                groupCode.cmnsCdGrp = groupCodeInput.val();
-            }
-
-            if (groupCodeNameInput.length == 1) {
-                groupCode.cmnsCdNm = groupCodeNameInput.val();
-            }
-
-            if (groupCodeLengthInput.length == 1) {
-                groupCode.cdLngth = groupCodeLengthInput.val();
-            }
-
-            if (!groupCodeUseYnCheck || (groupCodeUseYn && groupCodeUseYnCheck === 'n') || (!groupCodeUseYn && groupCodeUseYnCheck === 'y')) {
-                groupCode.useF = groupCodeUseYn ? 'Y' : 'N';
-            }
-
-            if (!(Object.keys(groupCode).length === 0)) {
-                groupCode.oldCmnsCdGrp = $(tr[i]).find("td:eq(0)").find("input").attr("id")
-                groupCodeList.push(groupCode);
-            }
+        if (groupCodeInput.length == 1) {
+            groupCode.cmnsCdGrp = groupCodeInput.val();
         }
 
-        if (groupCodeList.length != 0) {
-            saveGroupCode(groupCodeList);
+        if (groupCodeNameInput.length == 1) {
+            groupCode.cmnsCdNm = groupCodeNameInput.val();
         }
-    });
+
+        if (groupCodeLengthInput.length == 1) {
+            groupCode.cdLngth = groupCodeLengthInput.val();
+        }
+
+        if (!groupCodeUseYnCheck || (groupCodeUseYn && groupCodeUseYnCheck === 'n') || (!groupCodeUseYn && groupCodeUseYnCheck === 'y')) {
+            groupCode.useF = groupCodeUseYn ? 'Y' : 'N';
+        }
+
+        if (!(Object.keys(groupCode).length === 0)) {
+            groupCode.oldCmnsCdGrp = $(tr[i]).find("td:eq(0)").find("input").attr("id")
+            groupCodeList.push(groupCode);
+        }
+    }
+
+    if (groupCodeList.length != 0) {
+        saveGroupCode(groupCodeList);
+    }
 }
 
 function addCodeRow() {
-    $(document).on('click', '#add_row', function () {
-        let ROW_HTML = '';
-        ROW_HTML += '<tr>';
-        ROW_HTML += '   <td><input style="width:100%" type="checkbox"></td>';
-        ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
-        ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
-        ROW_HTML += '   <td></td>';
-        ROW_HTML += '   <td></td>';
-        ROW_HTML += '   <td><input class="code_use_yn" style="width:100%" type="checkbox"></td>';
-        ROW_HTML += '   <td></td>';
-        ROW_HTML += '   <td></td>';
-        ROW_HTML += '   <td></td>';
-        ROW_HTML += '   <td></td>';
-        ROW_HTML += '</tr>';
-        $('#codeListTable').append(ROW_HTML);
-    });
+    let ROW_HTML = '';
+    ROW_HTML += '<tr>';
+    ROW_HTML += '   <td><input style="width:100%" type="checkbox"></td>';
+    ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
+    ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
+    ROW_HTML += '   <td></td>';
+    ROW_HTML += '   <td></td>';
+    ROW_HTML += '   <td><input class="code_use_yn" style="width:100%" type="checkbox"></td>';
+    ROW_HTML += '   <td></td>';
+    ROW_HTML += '   <td></td>';
+    ROW_HTML += '   <td></td>';
+    ROW_HTML += '   <td></td>';
+    ROW_HTML += '</tr>';
+    $('#codeListTable').append(ROW_HTML);
 }
 
 function deleteGroupRow() {
-    $(document).on('click', '#delete_row', function () {
-        let request = new Object();
-        let codeList = new Array();
-        let tr = $('#codeListTable').children();
+    let request = new Object();
+    let codeList = new Array();
+    let tr = $('#codeListTable').children();
 
-        for (let i = 0; i < tr.length; i++) {
-            let deleteCheckBox = $(tr[i]).find('input');
+    for (let i = 0; i < tr.length; i++) {
+        let deleteCheckBox = $(tr[i]).find('input');
 
-            if (deleteCheckBox.prop('checked')) {
-                codeList.push(deleteCheckBox.attr('id'));
-            }
+        if (deleteCheckBox.prop('checked')) {
+            codeList.push(deleteCheckBox.attr('id'));
         }
+    }
 
-        if (codeList.length > 0) {
-            request.cmnsCdGrp = $(tr[0]).attr('id')
-            request.cdVlIds = codeList;
-        }
+    if (codeList.length > 0) {
+        request.cmnsCdGrp = $(tr[0]).attr('id')
+        request.cdVlIds = codeList;
+    }
 
-        if (Object.keys(request).length > 0) {
-            deleteCode(request);
-        }
-    });
+    if (Object.keys(request).length > 0) {
+        deleteCode(request);
+    }
 }
 
 function clickSaveCode() {
-    $(document).on('click', '#save', function () {
-        let codeList = new Array();
-        let tr = $('#codeListTable').children();
-        for (let i = 0; i < tr.length; i++) {
-            let code = new Object();
+    let codeList = new Array();
+    let tr = $('#codeListTable').children();
+    for (let i = 0; i < tr.length; i++) {
+        let code = new Object();
 
-            let groupCodeId = tr.attr('id');
-            let oldCodeId = $(tr[i]).find("td:eq(0)").find("input").attr('id');
-            let codeInput = $(tr[i]).find("td:eq(1)").find("input");
-            let codeNameInput = $(tr[i]).find("td:eq(2)").find("input");
-            let codeUseYn = $(tr[i]).find("td:eq(5)").find(".code_use_yn").prop("checked");
-            let codeUseYnCheck = $(tr[i]).find("td:eq(5)").find(".hidden_yn").val();
+        let groupCodeId = tr.attr('id');
+        let oldCodeId = $(tr[i]).find("td:eq(0)").find("input").attr('id');
+        let codeInput = $(tr[i]).find("td:eq(1)").find("input");
+        let codeNameInput = $(tr[i]).find("td:eq(2)").find("input");
+        let codeUseYn = $(tr[i]).find("td:eq(5)").find(".code_use_yn").prop("checked");
+        let codeUseYnCheck = $(tr[i]).find("td:eq(5)").find(".hidden_yn").val();
 
-            if (codeInput.length == 1) {
-                code.cdVlId = codeInput.val();
-            }
-
-            if (codeNameInput.length == 1) {
-                code.cdVlNm = codeNameInput.val();
-            }
-
-            if (!codeUseYnCheck || (codeUseYn && codeUseYnCheck === 'n') || (!codeUseYn && codeUseYnCheck === 'y')) {
-                code.useF = codeUseYn ? 'Y' : 'N';
-            }
-            
-            if (!(Object.keys(code).length === 0)) {
-                code.oldCdVlId = oldCodeId;
-                code.cmnsCdGrp = groupCodeId;
-                codeList.push(code);
-            }
+        if (codeInput.length == 1) {
+            code.cdVlId = codeInput.val();
         }
 
-        if (codeList.length > 0) {
-            saveCode(codeList);
+        if (codeNameInput.length == 1) {
+            code.cdVlNm = codeNameInput.val();
         }
-    });
+
+        if (!codeUseYnCheck || (codeUseYn && codeUseYnCheck === 'n') || (!codeUseYn && codeUseYnCheck === 'y')) {
+            code.useF = codeUseYn ? 'Y' : 'N';
+        }
+
+        if (!(Object.keys(code).length === 0)) {
+            code.oldCdVlId = oldCodeId;
+            code.cmnsCdGrp = groupCodeId;
+            codeList.push(code);
+        }
+    }
+
+    if (codeList.length > 0) {
+        saveCode(codeList);
+    }
 }
 
 var getCommonCodeInfo = function () {
@@ -294,6 +274,7 @@ var saveGroupCode = function (groupCodeList) {
         dataType: 'json',
         success: function () {
             getGroupCodeInfoList();
+            getCommonCodeInfo();
         },
         error: function (response) {
             let message = response.responseJSON.message;
@@ -349,6 +330,14 @@ var deleteCode = function (request) {
         },
         error: function (response) {
             console.log(response);
+        }
+    });
+}
+
+function deleteEnterEvent() {
+    $(document).keypress(function(e) {
+        if(e.keyCode == 13) {
+            e.preventDefault();
         }
     });
 }

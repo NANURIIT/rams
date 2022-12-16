@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.List;
 
 import com.nanuri.rams.business.itmanager.dto.*;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.nanuri.rams.business.itmanager.service.CodeManagementService;
@@ -11,10 +12,13 @@ import com.nanuri.rams.business.itmanager.service.CodeManagementService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.validation.Valid;
+
 
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@Validated
 public class CodeManagementAPIController {
 
 	private final CodeManagementService codeManagementService;
@@ -54,7 +58,7 @@ public class CodeManagementAPIController {
 
 	// 그룹코드정보 등록하기
 	@PostMapping(value = "/registGroupCodeInfo")
-	public boolean registGroupCodeInfo(@RequestBody List<GroupCodeInfoSaveRequestDto> requestDtos) {
+	public boolean registGroupCodeInfo(@RequestBody List<@Valid GroupCodeInfoSaveRequestDto> requestDtos) {
 		log.debug("requestDtos : {}", requestDtos);
 		return codeManagementService.registGroupCodeInfo(requestDtos);
 	}
