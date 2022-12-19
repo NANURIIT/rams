@@ -44,18 +44,20 @@ function setOpenModal() {
 	// open modal
 	OpenModal.onclick = function () {
 		Modal.style.display = "block";
-		reset_AC01121P();
+		
 	}
 
 	// close modal
 	CloseModal.onclick = function () {
 		Modal.style.display = "none";
+		reset_AC01121P();
 	}
 
 	// close modal
 	window.onclick = function (event) {
 		if (event.target === Modal) {
 			Modal.style.display = "none";
+			reset_AC01121P();
 		}
 	}
 
@@ -65,6 +67,7 @@ function setOpenModal() {
 		var code = e.keyCode || e.which;
 		if (code == 27) { // 27은 ESC 키번호
 			Modal.style.display = "none";
+			reset_AC01121P();
 		}
 
 	});
@@ -88,8 +91,6 @@ function getEmpList() {
 		, "hdqtNm": ""
 	}
 
-	//console.log(data);
-
 	$.ajax({
 		type: "GET",
 		url: "/findEmpList",
@@ -98,7 +99,6 @@ function getEmpList() {
 		success: function (data) {
 			var a = '';
 			$('#AC01121P_tbodyEmpList').html(a);
-			//console.log(data);
 			rebuildTable(data);
 		}
 	});
@@ -112,7 +112,6 @@ function rebuildTable(data) {
 
 	if (empList.length > 0) {
 		$.each(empList, function (key, value) {
-			//console.log(value);
 			html += '<tr onclick="setEno(' + "'" + value.ENO + "', '" + value.EMP_NM + "'" + ');">';
 			html += '<td>' + value.ENO + '</td>';
 			html += '<td>' + value.EMP_NM + '</td>';
@@ -127,7 +126,6 @@ function rebuildTable(data) {
 		html += '<td colspan="6" style="text-align: center">데이터가 없습니다.</td>';
 		html += '</tr>';
 	}
-	//console.log(html);
 	$('#AC01121P_tbodyEmpList').html(html);
 
 };
@@ -177,6 +175,13 @@ function reset_AC01121P() {
 // close modal
 function modalClose() {
 	let Modal = document.getElementById('AC01121P');
+	Modal.style.display = "none";
+	reset_AC01121P();
+}
+
+// close AC01130P modal
+function modalClose_AC01130P() {
+	let Modal = document.getElementById('AC01130P');
 	Modal.style.display = "none";
 }
 
@@ -253,6 +258,9 @@ var saveUserData = function () {
 		// dataType: 'json',
 		success: function (response) {
 			// alert(response);
+			resetTable();
+			modalClose_AC01130P();
+			reload();
 		},
 		error: function (request, status, error) {
 			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -279,6 +287,12 @@ var deleteUser = function () {
 		data: JSON.stringify(param),
 		contentType: 'application/json; charset=UTF-8',
 		// dataType: 'json',
+		success: function () {
+			resetTable();
+			modalClose_AC01130P();
+			reload();
+		},
+
 	});
 };
 
@@ -287,40 +301,11 @@ var recall = function () {
 	$('#AC01130P_datepicker2').val(recallDay);
 };
 
-// // 사용자 조회 (더블 클릭 및 사용자 추가에서 사용)
-// let setSelectUser = function () {
-// 	resetTable();
-// 	$('#AC01130P_setEno').val(eno);
-// 	$('#AC01130P_empNm').val(empNm);
-// 	$('#AC01130P_datepicker1').val(recallDay);
-// 	modalClose();
-// }
 
-
-// 권한 부여(사용자 추가)
-function aaasdasdA() {
-	/*$.ajax({
-		url: '/getUserList',
-		method: 'GET',
-		dataType: 'json',
-	}).done(function (userInfo) {
-		for (idx in userInfo) {
-			var data = userInfo[idx];
-			if (data.eno == eno && data.dltF == 'N') {
-				$('#AC01130P_setEno').text(data.eno);
-				$('#AC01130P_empNm').val(data.empNm);
-				$('#AC01130P_rghtCd').val(data.rghtCd);
-				$('#AC01130P_datepicker1').val(data.aplcStrtDt.substr(0, 4) + '-' + data.aplcStrtDt.substr(4, 2) + '-' + data.aplcStrtDt.substr(6, 2));
-				$('#AC01130P_datepicker2').val(data.aplcEndDt.substr(0, 4) + '-' + data.aplcEndDt.substr(4, 2) + '-' + data.aplcEndDt.substr(6, 2));
-				$('#AC01130P_rgstRsn').val(data.rgstRsn);
-				$('#AC01130P_rgstPEno').text(data.rgstPEno);
-				$('#AC01130P_rgstDt').text(data.rgstDt.substr(0, 4) + '-' + data.rgstDt.substr(4, 2) + '-' + data.rgstDt.substr(6, 2));
-				$('#AC01130P_hndlPEno').text(data.hndlPEno);
-				$('#AC01130P_hndlDyTm').text(data.hndlDyTm);
-				$('#AC01130P_saveButton').val(data.sq);
-				break;
-			};
-		};
-	});*/
-
+/* 쿼리 실행 시 페이지 리로드 */
+var reload = function () {
+	let empNm = $("#AC01130P_empNm").val();
+	let rghtCd = $("#AC01130P_rghtCd option:selected").val();
+	let dltY = "0";
+	findUser(empNm, rghtCd, dltY);
 }
