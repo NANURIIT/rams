@@ -128,12 +128,28 @@ function clickSaveGroupCode() {
 
 		if (groupCodeInput.length == 1) {
 			if (groupCodeInput.val().length > 4) {
-				alert("그룹코드는 4자리 이하여야 합니다.");
-				groupCodeInput.focus();
-				return;
+                openPopup({
+                    title : '실패', 
+                    text : '그룹코드는 4자리 이하여야 합니다.', 
+                    type : 'error', 
+                    callback : function() {
+                        $(document).on('click', '.confirm', function() {
+                            groupCodeInput.focus();
+                        });
+                    }
+                });
+                return;
 			} else if (!groupCodeInput.val()) {
-				alert("그룹코드를 입력해주세요");
-				groupCodeInput.focus();
+                openPopup({
+                    title : '실패', 
+                    text : '그룹코드를 입력해주세요.', 
+                    type : 'error', 
+                    callback : function() {
+                        $(document).on('click', '.confirm', function() {
+                            groupCodeInput.focus();
+                        });
+                    }
+                });
 				return;
 			}
 			groupCode.cmnsCdGrp = groupCodeInput.val();
@@ -141,8 +157,16 @@ function clickSaveGroupCode() {
 
 		if (groupCodeNameInput.length == 1) {
 			if (!groupCodeNameInput.val()) {
-				alert("그룹명을 입력해주세요");
-				groupCodeNameInput.focus();
+                openPopup({
+                    title : '실패', 
+                    text : '그룹명을 입력해주세요.', 
+                    type : 'error', 
+                    callback : function() {
+                        $(document).on('click', '.confirm', function() {
+                            groupCodeNameInput.focus();
+                        });
+                    }
+                });
 				return;
 			}
 			groupCode.cmnsCdNm = groupCodeNameInput.val();
@@ -150,12 +174,28 @@ function clickSaveGroupCode() {
 
 		if (groupCodeLengthInput.length == 1) {
 			if (!groupCodeLengthInput.val()) {
-				alert("코드 길이를 입력해주세요.");
-				groupCodeLengthInput.focus();
+                openPopup({
+                    title : '실패', 
+                    text : '코드 길이를 입력해주세요.', 
+                    type : 'error', 
+                    callback : function() {
+                        $(document).on('click', '.confirm', function() {
+                            groupCodeLengthInput.focus();
+                        });
+                    }
+                });
 				return;
 			} else if (isNaN(groupCodeLengthInput.val())) {
-				alert("코드 길이를 숫자로 입력해주세요.");
-				groupCodeLengthInput.focus();
+                openPopup({
+                    title : '실패', 
+                    text : '코드 길이를 숫자로 입력해주세요.', 
+                    type : 'error', 
+                    callback : function() {
+                        $(document).on('click', '.confirm', function() {
+                            groupCodeLengthInput.focus();
+                        });
+                    }
+                });
 				return;
 			}
 			groupCode.cdLngth = groupCodeLengthInput.val();
@@ -240,12 +280,28 @@ function clickSaveCode() {
 
 		if (codeInput.length == 1) {
 			if (!codeInput.val()) {
-				alert("코드를 입력해주세요");
-				codeInput.focus();
+                openPopup({
+                    title : '실패', 
+                    text : '코드를 입력해주세요.', 
+                    type : 'error', 
+                    callback : function() {
+                        $(document).on('click', '.confirm', function() {
+                            codeInput.focus();
+                        });
+                    }
+                });
 				return;
 			} else if (codeInput.val().length()) {
-				alert("코드는 4자리 이하로 입력해주세요.");
-				codeInput.focus();
+                openPopup({
+                    title : '실패', 
+                    text : '코드는 4자리 이하로 입력해주세요.', 
+                    type : 'error', 
+                    callback : function() {
+                        $(document).on('click', '.confirm', function() {
+                            codeInput.focus();
+                        });
+                    }
+                });
 				return;
 			}
 			code.cdVlId = codeInput.val();
@@ -253,8 +309,16 @@ function clickSaveCode() {
 
 		if (codeNameInput.length == 1) {
 			if (!codeNameInput.val()) {
-				alert("코드명을 입력해주세요.");
-				codeNameInput.focus();
+                openPopup({
+                    title : '실패', 
+                    text : '코드명을 입력해주세요.', 
+                    type : 'error', 
+                    callback : function() {
+                        $(document).on('click', '.confirm', function() {
+                            codeNameInput.focus();
+                        });
+                    }
+                });
 				return;
 			}
 			code.cdVlNm = codeNameInput.val();
@@ -368,7 +432,10 @@ var saveGroupCode = function(groupCodeList) {
 		},
 		error: function(response) {
 			let message = response.responseJSON.message;
-			alert(message);
+			openPopup({
+                title : '실패', 
+                text : message
+            });
 		}
 	});
 }
@@ -411,7 +478,10 @@ var saveCode = function(codeList) {
 		},
 		error: function(response) {
 			let message = response.responseJSON.message;
-			alert(message);
+            openPopup({
+                title : '실패', 
+                text : message
+            });
 		}
 	});
 }
