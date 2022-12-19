@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nanuri.rams.business.itmanager.dto.AuthCodeDto;
 import com.nanuri.rams.business.itmanager.dto.FindUserVo;
 import com.nanuri.rams.business.itmanager.dto.UserInfo;
 import com.nanuri.rams.business.itmanager.dto.UserListDto;
@@ -57,6 +58,7 @@ public class UserManagementServiceImpl implements UserManagementService {
         return userManagementMapper.selectUser(userVo);
     }
 
+    /* 사용자 삭제(퇴사) */
     @Override
     public void deleteUser(UserManageDTO userManageDTO) {
         String eno = facade.getDetails().getEno();
@@ -64,6 +66,7 @@ public class UserManagementServiceImpl implements UserManagementService {
         userManagementMapper.deleteUser(userManageDTO);
     }
 
+    /* 사용자 업데이트(권한회수) */
     @Override
     public void updateUser(UserManageDTO userManageDTO) {
         String eno = facade.getDetails().getEno();
@@ -71,6 +74,12 @@ public class UserManagementServiceImpl implements UserManagementService {
         userManageDTO.setAplcStrtDt(userManageDTO.getAplcStrtDt().replace("-", ""));
         userManageDTO.setAplcEndDt(userManageDTO.getAplcEndDt().replace("-", ""));
         userManagementMapper.insertUser(userManageDTO);
+    }
+
+    /* 사용자관리화면 권한구분 */
+    @Override
+    public List<AuthCodeDto> selectAuthCode() {
+        return userManagementMapper.selectRghtCd();
     }
 
 }

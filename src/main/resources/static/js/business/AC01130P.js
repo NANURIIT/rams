@@ -44,7 +44,7 @@ function setOpenModal() {
 	// open modal
 	OpenModal.onclick = function () {
 		Modal.style.display = "block";
-		reset_AC01120P();
+		reset_AC01121P();
 	}
 
 	// close modal
@@ -184,7 +184,7 @@ function modalClose() {
 var resetTable = function () {
 	$('#AC01130P_setEno').text("");
 	$('#AC01130P_empNm').val("");
-	$('#AC01130P_rghtCd').val("");
+	// $('#AC01130P_rghtCd').val("");
 	$('#AC01130P_datepicker1').val("");
 	$('#AC01130P_datepicker2').val("");
 	$('#AC01130P_rgstRsn').val("");
@@ -194,20 +194,21 @@ var resetTable = function () {
 	$('#AC01130P_hndlDyTm').text("");
 };
 
-// 사용자 조회 (더블 클릭 및 사용자 추가에서 사용)
-let setEno = function (eno, empNm) {
-	resetTable();
-	$('#AC01130P_setEno').text(eno);
-	$('#AC01130P_empNm').val(empNm);
-	modalClose();
-}
-
 // 오늘의 날짜
 var today = new Date();
 var year = today.getFullYear();
 var month = today.getMonth() + 1;
 var day = today.getDate();
 var recallDay = year + "-" + month + "-" + day;
+
+// 사용자 조회 (더블 클릭 및 사용자 추가에서 사용)
+let setEno = function (eno, empNm) {
+	resetTable();
+	$('#AC01130P_setEno').val(eno);
+	$('#AC01130P_empNm').val(empNm);
+	$('#AC01130P_datepicker1').val(recallDay);
+	modalClose();
+}
 
 // 권한 저장
 var saveUserData = function () {
@@ -282,11 +283,11 @@ var deleteUser = function () {
 
 // 권한 회수
 var recall = function () {
-
-	$('#AC01130P_recall').on('click', function () {
-		$('#AC01130P_datepicker2').val(recallDay);
-	})
+	$('#AC01130P_datepicker2').val(recallDay);
 };
+
+
+
 
 // 권한 부여(사용자 추가)
 function aaasdasdA() {

@@ -3,6 +3,7 @@ $(document).ready(function () {
 	setAC01130P();
 	setKeyDownFunction();
 	findKeydown();
+	selectAuthCode();
 });
 
 
@@ -27,9 +28,9 @@ function setAC01130P() {
 
 var runFindUser = function (){
 	let empNm = $("#AC01110S_empNm").val();
-	let rghtCd = $("#AC01110S_rghtCd").val();
+	let rghtCd = $("#AC01110S_rghtCd option:selected").val();
 	let dltY = $('#AC01110S_dltY:checked').length;
-	console.log(typeof(dltY));
+	// console.log(rghtCd);
 	findUser(empNm, rghtCd, dltY);
 }
 
@@ -124,8 +125,60 @@ function rebuildUserManageTable(data) {
 var findKeydown = function(){
 	$("input[id=AC01110S_empNm]").keydown(function (key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
-			console.log($('#AC01110S_dltY:checked').length);
+			// console.log($('#AC01110S_dltY:checked').length);
 			runFindUser();
 		}
 	});
 }
+
+/* 사용자관리화면 권한구분 */
+var selectAuthCode = function () {
+	
+	// dtoParam = {
+	// 	"rghtCd": rghtCd
+	// 	, "rghtCdNm": rghtCdNm
+	// 	, "rghtCdExpl": rghtCdExpl
+	// 	, "rghtCcd": rghtCcd
+	// 	, "aplcF": aplcF
+	// 	, "rgstDt": rgstDt
+	// 	, "rgstPEno": rgstPEno
+	// 	, "dltF": dltF
+	// 	, "dltDt": dltDt
+	// 	, "dltTm": dltTm
+	// 	, "dltPEno": dltPEno
+	// 	, "hndlDyTm": hndlDyTm
+	// 	, "hndlDprtCd": hndlDprtCd
+	// 	, "hndlPEno": hndlPEno
+	// }
+
+	$.ajax({
+		type: "GET",
+		url: "/selectAuthCode",
+		// data: dtoParam,
+		dataType: "json",
+		success: function (data) {
+			var a = '';
+			$('#AC01110S_rghtCd').html(a);
+			$('#AC01130P_rghtCd').html(a);
+			makeRghtCdList(data);
+		}
+	});
+}
+
+/* 권한구분 목록 */
+var makeRghtCdList = function(data) {
+	var html = '';
+
+		$.each(data, function (key, value) {
+			// console.log(value);
+			html += '<div>';
+			html += '<option value="' + value.rghtCd + '">' + value.rghtCdNm + '</option>';
+			html += '<input class="hidden_yn" type="hidden" value="'+ value.rghtCd +'" />';
+			html += '</div>';
+			// console.log(value.rghtCd);
+		})
+		// console.log(html);
+	$('#AC01110S_rghtCd').html(html);
+	$('#AC01130P_rghtCd').html(html);
+
+};
