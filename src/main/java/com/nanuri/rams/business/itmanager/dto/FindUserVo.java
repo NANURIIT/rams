@@ -5,7 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FindUserVo extends UserManageDTO{
-    
-    private String dltY;
+public class FindUserVo {
+
+	private String empNm;
+	private String rghtCd;
+	private String dltY;
 }

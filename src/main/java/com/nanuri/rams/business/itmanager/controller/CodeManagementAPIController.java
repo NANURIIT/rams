@@ -11,7 +11,6 @@ import com.nanuri.rams.business.itmanager.service.CodeManagementService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -37,7 +36,7 @@ public class CodeManagementAPIController {
 
 	@PatchMapping(value = "/deleteCodeInfo")
 	public boolean deleteCodeInfo(@RequestBody CodeInfoDeleteRequestDto requestDto) {
-		log.debug("requestDto : {}", requestDto);
+		//log.debug("requestDto : {}", requestDto);
 		return codeManagementService.deleteCodeInfo(requestDto);
 	}
 
@@ -55,14 +54,14 @@ public class CodeManagementAPIController {
 	// 그룹코드정보 등록하기
 	@PostMapping(value = "/registGroupCodeInfo")
 	public boolean registGroupCodeInfo(@RequestBody List<GroupCodeInfoSaveRequestDto> requestDtos) {
-		log.debug("requestDtos : {}", requestDtos);
+		//log.debug("requestDtos : {}", requestDtos);
 		return codeManagementService.registGroupCodeInfo(requestDtos);
 	}
 
 	// 코드정보 등록하기
 	@PostMapping(value = "/registCodeInfo")
 	public boolean registCodeInfo(@RequestBody List<CodeInfoSaveRequestDto> requestDtos) {
-		log.debug("requestDtos : {}", requestDtos);
+		//log.debug("requestDtos : {}", requestDtos);
 		return codeManagementService.registCodeInfo(requestDtos);
 	}
 

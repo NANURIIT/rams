@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nanuri.rams.business.casemanagement.mapper.CaseManagementMapper">
+<mapper namespace="com.nanuri.rams.business.common.mapper.RAA02BMapper">
 
-	<!-- deal 정보 검색 -->
-	<select id="getDealList" parameterType="com.nanuri.rams.business.common.dto.RAA02BDto" resultType="java.util.HashMap">
-		SELECT 1+1 FROM DUAL;
-	</select>
+	<!-- deal 정보 검색
+	<sql parameterType="com.nanuri.rams.business.common.vo.RAA02BVo$DealInfo" resultType="java.util.HashMap">
+		SELECT IB_DEAL_NO								
+		     , IB_DEAL_NM							
+		     , LST_C_CASE_CCD							
+		     , RA_DEAL_CCD								
+		     , RA_RSLTN_CCD								
+		  FROM RAA02B
+		 WHERE 1=1
+		 <if test="dealNo != ''">
+		   AND IB_DEAL_NO LIKE #{dealNo}
+		 </if>
+		 <if test="dealNo != ''">
+		   AND IB_DEAL_NO LIKE #{dealNm}
+		 </if>
+		 <if test="dealNo != ''">
+		   AND IB_DEAL_NO LIKE #{dscDate}
+		 </if>
+	</sql> -->
 	
 	<!-- 신규 안건 생성 -->
 	<!-- 임시 -->

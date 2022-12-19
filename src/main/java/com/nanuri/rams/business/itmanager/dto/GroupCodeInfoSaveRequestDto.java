@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 
 @Getter

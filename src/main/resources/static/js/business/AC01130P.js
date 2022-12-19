@@ -3,13 +3,18 @@ $(document).ready(function () {
 	setOpenModal();
 	setDatePicker();
 
+	setAAAA();
+
+});
+
+function setAAAA(){
 	$('#AC01130P_saveButton').on('click', function () {
 		var sq = $('#AC01130P_saveButton').val();
 		console.log("button: " + sq);
 		saveUserData(sq);
 	});
+}
 
-});
 
 function setDatePicker() {
 
@@ -116,7 +121,7 @@ function rebuildTable(data) {
 	if (empList.length > 0) {
 		$.each(empList, function (key, value) {
 			//console.log(value);
-			html += '<tr onclick="setEno(' + "'" + value.ENO + "'" + ');">';
+			html += '<tr onclick="setEno(' + "'" + value.ENO + "', '" + value.EMP_NM + "'" + ');">';
 			html += '<td>' + value.ENO + '</td>';
 			html += '<td>' + value.EMP_NM + '</td>';
 			html += '<td>' + value.DPRT_CD + '</td>';
@@ -189,16 +194,6 @@ function modalClose() {
 	Modal.style.display = "none";
 }
 
-// // send to #rcvdEmpNm
-// function setEmpNm(){
-// 	var tr = event.currentTarget;
-// 	var td = $(tr).children();
-// 	var empNm = td.eq(1).text();
-
-// 	$('#rcvdEmpNm').val(empNm);
-// 	modalClose();
-// }
-
 var resetTable = function () {
 	$('#AC01130P_setEno').text("");
 	$('#AC01130P_empName').val("");
@@ -212,56 +207,11 @@ var resetTable = function () {
 	$('#AC01130P_hndlDyTm').text("");
 };
 
-let setEno = function (eno) {
+let setEno = function (eno, empNm) {
 	resetTable();
-	deleteUser(eno);
-	recall();
-	updateUser(eno, recallDay);
 	$('#AC01130P_setEno').text(eno);
-	$('#AC01121P').css('display', 'none');
-	
-	$.ajax({
-		url: '/getUserList',
-		method: 'GET',
-		dataType: 'json',
-	}).done(function (userInfo) {
-		for (idx in userInfo) {
-			var data = userInfo[idx];
-			if (data.eno == eno && data.dltF == 'N') {
-				$('#AC01130P_setEno').text(data.eno);
-				$('#AC01130P_empName').val(data.empNm);
-				$('#AC01130P_rghtCd').val(data.rghtCd);
-				$('#AC01130P_datepicker1').val(data.aplcStrtDt.substr(0, 4) + '-' + data.aplcStrtDt.substr(4, 2) + '-' + data.aplcStrtDt.substr(6, 2));
-				$('#AC01130P_datepicker2').val(data.aplcEndDt.substr(0, 4) + '-' + data.aplcEndDt.substr(4, 2) + '-' + data.aplcEndDt.substr(6, 2));
-				$('#AC01130P_rgstRsn').val(data.rgstRsn);
-				$('#AC01130P_rgstPEno').text(data.rgstPEno);
-				$('#AC01130P_rgstDt').text(data.rgstDt.substr(0, 4) + '-' + data.rgstDt.substr(4, 2) + '-' + data.rgstDt.substr(6, 2));
-				$('#AC01130P_hndlPEno').text(data.hndlPEno);
-				$('#AC01130P_hndlDyTm').text(data.hndlDyTm);
-				$('#AC01130P_saveButton').val(data.sq);
-				break;
-			};
-		};
-	});
-}
-
-var getEnoList = function () {
-
-	/* 사원번호 조회 선택 후 AC01130P 해당 항목에 입력 */
-	$.ajax({
-		url: '/getEnoList',
-		method: 'GET',
-		dataType: 'json',
-		// data: dtoParam,
-	}).done(function (userInfo) {
-		let userInfoHTML = '';
-		for (idx in userInfo) {
-			let row = userInfo[idx];
-			//console.log(stringEno);
-			userInfoHTML += '<tr><td>' + row.eno + '<button onclick="setEno(' + "'" + row.eno + "','" + row.sq + "'" + ');">선택</button></td><td>' + row.empNm + '</td></tr>';
-		}
-		$('#userInfo').html(userInfoHTML);
-	});
+	$('#AC01130P_empName').val(empNm);
+	modalClose();
 }
 
 // 오늘의 날짜
@@ -321,20 +271,16 @@ var saveUserData = function (param) {
 	});
 }
 
-var deleteUser = function (eno) {
-	let dtoParam = {
-		"eno": eno
-	}
-
-	$('#AC01130P_deleteUser').on('click', function () {
+var deleteUser = function (eno, sq) {
+	
 		$.ajax({
 			url: '/deleteUser',
+			data : param
 			method: 'PATCH',
 			data: JSON.stringify(dtoParam),
 			contentType: 'application/json; charset=UTF-8',
 			// dataType: 'json',
 		});
-	});
 };
 
 var recall = function () {
@@ -343,3 +289,31 @@ var recall = function () {
 		$('#AC01130P_datepicker2').val(recallDay);
 	})
 };
+
+
+function aaasdasdA(){
+	/*$.ajax({
+		url: '/getUserList',
+		method: 'GET',
+		dataType: 'json',
+	}).done(function (userInfo) {
+		for (idx in userInfo) {
+			var data = userInfo[idx];
+			if (data.eno == eno && data.dltF == 'N') {
+				$('#AC01130P_setEno').text(data.eno);
+				$('#AC01130P_empName').val(data.empNm);
+				$('#AC01130P_rghtCd').val(data.rghtCd);
+				$('#AC01130P_datepicker1').val(data.aplcStrtDt.substr(0, 4) + '-' + data.aplcStrtDt.substr(4, 2) + '-' + data.aplcStrtDt.substr(6, 2));
+				$('#AC01130P_datepicker2').val(data.aplcEndDt.substr(0, 4) + '-' + data.aplcEndDt.substr(4, 2) + '-' + data.aplcEndDt.substr(6, 2));
+				$('#AC01130P_rgstRsn').val(data.rgstRsn);
+				$('#AC01130P_rgstPEno').text(data.rgstPEno);
+				$('#AC01130P_rgstDt').text(data.rgstDt.substr(0, 4) + '-' + data.rgstDt.substr(4, 2) + '-' + data.rgstDt.substr(6, 2));
+				$('#AC01130P_hndlPEno').text(data.hndlPEno);
+				$('#AC01130P_hndlDyTm').text(data.hndlDyTm);
+				$('#AC01130P_saveButton').val(data.sq);
+				break;
+			};
+		};
+	});*/
+	
+}

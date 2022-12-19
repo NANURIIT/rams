@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RAA02BDto {
+public class RAA01BDto {
 	
 	private String dealNo;				//	IBDEAL번호
     private String dealNm;				//	IBDEA명
