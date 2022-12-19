@@ -1,10 +1,10 @@
 $(document).ready(function() {
 	
+	setDatePicker();
+	
 	setOpenModal();
 	
 	setKeyDownFunction();
-	
-	setDatePicker();
 	
 });
 
@@ -68,44 +68,8 @@ function setOpenModal(){
 	});
 }
 
-// when page loaded
 function setKeyDownFunction() {
 	keyDownEnter();
-}
-
-function getDealInfo(){
-	
-	var dealNo = $("#AS02020P_dealNo").val();
-	var dealNm = $("#AS02020P_dealNm").val();
-	var dscDate = $("#AS02020P_datepicker1").val();
-	
-	var dtoParam = {
-		"dealNo" : dealNo
-		, "dealNm" : dealNm
-		, "dscDate" : dscDate
-	}
-	
-	console.log(dtoParam);
-	
-	$.ajax({
-		type: "GET",
-		url: "/getDealInfo",
-		data: dtoParam,
-		dataType: "json",
-		success: function(data) {
-			
-			//console.log(data);
-			/* 
-			var a = '';
-			$('#tbodyEmpList').html(a);
-			
-			rebuildTable(data);
-			 */
-			
-		
-		}
-	});
-		
 }
 
 function keyDownEnter() {
@@ -123,4 +87,49 @@ function keyDownEnter() {
 	});
 
 } 
+
+function getDealInfo(){
+	
+	var dealNo = $("#AS02020P_dealNo").val();
+	var dealNm = $("#AS02020P_dealNm").val();
+	var dscDate = $("#AS02020P_datepicker1").val();
+	
+	var dtoParam = {
+		"dealNo" : dealNo
+		, "dealNm" : dealNm
+		, "dscDate" : dscDate
+	}
+	
+	//console.log(dtoParam);
+	
+	$.ajax({
+		type: "GET",
+		url: "/getDealInfo",
+		data: dtoParam,
+		dataType: "json",
+		success: function(data) {
+			
+			//console.log(data);
+			/* 
+			var a = '';
+			$('#tbodyEmpList').html(a);
+			
+			rebuildTable(data);
+			 */
+		
+		}
+	});
+		
+}
+
+function setDealInfo(){
+	//tr(selected) = event.currentTarget;
+	//td(selected) = event.target;
+	var tr = event.currentTarget;
+	var td = $(tr).children();
+	var ibDealNo = td.eq(0).text();
+	
+	//console.log(ibDealNo);
+}
+
 

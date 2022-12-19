@@ -44,18 +44,19 @@ function setOpenModal() {
 	// open modal
 	OpenModal.onclick = function() {
 		Modal.style.display = "block";
-		reset_AC01120P();
 	}
 
 	// close modal
 	CloseModal.onclick = function() {
 		Modal.style.display = "none";
+		reset_AC01120P();
 	}
 	
 	// close modal
 	window.onclick = function(event) {
 		if (event.target === Modal) {
 			Modal.style.display = "none";
+			reset_AC01120P();
 		}
 	}
 
@@ -65,6 +66,7 @@ function setOpenModal() {
 		var code = e.keyCode || e.which;
 		if (code == 27) { // 27은 ESC 키번호
 			Modal.style.display = "none";
+			reset_AC01120P();
 		}
 
 	});
@@ -182,11 +184,14 @@ function modalClose(){
 
 // send to #rcvdEmpNm
 function setEmpNm(){
+	//tr(selected) = event.currentTarget;
+	//td(selected) = event.target;
 	var tr = event.currentTarget;
 	var td = $(tr).children();
 	var empNm = td.eq(1).text();
 	
 	$('#AS05010S_rcvdEmpNm').val(empNm);
+	reset_AC01120P();
 	modalClose();
 }
 

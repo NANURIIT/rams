@@ -1,5 +1,6 @@
 package com.nanuri.rams.business.assessment.as03;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -15,7 +16,8 @@ public interface AS03Service {
 	 * 
 	 * @param dealInfo
 	 * @return
+	 * @throws ParseException 
 	 */
-	public List<RAA01BDto> getDealInfo(DealInfo dealDto);
+	public List<RAA01BDto> getDealInfo(DealInfo dealDto) throws ParseException;
 
 }

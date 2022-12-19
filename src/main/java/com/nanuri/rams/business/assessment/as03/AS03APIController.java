@@ -1,5 +1,6 @@
 package com.nanuri.rams.business.assessment.as03;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,9 +23,10 @@ public class AS03APIController {
 	 * deal list 가져오기
 	 * @param dealDto
 	 * @return
+	 * @throws ParseException 
 	 */
 	@GetMapping(value = "/getDealInfo")
-	public List<RAA01BDto> getDealInfo(DealInfo dealDto) {
+	public List<RAA01BDto> getDealInfo(DealInfo dealDto) throws ParseException {
 		return as03Service.getDealInfo(dealDto);
 	}
 
