@@ -26,7 +26,7 @@ function setAC01130P() {
 	}
 }
 
-var runFindUser = function (){
+var runFindUser = function () {
 	let empNm = $("#AC01110S_empNm").val();
 	let rghtCd = $("#AC01110S_rghtCd option:selected").val();
 	let dltY = $('#AC01110S_dltY:checked').length;
@@ -34,12 +34,12 @@ var runFindUser = function (){
 	findUser(empNm, rghtCd, dltY);
 }
 
-var findUser= function (empNm, rghtCd, dltY) {
-	
+var findUser = function (empNm, rghtCd, dltY) {
+
 	let dtoParam = {
-		"empNm" : empNm
-		, "rghtCd" : rghtCd
-		, "dltY" : dltY
+		"empNm": empNm
+		, "rghtCd": rghtCd
+		, "dltY": dltY
 	}
 
 	$.ajax({
@@ -100,18 +100,19 @@ function rebuildUserManageTable(data) {
 	if (userList.length > 0) {
 		$.each(userList, function (key, value) {
 			//rghtCd = (value.rghtCd == "1") ? "해당부서" : (value.rghtCd == "2") ? "전체" : "해당본부"
-				html += '<tr>';
-				html += '<td>' + value.usrC + '</td>';
-				html += '<td>' + value.eno + '</td>';
-				html += '<td>' + value.empNm + '</td>';
-				html += '<td>' + value.pstn + '</td>';
-				html += '<td>' + value.rghtCd + '</td>';
-				html += '<td>' + value.aplcStrtDt + '</td>';
-				html += '<td>' + value.aplcEndDt + '</td>';
-				html += '<td>' + value.rgstRsn + '</td>';
-				html += '<td>' + value.rgstPEno + '</td>';
-				html += '<td>' + value.hndlPEno + '</td>';
-				html += '</tr>';
+			html += '<tr class="rght_user" value="' + value.sq + '" onclick="selectRgthUser(this);">';		// 해당 데이터가 가진 sequence 값
+			html += '<td>' + value.usrC + '</td>';
+			html += '<td value="' + value.sq + '" >' + value.eno + '</td>';
+			html += '<td>' + value.empNm + '</td>';
+			html += '<td>' + value.pstn + '</td>';
+			html += '<td>' + value.rghtCd + '</td>';
+			html += '<td>' + value.aplcStrtDt + '</td>';
+			html += '<td>' + value.aplcEndDt + '</td>';
+			html += '<td>' + value.rgstRsn + '</td>';
+			html += '<td>' + value.rgstPEno + '</td>';
+			html += '<td>' + value.hndlPEno + '</td>';
+			html += '<input type="hidden" value="' + value.sq + '" />'
+			html += '</tr>';
 		})
 	} else {
 		html += '<tr>';
@@ -122,7 +123,7 @@ function rebuildUserManageTable(data) {
 
 };
 
-var findKeydown = function(){
+var findKeydown = function () {
 	$("input[id=AC01110S_empNm]").keydown(function (key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
 			// console.log($('#AC01110S_dltY:checked').length);
@@ -133,7 +134,7 @@ var findKeydown = function(){
 
 /* 사용자관리화면 권한구분 */
 var selectAuthCode = function () {
-	
+
 	// dtoParam = {
 	// 	"rghtCd": rghtCd
 	// 	, "rghtCdNm": rghtCdNm
@@ -166,19 +167,68 @@ var selectAuthCode = function () {
 }
 
 /* 권한구분 목록 */
-var makeRghtCdList = function(data) {
+var makeRghtCdList = function (data) {
 	var html = '';
 
-		$.each(data, function (key, value) {
-			// console.log(value);
-			html += '<div>';
-			html += '<option value="' + value.rghtCd + '">' + value.rghtCdNm + '</option>';
-			html += '<input class="hidden_yn" type="hidden" value="'+ value.rghtCd +'" />';
-			html += '</div>';
-			// console.log(value.rghtCd);
-		})
-		// console.log(html);
+	$.each(data, function (key, value) {
+		// console.log(value);
+		html += '<div>';
+		html += '<option value="' + value.rghtCd + '">' + value.rghtCdNm + '</option>';
+		// html += '<input class="hidden_yn" type="hidden" value="' + value.rghtCd + '" />';
+		html += '</div>';
+		// console.log(value.rghtCd);
+	})
+	// console.log(html);
 	$('#AC01110S_rghtCd').html(html);
 	$('#AC01130P_rghtCd').html(html);
 
+};
+
+
+function openModal() {
+	let Modal = document.getElementById('AC01130P');
+	Modal.style.display = "block";
+}
+
+// 사용자 조회 (더블 클릭 및 사용자 추가에서 사용)
+function selectRgthUser(e) {
+	openModal();
+	var sq = $(e).find('input').val();
+	var eno = $(e).find('td:eq(1)').html();
+	// console.log("sq : " + sq + ", eno : " + eno);
+	selectAuthUser(sq, eno);
+
+}
+
+var selectAuthUser = function (sq, eno) {
+	let dtoParam = {
+		"sq": sq
+		, "eno": eno
+	}
+
+	$.ajax({
+		url: "/getUserList",
+		data: dtoParam,
+		// dataType: "json",
+		success: function (userInfo) {
+			addAuth(userInfo);
+		},
+	})
+}
+
+var addAuth = function (userInfo) {
+	for (idx in userInfo) {
+		var data = userInfo[idx];
+		$('#AC01130P_setEno').val(data.eno);
+		$('#AC01130P_empNm').val(data.empNm);
+		$('#AC01130P_rghtCd').val(data.rghtCd);
+		$('#AC01130P_datepicker1').val(data.aplcStrtDt.substr(0, 4) + '-' + data.aplcStrtDt.substr(4, 2) + '-' + data.aplcStrtDt.substr(6, 2));
+		$('#AC01130P_datepicker2').val(data.aplcEndDt.substr(0, 4) + '-' + data.aplcEndDt.substr(4, 2) + '-' + data.aplcEndDt.substr(6, 2));
+		$('#AC01130P_rgstRsn').val(data.rgstRsn);
+		$('#AC01130P_rgstPEno').text(data.rgstPEno);
+		$('#AC01130P_rgstDt').text(data.rgstDt.substr(0, 4) + '-' + data.rgstDt.substr(4, 2) + '-' + data.rgstDt.substr(6, 2));
+		$('#AC01130P_hndlPEno').text(data.hndlPEno);
+		$('#AC01130P_hndlDyTm').text(data.hndlDyTm);
+		$('#AC01130P_sq').val(data.sq);
+	};
 };

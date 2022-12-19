@@ -182,7 +182,7 @@ function modalClose() {
 
 // AC01130P 팝업 페이지 초기화
 var resetTable = function () {
-	$('#AC01130P_setEno').text("");
+	$('#AC01130P_setEno').val("");
 	$('#AC01130P_empNm').val("");
 	// $('#AC01130P_rghtCd').val("");
 	$('#AC01130P_datepicker1').val("");
@@ -212,7 +212,7 @@ let setEno = function (eno, empNm) {
 
 // 권한 저장
 var saveUserData = function () {
-	let eno = $('#AC01130P_setEno').text();
+	let eno = $('#AC01130P_setEno').val();
 	let empNm = $('#AC01130P_empNm').val();
 	let rghtCd = $('#AC01130P_rghtCd option:selected').val();
 	let aplcStrtDt = $('#AC01130P_datepicker1').val();
@@ -222,7 +222,7 @@ var saveUserData = function () {
 	let rgstDt = year + month + day;					/* 8자리의 날짜 */
 	let hndlPEno = $('#AC01130P_hndlPEno').val();		/* 수정자의 세션 */
 	let hndlDyTm = today; 								/* 수정한 시간(Date타입) */
-	let sq = Number($('#AC01130P_sq').val());
+	let sq = $('#AC01130P_sq').val();
 
 	let dtoParam = {
 		"eno": eno
@@ -252,10 +252,10 @@ var saveUserData = function () {
 		contentType: "application/json; charset=UTF-8",
 		// dataType: 'json',
 		success: function (response) {
-			alert(response);
+			// alert(response);
 		},
 		error: function (request, status, error) {
-			alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 		}
 	});
 }
@@ -266,6 +266,7 @@ var deleteUser = function () {
 
 	let eno = $('#AC01130P_setEno').val();
 	let sq = $('#AC01130P_sq').val();
+	// console.log("eno : " + eno + " sq : " + sq);
 	var param = {
 		"eno": eno
 		, "sq": sq
@@ -275,7 +276,7 @@ var deleteUser = function () {
 		url: '/deleteUser',
 		data: param,
 		method: 'PATCH',
-		data: JSON.stringify(dtoParam),
+		data: JSON.stringify(param),
 		contentType: 'application/json; charset=UTF-8',
 		// dataType: 'json',
 	});
@@ -286,7 +287,14 @@ var recall = function () {
 	$('#AC01130P_datepicker2').val(recallDay);
 };
 
-
+// // 사용자 조회 (더블 클릭 및 사용자 추가에서 사용)
+// let setSelectUser = function () {
+// 	resetTable();
+// 	$('#AC01130P_setEno').val(eno);
+// 	$('#AC01130P_empNm').val(empNm);
+// 	$('#AC01130P_datepicker1').val(recallDay);
+// 	modalClose();
+// }
 
 
 // 권한 부여(사용자 추가)

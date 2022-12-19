@@ -31,10 +31,10 @@ public class UserManagementAPIController {
     private final UserManagementService userManagementService;
     
     /* 사원번호 목록조회(사용자 추가 - 기존 등록 된  사용자 번호에 사용자를 추가하는 형식) */
-    @GetMapping(value="/getEnoList")
-    public List<UserInfo> getEnoList() {
-        return userManagementService.getEnoList();
-    }
+    // @GetMapping(value="/getEnoList")
+    // public List<UserInfo> getEnoList() {
+    //     return userManagementService.getEnoList();
+    // }
     
     /* 사용자 권한 추가 */
     @PostMapping(value="/insertUser")
@@ -59,5 +59,7 @@ public class UserManagementAPIController {
     public List<AuthCodeDto> selectAuthCode() {
         return userManagementService.selectAuthCode();
     }
+ 
+    
     
 }

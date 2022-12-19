@@ -18,6 +18,5 @@ public interface UserManagementMapper {
     public void insertUser(UserManageDTO userManageDTO);            // 사용자 추가
     public List<UserListDto> selectUser(FindUserVo userVo);         // 사용자 목록 조회
     public void deleteUser(UserManageDTO userManageDTO);            // 사용자 삭제(퇴사)
-    public void updateUser(UserManageDTO userManageDTO);            // 사용자 업데이트(권한회수)
     public List<AuthCodeDto> selectRghtCd();                                // 사용자관리화면 권한구분
 }

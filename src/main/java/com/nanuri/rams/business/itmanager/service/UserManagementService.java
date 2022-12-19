@@ -17,6 +17,5 @@ public interface UserManagementService {
     public void insertUser(UserManageDTO userManageDTO);                    // 사용자 추가// 사용자 추가
     public List<UserListDto> getUserList(FindUserVo userVo);                // 사용자 목록 조회
     public void deleteUser(UserManageDTO userManageDTO);                    // 사용자 삭제(퇴사)
-    public void updateUser(UserManageDTO userManageDTO);                    // 사용자 업데이트(권한회수)// 사용자 업데이트
     public List<AuthCodeDto> selectAuthCode();                                    // 사용자관리 화면의 권한구분
 }
