@@ -10,4 +10,6 @@ public class FindUserVo {
 	private String empNm;
 	private String rghtCd;
 	private String dltY;
+	private String eno;
+	private String sq;
 }
