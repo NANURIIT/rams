@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nanuri.rams.business.itmanager.mapper.CodeManagementMapper">
+<mapper namespace="com.nanuri.rams.business.common.mapper.RAA90BMapper">
 
     <!--  select박스에 담을 공통코드 호출  -->
     <select id="getCommonCodeName" resultType="com.nanuri.rams.business.itmanager.dto.CommonCodeInfoDto">
