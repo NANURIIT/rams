@@ -15,13 +15,15 @@ function setAC01130P() {
 	OpenModal.onclick = function () {
 		Modal.style.display = "block";
 	}
-
+	
 	CloseModal1.onclick = function () {
 		Modal.style.display = "none";
+		resetTable();
 	}
 	window.onclick = function (event) {
 		if (event.target === Modal) {
 			Modal.style.display = "none";
+			resetTable();
 		}
 	}
 }
@@ -99,13 +101,12 @@ function rebuildUserManageTable(data) {
 
 	if (userList.length > 0) {
 		$.each(userList, function (key, value) {
-			//rghtCd = (value.rghtCd == "1") ? "해당부서" : (value.rghtCd == "2") ? "전체" : "해당본부"
-			html += '<tr class="rght_user" value="' + value.sq + '" onclick="selectRgthUser(this);">';		// 해당 데이터가 가진 sequence 값
+			html += '<tr class="rght_user" value="' + value.sq + '" ondblclick="selectRgthUser(this);">';		// 해당 데이터가 가진 sequence 값
 			html += '<td>' + value.usrC + '</td>';
 			html += '<td value="' + value.sq + '" >' + value.eno + '</td>';
 			html += '<td>' + value.empNm + '</td>';
 			html += '<td>' + value.pstn + '</td>';
-			html += '<td>' + value.rghtCd + '</td>';
+			html += '<td class="rght_cd_nm">' + value.rghtCdNm + '</td>';
 			html += '<td>' + value.aplcStrtDt + '</td>';
 			html += '<td>' + value.aplcEndDt + '</td>';
 			html += '<td>' + value.rgstRsn + '</td>';
@@ -135,23 +136,6 @@ var findKeydown = function () {
 /* 사용자관리화면 권한구분 */
 var selectAuthCode = function () {
 
-	// dtoParam = {
-	// 	"rghtCd": rghtCd
-	// 	, "rghtCdNm": rghtCdNm
-	// 	, "rghtCdExpl": rghtCdExpl
-	// 	, "rghtCcd": rghtCcd
-	// 	, "aplcF": aplcF
-	// 	, "rgstDt": rgstDt
-	// 	, "rgstPEno": rgstPEno
-	// 	, "dltF": dltF
-	// 	, "dltDt": dltDt
-	// 	, "dltTm": dltTm
-	// 	, "dltPEno": dltPEno
-	// 	, "hndlDyTm": hndlDyTm
-	// 	, "hndlDprtCd": hndlDprtCd
-	// 	, "hndlPEno": hndlPEno
-	// }
-
 	$.ajax({
 		type: "GET",
 		url: "/selectAuthCode",
@@ -168,23 +152,19 @@ var selectAuthCode = function () {
 
 /* 권한구분 목록 */
 var makeRghtCdList = function (data) {
-	var html = '';
+	var html = '<div><option value="">전체</option></div>';
 
 	$.each(data, function (key, value) {
-		// console.log(value);
 		html += '<div>';
 		html += '<option value="' + value.rghtCd + '">' + value.rghtCdNm + '</option>';
-		// html += '<input class="hidden_yn" type="hidden" value="' + value.rghtCd + '" />';
 		html += '</div>';
-		// console.log(value.rghtCd);
 	})
-	// console.log(html);
 	$('#AC01110S_rghtCd').html(html);
 	$('#AC01130P_rghtCd').html(html);
 
 };
 
-
+/* AC01130P 팝업 오픈 */
 function openModal() {
 	let Modal = document.getElementById('AC01130P');
 	Modal.style.display = "block";

@@ -9,4 +9,5 @@ public class UserListDto extends UserManageDTO{
 
     private String usrC;        /* 사용자구분 */
     private String pstn;        /* 직책 */
+    private String rghtCdNm;    /* 권한명 */
 }

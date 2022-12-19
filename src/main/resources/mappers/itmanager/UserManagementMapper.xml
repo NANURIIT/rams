@@ -62,9 +62,10 @@
 	SELECT IFNULL(ENO, '')              				      AS ENO               <!-- 사번 -->
          , IFNULL(SQ, '')             					      AS SQ                <!-- 일련번호 -->
          , IFNULL(EMP_NM, '')         					      AS EMP_NM            <!-- 사원명 -->
+         , IFNULL(RGHT_CD, '')        					      AS RGHT_CD           <!-- 권한코드 -->
          , IFNULL((SELECT RGHT_CD_NM
                      FROM RAA94B
-                    WHERE RGHT_CD = A.RGHT_CD), '')      AS RGHT_CD           <!-- 권한코드 -->
+                    WHERE RGHT_CD = A.RGHT_CD), '')      AS RGHT_CD_NM        <!-- 권한명 -->
          , IFNULL(DPRT_CD, '')        					      AS DPRT_CD           <!-- 부점코드 -->
          , IFNULL(RGST_RSN, '')       					      AS RGST_RSN          <!-- 등록사유 -->
          , IFNULL(APLC_STRT_DT, '')   					      AS APLC_STRT_DT      <!-- 적용시작일자 -->
@@ -103,7 +104,7 @@
     	<if test="eno != null and eno != ''">
        AND eno = #{eno}
       </if>
-  	 ORDER BY SQ ASC
+  	 ORDER BY SQ*1 ASC
 </select>
 
 <update id="deleteUser" parameterType="com.nanuri.rams.business.itmanager.dto.UserManageDTO">
