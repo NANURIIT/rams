@@ -140,10 +140,55 @@ function setTabContents() {
 
 // 탭1 안건구조
 function setTab1() {
+	setRiskInspctCcd();
+	setLstCCaseCcd();
 	setInspctDprtCcd();
 	setInvstGdsLdvdCd();
 	setInvstGdsMdvdCd();
 	setInvstGdsSdvdCd();
+	setInvstGdsDtlsDvdCd();
+}
+
+// 리스크심사구분코드
+function setRiskInspctCcd() {
+	$.ajax({
+		type: "GET",
+		url: "/getRiskInspctCcd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_riskInspctCcd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_riskInspctCcd').html(html);
+		}
+	});
+}
+
+// 부수안건구분코드
+function setLstCCaseCcd() {
+	$.ajax({
+		type: "GET",
+		url: "/getlstCCaseCcd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_lstCCaseCcd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_lstCCaseCcd').html(html);
+		}
+	});
 }
 
 // 심사부서구분코드
@@ -228,6 +273,41 @@ function setInvstGdsSdvdCd() {
 			$('#AS03210S_invstGdsSdvdCd').html(html);
 		}
 	});
+}
+
+// 투자상품상세분류코드
+function setInvstGdsDtlsDvdCd() {
+	$.ajax({
+		type: "GET",
+		url: "/getInvstGdsDtlsDvdCd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_invstGdsDtlsDvdCd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_invstGdsDtlsDvdCd').html(html);
+		}
+	});
+}
+
+// 투자기간 숫자입력 & 만기일 체크 function
+function checkNumber(event) {
+	if (event.key >= 0 && event.key <= 9) {						// 숫자입력 체크
+		var input = $("#tab1_datepicker1").val();
+		if(input == ""){										// 기표일 값이 없을경우 만기일 체크 안함
+			return true;			
+		}else{													// 기표일 값이 있을경우 만기일 체크
+			console.log(input);
+			return true;
+		}
+	}
+	return false;
 }
 
 

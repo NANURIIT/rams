@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.nanuri.rams.business.common.dto.RAA01BDto;
+import com.nanuri.rams.business.common.vo.RAA01BVo;
 import com.nanuri.rams.business.common.vo.RAA01BVo.DealInfo;
 
 @Service
@@ -17,9 +17,15 @@ public interface AS03Service {
 	 * 
 	 * @param dealInfo
 	 * @return
-	 * @throws ParseException 
+	 * @throws ParseException
 	 */
-	public List<RAA01BDto> getDealInfo(DealInfo dealDto) throws ParseException;
+	public List<RAA01BVo> getDealInfo(DealInfo dealDto) throws ParseException;
+
+	// 리스크심사구분코드
+	public List<Map<String, Object>> getRiskInspctCcd();
+
+	// 부수안건구분코드
+	public List<Map<String, Object>> getlstCCaseCcd();
 
 	// 심사부서구분코드
 	public List<Map<String, Object>> getInspctDprtCcd();
@@ -32,5 +38,8 @@ public interface AS03Service {
 
 	// 투자상품소분류코드
 	public List<Map<String, Object>> getInvstGdsSdvdCd();
+
+	// 투자상품상세분류코드
+	public List<Map<String, Object>> getInvstGdsDtlsDvdCd();
 
 }

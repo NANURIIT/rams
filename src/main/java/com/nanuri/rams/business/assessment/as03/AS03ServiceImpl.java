@@ -6,13 +6,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import com.nanuri.rams.com.utils.StringUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nanuri.rams.business.common.dto.RAA01BDto;
+import com.ctc.wstx.util.StringUtil;
 import com.nanuri.rams.business.common.mapper.RAA01BMapper;
 import com.nanuri.rams.business.common.mapper.RAA91BMapper;
+import com.nanuri.rams.business.common.vo.RAA01BVo;
 import com.nanuri.rams.business.common.vo.RAA01BVo.DealInfo;
 
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class AS03ServiceImpl implements AS03Service {
 	 * @return
 	 * @throws ParseException
 	 */
-	public List<RAA01BDto> getDealInfo(DealInfo dealInfo) throws ParseException {
+	public List<RAA01BVo> getDealInfo(DealInfo dealInfo) throws ParseException {
 
 		SimpleDateFormat newFormat = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -45,10 +45,22 @@ public class AS03ServiceImpl implements AS03Service {
 			dealInfo.setDscDate(newFormat.format(formatDate));
 		}
 
-		List<RAA01BDto> dealList = raa01bMapper.getDealInfo(dealInfo);
+		List<RAA01BVo> dealList = raa01bMapper.getDealInfo(dealInfo);
 
 		return dealList;
 	}
+
+	// 리스크심사구분코드
+	public List<Map<String, Object>> getRiskInspctCcd() {
+
+		return raa91bMapper.getRiskInspctCcd();
+	};
+
+	// 부수안건구분코드
+	public List<Map<String, Object>> getlstCCaseCcd() {
+
+		return raa91bMapper.getlstCCaseCcd();
+	};
 
 	// 심사부서구분코드
 	public List<Map<String, Object>> getInspctDprtCcd() {
@@ -72,6 +84,12 @@ public class AS03ServiceImpl implements AS03Service {
 	public List<Map<String, Object>> getInvstGdsSdvdCd() {
 
 		return raa91bMapper.getInvstGdsSdvdCd();
+	};
+
+	// 투자상품상세분류코드
+	public List<Map<String, Object>> getInvstGdsDtlsDvdCd() {
+
+		return raa91bMapper.getInvstGdsDtlsDvdCd();
 	};
 
 }

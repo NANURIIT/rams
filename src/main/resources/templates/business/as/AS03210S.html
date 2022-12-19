@@ -104,22 +104,16 @@
 					<div id="tab1" class="tab">
 						<div class="contents_list_wrap contents_list_wrap1">
 							<div class="contents_list">
-								<div class="contents_list_title">신규재부의</div>
+								<div class="contents_list_title">리스크심사구분</div>
 								<div class="contents_list_desc">
-									<select>
-										<option value="1">1</option>
-										<option value="1">2</option>
-										<option value="1">3</option>
+									<select id="AS03210S_riskInspctCcd">
 									</select>
 								</div>
 							</div>
 							<div class="contents_list">
-								<div class="contents_list_title">신규재부의</div>
+								<div class="contents_list_title">부수안건</div>
 								<div class="contents_list_desc">
-									<select>
-										<option value="1">1</option>
-										<option value="1">2</option>
-										<option value="1">3</option>
+									<select id="AS03210S_lstCCaseCcd">
 									</select>
 								</div>
 							</div>
@@ -192,12 +186,9 @@
 								</div>
 							</div>
 							<div class="contents_list">
-								<div class="contents_list_title">금융상품분류</div>
+								<div class="contents_list_title">투자상품상세분류</div>
 								<div class="contents_list_desc">
-									<select>
-										<option value="1">1</option>
-										<option value="1">2</option>
-										<option value="1">3</option>
+									<select id="AS03210S_invstGdsDtlsDvdCd">
 									</select>
 								</div>
 							</div>
@@ -348,17 +339,19 @@
 							<div class="contents_list">
 								<div class="contents_list_title">투자기간(개월)</div>
 								<div class="contents_list_desc">
-									<input type="text">
+									<input type="text" onkeypress="return checkNumber(event);">
 								</div>
 							</div>
 							<div class="contents_list">
-								<div class="contents_list_title">기표일</div>
+								<div class="contents_list_title">기표일(예정)</div>
 								<div class="contents_list_desc">
-									<input type="text">
+									<div class="datepicker_wrap">
+										<input type="text" class="datepicker" id="tab1_datepicker1">
+									</div>
 								</div>
 							</div>
 							<div class="contents_list">
-								<div class="contents_list_title">구분2</div>
+								<div class="contents_list_title">만기일(예정)</div>
 								<div class="contents_list_desc">
 									<input type="text">
 								</div>

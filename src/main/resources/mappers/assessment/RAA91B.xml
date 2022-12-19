@@ -2,6 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.RAA91BMapper">
 
+	<!-- 리스크심사구분코드 -->
+	<select id="getRiskInspctCcd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'R013'
+		 ORDER BY CD_VL_ID
+	</select>
+
+	<!-- 부수안건구분코드 -->
+	<select id="getlstCCaseCcd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'L001'
+		 ORDER BY CD_VL_ID
+	</select>
+
 	<!-- 심사부서구분코드 -->
 	<select id="getInspctDprtCcd" resultType="java.util.HashMap">
 		SELECT CD_VL_ID					<!-- 코드값ID -->
@@ -43,6 +65,17 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'I014'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 투자상품상세분류코드 -->
+	<select id="getInvstGdsDtlsDvdCd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'I013'
 		 ORDER BY CD_VL_ID
 	</select>
 
