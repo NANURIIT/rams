@@ -1,4 +1,4 @@
-package com.nanuri.rams.business.itmanager.mapper;
+package com.nanuri.rams.business.common.mapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
-public interface CodeManagementMapper {
+public interface RAA90BMapper {
 
 	public List<GroupCodeInfoDto> getGroupCodeInfoList(String cmnsCdGrp); 								// 그룹코드정보 리스트 가져오기
 

@@ -1,4 +1,4 @@
-package com.nanuri.rams.business.itmanager.service;
+package com.nanuri.rams.business.assessment.ac01;
 
 import java.text.ParseException;
 import java.util.List;
@@ -7,7 +7,7 @@ import com.nanuri.rams.business.itmanager.dto.*;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface CodeManagementService {
+public interface AC01Service {
 
 	public List<GroupCodeInfoDto> getGroupCodeInfoList(String cmnsCdGrp) throws ParseException;			// 그룹코드정보 리스트 가져오기
 

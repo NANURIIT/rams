@@ -1,10 +1,10 @@
-package com.nanuri.rams.business.itmanager.controller;
+package com.nanuri.rams.business.assessment.ac01;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class ItManagerController {
+public class AC01Controller {
 	
 	@GetMapping(value = {"/AC01010S"})
     public String codeManagement() {
