@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.List;
 
 import com.nanuri.rams.business.common.dto.RAA94BDto;
+import com.nanuri.rams.business.common.vo.RAA93BVo;
 import com.nanuri.rams.business.itmanager.dto.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -70,6 +71,11 @@ public class AC01APIController {
 	@GetMapping(value = "/getAuthCode")
 	public List<RAA94BDto> getAuthCode(String rghtCdNm) throws ParseException {
 		return ac01Service.getAuthCode(rghtCdNm);
+	}
+
+	@GetMapping(value = "/getAuthCodeMenu")
+	public List<RAA93BVo> getAuthCodeMenu(String rghtCd) {
+		return ac01Service.getAuthCodeMenu(rghtCd);
 	}
 	//============ end AC01210S(권한별 메뉴관리) ============//
 }

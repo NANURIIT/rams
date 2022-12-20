@@ -6,7 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.nanuri.rams.business.common.dto.RAA94BDto;
+import com.nanuri.rams.business.common.mapper.RAA93BMapper;
 import com.nanuri.rams.business.common.mapper.RAA94BMapper;
+import com.nanuri.rams.business.common.vo.RAA93BVo;
 import com.nanuri.rams.business.itmanager.dto.*;
 import com.nanuri.rams.business.common.mapper.RAA90BMapper;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ public class AC01ServiceImpl implements AC01Service {
 
 	private final RAA90BMapper raa90BMapper;
 	private final RAA94BMapper raa94BMapper;
+	private final RAA93BMapper raa93BMapper;
 
 	//============ start AC01010S(공통코드관리) ============//
 	@Override
@@ -134,6 +137,25 @@ public class AC01ServiceImpl implements AC01Service {
 			authCode.setRgstDt(newFormat.format(formatDate));
 		}
 		return authCodes;
+	}
+
+	@Override
+	public List<RAA93BVo> getAuthCodeMenu(String rghtCd) {
+		List<RAA93BVo> authCodeMenus = raa93BMapper.selectAuthCodeMenu(rghtCd);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
+		for (RAA93BVo authCodeMenu : authCodeMenus) {
+			if (!hasText(authCodeMenu.getHndlPEno())) {
+				authCodeMenu.setHndlPEno("-");
+			}
+			if (!hasText(authCodeMenu.getHndlDyTm())) {
+				authCodeMenu.setHndlDyTm("-");
+			}
+			if (!hasText(authCodeMenu.getHndlPEno())) {
+				authCodeMenu.setHndlPEno("-");
+			}
+		}
+		return authCodeMenus;
 	}
 
 	//============ end AC01210S(권한별 메뉴관리) ============//

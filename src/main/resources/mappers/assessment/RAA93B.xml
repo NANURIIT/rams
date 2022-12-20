@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanuri.rams.business.common.mapper.RAA93BMapper">
+
+    <select id="selectAuthCodeMenu" parameterType="String" resultType="com.nanuri.rams.business.common.vo.RAA93BVo">
+        SELECT 93b.srt_no
+             , 93b.menu_id
+             , 95b.rght_cd
+             , 93b.menu_lv
+             , 93b.dlt_f
+             , 95b.mdfy_rght_ccd
+             , 93b.hndl_dy_tm
+             , 93b.hndl_p_eno
+          FROM RAA93B 93b
+    INNER JOIN RAA95B 95b
+            ON 93b.menu_id = 95b.menu_id
+         WHERE 95b.rght_cd = #{rghtCd}
+    </select>
+</mapper>

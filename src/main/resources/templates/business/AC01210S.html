@@ -20,7 +20,7 @@
                 <tr>
                     <th>권한명</th>
                     <td class="etc_td">
-                        <input id="authCodeSearchInput" type="text">
+                        <input id="authCodeSearchInput" onkeyup="if(window.event.keyCode==13){searchButtonClick()}" type="text">
                         <div  class="button_etc_wrap">
                             <button id="authCodeSearchButton" type="button" onclick="searchButtonClick();">조회</button>
                         </div>
@@ -136,29 +136,8 @@
                             <col style="width: 10%;">
                             <col style="width: 10%;">
                         </colgroup>
-                        <tbody>
-                            <tr>
-                                <td>31</td>
-                                <td>AS03210000</td>
-                                <td>AG10</td>
-                                <td>2</td>
-                                <td><input style="width: 15px;" type="checkbox" checked></td>
-                                <td>6</td>
-                                <td>7</td>
-                                <td>8</td>
-                                <td>9</td>
-                            </tr>
-                            <tr>
-                                <td>32</td>
-                                <td>AS03310000</td>
-                                <td>AG10</td>
-                                <td>2</td>
-                                <td><input style="width: 15px;" type="checkbox" checked></td>
-                                <td>6</td>
-                                <td>7</td>
-                                <td>8</td>
-                                <td>9</td>
-                            </tr>
+                        <tbody id="authCodeMenuTable">
+                            
                         </tbody>
                     </table>
                 </form>
