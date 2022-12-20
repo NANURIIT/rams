@@ -81,7 +81,7 @@ public class AS03APIController {
 	}
 	
 	// 협업유형코드
-	@GetMapping(value = "/getInvstCrncyCd")
+	@GetMapping(value = "/getCoprtnTypCd")
 	public List<Map<String, Object>> getCoprtnTypCd() {
 		return as03Service.getCoprtnTypCd();
 	}
