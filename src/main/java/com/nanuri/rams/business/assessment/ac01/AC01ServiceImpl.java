@@ -132,22 +132,25 @@ public class AC01ServiceImpl implements AC01Service {
         LocalTime now = LocalTime.now();
         DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyyMMdd");
         DateTimeFormatter time = DateTimeFormatter.ofPattern("HHmmss");
-        String rgstDt = today.format(date);
+        
+		String rgstDt = today.format(date);
         String rgstTm = now.format(time);
 		String sq = String.valueOf(RAA92BMapper.getLastSq() + 1);
 		String insertSq = Optional.ofNullable(dto.getSq()).orElse(sq);
         String eno = facade.getDetails().getEno();
 		String dprtCd = facade.getDetails().getDprtCd();
+		
 		dto.setSq(insertSq);
-        dto.setRgstPEno(eno);
-        dto.setHndlPEno(eno);
 		dto.setDprtCd(dprtCd);
-		dto.setHndlDprtCd(dprtCd);
-        dto.setAplcStrtDt(dto.getAplcStrtDt().replace("-", ""));
-        dto.setAplcEndDt(dto.getAplcEndDt().replace("-", ""));
+        dto.setRgstPEno(eno);
         dto.setRgstDt(rgstDt);
         dto.setRgstTm(rgstTm);
-        RAA92BMapper.insertUser(dto);
+        dto.setAplcStrtDt(dto.getAplcStrtDt().replace("-", ""));
+        dto.setAplcEndDt(dto.getAplcEndDt().replace("-", ""));
+        dto.setHndlPEno(eno);
+		dto.setHndlDprtCd(dprtCd);
+        
+		RAA92BMapper.insertUser(dto);
     }
 
     /* 사용자 목록 */
@@ -159,16 +162,21 @@ public class AC01ServiceImpl implements AC01Service {
     /* 사용자 삭제(퇴사) */
     @Override
     public void deleteUser(RAA92BDTO dto) {
-        String eno = facade.getDetails().getEno();
-        LocalDate today = LocalDate.now();
+		LocalDate today = LocalDate.now();
         LocalTime now = LocalTime.now();
         DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyyMMdd");
         DateTimeFormatter time = DateTimeFormatter.ofPattern("HHmmss");
-        String dltDt = today.format(date);
+        
+		String dltDt = today.format(date);
         String dltTm = now.format(time);
-        dto.setDltPEno(eno);
+        String eno = facade.getDetails().getEno();
+		String hndlDprtCd = facade.getDetails().getDprtCd();
+        
+		dto.setDltPEno(eno);
         dto.setDltDt(dltDt);
         dto.setDltTm(dltTm);
+		dto.setHndlPEno(eno);
+		dto.setHndlDprtCd(hndlDprtCd);
         
         RAA92BMapper.deleteUser(dto);
     }
