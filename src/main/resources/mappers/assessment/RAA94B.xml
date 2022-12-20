@@ -5,19 +5,19 @@
 <select id="selectRghtCd" resultType="com.nanuri.rams.business.common.dto.RAA94BDTO">
 	/* 권한구분 목록 조회*/
 	SELECT RGHT_CD
-	     , RGHT_CD_NM
-		 , RGHT_CD_EXPL
-		 , RGHT_CCD
-		 , APLC_F
-		 , RGST_DT
-		 , RGST_P_ENO
-		 , DLT_F
-		 , DLT_DT
-		 , DLT_TM
-		 , DLT_P_ENO
-		 , HNDL_DY_TM
-		 , HNDL_DPRT_CD
-		 , HNDL_P_ENO
+		   , RGHT_CD_NM
+		   , RGHT_CD_EXPL
+		   , RGHT_CCD
+		   , APLC_F
+		   , RGST_DT
+		   , RGST_P_ENO
+		   , DLT_F
+		   , DLT_DT
+		   , DLT_TM
+		   , DLT_P_ENO
+		   , HNDL_DY_TM
+		   , HNDL_DPRT_CD
+		   , HNDL_P_ENO
 	  FROM RAA94B
 </select>
 
