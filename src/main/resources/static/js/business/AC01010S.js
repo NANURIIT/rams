@@ -357,26 +357,33 @@ var getGroupCodeInfoList = function(cmnsCdGrp) {
 		dataType: 'json'
 	}).done(function(groupCodeInfoList) {
 		let groupCodeInfoHTML = '';
-		for (let i = 0; i < groupCodeInfoList.length; i++) {
-			let groupCodeInfo = groupCodeInfoList[i];
-			groupCodeInfoHTML += '<tr>';
-			groupCodeInfoHTML += '  <td><input id="' + groupCodeInfo.cmnsCdGrp + '" style="width:100%" type="checkbox"></td>';
-			groupCodeInfoHTML += '  <td class="update_column group_code">' + groupCodeInfo.cmnsCdGrp + '</td>';
-			groupCodeInfoHTML += '  <td class="update_column group_code_name">' + groupCodeInfo.cmnsCdNm + '</td>';
-			groupCodeInfoHTML += '  <td></td>';
-			groupCodeInfoHTML += '  <td class="update_column group_code_length">' + groupCodeInfo.cdLngth + '</td>';
-			groupCodeInfoHTML += '  <td><button class="groupCodeDetail" id="' + groupCodeInfo.cmnsCdGrp + '">↓상세</button></td>';
-			groupCodeInfoHTML += '  <td>' + groupCodeInfo.cmnsCdGrpExpl + '</td>';
-			if (groupCodeInfo.useF === 'Y') {
-				groupCodeInfoHTML += '  <td><input style="width:100%" class="group_code_use_yn" type="checkbox" checked><input class="hidden_yn" type="hidden" value="y"></td>';
-			} else {
-				groupCodeInfoHTML += '  <td><input style="width:100%" class="group_code_use_yn" type="checkbox"><input class="hidden_yn" type="hidden" value="n"></td>';
+		if(groupCodeInfoList.length > 0) {
+			for (let i = 0; i < groupCodeInfoList.length; i++) {
+				let groupCodeInfo = groupCodeInfoList[i];
+				groupCodeInfoHTML += '<tr>';
+				groupCodeInfoHTML += '  <td><input id="' + groupCodeInfo.cmnsCdGrp + '" style="width:100%" type="checkbox"></td>';
+				groupCodeInfoHTML += '  <td class="update_column group_code">' + groupCodeInfo.cmnsCdGrp + '</td>';
+				groupCodeInfoHTML += '  <td class="update_column group_code_name">' + groupCodeInfo.cmnsCdNm + '</td>';
+				groupCodeInfoHTML += '  <td></td>';
+				groupCodeInfoHTML += '  <td class="update_column group_code_length">' + groupCodeInfo.cdLngth + '</td>';
+				groupCodeInfoHTML += '  <td><button class="groupCodeDetail" id="' + groupCodeInfo.cmnsCdGrp + '">↓상세</button></td>';
+				groupCodeInfoHTML += '  <td>' + groupCodeInfo.cmnsCdGrpExpl + '</td>';
+				if (groupCodeInfo.useF === 'Y') {
+					groupCodeInfoHTML += '  <td><input style="width:100%" class="group_code_use_yn" type="checkbox" checked><input class="hidden_yn" type="hidden" value="y"></td>';
+				} else {
+					groupCodeInfoHTML += '  <td><input style="width:100%" class="group_code_use_yn" type="checkbox"><input class="hidden_yn" type="hidden" value="n"></td>';
+				}
+				groupCodeInfoHTML += '  <td>' + groupCodeInfo.rgstDt + '</td>';
+				groupCodeInfoHTML += '  <td></td>';
+				groupCodeInfoHTML += '  <td></td>';
+				groupCodeInfoHTML += '</tr>';
 			}
-			groupCodeInfoHTML += '  <td>' + groupCodeInfo.rgstDt + '</td>';
-			groupCodeInfoHTML += '  <td></td>';
-			groupCodeInfoHTML += '  <td></td>';
+		} else {
+			groupCodeInfoHTML += '<tr>';
+			groupCodeInfoHTML += '	<td colspan="11" style="text-align: center">데이터가 없습니다.</td>';
 			groupCodeInfoHTML += '</tr>';
 		}
+		
 		$('#groupCodeListTable').html(groupCodeInfoHTML);
 	});
 }
@@ -392,25 +399,32 @@ var getGroupCodeInfo = function(cmnsCdGrp) {
 		dataType: 'json'
 	}).done(function(codeInfoList) {
 		let codeInfoHTML = '';
-		for (let i = 0; i < codeInfoList.length; i++) {
-			let codeInfo = codeInfoList[i];
-			codeInfoHTML += '<tr id="' + cmnsCdGrp + '">';
-			codeInfoHTML += '   <td><input id="' + codeInfo.cdVlId + '" style="width:100%" type="checkbox"><input type="hidden" value="' + cmnsCdGrp + '"></td>';
-			codeInfoHTML += '   <td class="update_column">' + codeInfo.cdVlId + '</td>';
-			codeInfoHTML += '   <td class="update_column">' + codeInfo.cdVlNm + '</td>';
-			codeInfoHTML += '   <td></td>';
-			codeInfoHTML += '   <td>' + codeInfo.cdSq + '</td>';
-			if (codeInfo.useF === 'Y') {
-				codeInfoHTML += '   <td><input class="code_use_yn" style="width:100%" type="checkbox" checked><input class="hidden_yn" type="hidden" value="y"></td>';
-			} else {
-				codeInfoHTML += '   <td><input class="code_use_yn" style="width:100%" type="checkbox"><input class="hidden_yn" type="hidden" value="n"></td>';
+		if(codeInfoList.length > 0) {
+			for (let i = 0; i < codeInfoList.length; i++) {
+				let codeInfo = codeInfoList[i];
+				codeInfoHTML += '<tr id="' + cmnsCdGrp + '">';
+				codeInfoHTML += '   <td><input id="' + codeInfo.cdVlId + '" style="width:100%" type="checkbox"><input type="hidden" value="' + cmnsCdGrp + '"></td>';
+				codeInfoHTML += '   <td class="update_column">' + codeInfo.cdVlId + '</td>';
+				codeInfoHTML += '   <td class="update_column">' + codeInfo.cdVlNm + '</td>';
+				codeInfoHTML += '   <td></td>';
+				codeInfoHTML += '   <td>' + codeInfo.cdSq + '</td>';
+				if (codeInfo.useF === 'Y') {
+					codeInfoHTML += '   <td><input class="code_use_yn" style="width:100%" type="checkbox" checked><input class="hidden_yn" type="hidden" value="y"></td>';
+				} else {
+					codeInfoHTML += '   <td><input class="code_use_yn" style="width:100%" type="checkbox"><input class="hidden_yn" type="hidden" value="n"></td>';
+				}
+				codeInfoHTML += '   <td>' + codeInfo.rgstDt + '</td>';
+				codeInfoHTML += '   <td></td>';
+				codeInfoHTML += '   <td></td>';
+				codeInfoHTML += '   <td></td>';
+				codeInfoHTML += '</tr>';
 			}
-			codeInfoHTML += '   <td>' + codeInfo.rgstDt + '</td>';
-			codeInfoHTML += '   <td></td>';
-			codeInfoHTML += '   <td></td>';
-			codeInfoHTML += '   <td></td>';
+		} else {
+			codeInfoHTML += '<tr>';
+			codeInfoHTML += '	<td colspan="10" style="text-align: center">데이터가 없습니다.</td>';
 			codeInfoHTML += '</tr>';
 		}
+		
 		$('#codeListTable').html(codeInfoHTML);
 	});
 }
