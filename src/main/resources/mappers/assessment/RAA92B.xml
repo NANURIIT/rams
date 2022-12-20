@@ -30,11 +30,11 @@
          , #{sq}
          , #{empNm}
          , #{rghtCd}
-         , NULL                            <!-- , #{dprtCd} 부점코드 -->
+         , #{dprtCd}                                       <!-- , #{dprtCd} 부점코드 -->
          , #{rgstRsn}
          , #{aplcStrtDt}
          , #{aplcEndDt}
-         , 'N'
+         , #{dltF}
          , NULL
          , NULL
          , NULL
@@ -42,12 +42,22 @@
          , DATE_FORMAT(NOW(), '%H%i%s')
          , #{rgstPEno}
          , NOW()
-         , NULL                            <!-- , #{hndlDprtCd} 처리부점코드 -->
+         , NULL
          , #{hndlPEno}
          )
         ON DUPLICATE KEY
-    UPDATE APLC_END_DT = #{aplcEndDt}
-         , DLT_F = 'Y'
+    UPDATE APLC_STRT_DT = #{aplcStrtDt}               <!-- 부여시작기간 수정 -->
+         , APLC_END_DT = #{aplcEndDt}                 <!-- 부여마감기간 수정 -->
+         , RGST_RSN = #{rgstRsn}                      <!-- 부여사유 수정 -->
+         , RGHT_CD = #{rghtCd}                        <!-- 권한 수정 -->
+         , HNDL_DY_TM = NOW()                         <!-- 최종처리일 -->
+         , HNDL_DPRT_CD = #{dprtCd}                   <!-- 처리부점코드 -->
+         , HNDL_P_ENO = #{hndlPEno}                   <!-- 최종처리자 -->
+      <if test='dltF=="Y"'>
+         , DLT_F = #{dltF}                            <!-- 삭제여부 수정(권한삭제) -->
+         , DLT_DT = #{dltDt}                          <!-- 삭제일자 -->
+         , DLT_TM = #{dltTm}                          <!-- 삭제시간 -->
+      </if>
 </insert>
 
 <select id="selectUser" resultType="com.nanuri.rams.business.common.vo.RAA92BVO" parameterType="com.nanuri.rams.business.common.vo.RAA92BVO">

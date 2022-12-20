@@ -59,13 +59,13 @@ var findUser = function (empNm, rghtCd, dltY) {
 
 function getUserList() {
 	let usrC = $("#usrC").val();					/* 사용자구분 */
-	let eno = $("#eno").val();					/* 사번 */
-	let empNm = $("#empNm").val();				/* 직원명 */
+	let eno = $("#eno").val();						/* 사번 */
+	let empNm = $("#empNm").val();					/* 직원명 */
 	let pstn = $("#pstn").val();					/* 직책 */
 	let rghtCd = $("#rghtCd").val();				/* 권한 */
-	let rgstRsn = $("#rgstRsn").val();			/* 등록사유 */
+	let rgstRsn = $("#rgstRsn").val();				/* 등록사유 */
 	let aplcStrtDt = $("#aplcStrtDt").val();		/* 적용시작일 */
-	let aplcEndDt = $("#aplcEndDt").val();		/* 회수(예정)일 */
+	let aplcEndDt = $("#aplcEndDt").val();			/* 회수(예정)일 */
 	let rgstPEno = $("#rgstPEno").val();			/* 등록자사번 */
 	let hndlPEno = $("#hndlPEno").val();			/* 회수자사번 */
 
@@ -101,7 +101,7 @@ function rebuildUserManageTable(data) {
 
 	if (userList.length > 0) {
 		$.each(userList, function (key, value) {
-			html += '<tr class="rght_user" value="' + value.sq + '" ondblclick="selectRgthUser(this);">';		// 해당 데이터가 가진 sequence 값
+			html += '<tr class="rght_user" ondblclick="selectRgthUser(this);">';		// 해당 데이터가 가진 sequence 값
 			html += '<td>' + value.usrC + '</td>';
 			html += '<td value="' + value.sq + '" >' + value.eno + '</td>';
 			html += '<td>' + value.empNm + '</td>';
@@ -175,7 +175,7 @@ function selectRgthUser(e) {
 	openModal();
 	var sq = $(e).find('input').val();
 	var eno = $(e).find('td:eq(1)').html();
-	// console.log("sq : " + sq + ", eno : " + eno);
+	console.log("sq : " + sq + ", eno : " + eno);
 	selectAuthUser(sq, eno);
 
 }

@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -127,25 +128,21 @@ public class AC01ServiceImpl implements AC01Service {
 	/* 사용자 추가 */
     @Override
     public void insertUser(RAA92BDTO dto) {
-        String sq = String.valueOf(RAA92BMapper.getLastSq() + 1);
-        // System.out.println("        SQ : " + dto.getSq());
-        System.out.println(dto.getSq());
-        if (dto.getSq().equals("0")) {
-            dto.setSq(sq);
-        }else if ((dto.getSq() != null) || (dto.getSq() != "")){
-            dto.setSq(sq);
-        } else {
-            dto.setSq(dto.getSq());
-        }
-        String eno = facade.getDetails().getEno();
         LocalDate today = LocalDate.now();
         LocalTime now = LocalTime.now();
         DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyyMMdd");
         DateTimeFormatter time = DateTimeFormatter.ofPattern("HHmmss");
         String rgstDt = today.format(date);
         String rgstTm = now.format(time);
+		String sq = String.valueOf(RAA92BMapper.getLastSq() + 1);
+		String insertSq = Optional.ofNullable(dto.getSq()).orElse(sq);
+        String eno = facade.getDetails().getEno();
+		String dprtCd = facade.getDetails().getDprtCd();
+		dto.setSq(insertSq);
         dto.setRgstPEno(eno);
         dto.setHndlPEno(eno);
+		dto.setDprtCd(dprtCd);
+		dto.setHndlDprtCd(dprtCd);
         dto.setAplcStrtDt(dto.getAplcStrtDt().replace("-", ""));
         dto.setAplcEndDt(dto.getAplcEndDt().replace("-", ""));
         dto.setRgstDt(rgstDt);
@@ -155,8 +152,8 @@ public class AC01ServiceImpl implements AC01Service {
 
     /* 사용자 목록 */
     @Override
-    public List<RAA92BVO> getUserList(RAA92BVO userVo) {
-        return RAA92BMapper.selectUser(userVo);
+    public List<RAA92BVO> getUserList(RAA92BVO vo) {
+        return RAA92BMapper.selectUser(vo);
     }
 
     /* 사용자 삭제(퇴사) */

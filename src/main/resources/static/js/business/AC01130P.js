@@ -228,12 +228,12 @@ var saveUserData = function () {
 	let hndlPEno = $('#AC01130P_hndlPEno').val();		/* 수정자의 세션 */
 	let hndlDyTm = today; 								/* 수정한 시간(Date타입) */
 	let sq = $('#AC01130P_sq').val();
+	let dltF = 'N';
 
 	let dtoParam = {
 		"eno": eno
 		, "empNm": empNm
 		, "rghtCd": rghtCd
-		, "dprtCd": ""
 		, "rgstRsn": rgstRsn
 		, "aplcStrtDt": aplcStrtDt
 		, "aplcEndDt": aplcEndDt
@@ -241,12 +241,7 @@ var saveUserData = function () {
 		, "rgstDt": rgstDt
 		, "hndlPEno": hndlPEno
 		, "hndlDyTm": hndlDyTm
-		, "dltF": ""
-		, "dltDt": ""
-		, "dltTm": ""
-		, "dltPEno": ""
-		, "rgstTm": ""
-		, "hndlDprtCd": ""
+		, "dltF": dltF
 		, "sq": sq
 	}
 
@@ -278,6 +273,10 @@ var deleteUser = function () {
 	var param = {
 		"eno": eno
 		, "sq": sq
+		, "dltF": "Y"
+		, "dltPEno": ""
+		, "dltDt": ""
+		, "dltTm": ""
 	}
 
 	$.ajax({
