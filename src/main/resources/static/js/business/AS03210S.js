@@ -28,6 +28,11 @@ function setDatePicker() {
 	// btn apply
 	$('.datepicker').on('apply.daterangepicker', function(ev, picker) {
 		$(this).val(picker.startDate.format('YYYY-MM-DD'));
+		
+		var month = $("#invstPrdMtC").val();
+		if(month != ""){
+			calcDate();			
+		}
 	});
 
 	// btn clear
@@ -147,6 +152,7 @@ function setTab1() {
 	setInvstGdsMdvdCd();
 	setInvstGdsSdvdCd();
 	setInvstGdsDtlsDvdCd();
+	setInvstCrncyCd();
 }
 
 // 리스크심사구분코드
@@ -298,16 +304,121 @@ function setInvstGdsDtlsDvdCd() {
 
 // 투자기간 숫자입력 & 만기일 체크 function
 function checkNumber(event) {
-	if (event.key >= 0 && event.key <= 9) {						// 숫자입력 체크
+	if (event.key >= 0 && event.key <= 9) {						// 1. 숫자입력 체크
 		var input = $("#tab1_datepicker1").val();
-		if(input == ""){										// 기표일 값이 없을경우 만기일 체크 안함
+		if(input == ""){										// 2. 기표일 값이 없을경우 만기일 체크 안함
 			return true;			
-		}else{													// 기표일 값이 있을경우 만기일 체크
-			console.log(input);
+		}else{													// 2-1. 기표일 값이 있을경우 만기일 체크
+			calcDate();											// 개월수 계산하여 만기일 입력 fucntion
 			return true;
 		}
 	}
 	return false;
+}
+
+function calcDate(){
+	var inputInvstPrdMtC = $("#invstPrdMtC").val();
+	var inputDate = $("#tab1_datepicker1").val();
+	
+	var year = inputDate.substring(0, 4);
+	var month = inputDate.substring(5, 7);
+	var day = inputDate.substring(8, 10); 
+	
+	var date = new Date(year, month-1, day);
+	
+	/*
+	date.setMonth(date.getMonth() + Number(inputInvstPrdMtC));
+	
+	year = date.getFullYear();
+	month = date.getMonth()+1;
+	day = date.getDate();
+	
+	var resultDate = year + "-" + month + "-" + day;
+	*/
+	
+	var dt = inputDate;
+	var cycle = inputInvstPrdMtC;
+	var nxt = '';
+	if(dt!="" && cycle !='0'){
+        if(cycle=='99'){
+            nxt="-"
+        }else{
+            var arr1 = dt.split('-');
+            var date = new Date(arr1[0], arr1[1]-1, arr1[2]);
+
+            var addMonthFirstDate = new Date(
+                date.getFullYear(),
+                date.getMonth() + parseInt(cycle),
+                1
+            );
+            var addMonthLastDate = new Date(
+                addMonthFirstDate.getFullYear(),
+                addMonthFirstDate.getMonth() + 1
+                , 0
+            );
+
+            var result = addMonthFirstDate;
+            if(date.getDate() > addMonthLastDate.getDate()) 
+            {
+                result.setDate(addMonthLastDate.getDate());
+            } 
+            else 
+            {
+                result.setDate(date.getDate());
+            }
+
+            nxt = result.getFullYear() + "-" + fillZero(2,(result.getMonth() + 1).toString()) + "-" + fillZero(2,result.getDate().toString());
+        }
+    }
+
+	function fillZero(width, str) {
+		return str.length >= width ? str : new Array(width - str.length + 1).join('0') + str;//남는 길이만큼 0으로 채움
+	}
+	
+	$("#mtrtDt").val(nxt);
+	
+}
+
+// 부의기준통화
+function setInvstCrncyCd() {
+	$.ajax({
+		type: "GET",
+		url: "/getInvstCrncyCd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_invstCrncyCd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_invstCrncyCd').html(html);
+		}
+	});
+}
+
+// 협업유형코드
+function setCoprtnTypCd() {
+	$.ajax({
+		type: "GET",
+		url: "/getCoprtnTypCd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_coprtnTypCd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_coprtnTypCd').html(html);
+		}
+	});
 }
 
 

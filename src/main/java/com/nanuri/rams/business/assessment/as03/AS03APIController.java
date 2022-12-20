@@ -73,4 +73,16 @@ public class AS03APIController {
 	public List<Map<String, Object>> getInvstGdsDtlsDvdCd() {
 		return as03Service.getInvstGdsDtlsDvdCd();
 	}
+	
+	// 부의기준통화
+	@GetMapping(value = "/getInvstCrncyCd")
+	public List<Map<String, Object>> getInvstCrncyCd() {
+		return as03Service.getInvstCrncyCd();
+	}
+	
+	// 협업유형코드
+	@GetMapping(value = "/getInvstCrncyCd")
+	public List<Map<String, Object>> getCoprtnTypCd() {
+		return as03Service.getCoprtnTypCd();
+	}
 }

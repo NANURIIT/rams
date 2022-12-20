@@ -42,4 +42,10 @@ public interface AS03Service {
 	// 투자상품상세분류코드
 	public List<Map<String, Object>> getInvstGdsDtlsDvdCd();
 
+	// 부의기준통화
+	public List<Map<String, Object>> getInvstCrncyCd();
+
+	// 협업유형코드
+	public List<Map<String, Object>> getCoprtnTypCd();
+
 }

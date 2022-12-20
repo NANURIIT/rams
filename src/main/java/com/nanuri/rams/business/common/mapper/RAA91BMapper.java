@@ -22,6 +22,10 @@ public interface RAA91BMapper {
 
 	public List<Map<String, Object>> getInvstGdsDtlsDvdCd();						// 투자상품상세분류코드
 
+	public List<Map<String, Object>> getInvstCrncyCd();								// 부의기준통화
+
+	public List<Map<String, Object>> getCoprtnTypCd();								// 협업유형코드
+
 	
 
 	

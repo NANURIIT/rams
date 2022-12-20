@@ -91,5 +91,17 @@ public class AS03ServiceImpl implements AS03Service {
 
 		return raa91bMapper.getInvstGdsDtlsDvdCd();
 	};
+	
+	// 부의기준통화
+	public List<Map<String, Object>> getInvstCrncyCd() {
+
+		return raa91bMapper.getInvstCrncyCd();
+	};
+	
+	// 협업유형코드
+	public List<Map<String, Object>> getCoprtnTypCd() {
+
+		return raa91bMapper.getCoprtnTypCd();
+	};
 
 }
