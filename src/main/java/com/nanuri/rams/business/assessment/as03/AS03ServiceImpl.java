@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ctc.wstx.util.StringUtil;
 import com.nanuri.rams.business.common.mapper.RAA01BMapper;
 import com.nanuri.rams.business.common.mapper.RAA91BMapper;
-import com.nanuri.rams.business.common.vo.RAA01BVo;
-import com.nanuri.rams.business.common.vo.RAA01BVo.DealInfo;
+import com.nanuri.rams.business.common.vo.RAA01BVO;
+import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ public class AS03ServiceImpl implements AS03Service {
 	 * @return
 	 * @throws ParseException
 	 */
-	public List<RAA01BVo> getDealInfo(DealInfo dealInfo) throws ParseException {
+	public List<RAA01BVO> getDealInfo(DealInfo dealInfo) throws ParseException {
 
 		SimpleDateFormat newFormat = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -45,7 +45,7 @@ public class AS03ServiceImpl implements AS03Service {
 			dealInfo.setDscDate(newFormat.format(formatDate));
 		}
 
-		List<RAA01BVo> dealList = raa01bMapper.getDealInfo(dealInfo);
+		List<RAA01BVO> dealList = raa01bMapper.getDealInfo(dealInfo);
 
 		return dealList;
 	}

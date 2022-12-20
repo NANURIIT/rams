@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RAA01BVo {
+public class RAA01BVO {
 	
 	@Getter
 	@Setter

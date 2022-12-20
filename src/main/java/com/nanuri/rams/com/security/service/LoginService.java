@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.nanuri.rams.business.common.dto.RAA99ADto;
+import com.nanuri.rams.business.common.dto.RAA99ADTO;
 import com.nanuri.rams.business.common.mapper.RAA99AMapper;
 import com.nanuri.rams.com.code.RghtCd;
 import com.nanuri.rams.com.security.vo.EmpDetailsVO;
@@ -29,7 +29,7 @@ public class LoginService implements UserDetailsService {
 	
 	@Override
 	public EmpDetailsVO loadUserByUsername(String eno) {
-		RAA99ADto employee = raa99aMapper.findByEno(eno);
+		RAA99ADTO employee = raa99aMapper.findByEno(eno);
 		
 		if(employee == null) {
 			log.debug("employee is null => UsernameNotFoundException");
@@ -39,7 +39,7 @@ public class LoginService implements UserDetailsService {
 		}
 	}
 	
-	private List<GrantedAuthority> getGrantedAuthorities(RAA99ADto emp) {
+	private List<GrantedAuthority> getGrantedAuthorities(RAA99ADTO emp) {
         RghtCd rghtCd = emp.getRghtCd();
         List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(ROLE_PREFIX.concat(rghtCd.name()));
         return authorities;

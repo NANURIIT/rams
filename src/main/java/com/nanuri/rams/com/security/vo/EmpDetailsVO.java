@@ -8,7 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.nanuri.rams.business.common.dto.RAA99ADto;
+import com.nanuri.rams.business.common.dto.RAA99ADTO;
 import com.nanuri.rams.com.code.RghtCd;
 
 import lombok.EqualsAndHashCode;
@@ -64,21 +64,21 @@ public class EmpDetailsVO implements UserDetails {
         return new EmpDetailsVO(eno, empNm, password, rghtCd, dprtCd, dprtNm, hdqtCd, hdqtNm, pstn, isLocked, authorities);
     }
 
-    public static EmpDetailsVO of (RAA99ADto emp, String authority) {
+    public static EmpDetailsVO of (RAA99ADTO emp, String authority) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(authority));
         return new EmpDetailsVO(emp.getEno(), emp.getEmpNm(), emp.getPwd(), emp.getRghtCd(), emp.getDprtCd(), emp.getDprtNm(), emp.getHdqtCd(), emp.getHdqtNm()
 				, emp.getPstn(), emp.getIsLocked(), authorities);
     }
 
-    public static EmpDetailsVO of (RAA99ADto emp, GrantedAuthority authority) {
+    public static EmpDetailsVO of (RAA99ADTO emp, GrantedAuthority authority) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(authority);
         return new EmpDetailsVO(emp.getEno(), emp.getEmpNm(), emp.getPwd(), emp.getRghtCd(), emp.getDprtCd(), emp.getDprtNm(), emp.getHdqtCd(), emp.getHdqtNm()
 				, emp.getPstn(), emp.getIsLocked(), authorities);
     }
 	
-	public static EmpDetailsVO of (RAA99ADto emp, List<GrantedAuthority> authorities) {
+	public static EmpDetailsVO of (RAA99ADTO emp, List<GrantedAuthority> authorities) {
 		return new EmpDetailsVO(emp.getEno(), emp.getEmpNm(), emp.getPwd(), emp.getRghtCd(), emp.getDprtCd(), emp.getDprtNm(), emp.getHdqtCd(), emp.getHdqtNm()
 				, emp.getPstn(), emp.getIsLocked(), authorities);
 	}

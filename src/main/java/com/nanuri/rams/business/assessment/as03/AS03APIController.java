@@ -7,8 +7,8 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nanuri.rams.business.common.vo.RAA01BVo;
-import com.nanuri.rams.business.common.vo.RAA01BVo.DealInfo;
+import com.nanuri.rams.business.common.vo.RAA01BVO;
+import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class AS03APIController {
 	 * @throws ParseException
 	 */
 	@GetMapping(value = "/getDealInfo")
-	public List<RAA01BVo> getDealInfo(DealInfo dealDto) throws ParseException {
+	public List<RAA01BVO> getDealInfo(DealInfo dealDto) throws ParseException {
 		return as03Service.getDealInfo(dealDto);
 	}
 	

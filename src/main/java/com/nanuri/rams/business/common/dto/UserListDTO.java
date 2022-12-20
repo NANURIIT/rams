@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserListDto extends RAA92BDTO{
+public class UserListDTO extends RAA92BDTO{
 
     private String usrC;        /* 사용자구분 */
     private String pstn;        /* 직책 */

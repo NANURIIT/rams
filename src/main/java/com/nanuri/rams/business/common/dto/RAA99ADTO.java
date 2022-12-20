@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RAA99ADto {
+public class RAA99ADTO {
 	private String eno;					//사원번호
     private String empNm;				//직원명
     private String dprtCd;				//부점코드

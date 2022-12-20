@@ -3,7 +3,7 @@
 <mapper namespace="com.nanuri.rams.business.common.mapper.RAA99AMapper">
 	
 	<!-- 로그인 -->
-	<select id="findByEno" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA99ADto">
+	<select id="findByEno" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA99ADTO">
 		SELECT ENO
 			 , PWD
 		     , EMP_NM
@@ -18,7 +18,7 @@
 	</select>
 	
 	<!-- 직원검색 -->
-	<select id="findEmpList" parameterType="com.nanuri.rams.business.common.dto.RAA99ADto" resultType="java.util.HashMap">
+	<select id="findEmpList" parameterType="com.nanuri.rams.business.common.dto.RAA99ADTO" resultType="java.util.HashMap">
 		SELECT ENO
 		     , EMP_NM
 		     , IFNULL(DPRT_CD, '')	AS DPRT_CD
