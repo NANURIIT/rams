@@ -17,7 +17,7 @@ function getAuthCode(rghtCdNm) {
             if (authCode.length > 0) {
                 $.each(authCode, function (key, value) {
                     html += '<tr>';
-                    html += '   <td></td>';
+                    html += '   <td><input style="width: 15px;" type="checkbox"></td>';
                     html += '   <td>' + value.rghtCd + '</td>';
                     html += '   <td>' + value.rghtCdNm + '</td>';
                     html += '   <td>' + value.rghtCdExpl + '</td>';
@@ -42,6 +42,10 @@ function getAuthCode(rghtCdNm) {
                     html += '   <td>' + value.hndlPEno + '</td>';
                     html += '</tr>';
                 });
+            } else {
+                html += '<tr>';
+                html += '   <td colspan="12" style="text-align: center">데이터가 없습니다.</td>';
+                html += '</tr>';
             }
             $('#authCodeTable').html(html);
 
@@ -99,6 +103,10 @@ function getAuthCodeMenu(rghtCd) {
                     html += '   <td>' + value.hndlPEno + '</td>';
                     html += '</tr>';
                 });
+            } else {
+                html += '<tr>';
+                html += '   <td colspan="9" style="text-align: center">데이터가 없습니다.</td>';
+                html += '</tr>';
             }
             $('#authCodeMenuTable').html(html);
         }
