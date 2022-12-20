@@ -20,9 +20,9 @@
                 <tr>
                     <th>권한명</th>
                     <td class="etc_td">
-                        <input type="text">
+                        <input id="authCodeSearchInput" type="text">
                         <div  class="button_etc_wrap">
-                            <button type="button">조회</button>
+                            <button id="authCodeSearchButton" type="button" onclick="searchButtonClick();">조회</button>
                         </div>
                     </td>
                 </tr>
@@ -83,53 +83,8 @@
                             <col style="width: 7%;">
                             <col style="width: 7%;">
                         </colgroup>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>AG10</td>
-                                <td>사업부 담당자</td>
-                                <td>사업부(자기부서)</td>
-                                <td>
-                                    <select style="width: 170px;">
-                                        <option value="">해당부서</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                        <option value="">3</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <button id="#">⬇︎ 상세</button>
-                                </td>
-                                <td>2022-07-19</td>
-                                <td>SI22467</td>
-                                <td><input style="width: 15px;" type="checkbox" checked></td>
-                                <td>10</td>
-                                <td>11</td>
-                                <td>12</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>AG11</td>
-                                <td>사업부 부서원</td>
-                                <td>사업부(자기부서)</td>
-                                <td>
-                                    <select style="width: 170px;">
-                                        <option value="">해당부서</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                        <option value="">3</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <button id="#">⬇︎ 상세</button>
-                                </td>
-                                <td>2022-07-19</td>
-                                <td>SI22467</td>
-                                <td><input style="width: 15px;" type="checkbox" checked></td>
-                                <td>10</td>
-                                <td>11</td>
-                                <td>12</td>
-                            </tr>
+                        <tbody id="authCodeTable">
+                            
                         </tbody>
                     </table>
                 </form>

@@ -3,12 +3,14 @@ package com.nanuri.rams.business.assessment.ac01;
 import java.text.ParseException;
 import java.util.List;
 
+import com.nanuri.rams.business.common.dto.RAA94BDto;
 import com.nanuri.rams.business.itmanager.dto.*;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface AC01Service {
 
+	//============ start AC01010S(공통코드관리) ============//
 	public List<GroupCodeInfoDto> getGroupCodeInfoList(String cmnsCdGrp) throws ParseException;			// 그룹코드정보 리스트 가져오기
 
 	public List<CodeInfoDto> getCodeInfoList(String cmnsCdGrp) throws ParseException;
@@ -24,4 +26,10 @@ public interface AC01Service {
 	public boolean deleteCodeInfo(CodeInfoDeleteRequestDto requestDto);
 
 	public List<CommonCodeInfoDto> getCommonCodeName(); 												// 조회할 코드구분(코드이름) 가져오기
+
+	//============ end AC01010S(공통코드관리) ============//
+
+	//============ start AC01210S(권한별 메뉴관리) ============//
+	public List<RAA94BDto> getAuthCode(String rghtCdNm) throws ParseException;
+	//============ end AC01210S(권한별 메뉴관리) ============//
 }
