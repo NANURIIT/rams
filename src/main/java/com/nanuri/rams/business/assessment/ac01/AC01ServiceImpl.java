@@ -2,13 +2,28 @@ package com.nanuri.rams.business.assessment.ac01;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
-import com.nanuri.rams.business.itmanager.dto.*;
-import com.nanuri.rams.business.common.mapper.RAA90BMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.nanuri.rams.business.common.dto.RAA92BDTO;
+import com.nanuri.rams.business.common.dto.RAA94BDTO;
+import com.nanuri.rams.business.common.mapper.RAA90BMapper;
+import com.nanuri.rams.business.common.mapper.RAA92BMapper;
+import com.nanuri.rams.business.common.mapper.RAA94BMapper;
+import com.nanuri.rams.business.common.vo.RAA92BVO;
+import com.nanuri.rams.business.itmanager.dto.CodeInfoDeleteRequestDto;
+import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
+import com.nanuri.rams.business.itmanager.dto.CodeInfoSaveRequestDto;
+import com.nanuri.rams.business.itmanager.dto.CommonCodeInfoDto;
+import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoDto;
+import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto;
+import com.nanuri.rams.com.security.AuthenticationFacade;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +35,9 @@ import lombok.extern.slf4j.Slf4j;
 public class AC01ServiceImpl implements AC01Service {
 
 	private final RAA90BMapper RAA90BMapper;
+	private final RAA92BMapper RAA92BMapper;
+	private final RAA94BMapper RAA94BMapper;
+    private final AuthenticationFacade facade;
 
 	@Override
 	public List<CodeInfoDto> getCodeInfoList(GroupCodeInfoDto groupCodeInfoDto) {
@@ -105,4 +123,62 @@ public class AC01ServiceImpl implements AC01Service {
 		return RAA90BMapper.getCommonCodeName();
 	}
 
+
+	/* 사용자 추가 */
+    @Override
+    public void insertUser(RAA92BDTO dto) {
+        String sq = String.valueOf(RAA92BMapper.getLastSq() + 1);
+        // System.out.println("        SQ : " + dto.getSq());
+        System.out.println(dto.getSq());
+        if (dto.getSq().equals("0")) {
+            dto.setSq(sq);
+        }else if ((dto.getSq() != null) || (dto.getSq() != "")){
+            dto.setSq(sq);
+        } else {
+            dto.setSq(dto.getSq());
+        }
+        String eno = facade.getDetails().getEno();
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
+        DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyyMMdd");
+        DateTimeFormatter time = DateTimeFormatter.ofPattern("HHmmss");
+        String rgstDt = today.format(date);
+        String rgstTm = now.format(time);
+        dto.setRgstPEno(eno);
+        dto.setHndlPEno(eno);
+        dto.setAplcStrtDt(dto.getAplcStrtDt().replace("-", ""));
+        dto.setAplcEndDt(dto.getAplcEndDt().replace("-", ""));
+        dto.setRgstDt(rgstDt);
+        dto.setRgstTm(rgstTm);
+        RAA92BMapper.insertUser(dto);
+    }
+
+    /* 사용자 목록 */
+    @Override
+    public List<RAA92BVO> getUserList(RAA92BVO userVo) {
+        return RAA92BMapper.selectUser(userVo);
+    }
+
+    /* 사용자 삭제(퇴사) */
+    @Override
+    public void deleteUser(RAA92BDTO dto) {
+        String eno = facade.getDetails().getEno();
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
+        DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyyMMdd");
+        DateTimeFormatter time = DateTimeFormatter.ofPattern("HHmmss");
+        String dltDt = today.format(date);
+        String dltTm = now.format(time);
+        dto.setDltPEno(eno);
+        dto.setDltDt(dltDt);
+        dto.setDltTm(dltTm);
+        
+        RAA92BMapper.deleteUser(dto);
+    }
+
+    /* 사용자관리화면 권한구분 */
+    @Override
+    public List<RAA94BDTO> selectAuthCode() {
+        return RAA94BMapper.selectRghtCd();
+    }
 }

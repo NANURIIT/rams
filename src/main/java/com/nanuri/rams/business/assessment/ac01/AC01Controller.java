@@ -13,7 +13,7 @@ public class AC01Controller {
 	
     @GetMapping(value = {"/AC01110S"})
     public String userManagement() {
-        return "business/AC01110S";   
+        return "business/as/AC01110S";   
     }
     
     @GetMapping(value = {"/AC01210S"})
@@ -23,7 +23,7 @@ public class AC01Controller {
 
     @GetMapping(value = {"/AC01310S"})
     public String ManageMenu() {
-        return "business/AC01310S";   
+        return "business/AC01310S";
     }
 
 }
