@@ -12,7 +12,7 @@ public interface RAA92BMapper {
     
     public int getLastSq();                                         // AutoIncrement 적용이 되어 있지 않아 쿼리 숫자를 셀렉해 옴
     public void insertUser(RAA92BDTO userManageDTO);            // 사용자 추가
-    public List<RAA92BVO> selectUser(RAA92BVO userVo);         // 사용자 목록 조회
+    public List<RAA92BVO.selectVO> selectUser(RAA92BVO.selectVO userVo);         // 사용자 목록 조회
     public void deleteUser(RAA92BDTO userManageDTO);            // 사용자 삭제(퇴사)
     
 }

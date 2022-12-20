@@ -155,7 +155,7 @@ public class AC01ServiceImpl implements AC01Service {
 
     /* 사용자 목록 */
     @Override
-    public List<RAA92BVO> getUserList(RAA92BVO vo) {
+    public List<RAA92BVO.selectVO> getUserList(RAA92BVO.selectVO vo) {
         return RAA92BMapper.selectUser(vo);
     }
 

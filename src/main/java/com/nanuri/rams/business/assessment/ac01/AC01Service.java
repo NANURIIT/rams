@@ -12,7 +12,6 @@ import com.nanuri.rams.business.itmanager.dto.CodeInfoDeleteRequestDto;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoSaveRequestDto;
 import com.nanuri.rams.business.itmanager.dto.CommonCodeInfoDto;
-import com.nanuri.rams.business.itmanager.dto.FindUserVo;
 import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoDto;
 import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto;
 
@@ -36,7 +35,7 @@ public interface AC01Service {
 	public List<CommonCodeInfoDto> getCommonCodeName(); 												// 조회할 코드구분(코드이름) 가져오기
 
 	public void insertUser(RAA92BDTO userManageDTO);                    								// 사용자 추가// 사용자 추가
-    public List<RAA92BVO> getUserList(RAA92BVO userVo);            							    // 사용자 목록 조회
+    public List<RAA92BVO.selectVO> getUserList(RAA92BVO.selectVO userVo);            							    // 사용자 목록 조회
     public void deleteUser(RAA92BDTO userManageDTO);                    								// 사용자 삭제(퇴사)
     public List<RAA94BDTO> selectAuthCode();                            							  	// 사용자관리 화면의 권한구분
 }

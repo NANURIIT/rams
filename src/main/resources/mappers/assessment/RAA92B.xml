@@ -60,7 +60,7 @@
       </if>
 </insert>
 
-<select id="selectUser" resultType="com.nanuri.rams.business.common.vo.RAA92BVO" parameterType="com.nanuri.rams.business.common.vo.RAA92BVO">
+<select id="selectUser" resultType="com.nanuri.rams.business.common.vo.RAA92BVO$selectVO" parameterType="com.nanuri.rams.business.common.vo.RAA92BVO$selectVO">
 	/* 사용자 목록 조회 */
 	SELECT IFNULL(ENO, '')              				AS ENO					<!-- 사번 -->
 		   , IFNULL(SQ, '')             				AS SQ					<!-- 일련번호 -->

@@ -84,7 +84,7 @@ public class AC01APIController {
 
     /* 사용자 목록조회 */
     @GetMapping(value="/getUserList")
-    public List<RAA92BVO> getUserList(RAA92BVO userVo ) {
+    public List<RAA92BVO.selectVO> getUserList(RAA92BVO.selectVO userVo ) {
         return AC01Service.getUserList(userVo);
     }
     
