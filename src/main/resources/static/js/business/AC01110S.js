@@ -175,7 +175,7 @@ function selectRgthUser(e) {
 	openModal();
 	var sq = $(e).find('input').val();
 	var eno = $(e).find('td:eq(1)').html();
-	console.log("sq : " + sq + ", eno : " + eno);
+	// console.log("sq : " + sq + ", eno : " + eno);
 	selectAuthUser(sq, eno);
 
 }

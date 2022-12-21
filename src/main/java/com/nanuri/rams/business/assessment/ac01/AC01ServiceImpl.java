@@ -135,8 +135,10 @@ public class AC01ServiceImpl implements AC01Service {
         
 		String rgstDt = today.format(date);
         String rgstTm = now.format(time);
-		String sq = String.valueOf(RAA92BMapper.getLastSq() + 1);
-		String insertSq = Optional.ofNullable(dto.getSq()).orElse(sq);
+		// String sq = String.valueOf(RAA92BMapper.getLastSq() + 1);
+		// String sq = "(SELECT NEXTVAL(RAA92B_SQ))";
+		// String insertSq = Optional.ofNullable(dto.getSq()).orElse(sq);
+		String insertSq = Optional.ofNullable(dto.getSq()).orElse("");
         String eno = facade.getDetails().getEno();
 		String dprtCd = facade.getDetails().getDprtCd();
 		

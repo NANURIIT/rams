@@ -255,7 +255,7 @@ var saveUserData = function () {
 			// alert(response);
 			resetTable();
 			modalClose_AC01130P();
-			reload();
+			reload(empNm);
 		},
 		error: function (request, status, error) {
 			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -289,7 +289,7 @@ var deleteUser = function () {
 		success: function () {
 			resetTable();
 			modalClose_AC01130P();
-			reload();
+			reload(eno);
 		},
 
 	});
@@ -302,9 +302,10 @@ var recall = function () {
 
 
 /* 쿼리 실행 시 페이지 리로드 */
-var reload = function () {
-	let empNm = $("#AC01130P_empNm").val();
+var reload = function (empNm) {
+	// let emp = $('#AC01130P_empNm').val();
 	let rghtCd = $("#AC01130P_rghtCd option:selected").val();
 	let dltY = "0";
+	console.log(empNm +", "+ rghtCd +", "+ dltY)
 	findUser(empNm, rghtCd, dltY);
 }
