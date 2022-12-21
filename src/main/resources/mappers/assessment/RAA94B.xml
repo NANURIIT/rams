@@ -23,6 +23,25 @@
         </if>
     </select>
 
+    <update id="updateAuthCode" parameterType="com.nanuri.rams.business.common.dto.RAA94BDto">
+        UPDATE RAA94B
+        <set>
+            <if test="rghtCd != null and rghtCd !=''">
+                rght_cd = #{rghtCd},
+            </if>
+            <if test="rghtCdNm != null and rghtCdNm !=''">
+                rght_cd_nm = #{rghtCdNm},
+            </if>
+            <if test="rghtCdExpl != null and rghtCdExpl !=''">
+                rght_cd_expl = #{rghtCdExpl},
+            </if>
+            <if test="aplcF != null and aplcF !=''">
+                aplc_f = #{aplcF}, 
+            </if>
+        </set>
+         WHERE rght_cd = #{oldRghtCd}
+    </update>
+
     <update id="deleteAuthCode" parameterType="java.util.List">
         UPDATE RAA94B
            SET APLC_F = 'N'

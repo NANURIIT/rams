@@ -15,5 +15,6 @@
     INNER JOIN RAA95B 95b
             ON 93b.menu_id = 95b.menu_id
          WHERE 95b.rght_cd = #{rghtCd}
+           AND 93b.scrn_aplc_type_cd = 'S'
     </select>
 </mapper>

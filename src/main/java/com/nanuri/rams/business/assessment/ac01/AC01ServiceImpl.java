@@ -161,6 +161,15 @@ public class AC01ServiceImpl implements AC01Service {
 	}
 
 	@Override
+	public boolean registerAuthCode(List<RAA94BDto> requestDtos) {
+		int count = 0;
+		for (RAA94BDto requestDto : requestDtos) {
+			count += raa94BMapper.updateAuthCode(requestDto);
+		}
+		return count > 0;
+	}
+
+	@Override
 	public boolean deleteAuthCode(List<String> rghtCd) {
 		int count = 0;
 		count += raa94BMapper.deleteAuthCode(rghtCd);

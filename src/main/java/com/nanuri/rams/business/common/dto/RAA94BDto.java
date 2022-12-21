@@ -23,4 +23,6 @@ public class RAA94BDto {
     private String hndlDyTm;        /* 처리일시 */
     private String hndlDprtCd;      /* 처리부점코드 */
     private String hndlPEno;        /* 처리자사번 */
+
+    private String oldRghtCd;       /* 변경전 권한코드 */
 }

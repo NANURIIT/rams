@@ -78,6 +78,11 @@ public class AC01APIController {
         return ac01Service.getAuthCodeMenu(rghtCd);
     }
 
+    @PostMapping(value = "/registerAuthCode")
+    public boolean registerAuthCode(@RequestBody List<RAA94BDto> requestDtos) {
+        return ac01Service.registerAuthCode(requestDtos);
+    }
+
     @PatchMapping(value = "/deleteAuthCode")
     public boolean deleteAuthCode(@RequestBody List<String> rghtCd) {
 		return ac01Service.deleteAuthCode(rghtCd);
