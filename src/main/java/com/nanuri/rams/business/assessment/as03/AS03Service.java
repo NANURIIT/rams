@@ -48,4 +48,7 @@ public interface AS03Service {
 	// 협업유형코드
 	public List<Map<String, Object>> getCoprtnTypCd();
 
+	// 관련문서
+	public List<Map<String, Object>> getDocInfo();
+
 }

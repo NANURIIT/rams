@@ -85,4 +85,10 @@ public class AS03APIController {
 	public List<Map<String, Object>> getCoprtnTypCd() {
 		return as03Service.getCoprtnTypCd();
 	}
+	
+	// 관련문서
+	@GetMapping(value = "/getDocInfo")
+	public List<Map<String, Object>> getDocInfo() {
+		return as03Service.getDocInfo();
+	}
 }

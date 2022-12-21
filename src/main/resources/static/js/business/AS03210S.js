@@ -5,8 +5,8 @@ $(document).ready(function() {
 	setOpenModal();
 
 	setKeyDownFunction();
-
-	setTabContents();
+	
+	loadTabContents();
 
 });
 
@@ -28,16 +28,19 @@ function setDatePicker() {
 	// btn apply
 	$('.datepicker').on('apply.daterangepicker', function(ev, picker) {
 		$(this).val(picker.startDate.format('YYYY-MM-DD'));
-		
-		var month = $("#invstPrdMtC").val();
-		if(month != ""){
-			calcDate();			
-		}
 	});
 
 	// btn clear
 	$('.datepicker').on('cancel.daterangepicker', function(ev, picker) {
 		$(this).val('');
+	});
+	
+	// #tab1_datepicker1 btn apply function
+	$('#tab1_datepicker1').on('apply.daterangepicker', function(ev, picker) {
+		var month = $("#invstPrdMtC").val();
+		if(month != ""){
+			calcDate();			
+		}
 	});
 }
 
@@ -129,6 +132,7 @@ function getDealInfo() {
 
 }
 
+// 팝업에서 deal 번호 조회후 더블클릭
 function setDealInfo() {
 	//tr(selected) = event.currentTarget;
 	//td(selected) = event.target;
@@ -139,24 +143,71 @@ function setDealInfo() {
 	//console.log(ibDealNo);
 }
 
+// 화면에서 deal Info 검색 후 더블클릭 set
 function setTabContents() {
-	setTab1();
+	//setTab1();
+	//setTab2();
+	
+}
+
+function setTab2() {
+	getDocInfo();
+}
+
+// 관련문서
+function getDocInfo() {
+	
+	var paramData = {
+		"ibDealNo" : ''
+	}
+	
+	$.ajax({
+		type: "GET",
+		url: "/getDocInfo",
+		data: paramData,
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_docInfo').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<tr>';
+					html += '<td>' + value.RA_DOC_NO + '</td>';
+					html += '<td>' + value.RA_FNL_DOC_F + '</td>';
+					html += '</tr>';
+				});
+			} else {
+				html += '<tr>';
+				html += '<td colspan="2" style="text-align: center">데이터가 없습니다.</td>';
+				html += '</tr>';
+			}
+			$('#AS03210S_docInfo').html(html);
+		}
+	});
+}
+
+// 탭 페이지 항목 로드
+function loadTabContents() {
+	loadTab1();
 }
 
 // 탭1 안건구조
-function setTab1() {
-	setRiskInspctCcd();
-	setLstCCaseCcd();
-	setInspctDprtCcd();
-	setInvstGdsLdvdCd();
-	setInvstGdsMdvdCd();
-	setInvstGdsSdvdCd();
-	setInvstGdsDtlsDvdCd();
-	setInvstCrncyCd();
+function loadTab1() {
+	loadRiskInspctCcd();
+	loadLstCCaseCcd();
+	loadInspctDprtCcd();
+	loadInvstGdsLdvdCd();
+	loadInvstGdsMdvdCd();
+	loadInvstGdsSdvdCd();
+	loadInvstGdsDtlsDvdCd();
+	loadInvstCrncyCd();
+	loadCoprtnTypCd();
 }
 
 // 리스크심사구분코드
-function setRiskInspctCcd() {
+function loadRiskInspctCcd() {
 	$.ajax({
 		type: "GET",
 		url: "/getRiskInspctCcd",
@@ -177,7 +228,7 @@ function setRiskInspctCcd() {
 }
 
 // 부수안건구분코드
-function setLstCCaseCcd() {
+function loadLstCCaseCcd() {
 	$.ajax({
 		type: "GET",
 		url: "/getlstCCaseCcd",
@@ -198,7 +249,7 @@ function setLstCCaseCcd() {
 }
 
 // 심사부서구분코드
-function setInspctDprtCcd() {
+function loadInspctDprtCcd() {
 	$.ajax({
 		type: "GET",
 		url: "/getInspctDprtCcd",
@@ -219,7 +270,7 @@ function setInspctDprtCcd() {
 }
 
 // 투자상품대분류코드
-function setInvstGdsLdvdCd() {
+function loadInvstGdsLdvdCd() {
 	$.ajax({
 		type: "GET",
 		url: "/getInvstGdsLdvdCd",
@@ -240,7 +291,7 @@ function setInvstGdsLdvdCd() {
 }
 
 // 투자상품중분류코드
-function setInvstGdsMdvdCd() {
+function loadInvstGdsMdvdCd() {
 	$.ajax({
 		type: "GET",
 		url: "/getInvstGdsMdvdCd",
@@ -261,7 +312,7 @@ function setInvstGdsMdvdCd() {
 }
 
 // 투자상품소분류코드
-function setInvstGdsSdvdCd() {
+function loadInvstGdsSdvdCd() {
 	$.ajax({
 		type: "GET",
 		url: "/getInvstGdsSdvdCd",
@@ -282,7 +333,7 @@ function setInvstGdsSdvdCd() {
 }
 
 // 투자상품상세분류코드
-function setInvstGdsDtlsDvdCd() {
+function loadInvstGdsDtlsDvdCd() {
 	$.ajax({
 		type: "GET",
 		url: "/getInvstGdsDtlsDvdCd",
@@ -316,6 +367,7 @@ function checkNumber(event) {
 	return false;
 }
 
+// 만기일 계산
 function calcDate(){
 	var inputInvstPrdMtC = $("#invstPrdMtC").val();
 	var inputDate = $("#tab1_datepicker1").val();
@@ -380,7 +432,7 @@ function calcDate(){
 }
 
 // 부의기준통화
-function setInvstCrncyCd() {
+function loadInvstCrncyCd() {
 	$.ajax({
 		type: "GET",
 		url: "/getInvstCrncyCd",
@@ -401,7 +453,7 @@ function setInvstCrncyCd() {
 }
 
 // 협업유형코드
-function setCoprtnTypCd() {
+function loadCoprtnTypCd() {
 	$.ajax({
 		type: "GET",
 		url: "/getCoprtnTypCd",
@@ -420,6 +472,8 @@ function setCoprtnTypCd() {
 		}
 	});
 }
+
+
 
 
 

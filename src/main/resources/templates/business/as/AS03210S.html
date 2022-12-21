@@ -10,6 +10,9 @@
 
 <th:block layout:fragment="customContent">
 	<div class="main_container">
+		<div class="hiddenInfo">
+			<input type="hidden" id="AS03210S_selectedDealNo"/>
+		</div>
 		<div class="search_wrap">
 			<table class="search_table search_top">
 				<colgroup>
@@ -466,11 +469,7 @@
 											<col style="width: 50%;">
 											<col style="width: 50%;">
 										</colgroup>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>2</td>
-											</tr>
+										<tbody id="AS03210S_docInfo">
 										</tbody>
 									</table>
 								</form>
@@ -482,17 +481,16 @@
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">문서번호</div>
-								<div class="contents_list_desc contents_list_desc300">
-									<input type="text">
+								<div class="contents_list_desc contents_list_desc">
+									<input class="width280" type="text">
 								</div>
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">최종문서여부</div>
-								<div class="contents_list_desc contents_list_desc300">
-									<select>
-										<option value="1">1</option>
-										<option value="1">2</option>
-										<option value="1">3</option>
+								<div class="contents_list_desc contents_list_desc">
+									<select class="width280">
+										<option value="N" selected>N</option>
+										<option value="Y">Y</option>
 									</select>
 								</div>
 							</div>

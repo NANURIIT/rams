@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ctc.wstx.util.StringUtil;
 import com.nanuri.rams.business.common.mapper.RAA01BMapper;
+import com.nanuri.rams.business.common.mapper.RAA18BMapper;
 import com.nanuri.rams.business.common.mapper.RAA91BMapper;
 import com.nanuri.rams.business.common.vo.RAA01BVO;
 import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
@@ -26,6 +27,7 @@ public class AS03ServiceImpl implements AS03Service {
 
 	private final RAA01BMapper raa01bMapper;
 	private final RAA91BMapper raa91bMapper;
+	private final RAA18BMapper raa18bMapper;
 
 	/**
 	 * 딜목록 조회
@@ -34,6 +36,7 @@ public class AS03ServiceImpl implements AS03Service {
 	 * @return
 	 * @throws ParseException
 	 */
+	@Override
 	public List<RAA01BVO> getDealInfo(DealInfo dealInfo) throws ParseException {
 
 		SimpleDateFormat newFormat = new SimpleDateFormat("yyyyMMdd");
@@ -51,57 +54,73 @@ public class AS03ServiceImpl implements AS03Service {
 	}
 
 	// 리스크심사구분코드
+	@Override
 	public List<Map<String, Object>> getRiskInspctCcd() {
 
 		return raa91bMapper.getRiskInspctCcd();
 	};
 
 	// 부수안건구분코드
+	@Override
 	public List<Map<String, Object>> getlstCCaseCcd() {
 
 		return raa91bMapper.getlstCCaseCcd();
 	};
 
 	// 심사부서구분코드
+	@Override
 	public List<Map<String, Object>> getInspctDprtCcd() {
 
 		return raa91bMapper.getInspctDprtCcd();
 	};
 
 	// 투자상품대분류코드
+	@Override
 	public List<Map<String, Object>> getInvstGdsLdvdCd() {
 
 		return raa91bMapper.getInvstGdsLdvdCd();
 	};
 
 	// 투자상품중분류코드
+	@Override
 	public List<Map<String, Object>> getInvstGdsMdvdCd() {
 
 		return raa91bMapper.getInvstGdsMdvdCd();
 	};
 
 	// 투자상품소분류코드
+	@Override
 	public List<Map<String, Object>> getInvstGdsSdvdCd() {
 
 		return raa91bMapper.getInvstGdsSdvdCd();
 	};
 
 	// 투자상품상세분류코드
+	@Override
 	public List<Map<String, Object>> getInvstGdsDtlsDvdCd() {
 
 		return raa91bMapper.getInvstGdsDtlsDvdCd();
 	};
 	
 	// 부의기준통화
+	@Override
 	public List<Map<String, Object>> getInvstCrncyCd() {
 
 		return raa91bMapper.getInvstCrncyCd();
 	};
 	
 	// 협업유형코드
+	@Override
 	public List<Map<String, Object>> getCoprtnTypCd() {
 
 		return raa91bMapper.getCoprtnTypCd();
+	}
+
+	// 관련문서
+	@Override
+	public List<Map<String, Object>> getDocInfo() {
+
+		return raa18bMapper.getDocInfo();
 	};
 
 }
