@@ -81,6 +81,30 @@ public class AS03APIController {
 	public List<Map<String, Object>> getInvstCrncyCd() {
 		return as03Service.getInvstCrncyCd();
 	}
+	
+	// 고위험사업
+	@GetMapping(value = "/getIndTypDvdCd")
+	public List<Map<String, Object>> getIndTypDvdCd() {
+		return as03Service.getIndTypDvdCd();
+	}
+	
+	// 업무구분
+	@GetMapping(value = "/getCheckItemCd")
+	public List<Map<String, Object>> getCheckItemCd() {
+		return as03Service.getCheckItemCd();
+	}
+	
+	// 주요투자물건
+	@GetMapping(value = "/getInvstThingCcd")
+	public List<Map<String, Object>> getInvstThingCcd() {
+		return as03Service.getInvstThingCcd();
+	}
+	
+	// 주요투자물건상세
+	@GetMapping(value = "/getInvstThingDtlsCcd")
+	public List<Map<String, Object>> getInvstThingDtlsCcd() {
+		return as03Service.getInvstThingDtlsCcd();
+	}
 
 	// 협업유형코드
 	@GetMapping(value = "/getCoprtnTypCd")

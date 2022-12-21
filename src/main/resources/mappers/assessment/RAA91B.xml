@@ -90,6 +90,50 @@
 		 ORDER BY CD_VL_ID
 	</select>
 	
+	<!-- 고위험사업 -->
+	<select id="getIndTypDvdCd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'I008'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 업무구분 -->
+	<select id="getCheckItemCd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'C004'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 주요투자물건 -->
+	<select id="getInvstThingCcd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'I010'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 주요투자물건상세 -->
+	<select id="getInvstThingDtlsCcd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'I011'
+		 ORDER BY CD_VL_ID
+	</select>
+	
 	<!-- 협업유형코드 -->
 	<select id="getCoprtnTypCd" resultType="java.util.HashMap">
 		SELECT CD_VL_ID					<!-- 코드값ID -->

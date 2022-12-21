@@ -46,6 +46,18 @@ public interface AS03Service {
 	// 부의기준통화
 	public List<Map<String, Object>> getInvstCrncyCd();
 
+	// 고위험사업
+	public List<Map<String, Object>> getIndTypDvdCd();
+
+	// 업무구분
+	public List<Map<String, Object>> getCheckItemCd();
+
+	// 주요투자물건
+	public List<Map<String, Object>> getInvstThingCcd();
+
+	// 주요투자물건상세
+	public List<Map<String, Object>> getInvstThingDtlsCcd();
+
 	// 협업유형코드
 	public List<Map<String, Object>> getCoprtnTypCd();
 

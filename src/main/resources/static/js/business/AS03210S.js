@@ -208,6 +208,10 @@ function loadTab1() {
 	loadInvstGdsSdvdCd();
 	loadInvstGdsDtlsDvdCd();
 	loadInvstCrncyCd();
+	loadIndTypDvdCd();
+	loadCheckItemCd();
+	loadInvstThingCcd();
+	loadInvstThingDtlsCcd();
 	loadCoprtnTypCd();
 }
 
@@ -458,6 +462,90 @@ function loadInvstCrncyCd() {
 				});
 			}
 			$('#AS03210S_invstCrncyCd').html(html);
+		}
+	});
+}
+
+// 고위험사업
+function loadIndTypDvdCd() {
+	$.ajax({
+		type: "GET",
+		url: "/getIndTypDvdCd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_indTypDvdCd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_indTypDvdCd').html(html);
+		}
+	});
+}
+
+// 업무구분
+function loadCheckItemCd() {
+	$.ajax({
+		type: "GET",
+		url: "/getCheckItemCd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_checkItemCd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_checkItemCd').html(html);
+		}
+	});
+}
+
+// 주요투자물건
+function loadInvstThingCcd() {
+	$.ajax({
+		type: "GET",
+		url: "/getInvstThingCcd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_invstThingCcd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_invstThingCcd').html(html);
+		}
+	});
+}
+
+// 주요투자물건상세
+function loadInvstThingDtlsCcd() {
+	$.ajax({
+		type: "GET",
+		url: "/getInvstThingDtlsCcd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_invstThingDtlsCcd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_invstThingDtlsCcd').html(html);
 		}
 	});
 }
