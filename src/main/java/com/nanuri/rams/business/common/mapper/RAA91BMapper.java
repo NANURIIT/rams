@@ -26,6 +26,8 @@ public interface RAA91BMapper {
 
 	public List<Map<String, Object>> getCoprtnTypCd();								// 협업유형코드
 
+	public List<Map<String, Object>> getBscAstsKndCd();								// 기초자산종류
+
 	
 
 	

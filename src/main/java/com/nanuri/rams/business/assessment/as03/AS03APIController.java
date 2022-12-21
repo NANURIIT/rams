@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nanuri.rams.business.common.vo.RAA01BVO;
 import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
+import com.nanuri.rams.business.common.vo.RAA18BVO.DocInfo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +33,7 @@ public class AS03APIController {
 	public List<RAA01BVO> getDealInfo(DealInfo dealDto) throws ParseException {
 		return as03Service.getDealInfo(dealDto);
 	}
-	
+
 	// 리스크심사구분코드
 	@GetMapping(value = "/getRiskInspctCcd")
 	public List<Map<String, Object>> getRiskInspctCcd() {
@@ -73,22 +75,34 @@ public class AS03APIController {
 	public List<Map<String, Object>> getInvstGdsDtlsDvdCd() {
 		return as03Service.getInvstGdsDtlsDvdCd();
 	}
-	
+
 	// 부의기준통화
 	@GetMapping(value = "/getInvstCrncyCd")
 	public List<Map<String, Object>> getInvstCrncyCd() {
 		return as03Service.getInvstCrncyCd();
 	}
-	
+
 	// 협업유형코드
 	@GetMapping(value = "/getCoprtnTypCd")
 	public List<Map<String, Object>> getCoprtnTypCd() {
 		return as03Service.getCoprtnTypCd();
 	}
-	
+
 	// 관련문서
 	@GetMapping(value = "/getDocInfo")
-	public List<Map<String, Object>> getDocInfo() {
-		return as03Service.getDocInfo();
+	public List<Map<String, Object>> getDocInfo(DocInfo docInfo) {
+		return as03Service.getDocInfo(docInfo);
+	}
+
+	// 관련문서정보 제거
+	@PostMapping(value = "/deleteDocInfo")
+	public int deleteDocInfo(DocInfo docInfo) {
+		return as03Service.deleteDocInfo(docInfo);
+	}
+	
+	// 기초자산종류
+	@GetMapping(value = "/getBscAstsKndCd")
+	public List<Map<String, Object>> getBscAstsKndCd() {
+		return as03Service.getBscAstsKndCd();
 	}
 }

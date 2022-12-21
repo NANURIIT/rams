@@ -100,5 +100,16 @@
 		   AND CMNS_CD_GRP = 'C005'
 		 ORDER BY CD_VL_ID
 	</select>
+	
+	<!-- 기초자산종류 -->
+	<select id="getBscAstsKndCd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'B002'
+		 ORDER BY CD_VL_ID
+	</select>
 
 </mapper>
