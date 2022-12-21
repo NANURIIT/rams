@@ -27,7 +27,12 @@
          )
     VALUES (
            #{eno}
-         , #{sq}
+		<if test='sq == ""'>
+         , (SELECT NEXTVAL(RAA92B_SQ)) -- 1
+		</if>
+		<if test='sq != null and sq != ""'>
+         , #{sq} -- 2
+		</if>
          , #{empNm}
          , #{rghtCd}
          , #{dprtCd}
