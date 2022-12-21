@@ -22,4 +22,13 @@
          WHERE rght_cd_nm LIKE CONCAT('%', #{rghtCdNm}, '%')
         </if>
     </select>
+
+    <update id="deleteAuthCode" parameterType="java.util.List">
+        UPDATE RAA94B
+           SET APLC_F = 'N'
+         WHERE rght_cd IN
+        <foreach collection="list" item="rghtCd" index="index" open="(" separator="," close=")">
+            #{rghtCd}
+        </foreach>
+    </update>
 </mapper>

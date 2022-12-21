@@ -8,4 +8,5 @@ import java.util.List;
 @Mapper
 public interface RAA94BMapper {
     public List<RAA94BDto> selectAuthCode(String rghtCdNm);
+    public int deleteAuthCode(List<String> rghtCd);
 }

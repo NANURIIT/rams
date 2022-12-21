@@ -33,5 +33,6 @@ public interface AC01Service {
 	//============ start AC01210S(권한별 메뉴관리) ============//
 	public List<RAA94BDto> getAuthCode(String rghtCdNm) throws ParseException;
 	public List<RAA93BVo> getAuthCodeMenu(String rgCdNm);
+	public boolean deleteAuthCode(List<String> rghtCd);
 	//============ end AC01210S(권한별 메뉴관리) ============//
 }

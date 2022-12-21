@@ -17,7 +17,7 @@ function getAuthCode(rghtCdNm) {
             if (authCode.length > 0) {
                 $.each(authCode, function (key, value) {
                     html += '<tr>';
-                    html += '   <td><input style="width: 15px;" type="checkbox"></td>';
+                    html += '   <td><input id="' + value.rghtCd + '" style="width: 15px;" type="checkbox"></td>';
                     html += '   <td>' + value.rghtCd + '</td>';
                     html += '   <td>' + value.rghtCdNm + '</td>';
                     html += '   <td>' + value.rghtCdExpl + '</td>';
@@ -54,21 +54,8 @@ function getAuthCode(rghtCdNm) {
 }
 
 function searchButtonClick() {
-    let searchKeyword = $('#authCodeSearchInput').val()
-    if (!searchKeyword) {
-        openPopup({
-            title: '실패',
-            text: '권한명을 입력해주세요',
-            type: 'error',
-            success: function () {
-                $(document).on('click', '.confirm', function () {
-                    $('#authCodeSearchInput').focus();
-                });
-            }
-        });
-    } else {
-        getAuthCode(searchKeyword);
-    }
+    let searchKeyword = $('#authCodeSearchInput').val();
+    getAuthCode(searchKeyword);
 }
 
 function clickDetailButton() {
@@ -92,7 +79,7 @@ function getAuthCodeMenu(rghtCd) {
                     html += '   <td>' + value.menuId + '</td>';
                     html += '   <td>' + value.rghtCd + '</td>';
                     html += '   <td>' + value.menuLv + '</td>';
-                    if(value.dltF === 'N') {
+                    if (value.dltF === 'N') {
                         html += '   <td><input style="width: 15px;" type="checkbox" checked></td>';
                     } else {
                         html += '   <td><input style="width: 15px;" type="checkbox"></td>';
@@ -111,4 +98,39 @@ function getAuthCodeMenu(rghtCd) {
             $('#authCodeMenuTable').html(html);
         }
     });
+}
+
+function addRow() {
+    console.log('addRow');
+}
+
+function clickDeleteButton() {
+    let tr = $('#authCodeTable').children();
+    let authCodeList = new Array();
+    for (let i = 0; i < tr.length; i++) {
+        let deleteCheckBox = $(tr[i]).find("td:eq(0)").find("input");
+        if (deleteCheckBox.is(":checked")) {
+            authCodeList.push(deleteCheckBox.attr("id"));
+        }
+    }
+    deleteRow(authCodeList);
+}
+
+function deleteRow(authCodeList) {
+    ajaxCall({
+        method: 'patch', 
+        url : '/deleteAuthCode', 
+        data : authCodeList,
+        success : function() {
+            getAuthCode();
+        }
+    });
+}
+
+function saveAuth() {
+    console.log('saveAuth');
+}
+
+function saveMenu() {
+    console.log('saveMenu');
 }

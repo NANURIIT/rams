@@ -11,6 +11,7 @@ import com.nanuri.rams.business.common.mapper.RAA94BMapper;
 import com.nanuri.rams.business.common.vo.RAA93BVo;
 import com.nanuri.rams.business.itmanager.dto.*;
 import com.nanuri.rams.business.common.mapper.RAA90BMapper;
+import com.nanuri.rams.com.security.AuthenticationFacade;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ import static org.springframework.util.StringUtils.*;
 @RequiredArgsConstructor
 public class AC01ServiceImpl implements AC01Service {
 
+	private final AuthenticationFacade facade;
 	private final RAA90BMapper raa90BMapper;
 	private final RAA94BMapper raa94BMapper;
 	private final RAA93BMapper raa93BMapper;
@@ -156,6 +158,13 @@ public class AC01ServiceImpl implements AC01Service {
 			}
 		}
 		return authCodeMenus;
+	}
+
+	@Override
+	public boolean deleteAuthCode(List<String> rghtCd) {
+		int count = 0;
+		count += raa94BMapper.deleteAuthCode(rghtCd);
+		return count > 0;
 	}
 
 	//============ end AC01210S(권한별 메뉴관리) ============//
