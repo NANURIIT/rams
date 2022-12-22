@@ -13,6 +13,7 @@ import com.nanuri.rams.business.common.dto.RAA92BDTO;
 import com.nanuri.rams.business.common.dto.RAA94BDTO;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
+import com.nanuri.rams.business.common.vo.RAA95BVO;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDeleteRequestDto;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoSaveRequestDto;
@@ -22,6 +23,7 @@ import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 
 
 @Slf4j
@@ -114,7 +116,12 @@ public class AC01APIController {
 		return AC01Service.getMenuList(menuNm);
 	}
 	
-
+	/* 권한별 메뉴화면 사용권한 조회 */
+	@GetMapping(value="/menuByAuth")
+	public List<RAA95BVO.MenuByAuthVO> menuByAuth() {
+		return AC01Service.getMenuByAuth();
+	}
+	
 
 	//============ End AC01310S( 메뉴별권한관리 관리 ) ============//
 

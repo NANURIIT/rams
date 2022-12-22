@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.nanuri.rams.business.common.dto.RAA93BDTO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
 
 @Mapper

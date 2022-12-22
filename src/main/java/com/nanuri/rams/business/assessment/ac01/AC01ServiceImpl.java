@@ -3,28 +3,26 @@ package com.nanuri.rams.business.assessment.ac01;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nanuri.rams.business.common.dto.RAA92BDTO;
-import com.nanuri.rams.business.common.dto.RAA93BDTO;
 import com.nanuri.rams.business.common.dto.RAA94BDTO;
 import com.nanuri.rams.business.common.mapper.RAA90BMapper;
 import com.nanuri.rams.business.common.mapper.RAA92BMapper;
 import com.nanuri.rams.business.common.mapper.RAA93BMapper;
 import com.nanuri.rams.business.common.mapper.RAA94BMapper;
+import com.nanuri.rams.business.common.mapper.RAA95BMapper;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
+import com.nanuri.rams.business.common.vo.RAA95BVO;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDeleteRequestDto;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoSaveRequestDto;
@@ -46,6 +44,7 @@ public class AC01ServiceImpl implements AC01Service {
     private final RAA92BMapper RAA92BMapper;
     private final RAA93BMapper RAA93BMapper;
     private final RAA94BMapper RAA94BMapper;
+    private final RAA95BMapper RAA95BMapper;
     private final AuthenticationFacade facade;
 
     @Override
@@ -207,57 +206,51 @@ public class AC01ServiceImpl implements AC01Service {
         List<RAA93BVO.MenuListVO> menuList = RAA93BMapper.selectMenuList(menuNm);
 
         String name = "";
-		String lvName = "";
+        String lvName = "";
         int rowNum = 0;
 
-		for (RAA93BVO.MenuListVO menu : menuList) {
-			name = "";
-			lvName = "";
-			if(menu.getLv2Nm() != null && menu.getLv2Nm() != ""){
-				rowNum++;
-				name = menu.getLv1Nm() + " > " + menu.getLv2Nm();
-				lvName = menu.getLv2Id();
-			}
-			if(menu.getLv3Nm() != null && menu.getLv3Nm() != ""){
-				rowNum++;
-				name = menu.getLv1Nm() + " > " + menu.getLv2Nm() + " > " + menu.getLv3Nm();
-				lvName = menu.getLv3Id();
-			}
-			menu.setMenuId(lvName);
-			menu.setMenuName(name);
-			menu.setRowNum(rowNum);
-		}
-		
-
-		// depth에 따른 변수 선언
-		// Map<String, String> lv1 = new HashMap<>();
-        // Map<String, String> lv2 = new HashMap<>();
-        // Map<String, String> lv3 = new HashMap<>();
-
-        // for (RAA93BVO.MenuListVO menuList : menuLists) {
-		// 	name = "";
-        //     switch (menuList.getMenuLv()) {
-        //         case 1:
-        //             lv1.put(menuList.getUrlDvdCd(), menuList.getMenuNm());
-        //             break;
-        //         case 2:
-        //             // name = "";
-        //             rowNum += 1;
-        //             lv2.put(menuList.getUrlDvdCd(), menuList.getMenuNm());
-        //             name += lv1.get(menuList.getUrlDvdCd()) + " > " + lv2.get(menuList.getUrlDvdCd());
-        //             break;
-        //         case 3:
-        //             // name = "";
-        //             rowNum += 1;
-        //             lv3.put(menuList.getUrlDvdCd(), menuList.getMenuNm());
-        //             name += lv1.get(menuList.getUrlDvdCd()) + " > " + lv2.get(menuList.getUrlDvdCd()) + " > " + lv3.get(menuList.getUrlDvdCd());
-        //             break;
-        //     }
-        //     menuList.setMenuName(name);
-        //     menuList.setRowNum(rowNum);
-        // }
+        for (RAA93BVO.MenuListVO menu : menuList) {
+            name = "";
+            lvName = "";
+            if (menu.getLv2Nm() != null && menu.getLv2Nm() != "") {
+                rowNum++;
+                name = menu.getLv1Nm() + " > " + menu.getLv2Nm();
+                lvName = menu.getLv2Id();
+            }
+            if (menu.getLv3Nm() != null && menu.getLv3Nm() != "") {
+                rowNum++;
+                name = menu.getLv1Nm() + " > " + menu.getLv2Nm() + " > " + menu.getLv3Nm();
+                lvName = menu.getLv3Id();
+            }
+            menu.setMenuId(lvName);
+            menu.setMenuName(name);
+            menu.setRowNum(rowNum);
+        }
 
         return menuList;
+    }
+
+    /* 권한별 메뉴화면 사용권한 조회 */
+    @Override
+    public List<RAA95BVO.MenuByAuthVO> getMenuByAuth() {
+        List<RAA95BVO.MenuByAuthVO> menuAuthList = RAA95BMapper.selectMenuByAuth();
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+        for (RAA95BVO.MenuByAuthVO menu : menuAuthList) {
+			String dateTime = Optional.ofNullable(menu.getHndlDyTm()).orElse("");
+			if (dateTime!=""){
+				menu.setHndlDt(dateTime.split(" ")[0]);
+				menu.setHndlTm(dateTime.split(" ")[1]);
+			} else {
+				menu.setHndlDt(dateTime);
+				menu.setHndlTm(dateTime);
+			}
+			String hndlPEno = Optional.ofNullable(menu.getHndlPEno()).orElse("");
+			menu.setHndlPEno(hndlPEno);
+        }
+
+        return menuAuthList;
     }
 
     //============ End AC01310S( 메뉴별권한 관리 ) ============//	

@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RAA93BDTO {
+    
     /* 메뉴화면 등록정보 */
     private String menuId;								/* 메뉴ID */
     private String menuNm;								/* 메뉴명 */
