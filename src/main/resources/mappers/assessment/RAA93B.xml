@@ -17,4 +17,21 @@
          WHERE 95b.rght_cd = #{rghtCd}
            AND 93b.scrn_aplc_type_cd = 'S'
     </select>
+
+    <update id="updateAuthCodeMenu" parameterType="com.nanuri.rams.business.common.vo.RAA93BVo">
+        UPDATE RAA93B
+            <set>
+                <if test="dltF != null and dltF !=''">
+                    dlt_f = #{dltF},
+                </if>
+                hndl_p_eno = #{hndlPEno},
+                hndl_dy_tm = now()
+            </set>
+         WHERE menu_id = #{menuId};
+        <if test="mdfyRghtCcd != null and mdfyRghtCcd !=''">
+        UPDATE RAA95B
+           SET mdfy_rght_ccd = #{mdfyRghtCcd}
+        WHERE menu_id = #{menuId};
+        </if>
+    </update>
 </mapper>

@@ -23,7 +23,7 @@ spring:
   application:
     name: NANURI IT Corp Risk Management System
   datasource:
-    url: jdbc:log4jdbc:mysql://nanuriit.com:7706/rams?serverTimezone=Asia/Seoul
+    url: jdbc:log4jdbc:mysql://nanuriit.com:7706/rams?serverTimezone=Asia/Seoul&allowMultiQueries=true
     username: rams
     password: Nanuriwork1!
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy

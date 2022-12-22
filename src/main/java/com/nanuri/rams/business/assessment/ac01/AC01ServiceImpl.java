@@ -164,6 +164,7 @@ public class AC01ServiceImpl implements AC01Service {
 	public boolean registerAuthCode(List<RAA94BDto> requestDtos) {
 		int count = 0;
 		for (RAA94BDto requestDto : requestDtos) {
+			requestDto.setHndlPEno(facade.getDetails().getEno());
 			count += raa94BMapper.updateAuthCode(requestDto);
 		}
 		return count > 0;
@@ -173,6 +174,16 @@ public class AC01ServiceImpl implements AC01Service {
 	public boolean deleteAuthCode(List<String> rghtCd) {
 		int count = 0;
 		count += raa94BMapper.deleteAuthCode(rghtCd);
+		return count > 0;
+	}
+
+	@Override
+	public boolean registerAuthCodeMenu(List<RAA93BVo> requestDtos) {
+		int count = 0;
+		for (RAA93BVo requestDto : requestDtos) {
+			requestDto.setHndlPEno(facade.getDetails().getEno());
+			count += raa93BMapper.updateAuthCodeMenu(requestDto);
+		}
 		return count > 0;
 	}
 

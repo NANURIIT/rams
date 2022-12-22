@@ -36,8 +36,10 @@
                 rght_cd_expl = #{rghtCdExpl},
             </if>
             <if test="aplcF != null and aplcF !=''">
-                aplc_f = #{aplcF}, 
+                aplc_f = #{aplcF},
             </if>
+            hndl_p_eno = #{hndlPEno},
+            hndl_dy_tm = now()
         </set>
          WHERE rght_cd = #{oldRghtCd}
     </update>

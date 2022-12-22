@@ -9,4 +9,6 @@ import java.util.List;
 public interface RAA93BMapper {
 
     public List<RAA93BVo> selectAuthCodeMenu(String rghtCd);
+
+    public int updateAuthCodeMenu(RAA93BVo requestDto);
 }

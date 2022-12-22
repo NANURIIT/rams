@@ -87,5 +87,10 @@ public class AC01APIController {
     public boolean deleteAuthCode(@RequestBody List<String> rghtCd) {
 		return ac01Service.deleteAuthCode(rghtCd);
     }
+
+    @PostMapping(value = "/registerAuthCodeMenu")
+    public boolean registerAuthCodeMenu(@RequestBody List<RAA93BVo> requestDtos) {
+        return ac01Service.registerAuthCodeMenu(requestDtos);
+    }
     //============ end AC01210S(권한별 메뉴관리) ============//
 }

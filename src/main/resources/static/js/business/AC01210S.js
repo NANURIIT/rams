@@ -81,15 +81,15 @@ function getAuthCodeMenu(rghtCd) {
                     html += '   <td>' + value.rghtCd + '</td>';
                     html += '   <td>' + value.menuLv + '</td>';
                     if (value.dltF === 'N') {
-                        html += '   <td><input style="width: 15px;" type="checkbox" checked></td>';
+                        html += '   <td><input style="width: 15px;" class="can_use_yn" type="checkbox" checked><input type="hidden" class="use_hidden_yn" value="y"></td>';
                     } else {
-                        html += '   <td><input style="width: 15px;" type="checkbox"></td>';
+                        html += '   <td><input style="width: 15px;" class="can_use_yn" type="checkbox"><input type="hidden" class="use_hidden_yn" value="n"></td>';
                     }
 
-                    if(value.mdfyRghtCcd === '2') {
-                        html += '   <td><input style="width: 15px;" type="checkbox" checked></td>';
+                    if (value.mdfyRghtCcd === '2') {
+                        html += '   <td><input style="width: 15px;" class="can_modify_yn" type="checkbox" checked><input type="hidden" class="modify_hidden_yn" value="y"></td>';
                     } else {
-                        html += '   <td><input style="width: 15px;" type="checkbox"></td>';
+                        html += '   <td><input style="width: 15px;" class="can_modify_yn" type="checkbox"><input type="hidden" class="modify_hidden_yn" value="n"></td>';
                     }
                     html += '   <td>' + value.hndlDyTm + '</td>';
                     html += '   <td>' + value.hndlDyTm + '</td>';
@@ -106,8 +106,24 @@ function getAuthCodeMenu(rghtCd) {
     });
 }
 
-function addRow() {
-    console.log('addRow');
+function addAuthCodeRow() {
+    let html = '';
+    html += '<tr>';
+    html += '   <td></td>';
+    html += '   <td><input class="auth_code_input" style="width: 100%;" type="text"></td>';
+    html += '   <td><input class="auth_code_name_input" style="width: 100%;" type="text"></td>';
+    html += '   <td><input class="auth_explain_input" style="width: 100%;" type="text"></td>';
+    html += '   <td></td>';
+    html += '   <td></td>';
+    html += '   <td></td>';
+    html += '   <td></td>';
+    html += '   <td><input style="width: 15px;" class="auth_code_use_yn" type="checkbox"></td>';
+    html += '   <td></td>';
+    html += '   <td></td>';
+    html += '   <td></td>';
+    html += '</tr>';
+    $('#authCodeTable').append(html);
+    $('.auth_code_input').focus();
 }
 
 function clickDeleteButton() {
@@ -124,10 +140,10 @@ function clickDeleteButton() {
 
 function deleteRow(authCodeList) {
     ajaxCall({
-        method: 'patch', 
-        url : '/deleteAuthCode', 
-        data : authCodeList,
-        success : function() {
+        method: 'patch',
+        url: '/deleteAuthCode',
+        data: authCodeList,
+        success: function () {
             getAuthCode();
         }
     });
@@ -138,7 +154,7 @@ function clickAuthSaveButton() {
     let authCodeList = new Array();
     let tr = $('#authCodeTable').children();
 
-    for(let i = 0; i < tr.length; i++) {
+    for (let i = 0; i < tr.length; i++) {
 
         let authCode = new Object();
 
@@ -148,19 +164,19 @@ function clickAuthSaveButton() {
         let authCodeUseYn = $(tr[i]).find("td:eq(8)").find(".auth_code_use_yn").prop("checked");
         let authCodeUseYnCheck = $(tr[i]).find("td:eq(8)").find(".hidden_yn").val();
 
-        if(authCodeInput.length === 1) {
+        if (authCodeInput.length === 1) {
             authCode.rghtCd = authCodeInput.val();
         }
 
-        if(authCodeNameInput.length === 1){
+        if (authCodeNameInput.length === 1) {
             authCode.rghtCdNm = authCodeNameInput.val();
         }
 
-        if(authExplainInput.length === 1) {
+        if (authExplainInput.length === 1) {
             authCode.rghtCdExpl = authExplainInput.val();
         }
-        
-        if(!authCodeUseYnCheck || (authCodeUseYn && authCodeUseYnCheck === 'n') || (!authCodeUseYn && authCodeUseYnCheck === 'y')) {
+
+        if (!authCodeUseYnCheck || (authCodeUseYn && authCodeUseYnCheck === 'n') || (!authCodeUseYn && authCodeUseYnCheck === 'y')) {
             authCode.aplcF = authCodeUseYn ? "Y" : "N";
         }
 
@@ -169,8 +185,8 @@ function clickAuthSaveButton() {
             authCodeList.push(authCode);
         }
     }
-    
-    if(authCodeList.length > 0) {
+
+    if (authCodeList.length > 0) {
         saveAuthCode(authCodeList);
     }
 }
@@ -178,29 +194,79 @@ function clickAuthSaveButton() {
 function saveAuthCode(authCodeList) {
     console.log('in function authCodeList : ', authCodeList);
     ajaxCall({
-        url : '/registerAuthCode', 
-        method: 'post', 
-        data : authCodeList, 
-        success : function() {
+        url: '/registerAuthCode',
+        method: 'post',
+        data: authCodeList,
+        success: function () {
             getAuthCode();
-        }, 
-        fail : function() {
-
+        },
+        fail: function (response) {
+            let message = response.responseJSON.message;
+            openPopup({
+                title: '실패',
+                text: message
+            });
         }
     })
 }
 
-function saveMenu() {
-    console.log('saveMenu');
+function clickSaveMenuButton() {
+    let authCodeMenuList = new Array();
+    let tr = $('#authCodeMenuTable').children();
+    let authCode = $(tr[0]).find("td:eq(2)").text();
+
+    for (let i = 0; i < tr.length; i++) {
+        let authCodeMenu = new Object();
+
+        let menuUseYn = $(tr[i]).find("td:eq(4)").find(".can_use_yn").prop("checked");
+        let menuUseYnCheck = $(tr[i]).find("td:eq(4)").find(".use_hidden_yn").val();
+        let menuModifyYn = $(tr[i]).find("td:eq(5)").find(".can_modify_yn").prop("checked");
+        let menuModifyYnCheck = $(tr[i]).find("td:eq(5)").find(".modify_hidden_yn").val();
+
+        if (!menuUseYnCheck || (menuUseYn && menuUseYnCheck === 'n') || (!menuUseYn && menuUseYnCheck === 'y')) {
+			authCodeMenu.dltF = menuUseYn ? 'N' : 'Y';
+		}
+
+        if (!menuModifyYnCheck || (menuModifyYn && menuModifyYnCheck === 'n') || (!menuModifyYn && menuModifyYnCheck === 'y')) {
+			authCodeMenu.mdfyRghtCcd = menuModifyYn ? '2' : '1';
+		}
+        
+        if (!(Object.keys(authCodeMenu).length === 0)) {
+            authCodeMenu.menuId = $(tr[i]).find("td:eq(1)").text();
+			authCodeMenuList.push(authCodeMenu);
+		}
+    }
+
+    if(authCodeMenuList.length > 0) {
+        saveMenu(authCodeMenuList, authCode);
+    }
+}
+
+function saveMenu(authCodeMenuList, authCode) {
+    ajaxCall({
+        method : 'post', 
+        url : '/registerAuthCodeMenu', 
+        data : authCodeMenuList, 
+        success : function() {
+            getAuthCodeMenu(authCode);
+        }, 
+        fail : function(response) {
+            let message = response.responseJSON.message;
+            openPopup({
+                title: '실패',
+                text: message
+            });
+        }
+    });
 }
 
 /**
  * 변경 가능한 컬럼 더블클릭 했을시 input박스 생성
  */
 function doubleClickColumn() {
-	$(document).on('dblclick', '.update_column', function() {
-		let trClass = $(this).attr('class').split(' ')[1]
-		tdInputHTML = '<input class="' + trClass + '_input" style="width: 100%;" type="text" value="' + $(this).text() + '">'
-		$(this).html(tdInputHTML);
-	});
+    $(document).on('dblclick', '.update_column', function () {
+        let trClass = $(this).attr('class').split(' ')[1]
+        tdInputHTML = '<input class="' + trClass + '_input" style="width: 100%;" type="text" value="' + $(this).text() + '">'
+        $(this).html(tdInputHTML);
+    });
 }
