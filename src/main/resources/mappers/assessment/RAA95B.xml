@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanuri.rams.business.common.mapper.RAA95BMapper">
+	
+<select id="selectMenuByAuth" resultType="com.nanuri.rams.business.common.vo.RAA95BVO$MenuByAuthVO">
+	/* 권한별 메뉴화면 사용권한 조회 */
+		SELECT A.RGHT_CD
+			 , A.RGHT_CD_NM
+			 , A.RGHT_CD_EXPL
+			 , A.RGHT_CCD
+			 , B.MENU_ID
+			 , B.SQ
+			 , B.MDFY_RGHT_CCD
+			 , B.HNDL_DY_TM
+			 , B.HNDL_DPRT_CD
+			 , B.HNDL_P_ENO
+		  FROM RAA94B A
+	 LEFT JOIN (SELECT B.RGHT_CD
+   					 , B.SQ
+					 , B.MENU_ID
+					 , B.MDFY_RGHT_CCD
+					 , B.HNDL_DY_TM
+					 , B.HNDL_DPRT_CD
+					 , B.HNDL_P_ENO
+				  FROM RAA93B A
+			RIGHT JOIN RAA95B B
+		  			ON A.MENU_ID = B.MENU_ID) B
+			ON A.RGHT_CD = B.RGHT_CD
+</select>
+
+</mapper>

@@ -13,23 +13,28 @@
 		  FROM (SELECT MENU_ID LV1_ID
 					 , MENU_NM LV1_NM
 					 , URL_DVD_CD
+					 , SRT_NO
 				  FROM RAA93B
 				 WHERE MENU_LV = 1) A
      LEFT JOIN (SELECT B.LV2_ID
    					 , B.LV2_NM
 					 , B.URL_DVD_CD
+					 , B.SRT_NO
 				  FROM (SELECT MENU_ID LV2_ID
 							 , MENU_NM LV2_NM
 							 , URL_DVD_CD
+							 , SRT_NO
 						  FROM RAA93B
 					     WHERE MENU_LV = 2) B) B
 			ON A.URL_DVD_CD = B.URL_DVD_CD
 	 LEFT JOIN (SELECT C.LV3_ID
    					 , C.LV3_NM
 					 , C.URL_DVD_CD
+					 , C.SRT_NO
 				  FROM (SELECT MENU_ID LV3_ID
 							 , MENU_NM LV3_NM
 							 , URL_DVD_CD
+							 ,SRT_NO
 						  FROM RAA93B
 					     WHERE MENU_LV = 3) C) C
 			ON B.URL_DVD_CD = C.URL_DVD_CD
@@ -39,7 +44,7 @@
 				OR B.LV2_NM LIKE CONCAT('%', #{menuNm}, '%')
 				OR C.LV3_NM LIKE CONCAT('%', #{menuNm}, '%'))
 		</if>
-	  ORDER BY A.LV1_ID ASC
+	  ORDER BY A.SRT_NO ASC, B.SRT_NO ASC, C.SRT_NO ASC
 </select>
 
 </mapper>

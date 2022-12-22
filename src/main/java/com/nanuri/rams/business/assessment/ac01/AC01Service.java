@@ -10,6 +10,7 @@ import com.nanuri.rams.business.common.dto.RAA93BDTO;
 import com.nanuri.rams.business.common.dto.RAA94BDTO;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
+import com.nanuri.rams.business.common.vo.RAA95BVO;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDeleteRequestDto;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoSaveRequestDto;
@@ -44,4 +45,5 @@ public interface AC01Service {
 
 	/* 메뉴별권한관리 */
 	public List<RAA93BVO.MenuListVO> getMenuList(String menuNm);	// 메뉴별권한관리 메뉴명 조회
+	public List<RAA95BVO.MenuByAuthVO> getMenuByAuth();				// 권한별 메뉴화면 사용권한 조회
 }
