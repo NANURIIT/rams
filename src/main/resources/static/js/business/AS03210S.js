@@ -145,20 +145,23 @@ function setDealInfo() {
 
 // 화면에서 deal Info 검색 후 더블클릭 set
 function setTabContents() {
+	
+	var ibDealNo = $('#AS03210S_selectedDealNo').val();
+	
 	//setTab1();
-	//setTab2();
+	//setTab2(ibDealNo);
 	
 }
 
-function setTab2() {
-	getDocInfo();
+function setTab2(ibDealNo) {
+	getDocInfo(ibDealNo);
 }
 
 // 관련문서
-function getDocInfo() {
+function getDocInfo(ibDealNo) {
 	
 	var paramData = {
-		"ibDealNo" : ''
+		"ibDealNo" : ibDealNo
 	}
 	
 	$.ajax({
@@ -176,6 +179,7 @@ function getDocInfo() {
 					html += '<tr>';
 					html += '<td>' + value.RA_DOC_NO + '</td>';
 					html += '<td>' + value.RA_FNL_DOC_F + '</td>';
+					html += '<td style="display:none;">' + value.ITEM_SQ + '</td>';
 					html += '</tr>';
 				});
 			} else {
@@ -191,6 +195,7 @@ function getDocInfo() {
 // 탭 페이지 항목 로드
 function loadTabContents() {
 	loadTab1();
+	loadTab3();
 }
 
 // 탭1 안건구조
@@ -203,7 +208,16 @@ function loadTab1() {
 	loadInvstGdsSdvdCd();
 	loadInvstGdsDtlsDvdCd();
 	loadInvstCrncyCd();
+	loadIndTypDvdCd();
+	loadCheckItemCd();
+	loadInvstThingCcd();
+	loadInvstThingDtlsCcd();
 	loadCoprtnTypCd();
+}
+
+// 탭3 기초자산
+function loadTab3() {
+	loadBscAstsKndCd();
 }
 
 // 리스크심사구분코드
@@ -452,6 +466,90 @@ function loadInvstCrncyCd() {
 	});
 }
 
+// 고위험사업
+function loadIndTypDvdCd() {
+	$.ajax({
+		type: "GET",
+		url: "/getIndTypDvdCd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_indTypDvdCd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_indTypDvdCd').html(html);
+		}
+	});
+}
+
+// 업무구분
+function loadCheckItemCd() {
+	$.ajax({
+		type: "GET",
+		url: "/getCheckItemCd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_checkItemCd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_checkItemCd').html(html);
+		}
+	});
+}
+
+// 주요투자물건
+function loadInvstThingCcd() {
+	$.ajax({
+		type: "GET",
+		url: "/getInvstThingCcd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_invstThingCcd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_invstThingCcd').html(html);
+		}
+	});
+}
+
+// 주요투자물건상세
+function loadInvstThingDtlsCcd() {
+	$.ajax({
+		type: "GET",
+		url: "/getInvstThingDtlsCcd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_invstThingDtlsCcd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_invstThingDtlsCcd').html(html);
+		}
+	});
+}
+
 // 협업유형코드
 function loadCoprtnTypCd() {
 	$.ajax({
@@ -473,7 +571,66 @@ function loadCoprtnTypCd() {
 	});
 }
 
+// 관련문서 초기화버튼 function
+function tab2BtnReset() {
+	$('#AS03210S_docNo').val('');
+	$('#AS03210S_fnlDocF').val('N').prop('selected, true');
+}
+// 관련문서 삭제버튼 function
+function tab2BtnDelete() {
+	var ibDealNo = $('#AS03210S_selectedDealNo').val();
+	
+	if (ibDealNo != "") {
+		var docNo = $('#AS03210S_docNo').val();
+	
+		//console.log(dealNo);
+		
+		var paramData = {
+			"ibDealNo" : dealNo
+			,"docNo" : docNo
+		}
+		
+		$.ajax({
+			type: "POST",
+			url: "/deleteDocInfo",
+			data: paramData,
+			dataType: "json",
+			success: function() {
+				getDocInfo(ibDealNo);
+			},
+			error: function(errorCd){
+				swal("삭제 실패하였습니다. sql 에러 코드를 확인해주세요.\n error code:" + errorCd);
+			}
+		});
+		
+	} else {
+		swal('Deal 정보를 조회해주세요');
+	}
+	
+}
+// 관련문서 저장버튼 function
+function tab2BtnSave() {
+	
+}
 
+// 기초자산종류
+function loadBscAstsKndCd() {
+	$.ajax({
+		type: "GET",
+		url: "/getBscAstsKndCd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_bscAstsKndCd').html(html);
 
-
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_bscAstsKndCd').html(html);
+		}
+	});
+};
 

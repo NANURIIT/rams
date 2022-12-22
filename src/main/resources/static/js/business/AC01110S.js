@@ -1,35 +1,12 @@
 $(document).ready(function () {
-
-	setAC01130P();
+	
 	setKeyDownFunction();
 	findKeydown();
 	selectAuthCode();
 });
 
-
-function setAC01130P() {
-	let Modal = document.getElementById('AC01130P');
-	let OpenModal = document.getElementById("open_modal_AC01130P");
-	let CloseModal1 = document.getElementsByClassName("modal_close_AC01130P")[0];
-
-	OpenModal.onclick = function () {
-		Modal.style.display = "block";
-	}
-	
-	CloseModal1.onclick = function () {
-		Modal.style.display = "none";
-		resetTable();
-	}
-	window.onclick = function (event) {
-		if (event.target === Modal) {
-			Modal.style.display = "none";
-			resetTable();
-		}
-	}
-}
-
 var runFindUser = function () {
-	let empNm = $("#AC01110S_empNm").val();
+	let empNm = $("empNm").val();
 	let rghtCd = $("#AC01110S_rghtCd option:selected").val();
 	let dltY = $('#AC01110S_dltY:checked').length;
 	// console.log(rghtCd);
@@ -125,7 +102,7 @@ function rebuildUserManageTable(data) {
 };
 
 var findKeydown = function () {
-	$("input[id=AC01110S_empNm]").keydown(function (key) {
+	$("input[id=empNm]").keydown(function (key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
 			// console.log($('#AC01110S_dltY:checked').length);
 			runFindUser();
@@ -199,8 +176,8 @@ var selectAuthUser = function (sq, eno) {
 var addAuth = function (userInfo) {
 	for (idx in userInfo) {
 		var data = userInfo[idx];
-		$('#AC01130P_setEno').val(data.eno);
-		$('#AC01130P_empNm').val(data.empNm);
+		$('#AC01110S_empNo').val(data.eno);
+		$('#AC01110S_empNm').val(data.empNm);
 		$('#AC01130P_rghtCd').val(data.rghtCd);
 		$('#AC01130P_datepicker1').val(data.aplcStrtDt.substr(0, 4) + '-' + data.aplcStrtDt.substr(4, 2) + '-' + data.aplcStrtDt.substr(6, 2));
 		$('#AC01130P_datepicker2').val(data.aplcEndDt.substr(0, 4) + '-' + data.aplcEndDt.substr(4, 2) + '-' + data.aplcEndDt.substr(6, 2));

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.nanuri.rams.business.common.vo.RAA01BVO;
 import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
+import com.nanuri.rams.business.common.vo.RAA18BVO.DocInfo;
 
 @Service
 public interface AS03Service {
@@ -45,10 +46,28 @@ public interface AS03Service {
 	// 부의기준통화
 	public List<Map<String, Object>> getInvstCrncyCd();
 
+	// 고위험사업
+	public List<Map<String, Object>> getIndTypDvdCd();
+
+	// 업무구분
+	public List<Map<String, Object>> getCheckItemCd();
+
+	// 주요투자물건
+	public List<Map<String, Object>> getInvstThingCcd();
+
+	// 주요투자물건상세
+	public List<Map<String, Object>> getInvstThingDtlsCcd();
+
 	// 협업유형코드
 	public List<Map<String, Object>> getCoprtnTypCd();
 
 	// 관련문서
-	public List<Map<String, Object>> getDocInfo();
+	public List<Map<String, Object>> getDocInfo(DocInfo docInfo);
+
+	// 관련문서정보 제거
+	public int deleteDocInfo(DocInfo docInfo);
+
+	// 기초자산종류
+	public List<Map<String, Object>> getBscAstsKndCd();
 
 }

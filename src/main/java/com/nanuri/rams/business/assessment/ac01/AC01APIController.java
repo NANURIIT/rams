@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nanuri.rams.business.common.dto.RAA92BDTO;
 import com.nanuri.rams.business.common.dto.RAA94BDTO;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
+import com.nanuri.rams.business.common.vo.RAA93BVO;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDeleteRequestDto;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoSaveRequestDto;
@@ -21,6 +22,7 @@ import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -76,6 +78,8 @@ public class AC01APIController {
 		return AC01Service.registCodeInfo(requestDtos);
 	}
 
+	//============ Start AC01110S( 사용자 관리 ) ============//
+	
 	/* 사용자 권한 추가 */
     @PostMapping(value="/insertUser")
     public void insertUser(@RequestBody RAA92BDTO userManageDTO) {
@@ -99,5 +103,19 @@ public class AC01APIController {
     public List<RAA94BDTO> selectAuthCode() {
         return AC01Service.selectAuthCode();
     }
+
+	//============ End AC01110S( 사용자 관리 ) ============//
+
+	//============ Start AC01310S( 메뉴별권한관리 관리 ) ============//
+
+	/* 메뉴명 조회 */
+	@GetMapping(value="/findMenu")
+	public List<RAA93BVO.MenuListVO> getMethodName(String menuNm) {
+		return AC01Service.getMenuList(menuNm);
+	}
+	
+
+
+	//============ End AC01310S( 메뉴별권한관리 관리 ) ============//
 
 }
