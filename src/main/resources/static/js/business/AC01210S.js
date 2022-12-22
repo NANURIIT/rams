@@ -165,14 +165,65 @@ function clickAuthSaveButton() {
         let authCodeUseYnCheck = $(tr[i]).find("td:eq(8)").find(".hidden_yn").val();
 
         if (authCodeInput.length === 1) {
+            if(!authCodeInput.val()) {
+                openPopup({
+                    title : '실패', 
+                    text : '권한코드를 입력해주세요.', 
+                    type : 'error', 
+                    callback : function() {
+                        $(document).on('click', '.confirm', function() {
+                            authCodeInput.focus();
+                        });
+                    }
+                });
+                return;
+            } else if(authCodeInput.val().length > 4) {
+                openPopup({
+                    title : '실패', 
+                    text : '권한코드는 4자리 이하로 입력해주세요.', 
+                    type : 'error', 
+                    callback : function() {
+                        $(document).on('click', '.confirm', function() {
+                            authCodeInput.focus();
+                        });
+                    }
+                });
+                return;
+            }
             authCode.rghtCd = authCodeInput.val();
         }
 
         if (authCodeNameInput.length === 1) {
+            if(!authCodeNameInput.val()) {
+                openPopup({
+                    title : '실패', 
+                    text : '권한명를 입력해주세요.', 
+                    type : 'error', 
+                    callback : function() {
+                        $(document).on('click', '.confirm', function() {
+                            authCodeNameInput.focus();
+                        });
+                    }
+                });
+                return;
+            }
             authCode.rghtCdNm = authCodeNameInput.val();
         }
 
         if (authExplainInput.length === 1) {
+            if(!authExplainInput.val()) {
+                openPopup({
+                    title : '실패', 
+                    text : '권한설명을 입력해주세요.', 
+                    type : 'error', 
+                    callback : function() {
+                        $(document).on('click', '.confirm', function() {
+                            authCodeNameInput.focus();
+                        });
+                    }
+                });
+                return;
+            }
             authCode.rghtCdExpl = authExplainInput.val();
         }
 

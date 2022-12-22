@@ -291,7 +291,7 @@ function clickSaveCode() {
                     }
                 });
 				return;
-			} else if (codeInput.val().length()) {
+			} else if (codeInput.val().length() > 4) {
                 openPopup({
                     title : '실패', 
                     text : '코드는 4자리 이하로 입력해주세요.', 
