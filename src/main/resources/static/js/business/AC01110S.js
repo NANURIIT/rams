@@ -1,33 +1,9 @@
 $(document).ready(function () {
-
-	setAC01130P();
+	
 	setKeyDownFunction();
 	findKeydown();
 	selectAuthCode();
 });
-
-
-function setAC01130P() {
-	let Modal = document.getElementById('AC01130P');
-	let OpenModal = document.getElementById("open_modal_AC01130P");
-	let CloseModal1 = document.getElementsByClassName("modal_close_AC01130P")[0];
-
-	OpenModal.onclick = function () {
-		Modal.style.display = "block";
-		resetTable();
-	}
-	
-	CloseModal1.onclick = function () {
-		Modal.style.display = "none";
-		resetTable();
-	}
-	window.onclick = function (event) {
-		if (event.target === Modal) {
-			Modal.style.display = "none";
-			resetTable();
-		}
-	}
-}
 
 var runFindUser = function () {
 	let empNm = $("empNm").val();
