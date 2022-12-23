@@ -54,11 +54,40 @@ function getAuthCode(rghtCdNm) {
     });
 }
 
+/**
+ * 권한명으로 검색
+ */
 function searchButtonClick() {
     let searchKeyword = $('#authCodeSearchInput').val();
     getAuthCode(searchKeyword);
 }
 
+/**
+ * 행추가 버튼 클릭
+ */
+function addAuthCodeRow() {
+    let html = '';
+    html += '<tr>';
+    html += '   <td></td>';
+    html += '   <td><input class="auth_code_input" style="width: 100%;" type="text"></td>';
+    html += '   <td><input class="auth_code_name_input" style="width: 100%;" type="text"></td>';
+    html += '   <td><input class="auth_explain_input" style="width: 100%;" type="text"></td>';
+    html += '   <td></td>';
+    html += '   <td></td>';
+    html += '   <td></td>';
+    html += '   <td></td>';
+    html += '   <td><input style="width: 15px;" class="auth_code_use_yn" type="checkbox"></td>';
+    html += '   <td></td>';
+    html += '   <td></td>';
+    html += '   <td></td>';
+    html += '</tr>';
+    $('#authCodeTable').append(html);
+    $('.auth_code_input').focus();
+}
+
+/**
+ * 권한코드 상세버튼 클릭
+ */
 function clickDetailButton() {
     $(document).on('click', '.detail_button', function (e) {
         e.preventDefault();
@@ -67,6 +96,10 @@ function clickDetailButton() {
     });
 }
 
+/**
+ * 권한코드별 상세 메뉴 호출
+ * @param {권한코드} rghtCd 
+ */
 function getAuthCodeMenu(rghtCd) {
     ajaxCall({
         method: 'get',
@@ -106,26 +139,10 @@ function getAuthCodeMenu(rghtCd) {
     });
 }
 
-function addAuthCodeRow() {
-    let html = '';
-    html += '<tr>';
-    html += '   <td></td>';
-    html += '   <td><input class="auth_code_input" style="width: 100%;" type="text"></td>';
-    html += '   <td><input class="auth_code_name_input" style="width: 100%;" type="text"></td>';
-    html += '   <td><input class="auth_explain_input" style="width: 100%;" type="text"></td>';
-    html += '   <td></td>';
-    html += '   <td></td>';
-    html += '   <td></td>';
-    html += '   <td></td>';
-    html += '   <td><input style="width: 15px;" class="auth_code_use_yn" type="checkbox"></td>';
-    html += '   <td></td>';
-    html += '   <td></td>';
-    html += '   <td></td>';
-    html += '</tr>';
-    $('#authCodeTable').append(html);
-    $('.auth_code_input').focus();
-}
 
+/**
+ * 행삭제 버튼 클릭
+ */
 function clickDeleteButton() {
     let tr = $('#authCodeTable').children();
     let authCodeList = new Array();
@@ -138,6 +155,10 @@ function clickDeleteButton() {
     deleteRow(authCodeList);
 }
 
+/**
+ * 행삭제 호출
+ * @param {권한코드 리스트} authCodeList 
+ */
 function deleteRow(authCodeList) {
     ajaxCall({
         method: 'patch',
@@ -149,6 +170,9 @@ function deleteRow(authCodeList) {
     });
 }
 
+/**
+ * 권한코드 저장버튼 클릭
+ */
 function clickAuthSaveButton() {
 
     let authCodeList = new Array();
@@ -165,25 +189,25 @@ function clickAuthSaveButton() {
         let authCodeUseYnCheck = $(tr[i]).find("td:eq(8)").find(".hidden_yn").val();
 
         if (authCodeInput.length === 1) {
-            if(!authCodeInput.val()) {
+            if (!authCodeInput.val()) {
                 openPopup({
-                    title : '실패', 
-                    text : '권한코드를 입력해주세요.', 
-                    type : 'error', 
-                    callback : function() {
-                        $(document).on('click', '.confirm', function() {
+                    title: '실패',
+                    text: '권한코드를 입력해주세요.',
+                    type: 'error',
+                    callback: function () {
+                        $(document).on('click', '.confirm', function () {
                             authCodeInput.focus();
                         });
                     }
                 });
                 return;
-            } else if(authCodeInput.val().length > 4) {
+            } else if (authCodeInput.val().length > 4) {
                 openPopup({
-                    title : '실패', 
-                    text : '권한코드는 4자리 이하로 입력해주세요.', 
-                    type : 'error', 
-                    callback : function() {
-                        $(document).on('click', '.confirm', function() {
+                    title: '실패',
+                    text: '권한코드는 4자리 이하로 입력해주세요.',
+                    type: 'error',
+                    callback: function () {
+                        $(document).on('click', '.confirm', function () {
                             authCodeInput.focus();
                         });
                     }
@@ -194,13 +218,13 @@ function clickAuthSaveButton() {
         }
 
         if (authCodeNameInput.length === 1) {
-            if(!authCodeNameInput.val()) {
+            if (!authCodeNameInput.val()) {
                 openPopup({
-                    title : '실패', 
-                    text : '권한명를 입력해주세요.', 
-                    type : 'error', 
-                    callback : function() {
-                        $(document).on('click', '.confirm', function() {
+                    title: '실패',
+                    text: '권한명를 입력해주세요.',
+                    type: 'error',
+                    callback: function () {
+                        $(document).on('click', '.confirm', function () {
                             authCodeNameInput.focus();
                         });
                     }
@@ -211,13 +235,13 @@ function clickAuthSaveButton() {
         }
 
         if (authExplainInput.length === 1) {
-            if(!authExplainInput.val()) {
+            if (!authExplainInput.val()) {
                 openPopup({
-                    title : '실패', 
-                    text : '권한설명을 입력해주세요.', 
-                    type : 'error', 
-                    callback : function() {
-                        $(document).on('click', '.confirm', function() {
+                    title: '실패',
+                    text: '권한설명을 입력해주세요.',
+                    type: 'error',
+                    callback: function () {
+                        $(document).on('click', '.confirm', function () {
                             authCodeNameInput.focus();
                         });
                     }
@@ -243,6 +267,10 @@ function clickAuthSaveButton() {
     }
 }
 
+/**
+ * 권한코드 저장 요청
+ * @param {권한코드 리스트} authCodeList 
+ */
 function saveAuthCode(authCodeList) {
     ajaxCall({
         url: '/registerAuthCode',
@@ -255,13 +283,16 @@ function saveAuthCode(authCodeList) {
             let message = response.responseJSON.message;
             openPopup({
                 title: '실패',
-                type : 'error', 
+                type: 'error',
                 text: message
             });
         }
     })
 }
 
+/**
+ * 메뉴 저장버튼 클릭
+ */
 function clickSaveMenuButton() {
     let authCodeMenuList = new Array();
     let tr = $('#authCodeMenuTable').children();
@@ -276,37 +307,40 @@ function clickSaveMenuButton() {
         let menuModifyYnCheck = $(tr[i]).find("td:eq(5)").find(".modify_hidden_yn").val();
 
         if (!menuUseYnCheck || (menuUseYn && menuUseYnCheck === 'n') || (!menuUseYn && menuUseYnCheck === 'y')) {
-			authCodeMenu.dltF = menuUseYn ? 'N' : 'Y';
-		}
+            authCodeMenu.dltF = menuUseYn ? 'N' : 'Y';
+        }
 
         if (!menuModifyYnCheck || (menuModifyYn && menuModifyYnCheck === 'n') || (!menuModifyYn && menuModifyYnCheck === 'y')) {
-			authCodeMenu.mdfyRghtCcd = menuModifyYn ? '2' : '1';
-		}
-        
+            authCodeMenu.mdfyRghtCcd = menuModifyYn ? '2' : '1';
+        }
+
         if (!(Object.keys(authCodeMenu).length === 0)) {
             authCodeMenu.menuId = $(tr[i]).find("td:eq(1)").text();
-			authCodeMenuList.push(authCodeMenu);
-		}
+            authCodeMenuList.push(authCodeMenu);
+        }
     }
 
-    if(authCodeMenuList.length > 0) {
+    if (authCodeMenuList.length > 0) {
         saveMenu(authCodeMenuList, authCode);
     }
 }
 
+/**
+ * 메뉴 저장요청
+ */
 function saveMenu(authCodeMenuList, authCode) {
     ajaxCall({
-        method : 'post', 
-        url : '/registerAuthCodeMenu', 
-        data : authCodeMenuList, 
-        success : function() {
+        method: 'post',
+        url: '/registerAuthCodeMenu',
+        data: authCodeMenuList,
+        success: function () {
             getAuthCodeMenu(authCode);
-        }, 
-        fail : function(response) {
+        },
+        fail: function (response) {
             let message = response.responseJSON.message;
             openPopup({
                 title: '실패',
-                type : 'error', 
+                type: 'error',
                 text: message
             });
         }
