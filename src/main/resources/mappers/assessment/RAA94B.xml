@@ -23,6 +23,43 @@
         </if>
     </select>
 
+    <select id="getAuthCode" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA94BDto">
+        SELECT rght_cd
+             , rght_cd_nm
+             , rght_cd_expl
+             , rght_ccd
+             , aplc_f
+             , rgst_dt
+             , rgst_p_eno
+             , dlt_f
+             , dlt_dt
+             , dlt_tm
+             , dlt_p_eno
+             , hndl_dy_tm
+             , hndl_dprt_cd
+             , hndl_p_eno
+          FROM RAA94B
+         WHERE rght_cd = #{rghtCd}
+    </select>
+
+    <insert id="insertAuthCode" parameterType="com.nanuri.rams.business.common.dto.RAA94BDto">
+        INSERT INTO RAA94B(
+            RGHT_CD,
+            RGHT_CD_NM,
+            RGHT_CD_EXPL,
+            APLC_F,
+            RGST_DT,
+            RGST_P_ENO
+        ) VALUES(
+            #{rghtCd},
+            #{rghtCdNm},
+            #{rghtCdExpl},
+            #{aplcF},
+            #{rgstDt}, 
+            #{rgstPEno}
+        )
+    </insert>
+
     <update id="updateAuthCode" parameterType="com.nanuri.rams.business.common.dto.RAA94BDto">
         UPDATE RAA94B
         <set>

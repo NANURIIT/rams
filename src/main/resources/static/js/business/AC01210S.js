@@ -238,12 +238,12 @@ function clickAuthSaveButton() {
     }
 
     if (authCodeList.length > 0) {
+        console.log(authCodeList);
         saveAuthCode(authCodeList);
     }
 }
 
 function saveAuthCode(authCodeList) {
-    console.log('in function authCodeList : ', authCodeList);
     ajaxCall({
         url: '/registerAuthCode',
         method: 'post',

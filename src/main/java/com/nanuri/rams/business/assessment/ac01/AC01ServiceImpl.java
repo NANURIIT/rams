@@ -2,6 +2,8 @@ package com.nanuri.rams.business.assessment.ac01;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -164,8 +166,19 @@ public class AC01ServiceImpl implements AC01Service {
 	public boolean registerAuthCode(List<RAA94BDto> requestDtos) {
 		int count = 0;
 		for (RAA94BDto requestDto : requestDtos) {
-			requestDto.setHndlPEno(facade.getDetails().getEno());
-			count += raa94BMapper.updateAuthCode(requestDto);
+			if (raa94BMapper.getAuthCode(requestDto.getRghtCd()).isPresent()) {
+				throw new IllegalArgumentException("해당 권한코드가 존재합니다 : " + requestDto.getRghtCd());
+			}
+
+			if (raa94BMapper.getAuthCode(requestDto.getOldRghtCd()).isPresent()) {
+				requestDto.setHndlPEno(facade.getDetails().getEno());
+				count += raa94BMapper.updateAuthCode(requestDto);
+			} else {
+				String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")).toString();
+				requestDto.setRgstDt(now);
+				requestDto.setRgstPEno(facade.getDetails().getEno());
+				count += raa94BMapper.insertAuthCode(requestDto);
+			}
 		}
 		return count > 0;
 	}
