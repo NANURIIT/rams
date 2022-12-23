@@ -22,6 +22,9 @@ public interface AS03Service {
 	 */
 	public List<RAA01BVO> getDealInfo(DealInfo dealDto) throws ParseException;
 
+	// 담당직원 - 로그인유저정보
+	public Map<String, Object> getUserAuth();
+	
 	// 리스크심사구분코드
 	public List<Map<String, Object>> getRiskInspctCcd();
 
@@ -90,6 +93,8 @@ public interface AS03Service {
 
 	// 미이행시의무
 	public List<Map<String, Object>> getDbtNpFrmOblgCcd();
+
+	
 
 	
 

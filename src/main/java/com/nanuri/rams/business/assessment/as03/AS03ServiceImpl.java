@@ -3,9 +3,11 @@ package com.nanuri.rams.business.assessment.as03;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +18,7 @@ import com.nanuri.rams.business.common.mapper.RAA91BMapper;
 import com.nanuri.rams.business.common.vo.RAA01BVO;
 import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
 import com.nanuri.rams.business.common.vo.RAA18BVO.DocInfo;
+import com.nanuri.rams.com.security.AuthenticationFacade;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +32,9 @@ public class AS03ServiceImpl implements AS03Service {
 	private final RAA01BMapper raa01bMapper;
 	private final RAA91BMapper raa91bMapper;
 	private final RAA18BMapper raa18bMapper;
+
+	@Autowired
+	private AuthenticationFacade facade;
 
 	/**
 	 * 딜목록 조회
@@ -53,6 +59,21 @@ public class AS03ServiceImpl implements AS03Service {
 
 		return dealList;
 	};
+
+	// 담당직원 - 로그인유저정보
+	@Override
+	public Map<String, Object> getUserAuth() {
+		Map<String, Object> user = new HashMap<String, Object>();
+		
+		user.put("empNo", facade.getDetails().getEno());
+		user.put("empNm", facade.getDetails().getEmpNm());
+		user.put("dprtCd", facade.getDetails().getDprtCd());
+		user.put("dprtNm", facade.getDetails().getDprtNm());
+		user.put("HdqtCd", facade.getDetails().getHdqtCd());
+		user.put("HdqtNm", facade.getDetails().getHdqtNm());
+		
+		return user;
+	}
 
 	// 리스크심사구분코드
 	@Override
