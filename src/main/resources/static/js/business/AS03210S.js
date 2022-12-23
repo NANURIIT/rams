@@ -623,9 +623,9 @@ function loadUserAuth() {
 		url: "/getUserAuth",
 		dataType: "json",
 		success: function(data) {
-			
+
 			//console.log(data);
-			
+
 			$('#AS03210S_hdqtCd').val(data.HdqtCd);
 			$('#AS03210S_hdqtNm').val(data.HdqtNm);
 			$('#AS03210S_dprtCd').val(data.dprtCd);

@@ -24,7 +24,7 @@ public interface AS03Service {
 
 	// 담당직원 - 로그인유저정보
 	public Map<String, Object> getUserAuth();
-	
+
 	// 리스크심사구분코드
 	public List<Map<String, Object>> getRiskInspctCcd();
 
@@ -60,7 +60,7 @@ public interface AS03Service {
 
 	// 주요투자물건상세
 	public List<Map<String, Object>> getInvstThingDtlsCcd();
-	
+
 	// 책임준공
 	public List<Map<String, Object>> getRspsbCmplCcd();
 
@@ -93,9 +93,5 @@ public interface AS03Service {
 
 	// 미이행시의무
 	public List<Map<String, Object>> getDbtNpFrmOblgCcd();
-
-	
-
-	
 
 }
