@@ -57,6 +57,12 @@ public interface AS03Service {
 
 	// 주요투자물건상세
 	public List<Map<String, Object>> getInvstThingDtlsCcd();
+	
+	// 책임준공
+	public List<Map<String, Object>> getRspsbCmplCcd();
+
+	// 전결구분
+	public List<Map<String, Object>> getRaRsltnCcd();
 
 	// 협업유형코드
 	public List<Map<String, Object>> getCoprtnTypCd();
@@ -69,5 +75,22 @@ public interface AS03Service {
 
 	// 기초자산종류
 	public List<Map<String, Object>> getBscAstsKndCd();
+
+	// 법인형태
+	public List<Map<String, Object>> getCncCmpnyClsfCd();
+
+	// 담보유형
+	public List<Map<String, Object>> getMrtgKndCcd();
+
+	// 담보상세
+	public List<Map<String, Object>> getMrtgDtlsCcd();
+
+	// 권리순위
+	public List<Map<String, Object>> getRgtRnkCcd();
+
+	// 미이행시의무
+	public List<Map<String, Object>> getDbtNpFrmOblgCcd();
+
+	
 
 }

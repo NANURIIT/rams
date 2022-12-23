@@ -31,15 +31,24 @@ public interface RAA91BMapper {
 	public List<Map<String, Object>> getInvstThingCcd();							// 주요투자물건
 	
 	public List<Map<String, Object>> getInvstThingDtlsCcd();						// 주요투자물건상세
+	
+	public List<Map<String, Object>> getRspsbCmplCcd();								// 책임준공
+	
+	public List<Map<String, Object>> getRaRsltnCcd();								// 전결구분
 
 	public List<Map<String, Object>> getCoprtnTypCd();								// 협업유형코드
 
 	public List<Map<String, Object>> getBscAstsKndCd();								// 기초자산종류
 
-	
+	public List<Map<String, Object>> getCncCmpnyClsfCd();							// 법인형태
 
-	
+	public List<Map<String, Object>> getMrtgKndCcd();								// 담보유형
 
+	public List<Map<String, Object>> getMrtgDtlsCcd();								// 담보상세
+
+	public List<Map<String, Object>> getRgtRnkCcd();								// 권리순위
+
+	public List<Map<String, Object>> getDbtNpFrmOblgCcd();							// 미이행시의무
 	
 	
 }

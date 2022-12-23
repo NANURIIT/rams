@@ -196,6 +196,9 @@ function getDocInfo(ibDealNo) {
 function loadTabContents() {
 	loadTab1();
 	loadTab3();
+	loadTab4();
+	loadTab6();
+	loadTab8();
 }
 
 // 탭1 안건구조
@@ -212,12 +215,32 @@ function loadTab1() {
 	loadCheckItemCd();
 	loadInvstThingCcd();
 	loadInvstThingDtlsCcd();
+	loadRspsbCmplCcd();
+	loadRaRsltnCcd();
 	loadCoprtnTypCd();
+	
 }
 
 // 탭3 기초자산
 function loadTab3() {
 	loadBscAstsKndCd();
+}
+
+// 탭4 법인형태
+function loadTab4() {
+	loadCncCmpnyClsfCd();
+}
+
+// 탭6 담보
+function loadTab6() {
+	loadMrtgKndCcd();
+	loadMrtgDtlsCcd();
+	loadRgtRnkCcd();
+}
+
+// 탭8 책임준공
+function loadTab8() {
+	loadDbtNpFrmOblgCcd();
 }
 
 // 리스크심사구분코드
@@ -550,6 +573,48 @@ function loadInvstThingDtlsCcd() {
 	});
 }
 
+// 책임준공
+function loadRspsbCmplCcd() {
+	$.ajax({
+		type: "GET",
+		url: "/getRspsbCmplCcd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_rspsbCmplCcd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_rspsbCmplCcd').html(html);
+		}
+	});
+}
+
+// 전결구분
+function loadRaRsltnCcd() {
+	$.ajax({
+		type: "GET",
+		url: "/getRaRsltnCcd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_raRsltnCcd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_raRsltnCcd').html(html);
+		}
+	});
+}
+
 // 협업유형코드
 function loadCoprtnTypCd() {
 	$.ajax({
@@ -633,4 +698,111 @@ function loadBscAstsKndCd() {
 		}
 	});
 };
+
+// 법인형태
+function loadCncCmpnyClsfCd() {
+	$.ajax({
+		type: "GET",
+		url: "/getCncCmpnyClsfCd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_cncCmpnyClsfCd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_cncCmpnyClsfCd').html(html);
+		}
+	});
+};
+
+// 담보유형
+function loadMrtgKndCcd() {
+	$.ajax({
+		type: "GET",
+		url: "/getMrtgKndCcd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_mrtgKndCcd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_mrtgKndCcd').html(html);
+		}
+	});
+};
+
+// 담보상세
+function loadMrtgDtlsCcd() {
+	$.ajax({
+		type: "GET",
+		url: "/getMrtgDtlsCcd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_mrtgDtlsCcd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_mrtgDtlsCcd').html(html);
+		}
+	});
+};
+
+// 권리순위
+function loadRgtRnkCcd() {
+	$.ajax({
+		type: "GET",
+		url: "/getRgtRnkCcd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_rgtRnkCcd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_rgtRnkCcd').html(html);
+		}
+	});
+};
+
+// 미이행시의무
+function loadDbtNpFrmOblgCcd() {
+	$.ajax({
+		type: "GET",
+		url: "/getDbtNpFrmOblgCcd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_dbtNpFrmOblgCcd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_dbtNpFrmOblgCcd').html(html);
+		}
+	});
+};
+
+
 

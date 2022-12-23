@@ -126,6 +126,18 @@ public class AS03ServiceImpl implements AS03Service {
 		return raa91bMapper.getInvstThingDtlsCcd();
 	};
 	
+	// 책임준공
+	@Override
+	public List<Map<String, Object>> getRspsbCmplCcd() {
+		return raa91bMapper.getRspsbCmplCcd();
+	};
+	
+	// 전결구분
+	@Override
+	public List<Map<String, Object>> getRaRsltnCcd() {
+		return raa91bMapper.getRaRsltnCcd();
+	};
+	
 	// 협업유형코드
 	@Override
 	public List<Map<String, Object>> getCoprtnTypCd() {
@@ -148,6 +160,37 @@ public class AS03ServiceImpl implements AS03Service {
 	@Override
 	public List<Map<String, Object>> getBscAstsKndCd() {
 		return raa91bMapper.getBscAstsKndCd();
-	};
+	}
+
+	// 법인형태
+	@Override
+	public List<Map<String, Object>> getCncCmpnyClsfCd() {
+		return raa91bMapper.getCncCmpnyClsfCd();
+	}
+
+	// 담보유형
+	@Override
+	public List<Map<String, Object>> getMrtgKndCcd() {
+		return raa91bMapper.getMrtgKndCcd();
+	}
+
+	// 담보상세
+	@Override
+	public List<Map<String, Object>> getMrtgDtlsCcd() {
+		return raa91bMapper.getMrtgDtlsCcd();
+	}
+	
+	// 권리순위
+	@Override
+	public List<Map<String, Object>> getRgtRnkCcd() {
+		return raa91bMapper.getRgtRnkCcd();
+	}
+
+	// 미이행시의무
+	@Override
+	public List<Map<String, Object>> getDbtNpFrmOblgCcd() {
+		return raa91bMapper.getDbtNpFrmOblgCcd();
+	}
+	
 
 }

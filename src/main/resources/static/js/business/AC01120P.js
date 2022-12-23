@@ -159,19 +159,31 @@ function setEmpNm(){
 	//td(selected) = event.target;
 	var tr = event.currentTarget;
 	var td = $(tr).children();
-	var empNm = td.eq(1).text();
-	var empNo = td.eq(0).text();
+	
+	var empNo = td.eq(0).text();	// 직원번호
+	var empNm = td.eq(1).text();	// 직원명
+	var dprtCd = td.eq(2).text();	// 부점코드
+	var dprtNm = td.eq(3).text();	// 부점명
+	var hdqtCd = td.eq(4).text();	// 본부코드
+	var hdqtNm = td.eq(5).text();	// 본부명
+	
 	
 	var pathname = $(location).attr('pathname');
 	var path = pathname.split('/');
 	var pageEmpNm = '#' + path[path.length - 1] + '_empNm';
 	var pageEmpNo = '#' + path[path.length - 1] + '_empNo';
-	
-	console.log("pageEmpNm : "+ pageEmpNm);
-	console.log("pageEmpNo : "+ pageEmpNo);
+	var pageDprtCd = '#' + path[path.length - 1] + '_dprtCd';
+	var pageDprtNm = '#' + path[path.length - 1] + '_dprtNm';
+	var pageHdqtCd = '#' + path[path.length - 1] + '_hdqtCd';
+	var pageHdqtNm = '#' + path[path.length - 1] + '_hdqtNm';
 	
 	$(pageEmpNm).val(empNm);
 	$(pageEmpNo).val(empNo);
+	$(pageDprtCd).val(dprtCd);
+	$(pageDprtNm).val(dprtNm);
+	$(pageHdqtCd).val(hdqtCd);
+	$(pageHdqtNm).val(hdqtNm);
+	
 	reset_AC01120P();
 	modalClose();
 }
