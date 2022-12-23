@@ -255,6 +255,7 @@ function saveAuthCode(authCodeList) {
             let message = response.responseJSON.message;
             openPopup({
                 title: '실패',
+                type : 'error', 
                 text: message
             });
         }
@@ -305,6 +306,7 @@ function saveMenu(authCodeMenuList, authCode) {
             let message = response.responseJSON.message;
             openPopup({
                 title: '실패',
+                type : 'error', 
                 text: message
             });
         }
