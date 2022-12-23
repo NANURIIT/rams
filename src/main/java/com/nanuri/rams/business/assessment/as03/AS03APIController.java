@@ -1,9 +1,11 @@
 package com.nanuri.rams.business.assessment.as03;
 
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nanuri.rams.business.common.vo.RAA01BVO;
 import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
 import com.nanuri.rams.business.common.vo.RAA18BVO.DocInfo;
+import com.nanuri.rams.com.security.AuthenticationFacade;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +25,9 @@ public class AS03APIController {
 
 	private final AS03Service as03Service;
 
+	@Autowired
+	private AuthenticationFacade facade;
+	
 	/**
 	 * deal list 가져오기
 	 * 
@@ -35,9 +41,25 @@ public class AS03APIController {
 	}
 
 	// ---------------tab1 start------------------
+	
+	// 담당직원 - 로그인유저정보
+	@GetMapping(value = "/getUserAuth")
+	public Map<String, Object> getUserAuth() {
+		
+		Map<String, Object> user = new HashMap<String, Object>();
+		
+		user.put("empNo", facade.getDetails().getEno());
+		user.put("empNm", facade.getDetails().getEmpNm());
+		user.put("dprtCd", facade.getDetails().getDprtCd());
+		user.put("dprtNm", facade.getDetails().getDprtNm());
+		user.put("HdqtCd", facade.getDetails().getHdqtCd());
+		user.put("HdqtNm", facade.getDetails().getHdqtNm());
+		
+		return user;
+	}
 
 	// 리스크심사구분코드
-	@GetMapping(value = "/getR iskInspctCcd")
+	@GetMapping(value = "/getRiskInspctCcd")
 	public List<Map<String, Object>> getRiskInspctCcd() {
 		return as03Service.getRiskInspctCcd();
 	}

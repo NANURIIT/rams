@@ -218,6 +218,7 @@ function loadTab1() {
 	loadRspsbCmplCcd();
 	loadRaRsltnCcd();
 	loadCoprtnTypCd();
+	loadUserAuth();
 	
 }
 
@@ -611,6 +612,26 @@ function loadRaRsltnCcd() {
 				});
 			}
 			$('#AS03210S_raRsltnCcd').html(html);
+		}
+	});
+}
+
+// 담당직원정보
+function loadUserAuth() {
+	$.ajax({
+		type: "GET",
+		url: "/getUserAuth",
+		dataType: "json",
+		success: function(data) {
+			
+			//console.log(data);
+			
+			$('#AS03210S_hdqtCd').val(data.HdqtCd);
+			$('#AS03210S_hdqtNm').val(data.HdqtNm);
+			$('#AS03210S_dprtCd').val(data.dprtCd);
+			$('#AS03210S_dprtNm').val(data.dprtNm);
+			$('#AS03210S_empNo').val(data.empNo);
+			$('#AS03210S_empNm').val(data.empNm);
 		}
 	});
 }
