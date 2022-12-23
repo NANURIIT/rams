@@ -54,6 +54,7 @@ function selectCommonCode() {
 function clickDetailButton() {
 	$(document).on('click', '.groupCodeDetail', function(e) {
 		e.preventDefault();
+		codeId = $(this).attr('id');
 		getGroupCodeInfo($(this).attr('id'));
 	});
 }
@@ -81,7 +82,7 @@ function addGroupCodeRow() {
 	ROW_HTML += '   <td></td>';
 	ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
 	ROW_HTML += '   <td></td>';
-	ROW_HTML += '   <td></td>';
+	ROW_HTML += '   <td><input style="width: 100%;" type="text"></td>';
 	ROW_HTML += '   <td><input class="group_code_use_yn" style="width:100%" type="checkbox"></td>';
 	ROW_HTML += '   <td></td>';
 	ROW_HTML += '   <td></td>';
@@ -125,6 +126,7 @@ function clickSaveGroupCode() {
 		let groupCodeLengthInput = $(tr[i]).find("td:eq(4)").find("input");
 		let groupCodeUseYn = $(tr[i]).find("td:eq(7)").find(".group_code_use_yn").prop("checked");
 		let groupCodeUseYnCheck = $(tr[i]).find("td:eq(7)").find(".hidden_yn").val();
+		let groupCodeExplainInput = $(tr[i]).find("td:eq(6)").find("input");
 
 		if (groupCodeInput.length == 1) {
 			if (groupCodeInput.val().length > 4) {
@@ -201,6 +203,23 @@ function clickSaveGroupCode() {
 			groupCode.cdLngth = groupCodeLengthInput.val();
 		}
 
+		if(groupCodeExplainInput.length == 1) {
+			if(!groupCodeExplainInput.val()) {
+				openPopup({
+                    title : '실패', 
+                    text : '코드 설명을 입력해주세요.', 
+                    type : 'error', 
+                    callback : function() {
+                        $(document).on('click', '.confirm', function() {
+                            groupCodeExplainInput.focus();
+                        });
+                    }
+                });
+				return;
+			}
+			groupCode.cmnsCdGrpExpl = groupCodeExplainInput.val();
+		}
+
 		if (!groupCodeUseYnCheck || (groupCodeUseYn && groupCodeUseYnCheck === 'n') || (!groupCodeUseYn && groupCodeUseYnCheck === 'y')) {
 			groupCode.useF = groupCodeUseYn ? 'Y' : 'N';
 		}
@@ -220,6 +239,8 @@ function clickSaveGroupCode() {
  * 코드 행추가 버튼 클릭
  */
 function addCodeRow() {
+	let td = $('#codeListTable').children().find('td');
+	
 	let ROW_HTML = '';
 	ROW_HTML += '<tr>';
 	ROW_HTML += '   <td><input style="width:100%" type="checkbox"></td>';
@@ -233,7 +254,12 @@ function addCodeRow() {
 	ROW_HTML += '   <td></td>';
 	ROW_HTML += '   <td></td>';
 	ROW_HTML += '</tr>';
-	$('#codeListTable').append(ROW_HTML);
+
+	if(td.length === 1) {
+		$('#codeListTable').html(ROW_HTML);
+	} else if(td.length > 1) {
+		$('#codeListTable').append(ROW_HTML);	
+	}
 }
 
 /**
@@ -271,8 +297,8 @@ function clickSaveCode() {
 	for (let i = 0; i < tr.length; i++) {
 		let code = new Object();
 
-		let groupCodeId = tr.attr('id');
-		let oldCodeId = $(tr[i]).find("td:eq(0)").find("input").attr('id');
+		let groupCodeId = codeId;
+		let oldCodeId = codeId;
 		let codeInput = $(tr[i]).find("td:eq(1)").find("input");
 		let codeNameInput = $(tr[i]).find("td:eq(2)").find("input");
 		let codeUseYn = $(tr[i]).find("td:eq(5)").find(".code_use_yn").prop("checked");
@@ -291,7 +317,7 @@ function clickSaveCode() {
                     }
                 });
 				return;
-			} else if (codeInput.val().length() > 4) {
+			} else if (codeInput.val().length > 4) {
                 openPopup({
                     title : '실패', 
                     text : '코드는 4자리 이하로 입력해주세요.', 
@@ -367,7 +393,7 @@ var getGroupCodeInfoList = function(cmnsCdGrp) {
 				groupCodeInfoHTML += '  <td></td>';
 				groupCodeInfoHTML += '  <td class="update_column group_code_length">' + groupCodeInfo.cdLngth + '</td>';
 				groupCodeInfoHTML += '  <td><button class="groupCodeDetail" id="' + groupCodeInfo.cmnsCdGrp + '">↓상세</button></td>';
-				groupCodeInfoHTML += '  <td>' + groupCodeInfo.cmnsCdGrpExpl + '</td>';
+				groupCodeInfoHTML += '  <td class="update_column">' + groupCodeInfo.cmnsCdGrpExpl + '</td>';
 				if (groupCodeInfo.useF === 'Y') {
 					groupCodeInfoHTML += '  <td><input style="width:100%" class="group_code_use_yn" type="checkbox" checked><input class="hidden_yn" type="hidden" value="y"></td>';
 				} else {
@@ -520,3 +546,5 @@ var deleteCode = function(request) {
 		}
 	});
 }
+
+let codeId = '';

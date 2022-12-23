@@ -16,5 +16,6 @@ public class CodeInfoSaveRequestDto {
     @Max(value = 20, message = "코드Id는 20자리 이하여야 합니다.")
     private String cdVlId;
     private String cdVlNm;
+    private Integer cdSq;
     private String useF;
 }

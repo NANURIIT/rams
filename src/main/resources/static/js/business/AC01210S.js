@@ -262,7 +262,6 @@ function clickAuthSaveButton() {
     }
 
     if (authCodeList.length > 0) {
-        console.log(authCodeList);
         saveAuthCode(authCodeList);
     }
 }

@@ -55,7 +55,7 @@
             #{rghtCdNm},
             #{rghtCdExpl},
             #{aplcF},
-            #{rgstDt}, 
+            #{rgstDt},
             #{rgstPEno}
         )
     </insert>

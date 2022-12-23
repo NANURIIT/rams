@@ -98,6 +98,9 @@ public class AC01ServiceImpl implements AC01Service {
 
 			if (raa90BMapper.getCodeInfo(requestDto.getCmnsCdGrp(), requestDto.getOldCdVlId()).isEmpty()) {
 				// 신규등록
+				Integer seq = raa90BMapper.getMaxSeq(requestDto.getCmnsCdGrp()) == null ?
+						1 : raa90BMapper.getMaxSeq(requestDto.getCmnsCdGrp()) + 1;
+				requestDto.setCdSq(seq);
 				count += raa90BMapper.insertCodeInfo(requestDto);
 			} else {
 				// 수정
