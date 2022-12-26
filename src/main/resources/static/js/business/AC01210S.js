@@ -124,8 +124,13 @@ function getAuthCodeMenu(rghtCd) {
                     } else {
                         html += '   <td><input style="width: 15px;" class="can_modify_yn" type="checkbox"><input type="hidden" class="modify_hidden_yn" value="n"></td>';
                     }
-                    html += '   <td>' + value.hndlDyTm + '</td>';
-                    html += '   <td>' + value.hndlDyTm + '</td>';
+                    html += '   <td>' + value.hndlDyTm.substring(0, 10) + '</td>';
+                    if(value.hndlDyTm === '-') {
+                        html += '   <td> - </td>';
+                    } else {
+                        html += '   <td>' + value.hndlDyTm.substring(10, value.hndlDyTm.length) + '</td>';
+                    }
+                    
                     html += '   <td>' + value.hndlPEno + '</td>';
                     html += '</tr>';
                 });
