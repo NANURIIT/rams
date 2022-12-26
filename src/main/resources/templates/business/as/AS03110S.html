@@ -1,96 +1,91 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout}">
+	layout:decorate="~{layout/ramsLayout}">
 
 <th:block layout:fragment="script">
 
 </th:block>
  
 <th:block layout:fragment="customContent">
-	<div class="main_container">
-		<div class="search_wrap">
-			<table class="search_table search_top">
-				<colgroup>
-					<col style="width: 5%;">
-					<col style="width: 15%;">
-					<col>
-				</colgroup>
-				<tr>
-					<th>접수배정일</th>
-					<td>
-						<div>
-							<input type="text">~<input type="text">
-						</div>
-					</td>
-					<td>
-						<button type="button">조회</button>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div class="contents_box">
-			<table class="table_header">
-				<colgroup>
-					<col>
-					<col>
-					<col>
-					<col>
-					<col>
-					<col>
-					<col>
-					<col>
-					<col>
-					<col>
-				</colgroup>
-				<thead>
-					<tr>
-						<th>접수배정일</th>
-						<th>deal번호</th>
-						<th>신규/재부의</th>
-						<th>부수안건</th>
-						<th>안건명</th>
-						<th>심사역</th>
-						<th>본부</th>
-						<th>부서</th>
-						<th>직원</th>
-						<th>현업유형</th>
-					</tr>
-				</thead>
-			</table>
-			<div class="grid_wrap grid_wrapS">
-				<form>
-					<table>
-						<colgroup>
-							<col>
-							<col>
-							<col>
-							<col>
-							<col>
-							<col>
-							<col>
-							<col>
-							<col>
-							<col>
-						</colgroup>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td>2</td>
-								<td>3</td>
-								<td>4</td>
-								<td>5</td>
-								<td>6</td>
-								<td>7</td>
-								<td>8</td>
-								<td>9</td>
-								<td>10</td>
-							</tr>
-						</tbody>
-					</table>
-				</form>
-			</div>
-		</div>
+	<!-- 상단 타이틀 -->
+	<div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>[03110]심사배정안건조회</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="index.html">심사정보</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <strong>심사배정안건조회</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2">
+
+        </div>
+    </div>
+    
+    <!-- 내용 -->
+    <div class="wrapper wrapper-content animated fadeIn">
+	    <div class="row">
+	    	<div class="col-lg-12">
+	    		<div class="ibox ">
+	    			<!-- 조회조건영역 -->
+	    			<div class="ibox-title text-right">
+	    				<form method="get">
+	    					<div class="form-group row">
+	    						<label class="col-sm-1 col-form-label">접수배정일</label>
+	                            <div class="col-sm-3">
+	                            	<div class="input-daterange input-group" id="datepicker">
+	                                    <input type="text" class="form-control-sm form-control" name="start" value="05/14/2014"/>
+	                                    <span class="input-group-addon">~</span>
+	                                    <input type="text" class="form-control-sm form-control" name="end" value="05/22/2014" />
+	                                </div>
+	                            </div>
+	                        	<div class="col-sm-8 text-left">
+	                        		<button class="btn btn-primary" type="submit">조회</button>
+	                        	</div>
+	                        </div>
+	    				</form>
+	    			</div>
+	    			
+	    			<!-- 조회결과 -->
+	    			<div class="ibox-content">
+	    				<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>접수배정일</th>
+									<th>deal번호</th>
+									<th>신규/재부의</th>
+									<th>부수안건</th>
+									<th>안건명</th>
+									<th>심사역</th>
+									<th>본부</th>
+									<th>부서</th>
+									<th>직원</th>
+									<th>현업유형</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>2</td>
+									<td>3</td>
+									<td>4</td>
+									<td>5</td>
+									<td>6</td>
+									<td>7</td>
+									<td>8</td>
+									<td>9</td>
+									<td>10</td>
+								</tr>
+							</tbody>
+						</table>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
 	</div>
 </th:block>
 </html>
