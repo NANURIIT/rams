@@ -18,4 +18,6 @@ public class CodeInfoSaveRequestDto {
     private String cdVlNm;
     private Integer cdSq;
     private String useF;
+    private String rgstPEno;
+    private String hndlPEno;
 }

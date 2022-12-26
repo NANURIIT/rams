@@ -123,6 +123,8 @@
             <if test="useF != null and useF !=''">
                 use_f = #{useF},
             </if>
+            hndl_dy_tm = now(),
+            hndl_p_eno = #{hndlPEno}
         </set>
         WHERE cmns_cd_grp = #{cmnsCdGrp}
           AND cd_vl_id = #{oldCdVlId}
@@ -135,14 +137,16 @@
             cd_vl_nm,
             use_f,
             cd_sq,
-            rgst_dt
+            rgst_dt,
+            rgst_p_eno
         ) VALUES (
             #{cmnsCdGrp},
             #{cdVlId},
             #{cdVlNm},
             #{useF},
             #{cdSq},
-            DATE_FORMAT(now(), '%Y%m%d')
+            DATE_FORMAT(now(), '%Y%m%d'),
+            #{rgstPEno}
         )
     </insert>
 
