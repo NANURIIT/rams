@@ -65,7 +65,7 @@ public class AS03ServiceImpl implements AS03Service {
 	public Map<String, Object> getUserAuth() {
 		Map<String, Object> user = new HashMap<String, Object>();
 
-		user.put("empNo", facade.getDetails().getEno());
+		user.put("eno", facade.getDetails().getEno());
 		user.put("empNm", facade.getDetails().getEmpNm());
 		user.put("dprtCd", facade.getDetails().getDprtCd());
 		user.put("dprtNm", facade.getDetails().getDprtNm());

@@ -160,7 +160,7 @@ function setEmpNm(){
 	var tr = event.currentTarget;
 	var td = $(tr).children();
 	
-	var empNo = td.eq(0).text();	// 직원번호
+	var eno = td.eq(0).text();	// 직원번호
 	var empNm = td.eq(1).text();	// 직원명
 	var dprtCd = td.eq(2).text();	// 부점코드
 	var dprtNm = td.eq(3).text();	// 부점명
@@ -171,14 +171,14 @@ function setEmpNm(){
 	var pathname = $(location).attr('pathname');
 	var path = pathname.split('/');
 	var pageEmpNm = '#' + path[path.length - 1] + '_empNm';
-	var pageEmpNo = '#' + path[path.length - 1] + '_empNo';
+	var pageEno = '#' + path[path.length - 1] + '_eno';
 	var pageDprtCd = '#' + path[path.length - 1] + '_dprtCd';
 	var pageDprtNm = '#' + path[path.length - 1] + '_dprtNm';
 	var pageHdqtCd = '#' + path[path.length - 1] + '_hdqtCd';
 	var pageHdqtNm = '#' + path[path.length - 1] + '_hdqtNm';
 	
 	$(pageEmpNm).val(empNm);
-	$(pageEmpNo).val(empNo);
+	$(pageEno).val(eno);
 	$(pageDprtCd).val(dprtCd);
 	$(pageDprtNm).val(dprtNm);
 	$(pageHdqtCd).val(hdqtCd);

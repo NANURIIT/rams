@@ -630,7 +630,7 @@ function loadUserAuth() {
 			$('#AS03210S_hdqtNm').val(data.HdqtNm);
 			$('#AS03210S_dprtCd').val(data.dprtCd);
 			$('#AS03210S_dprtNm').val(data.dprtNm);
-			$('#AS03210S_empNo').val(data.empNo);
+			$('#AS03210S_eno').val(data.eno);
 			$('#AS03210S_empNm').val(data.empNm);
 		}
 	});
