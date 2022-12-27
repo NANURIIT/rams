@@ -40,12 +40,13 @@
 			, #{hndlDprtCd}
 			, #{hndlPEno}
 			)
-		   ON DUPLICATE KEY
-	   UPDATE MDFY_RGHT_CCD 	= #{mdfyRghtCcd}
+		   <!-- ON DUPLICATE KEY
+	   UPDATE RGHT_CD			= #{rghtCd}
+	   		, MDFY_RGHT_CCD 	= #{mdfyRghtCcd}
 			, HNDL_DY_TM 		= NOW()
 			, HNDL_DPRT_CD 		= #{hndlDprtCd}
 			, HNDL_P_ENO  		= #{hndlPEno}
-			, MENU_ID 			= #{menuId}
+			, MENU_ID 			= #{menuId} -->
 </insert>
 
 <delete id='deleteUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
@@ -56,52 +57,29 @@
 		 AND SQ			= #{sq}
 </delete>
 
-<select id="selectUseMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO" resultType="com.nanuri.rams.business.common.vo.RAA95BVO$selectUseMenuVO">
-	/* 권한별 메뉴화면 사용권한 조회 */
-	 SELECT *
-	   FROM RAA95B A
-	  WHERE MENU_ID
-	  	 IN ( SELECT B.HG_RNK_MENU_ID 
-				FROM RAA95B A
-		   LEFT JOIN RAA93B B
-				  ON A.MENU_ID = B.MENU_ID 
-			   WHERE A.MENU_ID = #{menuId}
-				 AND A.RGHT_CD = #{rghtCd} )
-		 OR MENU_ID = #{menuId}
-</select>
-<!-- <select id="selectUseMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO">
-	/* 권한별 메뉴화면 사용권한 조회 */
-	SELECT RGHT_CD
-		 , SQ
-		 , MENU_ID
-		 , MDFY_RGHT_CCD
-		 , HNDL_DY_TM
-		 , HNDL_DPRT_CD
-		 , HNDL_P_ENO
-	FROM RAA95B
-	WHERE 1=1
-		<if test='sq != null and sq != ""'>
-		AND SQ = #{sq}
-		</if>
-		<if test='rghtCd != null and rghtCd = ""'>
-		AND RGHT_CD = #{rghtCd}
-		</if>
-</select> -->
 
+<!-- 상위메뉴의 조회 여부를 수정하기 위해 데이터 유무 조회 -->
 <select id='selectMainMenuId' parameterType="com.nanuri.rams.business.common.vo.RAA95BVO$selectUseMenuVO" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO">
-	SELECT RGHT_CD
-		 , SQ
-		 , MENU_ID
-		 , MDFY_RGHT_CCD
-		 , HNDL_DY_TM
-		 , HNDL_DPRT_CD
-		 , HNDL_P_ENO
-	 FROM RAA95B A
-    WHERE A.MENU_ID 		= #{menuId}
-	  AND A.RGHT_CD 		= #{rghtCd}
+	  SELECT DISTINCT( MENU_ID )
+		FROM RAA95B A
+	   WHERE MENU_ID
+		  IN ( SELECT DISTINCT( B.HG_RNK_MENU_ID )
+				 FROM RAA95B A
+			LEFT JOIN RAA93B B
+				   ON A.MENU_ID = B.MENU_ID 
+				WHERE A.MENU_ID 	= #{menuId}
+				  AND A.RGHT_CD 	= #{rghtCd} )
 </select>
 
 <select id="selectMaxSq" resultType="int">
 SELECT MAX(SQ) FROM RAA95B
 </select>
+
+<delete id="deleteMainMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+	  DELETE 
+		FROM RAA95B
+	   WHERE RGHT_CD	= #{rghtCd}
+	   	 AND MENU_ID	= #{menuId}
+</delete>
+
 </mapper>

@@ -134,15 +134,17 @@ var saveUseMenu = function (i) {
 		saveRghtCd = tr.children().eq(1).html();
 		// console.log('useCheckbox saveRghtCd :' + saveRghtCd.html());
 		if (lv2Id != 'null' && lv3Id == 'null') {
-			dtoParam.push({
-				"sq": Number(saveSq)
-				, "rghtCd": saveRghtCd
-				, "mdfyRghtCcd": '1'
-				, "menuId": lv2Id
-				, "lv1Id": lv1Id
-			});
-		}
-	})
+			if (!(tr.children().eq(6).children().prop('checked'))) {
+				dtoParam.push({
+					"sq": Number(saveSq)
+					, "rghtCd": saveRghtCd
+					, "mdfyRghtCcd": '1'
+					, "menuId": lv2Id
+					, "lv1Id": lv1Id
+				});
+			};
+		};
+	});
 	modifyCheckbox.each(function (i) {
 		let tr = modifyCheckbox.parent().parent().eq(i);
 		saveRghtCd = tr.children().eq(1).html();
@@ -166,7 +168,7 @@ var saveUseMenu = function (i) {
 		data: JSON.stringify(dtoParam),
 		contentType: "application/json; charset=UTF-8",
 		// dataType: 'json',
-		success: function (){
+		success: function () {
 			alert("Success!");
 		}, error: function (request, status, error) {
 			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -181,7 +183,7 @@ function checkboxModifyYn(e) {
 		checkedUseYn.prop('checked', true);
 	}
 }
-function checkboxUseYn(e){
+function checkboxUseYn(e) {
 	var checkedUseYn = $(e);
 	var checkedModifyYn = $(e).parent().parent().children().eq(6).children();
 	if (checkedUseYn.prop('checked') == false) {
