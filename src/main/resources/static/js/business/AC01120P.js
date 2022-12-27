@@ -1,9 +1,9 @@
 $(document).ready(function() {
-	
+
 	setOpenModal();
-	
+
 	setKeyDownFunction();
-	
+
 });
 
 // modal controll function
@@ -11,7 +11,7 @@ function setOpenModal() {
 	let Modal = document.getElementById('AC01120P');
 	let OpenModal = document.getElementById("open_modal_AC01120P");
 	let CloseModal = document.getElementsByClassName("modal_close_AC01120P")[0];
-	
+
 	// open modal
 	OpenModal.onclick = function() {
 		Modal.style.display = "block";
@@ -22,7 +22,7 @@ function setOpenModal() {
 		Modal.style.display = "none";
 		reset_AC01120P();
 	}
-	
+
 	// close modal
 	window.onclick = function(event) {
 		if (event.target === Modal) {
@@ -42,7 +42,7 @@ function setOpenModal() {
 
 	});
 
-}
+};
 
 // reset AC01120P
 function reset_AC01120P() {
@@ -51,12 +51,12 @@ function reset_AC01120P() {
 	$('#AC01120P_eno').val("");
 	$('#AC01120P_dprtCd').val("");
 	$('#AC01120P_dprtNm').val("");
-}
+};
 
 // when page loaded
 function setKeyDownFunction() {
 	keyDownEnter();
-}
+};
 
 // search employee or deal
 function keyDownEnter() {
@@ -84,7 +84,7 @@ function keyDownEnter() {
 			getEmpList();
 		}
 	});
-}
+};
 
 // get employee list
 function getEmpList() {
@@ -101,7 +101,7 @@ function getEmpList() {
 		, "dprtNm": dprtNm
 		, "hdqtCd": ""
 		, "hdqtNm": ""
-	}
+	};
 
 	//console.log(data);
 
@@ -117,8 +117,7 @@ function getEmpList() {
 			rebuildTable(data);
 		}
 	});
-
-}
+};
 
 // draw modal table employee 
 function rebuildTable(data) {
@@ -144,30 +143,29 @@ function rebuildTable(data) {
 	}
 	//console.log(html);
 	$('#AC01120P_tbodyEmpList').html(html);
-
 };
 
 // close modal
-function modalClose(){
+function modalClose() {
 	let Modal = document.getElementById('AC01120P');
 	Modal.style.display = "none";
-}
+};
 
 // send to #rcvdEmpNm
-function setEmpNm(){
+function setEmpNm() {
 	//tr(selected) = event.currentTarget;
 	//td(selected) = event.target;
 	var tr = event.currentTarget;
 	var td = $(tr).children();
-	
+
 	var eno = td.eq(0).text();	// 직원번호
 	var empNm = td.eq(1).text();	// 직원명
 	var dprtCd = td.eq(2).text();	// 부점코드
 	var dprtNm = td.eq(3).text();	// 부점명
 	var hdqtCd = td.eq(4).text();	// 본부코드
 	var hdqtNm = td.eq(5).text();	// 본부명
-	
-	
+
+
 	var pathname = $(location).attr('pathname');
 	var path = pathname.split('/');
 	var pageEmpNm = '#' + path[path.length - 1] + '_empNm';
@@ -176,16 +174,14 @@ function setEmpNm(){
 	var pageDprtNm = '#' + path[path.length - 1] + '_dprtNm';
 	var pageHdqtCd = '#' + path[path.length - 1] + '_hdqtCd';
 	var pageHdqtNm = '#' + path[path.length - 1] + '_hdqtNm';
-	
+
 	$(pageEmpNm).val(empNm);
 	$(pageEno).val(eno);
 	$(pageDprtCd).val(dprtCd);
 	$(pageDprtNm).val(dprtNm);
 	$(pageHdqtCd).val(hdqtCd);
 	$(pageHdqtNm).val(hdqtNm);
-	
+
 	reset_AC01120P();
 	modalClose();
-}
-
-
+};

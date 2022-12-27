@@ -2,10 +2,6 @@ $(document).ready(function() {
 
 	setDatePicker();
 
-	setOpenModal();
-
-	setKeyDownFunction();
-	
 	loadTabContents();
 
 });
@@ -34,123 +30,24 @@ function setDatePicker() {
 	$('.datepicker').on('cancel.daterangepicker', function(ev, picker) {
 		$(this).val('');
 	});
-	
+
 	// #tab1_datepicker1 btn apply function
 	$('#tab1_datepicker1').on('apply.daterangepicker', function(ev, picker) {
 		var month = $("#invstPrdMtC").val();
-		if(month != ""){
-			calcDate();			
+		if (month != "") {
+			calcDate();
 		}
 	});
-}
-
-// modal controll function
-function setOpenModal() {
-	let Modal = document.getElementById('AS02020P');
-	let OpenModal = document.getElementById("open_modal_AS02020P");
-	let CloseModal = document.getElementsByClassName("modal_close_AS02020P")[0];
-
-	// open modal
-	OpenModal.onclick = function() {
-		Modal.style.display = "block";
-	}
-
-	// close modal
-	CloseModal.onclick = function() {
-		Modal.style.display = "none";
-	}
-
-	// close modal
-	window.onclick = function(event) {
-		if (event.target === Modal) {
-			Modal.style.display = "none";
-		}
-	}
-
-	// close modal
-	$(document).keydown(function(e) {
-		//keyCode 구 브라우저, which 현재 브라우저
-		var code = e.keyCode || e.which;
-		if (code == 27) { // 27은 ESC 키번호
-			Modal.style.display = "none";
-		}
-
-	});
-}
-
-function setKeyDownFunction() {
-	keyDownEnter();
-}
-
-function keyDownEnter() {
-
-	$("input[id=AS02020P_dealNo]").keydown(function(key) {
-		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
-			getDealInfo();
-		}
-	});
-
-	$("input[id=AS02020P_dealNm]").keydown(function(key) {
-		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
-			getDealInfo();
-		}
-	});
-
-}
-
-function getDealInfo() {
-
-	var dealNo = $("#AS02020P_dealNo").val();
-	var dealNm = $("#AS02020P_dealNm").val();
-	var dscDate = $("#AS02020P_datepicker1").val();
-
-	var dtoParam = {
-		"dealNo": dealNo
-		, "dealNm": dealNm
-		, "dscDate": dscDate
-	}
-
-	//console.log(dtoParam);
-
-	$.ajax({
-		type: "GET",
-		url: "/getDealInfo",
-		data: dtoParam,
-		dataType: "json",
-		success: function(data) {
-
-			//console.log(data);
-			/* 
-			var a = '';
-			$('#tbodyEmpList').html(a);
-			
-			rebuildTable(data);
-			 */
-
-		}
-	});
-
-}
-
-// 팝업에서 deal 번호 조회후 더블클릭
-function setDealInfo() {
-	//tr(selected) = event.currentTarget;
-	//td(selected) = event.target;
-	var tr = event.currentTarget;
-	var td = $(tr).children();
-	var ibDealNo = td.eq(0).text();
-
-	//console.log(ibDealNo);
 }
 
 // 화면에서 deal Info 검색 후 더블클릭 set
 function setTabContents() {
-	
+
 	var ibDealNo = $('#AS03210S_selectedDealNo').val();
-	
+
 	//setTab1();
 	//setTab2(ibDealNo);
-	
+
 }
 
 function setTab2(ibDealNo) {
@@ -159,11 +56,11 @@ function setTab2(ibDealNo) {
 
 // 관련문서
 function getDocInfo(ibDealNo) {
-	
+
 	var paramData = {
-		"ibDealNo" : ibDealNo
+		"ibDealNo": ibDealNo
 	}
-	
+
 	$.ajax({
 		type: "GET",
 		url: "/getDocInfo",
@@ -219,7 +116,9 @@ function loadTab1() {
 	loadRaRsltnCcd();
 	loadCoprtnTypCd();
 	loadUserAuth();
-	
+	loadCntyCd();
+	loadBsnsAreaCd();
+
 }
 
 // 탭3 기초자산
@@ -395,9 +294,9 @@ function loadInvstGdsDtlsDvdCd() {
 function checkNumber(event) {
 	if (event.key >= 0 && event.key <= 9) {						// 1. 숫자입력 체크
 		var input = $("#tab1_datepicker1").val();
-		if(input == ""){										// 2. 기표일 값이 없을경우 만기일 체크 안함
-			return true;			
-		}else{													// 2-1. 기표일 값이 있을경우 만기일 체크
+		if (input == ""  {										// 2. 기표일 값이 없을경우 만기일 체크 안함
+			return true;
+		} else {													// 2-1. 기표일 값이 있을경우 만기일 체크
 			calcDate();											// 개월수 계산하여 만기일 입력 fucntion
 			return true;
 		}
@@ -406,16 +305,16 @@ function checkNumber(event) {
 }
 
 // 만기일 계산
-function calcDate(){
+function calcDate() {
 	var inputInvstPrdMtC = $("#invstPrdMtC").val();
 	var inputDate = $("#tab1_datepicker1").val();
-	
+
 	var year = inputDate.substring(0, 4);
 	var month = inputDate.substring(5, 7);
-	var day = inputDate.substring(8, 10); 
-	
-	var date = new Date(year, month-1, day);
-	
+	var day = inputDate.substring(8, 10);
+
+	var date = new Date(year, month - 1, day);
+
 	/*
 	date.setMonth(date.getMonth() + Number(inputInvstPrdMtC));
 	
@@ -425,48 +324,46 @@ function calcDate(){
 	
 	var resultDate = year + "-" + month + "-" + day;
 	*/
-	
+
 	var dt = inputDate;
 	var cycle = inputInvstPrdMtC;
 	var nxt = '';
-	if(dt!="" && cycle !='0'){
-        if(cycle=='99'){
-            nxt="-"
-        }else{
-            var arr1 = dt.split('-');
-            var date = new Date(arr1[0], arr1[1]-1, arr1[2]);
+	if (dt  != "" && cycle != '0') {
+		if (cycle == '99') {
+			nxt   "-"
+		} else {
+			var arr1 = dt.split('-');
+			var date = new Date(arr1[0], arr1[1] - 1, arr1[2]);
 
-            var addMonthFirstDate = new Date(
-                date.getFullYear(),
-                date.getMonth() + parseInt(cycle),
-                1
-            );
-            var addMonthLastDate = new Date(
-                addMonthFirstDate.getFullYear(),
-                addMonthFirstDate.getMonth() + 1
-                , 0
-            );
+			var addMonthFirstDate = new Date(
+				date.getFullYear(),
+				date.getMonth() + parseInt(cycle),
+				1
+			);
+			var addMonthLastDate = new Date(
+				addMonthFirstDate.getFullYear(),
+				addMonthFirstDate.getMonth() + 1
+				, 0
+			);
 
-            var result = addMonthFirstDate;
-            if(date.getDate() > addMonthLastDate.getDate()) 
-            {
-                result.setDate(addMonthLastDate.getDate());
-            } 
-            else 
-            {
-                result.setDate(date.getDate());
-            }
+			var result = addMonthFirstDate;
+			if (date.getDate() > addMonthLastDate.getDate()) {
+				result.setDate(addMonthLastDate.getDate());
+			}
+			else {
+				result.setDate(date.getDate());
+			}
 
-            nxt = result.getFullYear() + "-" + fillZero(2,(result.getMonth() + 1).toString()) + "-" + fillZero(2,result.getDate().toString());
-        }
-    }
+			nxt = result.getFullYear() + "-" + fillZero(2, (result.getMonth() + 1).toString()) + "-" + fillZero(2, result.getDate().toString());
+		}
+	}
 
 	function fillZero(width, str) {
 		return str.length >= width ? str : new Array(width - str.length + 1).join('0') + str;//남는 길이만큼 0으로 채움
 	}
-	
+
 	$("#mtrtDt").val(nxt);
-	
+
 }
 
 // 부의기준통화
@@ -486,6 +383,27 @@ function loadInvstCrncyCd() {
 				});
 			}
 			$('#AS03210S_invstCrncyCd').html(html);
+		}
+	});
+}
+
+// 투자국가
+function loadCntyCd() {
+	$.ajax({
+		type: "GET",
+		url: "/getCntyCd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_cntyCd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_cntyCd').html(html);
 		}
 	});
 }
@@ -528,6 +446,27 @@ function loadCheckItemCd() {
 				});
 			}
 			$('#AS03210S_checkItemCd').html(html);
+		}
+	});
+}
+
+// 사업지역
+function loadBsnsAreaCd() {
+	$.ajax({
+		type: "GET",
+		url: "/getBsnsAreaCd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_bsnsAreaCd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_bsnsAreaCd').html(html);
 		}
 	});
 }
@@ -655,8 +594,122 @@ function loadCoprtnTypCd() {
 			$('#AS03210S_coprtnTypCd').html(html);
 		}
 	});
-}
+};
 
+/*tab1****************************************************/
+
+function tab1save() {
+
+	var riskInspctCcd = $('#AS03210S_riskInspctCcd').val();							// 리스크심사구분
+	var lstCCaseCcd = $('#AS03210S_lstCCaseCcd').val();								// 부수안건
+	var inspctDprtCcd = $('#AS03210S_inspctDprtCcd').val();							// 심사부서구분 
+	var invstGdsLdvdCd = $('#AS03210S_invstGdsLdvdCd').val();						// 투자상품대분류
+	var invstGdsMdvdCd = $('#AS03210S_invstGdsMdvdCd').val();						// 투자상품중분류
+	var invstGdsSdvdCd = $('#AS03210S_invstGdsSdvdCd').val();						// 투자상품소분류
+	var invstGdsDtlsDvdCd = $('#AS03210S_invstGdsDtlsDvdCd').val();					// 투자상품상세분류
+	// 투자기간(INVST_PRD_DY_C) : 만기일 - 기표일
+	var wrtDt = $('#tab1_datepicker1').val();										// 기표일
+	var mtrtDt = $('#mtrtDt').val();												// 만기일
+	var ibDealNm = $('#ibDealNm').val();											// 안건명
+	var ibDealSnmNm = $('#ibDealSnmNm').val();										// 안건약어명
+	var invstCrncyCd = $('#AS03210S_invstCrncyCd').val();							// 부의기준통화
+	var crncyAmt = $('#crncyAmt').val();											// 부의금액
+	var cntyCd = $('#AS03210S_cntyCd').val();										// 투자국가
+	var aplcExchR = $('aplcExchR').val();											// 적용환율
+	// 부의금액(원)(AGR_AMT) : 부의금액 * 적용환율
+	var tlErnAmt = $('#tlErnAmt').val();											// 투자수익
+	var rcvblErnAmt = $('#rcvblErnAmt').val();										// 수수료수익
+	var wrtErmAmt = $('#wrtErmAmt').val();											// 투자수익 
+	var indTypDvdCd = $('#AS03210S_indTypDvdCd').val();								// 고위험산업
+	var checkItemCd = $('#AS03210S_checkItemCd').val();								// 업무구분
+	var bsnsAreaCd = $('#AS03210S_bsnsAreaCd').val();								// 사업지역
+	var invstThingCcd = $('#AS03210S_invstThingCcd').val();							// 주요투자물건
+	var invstThingDtlsCcd = $('#AS03210S_invstThingDtlsCcd').val();					// 투자물건상세
+	var mrtgF = $('#AS03210S_mrtgF').val();											// 담보
+	var grtF = $('#AS03210S_grtF').val();											// 보증
+	var rspsbCmplCcd = $('#AS03210S_rspsbCmplCcd').val();							// 책임준공
+	var raRsltnCcd = $('#AS03210S_raRsltnCcd').val();								// 전결구분
+	var riskRcgNo = $('#AS03210S_riskRcgNo').val();									// 리스크승인번호
+	var hdqtCd = $('#AS03210S_hdqtCd').val();										// 본부코드
+	var hdqtNm = $('#AS03210S_hdqtNm').val();										// 본부명
+	var dprtCd = $('#AS03210S_dprtCd').val();										// 부서코드
+	var dprtNm = $('#AS03210S_dprtNm').val();										// 부서명
+	var eno = $('#AS03210S_eno').val();												// 직원코드
+	var empNm = $('#AS03210S_empNm').val();											// 직원명
+	var coprtnTypCd = $('#AS03210S_coprtnTypCd').val();								// 협업유형
+	var entpRnm = $('#AS03210S_entpRnm').val();										// 업체명
+	var bsnsDprtCmmtRmrk1 = $('#AS03210S_bsnsDprtCmmtRmrk1').val();					// 사업부의견
+	var inspctDprtCmmtRmrk2 = $('#AS03210S_inspctDprtCmmtRmrk2').val();				// 심사부의견
+
+	var paramData = {
+		"riskInspctCcd": riskInspctCcd
+		, "lstCCaseCcd": lstCCaseCcd
+		, "inspctDprtCcd": inspctDprtCcd
+		, "invstGdsLdvdCd": invstGdsLdvdCd
+		, "invstGdsMdvdCd": invstGdsMdvdCd
+		, "invstGdsSdvdCd": invstGdsSdvdCd
+		, "invstGdsDtlsDvdCd": invstGdsDtlsDvdCd
+		, "wrtDt": wrtDt
+		, "mtrtDt": mtrtDt
+		, "ibDealNm": ibDealNm
+		, "ibDealSnmNm": ibDealSnmNm
+		, "invstCrncyCd": invstCrncyCd
+		, "crncyAmt": crncyAmt
+		, "cntyCd": cntyCd
+		, "aplcExchR": aplcExchR
+		, "tlErnAmt": tlErnAmt
+		, "rcvblErnAmt": rcvblErnAmt
+		, "wrtErmAmt": wrtErmAmt
+		, "indTypDvdCd": indTypDvdCd
+		, "checkItemCd": checkItemCd
+		, "bsnsAreaCd": bsnsAreaCd
+		, "invstThingCcd": invstThingCcd
+		, "invstThingDtlsCcd": invstThingDtlsCcd
+		, "mrtgF": mrtgF
+		, "grtF": grtF
+		, "rspsbCmplCcd": rspsbCmplCcd
+		, "raRsltnCcd": raRsltnCcd
+		, "riskRcgNo": riskRcgNo
+		, "hdqtCd": hdqtCd
+		, "hdqtNm": hdqtNm
+		, "dprtCd": dprtCd
+		, "dprtNm": dprtNm
+		, "eno": eno
+		, "empNm": empNm
+		, "coprtnTypCd": coprtnTypCd
+		, "entpRnm": entpRnm
+		, "bsnsDprtCmmtRmrk1": bsnsDprtCmmtRmrk1
+		, "inspctDprtCmmtRmrk2": inspctDprtCmmtRmrk2
+	};
+
+	//console.log(paramData);
+
+	$.ajax({
+		type: "POST",
+		url: "/registDealInfo",
+		data: paramData,
+		dataType: "json",
+		success: function() {
+			swal("success!");
+		},
+		error: function(errorCd) {
+			swal("deal정보를 생성하는데 실패하였습니다. sql 에러 코드를 확인해주세요.\n error code:" + errorCd);
+		}
+	});
+
+
+
+};
+
+
+
+
+
+
+
+
+
+/*tab2****************************************************/
 // 관련문서 초기화버튼 function
 function tab2BtnReset() {
 	$('#AS03210S_docNo').val('');
@@ -665,17 +718,17 @@ function tab2BtnReset() {
 // 관련문서 삭제버튼 function
 function tab2BtnDelete() {
 	var ibDealNo = $('#AS03210S_selectedDealNo').val();
-	
+
 	if (ibDealNo != "") {
 		var docNo = $('#AS03210S_docNo').val();
-	
+
 		//console.log(dealNo);
-		
+
 		var paramData = {
-			"ibDealNo" : dealNo
-			,"docNo" : docNo
+			"ibDealNo": dealNo
+			, "docNo": docNo
 		}
-		
+
 		$.ajax({
 			type: "POST",
 			url: "/deleteDocInfo",
@@ -684,19 +737,19 @@ function tab2BtnDelete() {
 			success: function() {
 				getDocInfo(ibDealNo);
 			},
-			error: function(errorCd){
+			error: function(errorCd) {
 				swal("삭제 실패하였습니다. sql 에러 코드를 확인해주세요.\n error code:" + errorCd);
 			}
 		});
-		
+
 	} else {
 		swal('Deal 정보를 조회해주세요');
 	}
-	
+
 }
 // 관련문서 저장버튼 function
 function tab2BtnSave() {
-	
+
 }
 
 // 기초자산종류

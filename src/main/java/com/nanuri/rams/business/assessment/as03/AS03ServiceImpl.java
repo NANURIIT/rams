@@ -122,6 +122,12 @@ public class AS03ServiceImpl implements AS03Service {
 	public List<Map<String, Object>> getInvstCrncyCd() {
 		return raa91bMapper.getInvstCrncyCd();
 	};
+	
+	// 투자국가
+	@Override
+	public List<Map<String, Object>> getCntyCd() {
+		return raa91bMapper.getCntyCd();
+	};
 
 	// 고위험사업
 	@Override
@@ -133,6 +139,12 @@ public class AS03ServiceImpl implements AS03Service {
 	@Override
 	public List<Map<String, Object>> getCheckItemCd() {
 		return raa91bMapper.getCheckItemCd();
+	};
+	
+	// 사업지역
+	@Override
+	public List<Map<String, Object>> getBsnsAreaCd() {
+		return raa91bMapper.getBsnsAreaCd();
 	};
 
 	// 주요투자물건
@@ -181,36 +193,37 @@ public class AS03ServiceImpl implements AS03Service {
 	@Override
 	public List<Map<String, Object>> getBscAstsKndCd() {
 		return raa91bMapper.getBscAstsKndCd();
-	}
+	};
 
 	// 법인형태
 	@Override
 	public List<Map<String, Object>> getCncCmpnyClsfCd() {
 		return raa91bMapper.getCncCmpnyClsfCd();
-	}
+	};
 
 	// 담보유형
 	@Override
 	public List<Map<String, Object>> getMrtgKndCcd() {
 		return raa91bMapper.getMrtgKndCcd();
-	}
+	};
 
 	// 담보상세
 	@Override
 	public List<Map<String, Object>> getMrtgDtlsCcd() {
 		return raa91bMapper.getMrtgDtlsCcd();
-	}
+	};
 
 	// 권리순위
 	@Override
 	public List<Map<String, Object>> getRgtRnkCcd() {
 		return raa91bMapper.getRgtRnkCcd();
-	}
+	};
 
 	// 미이행시의무
 	@Override
 	public List<Map<String, Object>> getDbtNpFrmOblgCcd() {
 		return raa91bMapper.getDbtNpFrmOblgCcd();
-	}
+	};
+	
 
 }

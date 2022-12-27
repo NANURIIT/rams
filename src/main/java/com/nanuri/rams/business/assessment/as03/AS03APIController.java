@@ -89,6 +89,12 @@ public class AS03APIController {
 	public List<Map<String, Object>> getInvstCrncyCd() {
 		return as03Service.getInvstCrncyCd();
 	}
+	
+	// 투자국가
+	@GetMapping(value = "/getCntyCd")
+	public List<Map<String, Object>> getCntyCd() {
+		return as03Service.getCntyCd();
+	}
 
 	// 고위험사업
 	@GetMapping(value = "/getIndTypDvdCd")
@@ -100,6 +106,12 @@ public class AS03APIController {
 	@GetMapping(value = "/getCheckItemCd")
 	public List<Map<String, Object>> getCheckItemCd() {
 		return as03Service.getCheckItemCd();
+	}
+	
+	// 투자국가
+	@GetMapping(value = "/getBsnsAreaCd")
+	public List<Map<String, Object>> getBsnsAreaCd() {
+		return as03Service.getBsnsAreaCd();
 	}
 
 	// 주요투자물건
