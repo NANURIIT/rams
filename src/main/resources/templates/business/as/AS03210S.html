@@ -6,6 +6,7 @@
 <th:block layout:fragment="script">
 	<script th:src="@{/js/tab.js}"></script>
 	<script th:src="@{/js/business/AS03210S.js}"></script>
+	<script th:src="@{/js/business/AC01120P.js}"></script>
 </th:block>
 
 <th:block layout:fragment="customContent">
@@ -139,10 +140,7 @@
 							<div class="contents_list">
 								<div class="contents_list_title">전결구분</div>
 								<div class="contents_list_desc">
-									<select>
-										<option value="1">1</option>
-										<option value="1">2</option>
-										<option value="1">3</option>
+									<select id="AS03210S_raRsltnCcd">
 									</select>
 								</div>
 							</div>
@@ -287,21 +285,20 @@
 								<div class="contents_list_title">본부</div>
 								<div
 									class="contents_list_desc contents_list_descS contents_list_descE">
-									<input type="text"> <input type="text">
+									<input type="text" id="AS03210S_hdqtCd" readonly> <input type="text" id="AS03210S_hdqtNm" readonly>
 								</div>
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">부서</div>
-								<div
-									class="contents_list_desc contents_list_descS contents_list_descE">
-									<input type="text"> <input type="text">
+								<div class="contents_list_desc contents_list_descS contents_list_descE">
+									<input type="text" id="AS03210S_dprtCd" readonly> <input type="text" id="AS03210S_dprtNm" readonly>
 								</div>
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">직원</div>
 								<div class="contents_list_desc contents_list_descS">
-									<input type="text"> <input type="text">
-									<button>찾기</button>
+									<input type="text" id="AS03210S_eno" readonly> <input type="text" id="AS03210S_empNm" readonly>
+									<button type="button" id="open_modal_AC01120P">찾기</button>
 								</div>
 							</div>
 						</div>
@@ -390,10 +387,7 @@
 							<div class="contents_list">
 								<div class="contents_list_title">책임준공</div>
 								<div class="contents_list_desc">
-									<select>
-										<option value="1">1</option>
-										<option value="1">2</option>
-										<option value="1">3</option>
+									<select id="AS03210S_rspsbCmplCcd">
 									</select>
 								</div>
 							</div>
@@ -616,10 +610,7 @@
 							<div class="contents_list">
 								<div class="contents_list_title">법인형태</div>
 								<div class="contents_list_desc">
-									<select>
-										<option value="1">1</option>
-										<option value="1">2</option>
-										<option value="1">3</option>
+									<select id="AS03210S_cncCmpnyClsfCd">
 									</select>
 								</div>
 							</div>
@@ -700,9 +691,8 @@
 								<div class="contents_list_title">내부등급대상여부</div>
 								<div class="contents_list_desc">
 									<select>
-										<option value="1">1</option>
-										<option value="1">2</option>
-										<option value="1">3</option>
+										<option value="Y" selected>Y</option>
+										<option value="N">N</option>
 									</select>
 								</div>
 							</div>
@@ -710,9 +700,8 @@
 								<div class="contents_list_title">SL대상여부</div>
 								<div class="contents_list_desc">
 									<select>
-										<option value="1">1</option>
-										<option value="1">2</option>
-										<option value="1">3</option>
+										<option value="Y" selected>Y</option>
+										<option value="N">N</option>
 									</select>
 								</div>
 							</div>
@@ -797,12 +786,16 @@
 								<div class="content_list_caption">담보</div>
 							</div>
 							<div class="contents_list">
-								<div class="contents_list_title">담보종류</div>
+								<div class="contents_list_title">담보유형</div>
 								<div class="contents_list_desc">
-									<select>
-										<option value="1">1</option>
-										<option value="1">2</option>
-										<option value="1">3</option>
+									<select id="AS03210S_mrtgKndCcd">
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">담보상세</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_mrtgDtlsCcd">
 									</select>
 								</div>
 							</div>
@@ -823,10 +816,7 @@
 							<div class="contents_list">
 								<div class="contents_list_title">권리순위</div>
 								<div class="contents_list_desc">
-									<select>
-										<option value="1">1</option>
-										<option value="1">2</option>
-										<option value="1">3</option>
+									<select id="AS03210S_rgtRnkCcd">
 									</select>
 								</div>
 							</div>
@@ -979,10 +969,7 @@
 							<div class="contents_list">
 								<div class="contents_list_title">미이행시의무</div>
 								<div class="contents_list_desc">
-									<select>
-										<option value="1">1</option>
-										<option value="1">2</option>
-										<option value="1">3</option>
+									<select id="AS03210S_dbtNpFrmOblgCcd">
 									</select>
 								</div>
 							</div>

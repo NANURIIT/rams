@@ -41,4 +41,117 @@
 	</select>
 
 
+	<!-- 권한구분 목록 조회 -->
+	<select id="selectRghtCd" resultType="com.nanuri.rams.business.common.dto.RAA94BDTO">
+		SELECT RGHT_CD
+		     , RGHT_CD_NM
+		     , RGHT_CD_EXPL
+		     , RGHT_CCD
+		     , APLC_F
+		     , RGST_DT
+		     , RGST_P_ENO
+		     , DLT_F
+		     , DLT_DT
+		     , DLT_TM
+		     , DLT_P_ENO
+		     , HNDL_DY_TM
+		     , HNDL_DPRT_CD
+		     , HNDL_P_ENO
+	  	  FROM RAA94B
+	</select>
+
+	<select id="selectAuthCode" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA94BDTO">
+        SELECT rght_cd
+             , rght_cd_nm
+             , rght_cd_expl
+             , rght_ccd
+             , aplc_f
+             , rgst_dt
+             , rgst_p_eno
+             , dlt_f
+             , dlt_dt
+             , dlt_tm
+             , dlt_p_eno
+             , hndl_dy_tm
+             , hndl_dprt_cd
+             , hndl_p_eno
+          FROM RAA94B
+        <if test="rghtCdNm != null and rghtCdNm != ''">
+         WHERE 1=1
+           AND rght_cd_nm LIKE CONCAT('%', #{rghtCdNm}, '%')
+        </if>
+    </select>
+    
+    <select id="getAuthCode" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA94BDTO">
+        SELECT rght_cd
+             , rght_cd_nm
+             , rght_cd_expl
+             , rght_ccd
+             , aplc_f
+             , rgst_dt
+             , rgst_p_eno
+             , dlt_f
+             , dlt_dt
+             , dlt_tm
+             , dlt_p_eno
+             , hndl_dy_tm
+             , hndl_dprt_cd
+             , hndl_p_eno
+          FROM RAA94B
+         WHERE 1=1
+           AND rght_cd = #{rghtCd}
+    </select>
+
+    <insert id="insertAuthCode" parameterType="com.nanuri.rams.business.common.dto.RAA94BDTO">
+        INSERT INTO RAA94B
+               (
+                RGHT_CD
+                , RGHT_CD_NM
+                , RGHT_CD_EXPL
+                , APLC_F
+                , RGST_DT
+                , RGST_P_ENO
+               ) 
+        VALUES (
+                #{rghtCd}
+                , #{rghtCdNm}
+                , #{rghtCdExpl}
+                , #{aplcF}
+                , #{rgstDt}
+                , #{rgstPEno}
+               )
+    </insert>
+
+    <update id="updateAuthCode" parameterType="com.nanuri.rams.business.common.dto.RAA94BDTO">
+        UPDATE RAA94B
+        <set>
+            <if test="rghtCd != null and rghtCd !=''">
+                rght_cd = #{rghtCd},
+            </if>
+            <if test="rghtCdNm != null and rghtCdNm !=''">
+                rght_cd_nm = #{rghtCdNm},
+            </if>
+            <if test="rghtCdExpl != null and rghtCdExpl !=''">
+                rght_cd_expl = #{rghtCdExpl},
+            </if>
+            <if test="aplcF != null and aplcF !=''">
+                aplc_f = #{aplcF},
+            </if>
+               hndl_p_eno = #{hndlPEno},
+               hndl_dy_tm = now()
+        </set>
+         WHERE 1=1
+           AND rght_cd = #{oldRghtCd}
+    </update>
+
+    <update id="deleteAuthCode" parameterType="java.util.List">
+        UPDATE RAA94B
+           SET APLC_F = 'N'
+         WHERE 1=1
+           AND rght_cd IN
+        <foreach collection="list" item="rghtCd" index="index" open="(" separator="," close=")">
+               #{rghtCd}
+        </foreach>
+    </update>
+
 </mapper>

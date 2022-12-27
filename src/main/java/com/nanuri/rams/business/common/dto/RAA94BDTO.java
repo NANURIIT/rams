@@ -24,4 +24,6 @@ public class RAA94BDTO { // TODO: rgstTm이 없어서 CommonDTO를 사용하지 
     private Date hndlDyTm;                    /* 처리일시 */
     private String hndlDprtCd;                  /* 처리부점코드 */
     private String hndlPEno;                    /* 처리자사번 */
+
+    private String oldRghtCd;       			/* 변경전 권한코드 */
 }

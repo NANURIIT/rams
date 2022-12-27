@@ -23,6 +23,8 @@ import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto;
 
 @Service
 public interface AC01Service {
+	
+	//============ start AC01010S(공통코드관리) ============//
 
 	public List<GroupCodeInfoDto> getGroupCodeInfoList(String cmnsCdGrp) throws ParseException;			// 그룹코드정보 리스트 가져오기
 
@@ -39,11 +41,16 @@ public interface AC01Service {
 	public boolean deleteCodeInfo(CodeInfoDeleteRequestDto requestDto);
 
 	public List<CommonCodeInfoDto> getCommonCodeName(); 												// 조회할 코드구분(코드이름) 가져오기
+	
+	//============ end AC01010S(공통코드관리) ============//
+	
+	
 
 	/* 사용자관리 */
 	public void insertUser(RAA92BDTO userManageDTO);                    								// 사용자 추가// 사용자 추가
     public List<RAA92BVO.selectVO> getUserList(RAA92BVO.selectVO userVo);            					// 사용자 목록 조회
     public void deleteUser(RAA92BDTO userManageDTO);                    								// 사용자 삭제(퇴사)
+    
     public List<RAA94BDTO> selectAuthCode();                            							  	// 사용자관리 화면의 권한구분
 
 	/* 메뉴별권한관리 */
@@ -51,4 +58,22 @@ public interface AC01Service {
 	public List<RAA94BVO.MenuByAuthVO> getMenuByAuth();													// 권한별 메뉴화면 사용권한 조회
 	public List<RAA95BDTO> getAvailableMenu(Map<String, String> menuId);								// RAA95B 수정 조회 가능 여부 조회
 	public boolean registUseMenu(ArrayList<RAA95BVO.selectUseMenuVO> dtoList);													// RAA95B 수정 조회 가능 여부 저장
+	
+	//============ start AC01210S(권한별 메뉴관리) ============//
+	
+	public List<RAA94BDTO> getAuthCode(String rghtCdNm) throws ParseException;
+	
+	public List<RAA93BVO> getAuthCodeMenu(String rgCdNm);
+	
+	public boolean registerAuthCode(List<RAA94BDTO> requestDtos);
+	
+	public boolean deleteAuthCode(List<String> rghtCd);
+	
+	public boolean registerAuthCodeMenu(List<RAA93BVO> requestDtos);
+	
+	//============ end AC01210S(권한별 메뉴관리) ============//
+	
+	
 }
+
+
