@@ -15,6 +15,7 @@ public class GroupCodeInfoSaveRequestDto {
     private String oldCmnsCdGrp;
     private String cmnsCdGrp;
     private String cmnsCdNm;
+    private String cmnsCdGrpExpl;
     private Integer cdLngth;
     private String useF;
 }

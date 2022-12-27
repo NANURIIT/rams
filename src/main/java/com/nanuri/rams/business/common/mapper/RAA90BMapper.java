@@ -27,6 +27,7 @@ public interface RAA90BMapper {
 	public int registCodeInfo(CodeInfoSaveRequestDto requestDto); 										// 코드정보 등록하기
 
 	public int insertCodeInfo(CodeInfoSaveRequestDto requestDto);
+	public Integer getMaxSeq(String cmnsCdGrp);
 
 	public Optional<CodeInfoDto> getCodeInfo(@Param(value = "cmnsCdGrp") String cmnsCdGrp,
 											 @Param(value = "cdVlId") String cdVlId);

@@ -103,6 +103,13 @@ public class AC01ServiceImpl implements AC01Service {
         for (CodeInfoDto codeInfo : codeInfoList) {
             Date formatDate = dateFormat.parse(codeInfo.getRgstDt());
             codeInfo.setRgstDt(newFormat.format(formatDate));
+            if (StringUtil.isAllWhitespace(codeInfo.getRgstPEno())) {
+                codeInfo.setRgstPEno("-");
+            }
+
+            if (StringUtil.isAllWhitespace(codeInfo.getHndlPEno())) {
+                codeInfo.setHndlPEno("-");
+            }
         }
 
         return codeInfoList;
@@ -118,9 +125,14 @@ public class AC01ServiceImpl implements AC01Service {
 
             if (raa90BMapper.getCodeInfo(requestDto.getCmnsCdGrp(), requestDto.getOldCdVlId()).isEmpty()) {
                 // 신규등록
+                Integer seq = raa90BMapper.getMaxSeq(requestDto.getCmnsCdGrp()) == null ?
+                        1 : raa90BMapper.getMaxSeq(requestDto.getCmnsCdGrp()) + 1;
+                requestDto.setCdSq(seq);
+                requestDto.setRgstPEno(facade.getDetails().getEno());
                 count += raa90BMapper.insertCodeInfo(requestDto);
             } else {
                 // 수정
+                requestDto.setHndlPEno(facade.getDetails().getEno());
                 count += raa90BMapper.registCodeInfo(requestDto);
             }
         }

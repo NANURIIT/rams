@@ -85,6 +85,10 @@
             <if test="useF != null and useF !=''">
                 use_f = #{useF},
             </if>
+
+            <if test="cmnsCdGrpExpl != null and cmnsCdGrpExpl !=''">
+                cmns_cd_grp_expl = #{cmnsCdGrpExpl},
+            </if>
         </set>
         WHERE cmns_cd_grp = #{oldCmnsCdGrp}
     </update>
@@ -95,12 +99,14 @@
             cmns_cd_nm,
             cd_lngth,
             use_f,
+            cmns_cd_grp_expl,
             rgst_dt
         ) VALUES (
             #{cmnsCdGrp},
             #{cmnsCdNm},
             #{cdLngth},
             #{useF},
+            #{cmnsCdGrpExpl},
             DATE_FORMAT(now(), '%Y%m%d')
         )
     </insert>
@@ -117,6 +123,8 @@
             <if test="useF != null and useF !=''">
                 use_f = #{useF},
             </if>
+            hndl_dy_tm = now(),
+            hndl_p_eno = #{hndlPEno}
         </set>
         WHERE cmns_cd_grp = #{cmnsCdGrp}
           AND cd_vl_id = #{oldCdVlId}
@@ -128,15 +136,25 @@
             cd_vl_id,
             cd_vl_nm,
             use_f,
-            rgst_dt
+            cd_sq,
+            rgst_dt,
+            rgst_p_eno
         ) VALUES (
             #{cmnsCdGrp},
             #{cdVlId},
             #{cdVlNm},
             #{useF},
-            DATE_FORMAT(now(), '%Y%m%d')
+            #{cdSq},
+            DATE_FORMAT(now(), '%Y%m%d'),
+            #{rgstPEno}
         )
     </insert>
+
+    <select id="getMaxSeq" parameterType="String" resultType="Integer">
+        SELECT MAX(cd_sq)
+          FROM RAA91B
+         WHERE cmns_cd_grp = #{cmnsCdGrp}
+    </select>
 
     <select id="getCodeInfo" resultType="com.nanuri.rams.business.itmanager.dto.CodeInfoDto">
         SELECT cd_vl_id
