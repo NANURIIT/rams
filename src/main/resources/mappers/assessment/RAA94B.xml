@@ -21,7 +21,7 @@
 	  	  FROM RAA94B
 	</select>
 
-	<select id="selectAuthCode" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA94BDto">
+	<select id="selectAuthCode" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA94BDTO">
         SELECT rght_cd
              , rght_cd_nm
              , rght_cd_expl
@@ -43,7 +43,7 @@
         </if>
     </select>
     
-    <select id="getAuthCode" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA94BDto">
+    <select id="getAuthCode" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA94BDTO">
         SELECT rght_cd
              , rght_cd_nm
              , rght_cd_expl
@@ -63,7 +63,7 @@
            AND rght_cd = #{rghtCd}
     </select>
 
-    <insert id="insertAuthCode" parameterType="com.nanuri.rams.business.common.dto.RAA94BDto">
+    <insert id="insertAuthCode" parameterType="com.nanuri.rams.business.common.dto.RAA94BDTO">
         INSERT INTO RAA94B
                (
                 RGHT_CD
@@ -83,7 +83,7 @@
                )
     </insert>
 
-    <update id="updateAuthCode" parameterType="com.nanuri.rams.business.common.dto.RAA94BDto">
+    <update id="updateAuthCode" parameterType="com.nanuri.rams.business.common.dto.RAA94BDTO">
         UPDATE RAA94B
         <set>
             <if test="rghtCd != null and rghtCd !=''">

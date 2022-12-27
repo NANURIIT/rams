@@ -57,7 +57,7 @@
 	     ORDER BY A.SRT_NO ASC, B.SRT_NO ASC, C.SRT_NO ASC
 	</select>
 
-	<select id="selectAuthCodeMenu" parameterType="String" resultType="com.nanuri.rams.business.common.vo.RAA93BVo">
+	<select id="selectAuthCodeMenu" parameterType="String" resultType="com.nanuri.rams.business.common.vo.RAA93BVO">
         SELECT 93b.srt_no
              , 93b.menu_id
              , 95b.rght_cd
@@ -74,7 +74,7 @@
            AND 93b.scrn_aplc_type_cd = 'S'
     </select>
     
-    <update id="updateAuthCodeMenu" parameterType="com.nanuri.rams.business.common.vo.RAA93BVo">
+    <update id="updateAuthCodeMenu" parameterType="com.nanuri.rams.business.common.vo.RAA93BVO">
         UPDATE RAA93B
             <set>
                 <if test="dltF != null and dltF !=''">
