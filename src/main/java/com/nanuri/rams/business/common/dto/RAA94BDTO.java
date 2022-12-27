@@ -1,5 +1,7 @@
 package com.nanuri.rams.business.common.dto;
 
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +21,7 @@ public class RAA94BDTO { // TODO: rgstTm이 없어서 CommonDTO를 사용하지 
     private String dltDt;                       /* 삭제일자 */
     private String dltTm;                       /* 삭제시간 */
     private String dltPEno;                     /* 삭제자사번 */
-    private String hndlDyTm;                    /* 처리일시 */
+    private Date hndlDyTm;                    /* 처리일시 */
     private String hndlDprtCd;                  /* 처리부점코드 */
     private String hndlPEno;                    /* 처리자사번 */
 }

@@ -2,30 +2,106 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.RAA95BMapper">
 	
-<select id="selectMenuByAuth" resultType="com.nanuri.rams.business.common.vo.RAA95BVO$MenuByAuthVO">
+<select id="selectAvailableMenu" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO" parameterType='java.util.Map'>
 	/* 권한별 메뉴화면 사용권한 조회 */
-		SELECT A.RGHT_CD
-			 , A.RGHT_CD_NM
-			 , A.RGHT_CD_EXPL
-			 , A.RGHT_CCD
-			 , B.MENU_ID
-			 , B.SQ
-			 , B.MDFY_RGHT_CCD
-			 , B.HNDL_DY_TM
-			 , B.HNDL_DPRT_CD
-			 , B.HNDL_P_ENO
-		  FROM RAA94B A
-	 LEFT JOIN (SELECT B.RGHT_CD
-   					 , B.SQ
-					 , B.MENU_ID
-					 , B.MDFY_RGHT_CCD
-					 , B.HNDL_DY_TM
-					 , B.HNDL_DPRT_CD
-					 , B.HNDL_P_ENO
-				  FROM RAA93B A
-			RIGHT JOIN RAA95B B
-		  			ON A.MENU_ID = B.MENU_ID) B
-			ON A.RGHT_CD = B.RGHT_CD
+	SELECT RGHT_CD
+		 , SQ
+		 , MENU_ID
+		 , MDFY_RGHT_CCD
+		 , HNDL_DY_TM
+		 , HNDL_DPRT_CD
+		 , HNDL_P_ENO
+	FROM RAA95B
+	WHERE 1=1
+		<if test='lv3Id == "null"'>
+		AND MENU_ID = #{lv2Id}
+		</if>
+		<if test='lv3Id != "null"'>
+		AND MENU_ID = #{lv3Id}
+		</if>
 </select>
 
+<insert id='insertUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
+	   INSERT INTO RAA95B (
+			  RGHT_CD
+			, SQ
+			, MENU_ID
+			, MDFY_RGHT_CCD
+			, HNDL_DY_TM
+			, HNDL_DPRT_CD
+			, HNDL_P_ENO
+			)
+	   VALUES (
+			  #{rghtCd}
+			, #{sq}
+			, #{menuId}
+			, #{mdfyRghtCcd}
+			, NOW()
+			, #{hndlDprtCd}
+			, #{hndlPEno}
+			)
+		   ON DUPLICATE KEY
+	   UPDATE MDFY_RGHT_CCD 	= #{mdfyRghtCcd}
+			, HNDL_DY_TM 		= NOW()
+			, HNDL_DPRT_CD 		= #{hndlDprtCd}
+			, HNDL_P_ENO  		= #{hndlPEno}
+			, MENU_ID 			= #{menuId}
+</insert>
+
+<delete id='deleteUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
+	  DELETE
+		FROM RAA95B
+	   WHERE 1=1
+		 AND RGHT_CD	= #{rghtCd}
+		 AND SQ			= #{sq}
+</delete>
+
+<select id="selectUseMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO" resultType="com.nanuri.rams.business.common.vo.RAA95BVO$selectUseMenuVO">
+	/* 권한별 메뉴화면 사용권한 조회 */
+	 SELECT *
+	   FROM RAA95B A
+	  WHERE MENU_ID
+	  	 IN ( SELECT B.HG_RNK_MENU_ID 
+				FROM RAA95B A
+		   LEFT JOIN RAA93B B
+				  ON A.MENU_ID = B.MENU_ID 
+			   WHERE A.MENU_ID = #{menuId}
+				 AND A.RGHT_CD = #{rghtCd} )
+		 OR MENU_ID = #{menuId}
+</select>
+<!-- <select id="selectUseMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+	/* 권한별 메뉴화면 사용권한 조회 */
+	SELECT RGHT_CD
+		 , SQ
+		 , MENU_ID
+		 , MDFY_RGHT_CCD
+		 , HNDL_DY_TM
+		 , HNDL_DPRT_CD
+		 , HNDL_P_ENO
+	FROM RAA95B
+	WHERE 1=1
+		<if test='sq != null and sq != ""'>
+		AND SQ = #{sq}
+		</if>
+		<if test='rghtCd != null and rghtCd = ""'>
+		AND RGHT_CD = #{rghtCd}
+		</if>
+</select> -->
+
+<select id='selectMainMenuId' parameterType="com.nanuri.rams.business.common.vo.RAA95BVO$selectUseMenuVO" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+	SELECT RGHT_CD
+		 , SQ
+		 , MENU_ID
+		 , MDFY_RGHT_CCD
+		 , HNDL_DY_TM
+		 , HNDL_DPRT_CD
+		 , HNDL_P_ENO
+	 FROM RAA95B A
+    WHERE A.MENU_ID 		= #{menuId}
+	  AND A.RGHT_CD 		= #{rghtCd}
+</select>
+
+<select id="selectMaxSq" resultType="int">
+SELECT MAX(SQ) FROM RAA95B
+</select>
 </mapper>
