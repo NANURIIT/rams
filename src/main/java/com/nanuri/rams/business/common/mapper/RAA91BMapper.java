@@ -24,9 +24,13 @@ public interface RAA91BMapper {
 
 	public List<Map<String, Object>> getInvstCrncyCd();								// 부의기준통화
 	
+	public List<Map<String, Object>> getCntyCd();									// 투자국가
+	
 	public List<Map<String, Object>> getIndTypDvdCd();								// 고위험사업
 	
 	public List<Map<String, Object>> getCheckItemCd();								// 업무구분
+	
+	public List<Map<String, Object>> getBsnsAreaCd();								// 사업지역
 	
 	public List<Map<String, Object>> getInvstThingCcd();							// 주요투자물건
 	

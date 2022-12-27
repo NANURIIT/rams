@@ -10,7 +10,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'R013'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 
 	<!-- 부수안건구분코드 -->
@@ -21,7 +21,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'L001'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 
 	<!-- 심사부서구분코드 -->
@@ -32,7 +32,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'I003'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 	
 	<!-- 투자상품대분류코드 -->
@@ -43,7 +43,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'I012'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 	
 	<!-- 투자상품중분류코드 -->
@@ -54,7 +54,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'I015'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 	
 	<!-- 투자상품소분류코드 -->
@@ -65,7 +65,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'I014'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 	
 	<!-- 투자상품상세분류코드 -->
@@ -76,7 +76,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'I013'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 	
 	<!-- 부의기준통화 -->
@@ -87,7 +87,18 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'I016'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
+	</select>
+	
+	<!-- 투자국가 -->
+	<select id="getCntyCd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'U003'
+		 ORDER BY CD_SQ
 	</select>
 	
 	<!-- 고위험사업 -->
@@ -98,7 +109,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'I008'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 	
 	<!-- 업무구분 -->
@@ -109,7 +120,18 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'C004'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
+	</select>
+	
+	<!-- 사업지역 -->
+	<select id="getBsnsAreaCd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'U004'
+		 ORDER BY CD_SQ
 	</select>
 	
 	<!-- 주요투자물건 -->
@@ -120,7 +142,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'I010'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 	
 	<!-- 주요투자물건상세 -->
@@ -131,7 +153,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'I011'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 	
 	<!-- 책임준공 -->
@@ -142,7 +164,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'R014'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 	
 	<!-- 전결구분 -->
@@ -153,7 +175,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'R002'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 	
 	<!-- 협업유형코드 -->
@@ -164,7 +186,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'C005'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 	
 	<!-- 기초자산종류 -->
@@ -175,7 +197,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'B002'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 	
 	<!-- 법인형태 -->
@@ -186,7 +208,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'C002'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 	
 	<!-- 담보유형 -->
@@ -197,7 +219,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'M002'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 	
 	<!-- 담보상세 -->
@@ -208,7 +230,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'M001'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 	
 	<!-- 권리순위 -->
@@ -219,7 +241,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'R008'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 	
 	<!-- 미이행시의무 -->
@@ -230,7 +252,7 @@
 		 WHERE 1=1
 		   AND USE_F = 'Y'
 		   AND CMNS_CD_GRP = 'D001'
-		 ORDER BY CD_VL_ID
+		 ORDER BY CD_SQ
 	</select>
 
 </mapper>

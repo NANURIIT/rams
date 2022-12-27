@@ -48,12 +48,18 @@ public interface AS03Service {
 
 	// 부의기준통화
 	public List<Map<String, Object>> getInvstCrncyCd();
+	
+	// 투자국가
+	public List<Map<String, Object>> getCntyCd();
 
 	// 고위험사업
 	public List<Map<String, Object>> getIndTypDvdCd();
 
 	// 업무구분
 	public List<Map<String, Object>> getCheckItemCd();
+	
+	// 투자국가
+	public List<Map<String, Object>> getBsnsAreaCd();
 
 	// 주요투자물건
 	public List<Map<String, Object>> getInvstThingCcd();
@@ -93,5 +99,6 @@ public interface AS03Service {
 
 	// 미이행시의무
 	public List<Map<String, Object>> getDbtNpFrmOblgCcd();
+	
 
 }
