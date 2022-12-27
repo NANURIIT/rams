@@ -71,11 +71,10 @@
              , 93b.hndl_dy_tm
              , 93b.hndl_p_eno
           FROM RAA93B 93b
-    INNER JOIN RAA95B 95b
+     LEFT JOIN (SELECT * FROM RAA95B WHERE rght_cd = #{rghtCd}) 95b
             ON 93b.menu_id = 95b.menu_id
-         WHERE 1=1
-           AND 95b.rght_cd = #{rghtCd}
-           AND 93b.scrn_aplc_type_cd = 'S'
+         WHERE 93b.scrn_aplc_type_cd = 'S'
+      ORDER BY srt_no
     </select>
     
     <update id="updateAuthCodeMenu" parameterType="com.nanuri.rams.business.common.vo.RAA93BVO">

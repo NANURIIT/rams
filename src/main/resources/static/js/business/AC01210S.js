@@ -38,24 +38,9 @@ function getAuthCode(rghtCdNm) {
                     } else {
                         html += '   <td><input style="width: 15px;" class="auth_code_use_yn" type="checkbox"><input class="hidden_yn" type="hidden" value="n"></td>';
                     }
-                    if(isEmpty(value.hndlDyTm)) {
-                        html += '   <td> - </td>';
-                    } else {
-                        html += '   <td>' + value.hndlDyTm.substring(0, 10) + '</td>';
-                    }
-
-                    if(isEmpty(value.hndlDyTm)) {
-                        html += '   <td> - </td>';
-                    } else {
-                        html += '   <td>' + value.hndlDyTm.substring(11, 19) + '</td>';
-                    }
-                    
-                    if(isEmpty(value.hndlPEno)) {
-                        html += '   <td>' + value.hndlPEno + '</td>';
-                    } else {
-                        html += '   <td> - </td>';
-                    }
-                    
+                    html += '   <td>' + value.hndlDyTm + '</td>';
+                    html += '   <td>' + value.hndlDyTm + '</td>';
+                    html += '   <td>' + value.hndlPEno + '</td>';
                     html += '</tr>';
                 });
             } else {
@@ -126,7 +111,11 @@ function getAuthCodeMenu(rghtCd) {
                     html += '<tr>';
                     html += '   <td>' + value.srtNo + '</td>';
                     html += '   <td>' + value.menuId + '</td>';
-                    html += '   <td>' + value.rghtCd + '</td>';
+                    if(isEmpty(value.rghtCd)) {
+                        html += '   <td> - </td>';
+                    } else {
+                        html += '   <td>' + value.rghtCd + '</td>';
+                    }
                     html += '   <td>' + value.menuLv + '</td>';
                     if (value.dltF === 'N') {
                         html += '   <td><input style="width: 15px;" class="can_use_yn" type="checkbox" checked><input type="hidden" class="use_hidden_yn" value="y"></td>';
