@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nanuri.rams.com.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ctc.wstx.util.StringUtil;
 import com.nanuri.rams.business.common.mapper.RAA01BMapper;
 import com.nanuri.rams.business.common.mapper.RAA18BMapper;
 import com.nanuri.rams.business.common.mapper.RAA91BMapper;
