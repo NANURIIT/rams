@@ -38,8 +38,18 @@ function getAuthCode(rghtCdNm) {
                     } else {
                         html += '   <td><input style="width: 15px;" class="auth_code_use_yn" type="checkbox"><input class="hidden_yn" type="hidden" value="n"></td>';
                     }
-                    html += '   <td>' + value.hndlDyTm + '</td>';
-                    html += '   <td>' + value.hndlDyTm + '</td>';
+
+                    if (isEmpty(value.hndlDyTm)) {
+                        html += '   <td> - </td>';
+                    } else {
+                        html += '   <td>' + value.hndlDyTm.substring(0, 10) + '</td>';
+                    }
+
+                    if (isEmpty(value.hndlDyTm)) {
+                        html += '   <td> - </td>';
+                    } else {
+                        html += '   <td>' + value.hndlDyTm.substring(11, 19) + '</td>';
+                    }
                     html += '   <td>' + value.hndlPEno + '</td>';
                     html += '</tr>';
                 });
@@ -111,7 +121,7 @@ function getAuthCodeMenu(rghtCd) {
                     html += '<tr>';
                     html += '   <td>' + value.srtNo + '</td>';
                     html += '   <td>' + value.menuId + '</td>';
-                    if(isEmpty(value.rghtCd)) {
+                    if (isEmpty(value.rghtCd)) {
                         html += '   <td> - </td>';
                     } else {
                         html += '   <td>' + value.rghtCd + '</td>';
@@ -129,12 +139,12 @@ function getAuthCodeMenu(rghtCd) {
                         html += '   <td><input style="width: 15px;" class="can_modify_yn" type="checkbox"><input type="hidden" class="modify_hidden_yn" value="n"></td>';
                     }
                     html += '   <td>' + value.hndlDyTm.substring(0, 10) + '</td>';
-                    if(value.hndlDyTm === '-') {
+                    if (value.hndlDyTm === '-') {
                         html += '   <td> - </td>';
                     } else {
                         html += '   <td>' + value.hndlDyTm.substring(10, value.hndlDyTm.length) + '</td>';
                     }
-                    
+
                     html += '   <td>' + value.hndlPEno + '</td>';
                     html += '</tr>';
                 });
