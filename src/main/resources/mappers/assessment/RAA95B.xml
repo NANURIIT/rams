@@ -1,85 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.RAA95BMapper">
-	
-<select id="selectAvailableMenu" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO" parameterType='java.util.Map'>
-	/* 권한별 메뉴화면 사용권한 조회 */
-	SELECT RGHT_CD
-		 , SQ
-		 , MENU_ID
-		 , MDFY_RGHT_CCD
-		 , HNDL_DY_TM
-		 , HNDL_DPRT_CD
-		 , HNDL_P_ENO
-	FROM RAA95B
-	WHERE 1=1
-		<if test='lv3Id == "null"'>
-		AND MENU_ID = #{lv2Id}
-		</if>
-		<if test='lv3Id != "null"'>
-		AND MENU_ID = #{lv3Id}
-		</if>
-</select>
 
-<insert id='insertUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
-	   INSERT INTO RAA95B (
-			  RGHT_CD
-			, SQ
-			, MENU_ID
-			, MDFY_RGHT_CCD
-			, HNDL_DY_TM
-			, HNDL_DPRT_CD
-			, HNDL_P_ENO
-			)
-	   VALUES (
+    <select id="selectAvailableMenu" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO" parameterType='java.util.Map'>
+        /* 권한별 메뉴화면 사용권한 조회 */
+        SELECT RGHT_CD
+        	 , SQ
+        	 , MENU_ID
+        	 , MDFY_RGHT_CCD
+        	 , HNDL_DY_TM
+        	 , HNDL_DPRT_CD
+        	 , HNDL_P_ENO
+		  FROM RAA95B
+         WHERE 1=1
+        <if test='lv3Id == "null"'>
+            AND MENU_ID = #{lv2Id}
+        </if>
+        <if test='lv3Id != "null"'>
+            AND MENU_ID = #{lv3Id}
+        </if>
+    </select>
+
+    <insert id='insertUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
+        INSERT INTO RAA95B (
+		       RGHT_CD
+          	 , SQ
+          	 , MENU_ID
+          	 , MDFY_RGHT_CCD
+          	 , HNDL_DY_TM
+          	 , HNDL_DPRT_CD
+          	 , HNDL_P_ENO
+        )
+        VALUES (
 			  #{rghtCd}
 			, #{sq}
-			, #{menuId}
-			, #{mdfyRghtCcd}
-			, NOW()
-			, #{hndlDprtCd}
-			, #{hndlPEno}
-			)
-		   <!-- ON DUPLICATE KEY
-	   UPDATE RGHT_CD			= #{rghtCd}
-	   		, MDFY_RGHT_CCD 	= #{mdfyRghtCcd}
-			, HNDL_DY_TM 		= NOW()
-			, HNDL_DPRT_CD 		= #{hndlDprtCd}
-			, HNDL_P_ENO  		= #{hndlPEno}
-			, MENU_ID 			= #{menuId} -->
-</insert>
+          	, #{menuId}
+        	, #{mdfyRghtCcd}
+        	, NOW()
+        	, #{hndlDprtCd}
+        	, #{hndlPEno}
+        )
+        <!-- ON DUPLICATE KEY
+    UPDATE RGHT_CD			= #{rghtCd}
+            , MDFY_RGHT_CCD 	= #{mdfyRghtCcd}
+         , HNDL_DY_TM 		= NOW()
+         , HNDL_DPRT_CD 		= #{hndlDprtCd}
+         , HNDL_P_ENO  		= #{hndlPEno}
+         , MENU_ID 			= #{menuId} -->
+    </insert>
 
-<delete id='deleteUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
-	  DELETE
-		FROM RAA95B
-	   WHERE 1=1
-		 AND RGHT_CD	= #{rghtCd}
-		 AND SQ			= #{sq}
-</delete>
+    <delete id='deleteUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
+        DELETE
+          FROM RAA95B
+		 WHERE 1=1
+           AND RGHT_CD = #{rghtCd}
+           AND SQ = #{sq}
+    </delete>
 
 
-<!-- 상위메뉴의 조회 여부를 수정하기 위해 데이터 유무 조회 -->
-<select id='selectMainMenuId' parameterType="com.nanuri.rams.business.common.vo.RAA95BVO$selectUseMenuVO" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO">
-	  SELECT DISTINCT( MENU_ID )
-		FROM RAA95B A
-	   WHERE MENU_ID
-		  IN ( SELECT DISTINCT( B.HG_RNK_MENU_ID )
-				 FROM RAA95B A
-			LEFT JOIN RAA93B B
-				   ON A.MENU_ID = B.MENU_ID 
-				WHERE A.MENU_ID 	= #{menuId}
-				  AND A.RGHT_CD 	= #{rghtCd} )
-</select>
+    <!-- 상위메뉴의 조회 여부를 수정하기 위해 데이터 유무 조회 -->
+    <select id='selectMainMenuId' parameterType="com.nanuri.rams.business.common.vo.RAA95BVO$selectUseMenuVO" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+        SELECT DISTINCT( MENU_ID )
+          FROM RAA95B A
+         WHERE MENU_ID
+            IN ( SELECT DISTINCT( B.HG_RNK_MENU_ID )
+				   FROM RAA95B A
+        	  LEFT JOIN RAA93B B
+        	    ON A.MENU_ID = B.MENU_ID
+        	 WHERE A.MENU_ID = #{menuId}
+        	   AND A.RGHT_CD = #{rghtCd} )
+    </select>
 
-<select id="selectMaxSq" resultType="int">
-SELECT MAX(SQ) FROM RAA95B
-</select>
+    <select id="selectMaxSq" resultType="int">
+        SELECT MAX(SQ) FROM RAA95B
+    </select>
 
-<delete id="deleteMainMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
-	  DELETE 
-		FROM RAA95B
-	   WHERE RGHT_CD	= #{rghtCd}
-	   	 AND MENU_ID	= #{menuId}
-</delete>
+    <delete id="deleteMainMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+        DELETE
+          FROM RAA95B
+         WHERE RGHT_CD = #{rghtCd}
+           AND MENU_ID = #{menuId}
+    </delete>
+
+	<select id="selectAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+		SELECT *
+		  FROM RAA95B
+		 WHERE RGHT_CD = #{rghtCd}
+		   AND MENU_ID = #{menuId}
+	</select>
+
+	<insert id="insertAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+		INSERT INTO RAA95B (
+			rght_cd,
+			sq,
+			menu_id,
+			mdfy_rght_ccd,
+			hndl_dy_tm,
+			hndl_p_eno
+		) VALUES (
+			#{rghtCd},
+			#{sq},
+			#{menuId},
+			#{mdfyRghtCcd},
+			now(),
+			#{hndlPEno}
+		)
+	</insert>
+
+	<update id="updateAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+		UPDATE RAA95B
+		<set>
+			<if test="rghtCd != null and rghtCd !=''">
+				rght_cd = #{rghtCd},
+			</if>
+			<if test="menuId != null and menuId !=''">
+				menu_id = #{menuId},
+			</if>
+			<if test="mdfyRghtCcd != null and mdfyRghtCcd !=''">
+				mdfy_rght_ccd = #{mdfyRghtCcd},
+			</if>
+			hndl_dy_tm = now(),
+			hndl_p_eno = #{hndlPEno}
+		</set>
+		WHERE rght_cd = #{rghtCd}
+		  AND menu_id = #{menuId}
+	</update>
 
 </mapper>

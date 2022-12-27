@@ -133,8 +133,8 @@ public class AC01APIController {
 	}
 
 	@PostMapping(value = "/registerAuthCodeMenu")
-	public boolean registerAuthCodeMenu(@RequestBody List<RAA93BVO> requestDtos) {
-		return ac01Service.registerAuthCodeMenu(requestDtos);
+	public boolean registerAuthCodeMenu(@RequestBody List<RAA95BDTO> dtos) {
+		return ac01Service.registerAuthCodeMenu(dtos);
 	}
 	// ============ end AC01210S(권한별 메뉴관리) ============//
 

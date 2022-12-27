@@ -121,23 +121,19 @@ function getAuthCodeMenu(rghtCd) {
                     html += '<tr>';
                     html += '   <td>' + value.srtNo + '</td>';
                     html += '   <td>' + value.menuId + '</td>';
-                    if (isEmpty(value.rghtCd)) {
-                        html += '   <td> - </td>';
-                    } else {
-                        html += '   <td>' + value.rghtCd + '</td>';
-                    }
+                    html += '   <td>'+ rghtCd +'</td>';
                     html += '   <td>' + value.menuLv + '</td>';
-                    if (value.dltF === 'N') {
-                        html += '   <td><input style="width: 15px;" class="can_use_yn" type="checkbox" checked><input type="hidden" class="use_hidden_yn" value="y"></td>';
-                    } else {
+                    if (isEmpty(value.mdfyRghtCcd)) {
                         html += '   <td><input style="width: 15px;" class="can_use_yn" type="checkbox"><input type="hidden" class="use_hidden_yn" value="n"></td>';
+                        html += '   <td><input style="width: 15px;" class="can_modify_yn" type="checkbox"><input type="hidden" class="modify_hidden_yn" value="n"></td>';
+                    } else if(value.mdfyRghtCcd === '1') {
+                        html += '   <td><input style="width: 15px;" class="can_use_yn" type="checkbox" checked><input type="hidden" class="use_hidden_yn" value="y"></td>';
+                        html += '   <td><input style="width: 15px;" class="can_modify_yn" type="checkbox"><input type="hidden" class="modify_hidden_yn" value="n"></td>';
+                    } else {
+                        html += '   <td><input style="width: 15px;" class="can_use_yn" type="checkbox" checked><input type="hidden" class="use_hidden_yn" value="y"></td>';
+                        html += '   <td><input style="width: 15px;" class="can_modify_yn" type="checkbox" checked><input type="hidden" class="modify_hidden_yn" value="y"></td>';
                     }
 
-                    if (value.mdfyRghtCcd === '2') {
-                        html += '   <td><input style="width: 15px;" class="can_modify_yn" type="checkbox" checked><input type="hidden" class="modify_hidden_yn" value="y"></td>';
-                    } else {
-                        html += '   <td><input style="width: 15px;" class="can_modify_yn" type="checkbox"><input type="hidden" class="modify_hidden_yn" value="n"></td>';
-                    }
                     html += '   <td>' + value.hndlDyTm.substring(0, 10) + '</td>';
                     if (value.hndlDyTm === '-') {
                         html += '   <td> - </td>';
@@ -324,22 +320,32 @@ function clickSaveMenuButton() {
         let menuModifyYn = $(tr[i]).find("td:eq(5)").find(".can_modify_yn").prop("checked");
         let menuModifyYnCheck = $(tr[i]).find("td:eq(5)").find(".modify_hidden_yn").val();
 
+        let flag = false;
+        
         if (!menuUseYnCheck || (menuUseYn && menuUseYnCheck === 'n') || (!menuUseYn && menuUseYnCheck === 'y')) {
-            authCodeMenu.dltF = menuUseYn ? 'N' : 'Y';
+            flag = true;
         }
 
         if (!menuModifyYnCheck || (menuModifyYn && menuModifyYnCheck === 'n') || (!menuModifyYn && menuModifyYnCheck === 'y')) {
-            authCodeMenu.mdfyRghtCcd = menuModifyYn ? '2' : '1';
+            flag = true;
+        }
+
+        if(flag && menuUseYn && !menuModifyYn) {
+            authCodeMenu.mdfyRghtCcd = '1';
+        } else if(flag && menuUseYn && menuUseYn) {
+            authCodeMenu.mdfyRghtCcd = '2';
         }
 
         if (!(Object.keys(authCodeMenu).length === 0)) {
             authCodeMenu.menuId = $(tr[i]).find("td:eq(1)").text();
+            authCodeMenu.rghtCd = authCode;
             authCodeMenuList.push(authCodeMenu);
         }
     }
 
     if (authCodeMenuList.length > 0) {
-        saveMenu(authCodeMenuList, authCode);
+        console.log(authCodeMenuList);
+        // saveMenu(authCodeMenuList, authCode);
     }
 }
 

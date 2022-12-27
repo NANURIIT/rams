@@ -64,12 +64,10 @@
 	<select id="selectAuthCodeMenu" parameterType="String" resultType="com.nanuri.rams.business.common.vo.RAA93BVO">
         SELECT 93b.srt_no
              , 93b.menu_id
-             , 95b.rght_cd
              , 93b.menu_lv
-             , 93b.dlt_f
              , 95b.mdfy_rght_ccd
-             , 93b.hndl_dy_tm
-             , 93b.hndl_p_eno
+             , 95b.hndl_dy_tm
+             , 95b.hndl_p_eno
           FROM RAA93B 93b
      LEFT JOIN (SELECT * FROM RAA95B WHERE rght_cd = #{rghtCd}) 95b
             ON 93b.menu_id = 95b.menu_id

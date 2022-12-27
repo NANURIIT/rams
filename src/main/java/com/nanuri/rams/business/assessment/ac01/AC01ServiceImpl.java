@@ -379,11 +379,15 @@ public class AC01ServiceImpl implements AC01Service {
     }
 
     @Override
-    public boolean registerAuthCodeMenu(List<RAA93BVO> requestDtos) {
+    public boolean registerAuthCodeMenu(List<RAA95BDTO> dtos) {
         int count = 0;
-        for (RAA93BVO requestDto : requestDtos) {
-            requestDto.setHndlPEno(facade.getDetails().getEno());
-            count += raa93BMapper.updateAuthCodeMenu(requestDto);
+        for (RAA95BDTO dto : dtos) {
+            dto.setHndlPEno(facade.getDetails().getEno());
+            if (raa95BMapper.selectAuthCodeMenu(dto).isEmpty()) {
+                count += raa95BMapper.insertAuthCodeMenu(dto);
+            } else {
+                count += raa95BMapper.updateAuthCodeMenu(dto);
+            }
         }
         return count > 0;
     }
