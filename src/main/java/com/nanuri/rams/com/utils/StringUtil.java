@@ -149,22 +149,26 @@ public final class StringUtil
 
     public static boolean isAllWhitespace(String str)
     {
-        for (int i = 0, len = str.length(); i < len; ++i) {
-            if (str.charAt(i) > CHAR_SPACE) {
-                return false;
+    	if(str != null) {
+    		for (int i = 0, len = str.length(); i < len; ++i) {
+                if (str.charAt(i) > CHAR_SPACE) {
+                    return false;
+                }
             }
-        }
+    	}
         return true;
     }
 
     public static boolean isAllWhitespace(char[] ch, int start, int len)
     {
-        len += start;
-        for (; start < len; ++start) {
-            if (ch[start] > CHAR_SPACE) {
-                return false;
+    	if(ch != null) {
+    		len += start;
+            for (; start < len; ++start) {
+                if (ch[start] > CHAR_SPACE) {
+                    return false;
+                }
             }
-        }
+    	}
         return true;
     }
 
