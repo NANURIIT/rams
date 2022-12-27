@@ -25,7 +25,6 @@ import com.nanuri.rams.business.common.mapper.RAA94BMapper;
 import com.nanuri.rams.business.common.mapper.RAA95BMapper;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
-import com.nanuri.rams.business.common.vo.RAA94BVO;
 import com.nanuri.rams.business.common.vo.RAA95BVO;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDeleteRequestDto;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
@@ -34,7 +33,6 @@ import com.nanuri.rams.business.itmanager.dto.CommonCodeInfoDto;
 import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoDto;
 import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto;
 import com.nanuri.rams.com.security.AuthenticationFacade;
-import com.nanuri.rams.com.utils.StringUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -322,20 +320,20 @@ public class AC01ServiceImpl implements AC01Service {
 
     /* 권한별 메뉴화면 사용권한 조회 */
     @Override
-    public List<RAA94BVO.MenuByAuthVO> getMenuByAuth() {
-        List<RAA94BVO.MenuByAuthVO> menuAuthList = raa94BMapper.selectMenuByAuth();
-        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss");
-        for (RAA94BVO.MenuByAuthVO menu : menuAuthList) {
-            if (menu.getHndlDyTm() != null) {
-                String date = dateformat.format(menu.getHndlDyTm());
-                String time = timeformat.format(menu.getHndlDyTm());
-                menu.setHndlDt(date);
-                menu.setHndlTm(time);
-            } else {
-                menu.setHndlDt("");
-                menu.setHndlTm("");
-            }
+    public List<RAA94BDTO> getMenuByAuth() {
+        List<RAA94BDTO> menuAuthList = raa94BMapper.selectRghtCd();
+        // SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        // SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss");
+        for (RAA94BDTO menu : menuAuthList) {
+            // if (menu.getHndlDyTm() != null) {
+            //     String date = dateformat.format(menu.getHndlDyTm());
+            //     String time = timeformat.format(menu.getHndlDyTm());
+            //     menu.setHndlDt(date);
+            //     menu.setHndlTm(time);
+            // } else {
+            //     menu.setHndlDt("");
+            //     menu.setHndlTm("");
+            // }
             String hndlPEno = Optional.ofNullable(menu.getHndlPEno()).orElse("");
             menu.setHndlPEno(hndlPEno);
         }

@@ -17,7 +17,6 @@ import com.nanuri.rams.business.common.dto.RAA94BDTO;
 import com.nanuri.rams.business.common.dto.RAA95BDTO;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
-import com.nanuri.rams.business.common.vo.RAA94BVO;
 import com.nanuri.rams.business.common.vo.RAA95BVO;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDeleteRequestDto;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
@@ -148,7 +147,7 @@ public class AC01APIController {
 
 	/* 권한별 메뉴화면 사용권한 조회 */
 	@GetMapping(value="/menuByAuth")
-	public List<RAA94BVO.MenuByAuthVO> menuByAuth() {
+	public List<RAA94BDTO> menuByAuth() {
 		return ac01Service.getMenuByAuth();
 	}
 

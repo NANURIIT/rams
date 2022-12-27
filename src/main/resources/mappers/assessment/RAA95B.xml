@@ -38,7 +38,7 @@
 			, #{sq}
 			, #{menuId}
 			, #{mdfyRghtCcd}
-			, NOW()
+			, DATE_FORMAT(NOW(),'%Y-%m-%d %H:%m:%s')
 			, #{hndlDprtCd}
 			, #{hndlPEno}
 			)

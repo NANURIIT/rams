@@ -12,7 +12,6 @@ import com.nanuri.rams.business.common.dto.RAA94BDTO;
 import com.nanuri.rams.business.common.dto.RAA95BDTO;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
-import com.nanuri.rams.business.common.vo.RAA94BVO;
 import com.nanuri.rams.business.common.vo.RAA95BVO;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDeleteRequestDto;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
@@ -55,7 +54,7 @@ public interface AC01Service {
 
 	/* 메뉴별권한관리 */
 	public List<RAA93BVO.MenuListVO> getMenuList(String menuNm);										// 메뉴별권한관리 메뉴명 조회
-	public List<RAA94BVO.MenuByAuthVO> getMenuByAuth();													// 권한별 메뉴화면 사용권한 조회
+	public List<RAA94BDTO> getMenuByAuth();													// 권한별 메뉴화면 사용권한 조회
 	public List<RAA95BDTO> getAvailableMenu(Map<String, String> menuId);								// RAA95B 수정 조회 가능 여부 조회
 	public boolean registUseMenu(ArrayList<RAA95BVO.selectUseMenuVO> dtoList);													// RAA95B 수정 조회 가능 여부 저장
 	
