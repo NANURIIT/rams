@@ -4,7 +4,12 @@
 	layout:decorate="~{layout/ramsLayout}">
 
 <th:block layout:fragment="script">
+	<script th:src="@{js/common.js}"></script>
+	<script th:src="@{js/business/popup/AC01120P.js}"></script>
+</th:block>
 
+<th:block layout:fragment="modalpopup">
+	<th:block th:replace="business/popup/AC01120P :: AC01120P"></th:block>
 </th:block>
  
 <th:block layout:fragment="customContent">
@@ -36,7 +41,9 @@
 	    				<form method="get">
 	    					<div class="form-group row">
 	    						<label class="col-sm-1 col-form-label">DSC일자</label>
-	                            <div class="col-sm-2"><input type="text" class="form-control"></div>
+	                            <div class="col-sm-2 input-group date">
+                                    <input type="text" class="form-control" value="" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
 	                        	
 	                        	<label class="col-sm-1 col-form-label">부서</label>
 	                            <div class="col-sm-2">
@@ -65,8 +72,14 @@
 	                            </div>
 	                        	
 	                        	<label class="col-sm-1 col-form-label">딜명</label>
-	                            <div class="col-sm-5"><input type="text" class="form-control"></div>
-	                        
+	                            <div class="col-sm-5 input-group m-b">
+                            		<input type="hidden" id="dealNo" name="dealNo">
+                            		<input type="text" class="form-control" id="dealNm" name="dealNm">
+                            		<span class="input-group-append">
+                                        <button type="button" class="btn btn-default btn-AC01120P"><i class="fa fa-search"></i></button>
+                                    </span>
+                            	</div>
+						                            	
 	                        	<div class="col-sm-3 text-left">
 	                        		<button class="btn btn-primary" type="submit">조회</button>
 	                        	</div>
@@ -179,8 +192,16 @@
 						    				<div class="ibox-content text-right">
 						    					<div class="form-group row">
 						    						<label class="col-sm-2 col-form-label">심사역</label>
-						                            <div class="col-sm-4"><input type="text" class="form-control"></div>
-						    					
+						                            <div class="col-sm-4">
+						                            	<div class="input-group m-b">
+						                            		<input type="hidden" id="assessMenntEno" name="assessMenntEno">
+						                            		<input type="text" class="form-control" id="assessMenntEmpNm" name="assessMenntEmpNm">
+						                            		<span class="input-group-append">
+				                                                <button type="button" class="btn btn-default btn-AC01120P"><i class="fa fa-search"></i></button>
+				                                            </span>
+						                            	</div>
+						                            </div>
+						                            
 						    						<label class="col-sm-2 col-form-label">전결협의체</label>
 						                            <div class="col-sm-4">
 						                            	<select class="form-control m-b" name="account">
@@ -190,7 +211,9 @@
 						                            </div>
 						    					
 						    						<label class="col-sm-2 col-form-label">접수배정일</label>
-						                            <div class="col-sm-4"><input type="text" class="form-control"></div>
+						                            <div class="col-sm-4 input-group date">
+					                                    <input type="text" class="form-control" value="" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+					                                </div>
 						    					</div>
 						    				</div>
 						    			</div>
