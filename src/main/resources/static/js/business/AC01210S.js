@@ -38,9 +38,24 @@ function getAuthCode(rghtCdNm) {
                     } else {
                         html += '   <td><input style="width: 15px;" class="auth_code_use_yn" type="checkbox"><input class="hidden_yn" type="hidden" value="n"></td>';
                     }
-                    html += '   <td>' + value.hndlDyTm + '</td>';
-                    html += '   <td>' + value.hndlDyTm + '</td>';
-                    html += '   <td>' + value.hndlPEno + '</td>';
+                    if(isEmpty(value.hndlDyTm)) {
+                        html += '   <td> - </td>';
+                    } else {
+                        html += '   <td>' + value.hndlDyTm.substring(0, 10) + '</td>';
+                    }
+
+                    if(isEmpty(value.hndlDyTm)) {
+                        html += '   <td> - </td>';
+                    } else {
+                        html += '   <td>' + value.hndlDyTm.substring(11, 19) + '</td>';
+                    }
+                    
+                    if(isEmpty(value.hndlPEno)) {
+                        html += '   <td>' + value.hndlPEno + '</td>';
+                    } else {
+                        html += '   <td> - </td>';
+                    }
+                    
                     html += '</tr>';
                 });
             } else {
