@@ -8,22 +8,22 @@ public class AC01Controller {
 	
 	@GetMapping(value = {"/AC01010S"})
     public String codeManagement() {
-        return "business/AC01010S";
+        return "business/ac/AC01010S";
     }
 	
     @GetMapping(value = {"/AC01110S"})
     public String userManagement() {
-        return "business/AC01110S";   
+        return "business/ac/AC01110S";   
     }
     
     @GetMapping(value = {"/AC01210S"})
     public String ManageAuth() {
-        return "business/AC01210S";   
+        return "business/ac/AC01210S";   
     }
 
     @GetMapping(value = {"/AC01310S"})
     public String ManageMenu() {
-        return "business/AC01310S";   
+        return "business/ac/AC01310S";
     }
 
 }

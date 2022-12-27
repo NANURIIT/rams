@@ -3,7 +3,7 @@
 <mapper namespace="com.nanuri.rams.business.common.mapper.RAA01BMapper">
 
 	<!-- deal 정보 검색 -->
-	<select id="getDealInfo" parameterType="com.nanuri.rams.business.common.vo.RAA01BVo$DealInfo" resultType="java.util.HashMap">
+	<select id="getDealInfo" parameterType="com.nanuri.rams.business.common.vo.RAA01BVO$DealInfo" resultType="java.util.HashMap">
 		SELECT r01b.IB_DEAL_NO							<!-- IBDEAL번호 -->
 		     , r01b.IB_DEAL_NM							<!-- IBDEAL명 -->
 		     , r01b.DSC_DT								<!-- DSC일자 -->
@@ -23,8 +23,6 @@
 		   AND r01b.DSC_DT LIKE #{dscDate}
 		 </if>
 	</select>
-
-
 
 	<!-- 신규 안건 생성 -->
 	<!-- 임시 -->

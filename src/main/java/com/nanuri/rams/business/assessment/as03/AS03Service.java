@@ -2,11 +2,13 @@ package com.nanuri.rams.business.assessment.as03;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.nanuri.rams.business.common.dto.RAA01BDto;
-import com.nanuri.rams.business.common.vo.RAA01BVo.DealInfo;
+import com.nanuri.rams.business.common.vo.RAA01BVO;
+import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
+import com.nanuri.rams.business.common.vo.RAA18BVO.DocInfo;
 
 @Service
 public interface AS03Service {
@@ -16,8 +18,80 @@ public interface AS03Service {
 	 * 
 	 * @param dealInfo
 	 * @return
-	 * @throws ParseException 
+	 * @throws ParseException
 	 */
-	public List<RAA01BDto> getDealInfo(DealInfo dealDto) throws ParseException;
+	public List<RAA01BVO> getDealInfo(DealInfo dealDto) throws ParseException;
+
+	// 담당직원 - 로그인유저정보
+	public Map<String, Object> getUserAuth();
+
+	// 리스크심사구분코드
+	public List<Map<String, Object>> getRiskInspctCcd();
+
+	// 부수안건구분코드
+	public List<Map<String, Object>> getlstCCaseCcd();
+
+	// 심사부서구분코드
+	public List<Map<String, Object>> getInspctDprtCcd();
+
+	// 투자상품대분류코드
+	public List<Map<String, Object>> getInvstGdsLdvdCd();
+
+	// 투자상품중분류코드
+	public List<Map<String, Object>> getInvstGdsMdvdCd();
+
+	// 투자상품소분류코드
+	public List<Map<String, Object>> getInvstGdsSdvdCd();
+
+	// 투자상품상세분류코드
+	public List<Map<String, Object>> getInvstGdsDtlsDvdCd();
+
+	// 부의기준통화
+	public List<Map<String, Object>> getInvstCrncyCd();
+
+	// 고위험사업
+	public List<Map<String, Object>> getIndTypDvdCd();
+
+	// 업무구분
+	public List<Map<String, Object>> getCheckItemCd();
+
+	// 주요투자물건
+	public List<Map<String, Object>> getInvstThingCcd();
+
+	// 주요투자물건상세
+	public List<Map<String, Object>> getInvstThingDtlsCcd();
+
+	// 책임준공
+	public List<Map<String, Object>> getRspsbCmplCcd();
+
+	// 전결구분
+	public List<Map<String, Object>> getRaRsltnCcd();
+
+	// 협업유형코드
+	public List<Map<String, Object>> getCoprtnTypCd();
+
+	// 관련문서
+	public List<Map<String, Object>> getDocInfo(DocInfo docInfo);
+
+	// 관련문서정보 제거
+	public int deleteDocInfo(DocInfo docInfo);
+
+	// 기초자산종류
+	public List<Map<String, Object>> getBscAstsKndCd();
+
+	// 법인형태
+	public List<Map<String, Object>> getCncCmpnyClsfCd();
+
+	// 담보유형
+	public List<Map<String, Object>> getMrtgKndCcd();
+
+	// 담보상세
+	public List<Map<String, Object>> getMrtgDtlsCcd();
+
+	// 권리순위
+	public List<Map<String, Object>> getRgtRnkCcd();
+
+	// 미이행시의무
+	public List<Map<String, Object>> getDbtNpFrmOblgCcd();
 
 }

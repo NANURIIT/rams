@@ -5,14 +5,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RAA01BVo {
+public class RAA18BVO {
 	
 	@Getter
 	@Setter
-	public static class DealInfo {
+	public static class DocInfo {
 		private String dealNo;				//	IBDEAL번호
-	    private String dealNm;				//	IBDEA명
-	    private String dscDate;				//	DSC일자
+		private String docNo;				//	문서번호
 	}
 	
 	

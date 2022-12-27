@@ -20,20 +20,15 @@
                 <tr>
                     <th>메뉴명</th>
                     <td class="etc_td">
-                        <input type="text">
+                        <input type="text" id="AC01310S_findMenu">
                         <div  class="button_etc_wrap">
-                            <button type="button">조회</button>
+                            <button type="button" onclick="AC01310S_findClickbutton();">조회</button>
                         </div>
                     </td>
                 </tr>
             </table>
         </div>
         <div class="contents_box">
-            <div class="button_wrap">
-                <button type="button">행추가</button>
-                <button type="button">행삭제</button>
-                <button type="button">저장</button>
-            </div>
             <table class="table_header">
                 <colgroup>
                     <col style="width: 10%;">
@@ -44,7 +39,7 @@
                     <tr>
                         <th>순번</th>
                         <th>메뉴명</th>
-                        <th>사용자권한</th>
+                        <th>메뉴화면ID</th>
                     </tr>
                 </thead>
             </table>
@@ -56,22 +51,7 @@
                             <col style="width: 60%;">
                             <col style="width: 30%;">
                         </colgroup>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>심사정보 > IB/PI안건 심사요청</td>
-                                <td> - </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>심사정보 > WM상품(비시장성) 심사요청</td>
-                                <td> - </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>심사정보 > WM상품(신용공여) 심사요청</td>
-                                <td> - </td>
-                            </tr>
+                        <tbody id="AC01310S_makeMenuList">
                         </tbody>
                     </table>
                 </form>
@@ -126,8 +106,8 @@
                             <col style="width: 10%;">
                             <col style="width: 10%;">
                         </colgroup>
-                        <tbody>
-                            <tr>
+                        <tbody id="AC01310S_makeMenuByAuthList">
+                            <!-- <tr>
                                 <td>1</td>
                                 <td>AG10</td>
                                 <td>사업부 담당자</td>
@@ -174,7 +154,7 @@
                                 <td>2022-07-25</td>
                                 <td>12:00:00</td>
                                 <td>SI22467</td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                 </form>

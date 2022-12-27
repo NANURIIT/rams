@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nanuri.rams.business.common.dto.RAA99ADto;
+import com.nanuri.rams.business.common.dto.RAA99ADTO;
 import com.nanuri.rams.business.common.mapper.RAA99AMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -23,9 +23,9 @@ public class AS02ServiceImpl implements AS02Service {
 	 * 직원검색
 	 */
 	@Override
-	public List<RAA99ADto> findEmpList(RAA99ADto raa99aDto) {
+	public List<RAA99ADTO> findEmpList(RAA99ADTO raa99aDto) {
 		
-		List<RAA99ADto> raa90aList = raa99bMapper.findEmpList(raa99aDto);
+		List<RAA99ADTO> raa90aList = raa99bMapper.findEmpList(raa99aDto);
 		
 		return raa90aList;
 	}

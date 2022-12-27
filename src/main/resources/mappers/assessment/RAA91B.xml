@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanuri.rams.business.common.mapper.RAA91BMapper">
+
+	<!-- 리스크심사구분코드 -->
+	<select id="getRiskInspctCcd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'R013'
+		 ORDER BY CD_VL_ID
+	</select>
+
+	<!-- 부수안건구분코드 -->
+	<select id="getlstCCaseCcd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'L001'
+		 ORDER BY CD_VL_ID
+	</select>
+
+	<!-- 심사부서구분코드 -->
+	<select id="getInspctDprtCcd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'I003'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 투자상품대분류코드 -->
+	<select id="getInvstGdsLdvdCd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'I012'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 투자상품중분류코드 -->
+	<select id="getInvstGdsMdvdCd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'I015'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 투자상품소분류코드 -->
+	<select id="getInvstGdsSdvdCd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'I014'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 투자상품상세분류코드 -->
+	<select id="getInvstGdsDtlsDvdCd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'I013'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 부의기준통화 -->
+	<select id="getInvstCrncyCd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'I016'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 고위험사업 -->
+	<select id="getIndTypDvdCd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'I008'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 업무구분 -->
+	<select id="getCheckItemCd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'C004'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 주요투자물건 -->
+	<select id="getInvstThingCcd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'I010'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 주요투자물건상세 -->
+	<select id="getInvstThingDtlsCcd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'I011'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 책임준공 -->
+	<select id="getRspsbCmplCcd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'R014'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 전결구분 -->
+	<select id="getRaRsltnCcd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'R002'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 협업유형코드 -->
+	<select id="getCoprtnTypCd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'C005'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 기초자산종류 -->
+	<select id="getBscAstsKndCd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'B002'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 법인형태 -->
+	<select id="getCncCmpnyClsfCd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'C002'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 담보유형 -->
+	<select id="getMrtgKndCcd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'M002'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 담보상세 -->
+	<select id="getMrtgDtlsCcd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'M001'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 권리순위 -->
+	<select id="getRgtRnkCcd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'R008'
+		 ORDER BY CD_VL_ID
+	</select>
+	
+	<!-- 미이행시의무 -->
+	<select id="getDbtNpFrmOblgCcd" resultType="java.util.HashMap">
+		SELECT CD_VL_ID					<!-- 코드값ID -->
+		     , CD_VL_NM					<!-- 코드값명 -->
+		  FROM RAA91B
+		 WHERE 1=1
+		   AND USE_F = 'Y'
+		   AND CMNS_CD_GRP = 'D001'
+		 ORDER BY CD_VL_ID
+	</select>
+
+</mapper>

@@ -28,17 +28,20 @@
 											<tr>
 												<td class="etc_td" colspan="5">
 													<div class="button_etc_wrap">
-														<button id="AC01130P_saveButton">저장</button>
-														<button id="AC01130P_deleteUser">삭제</button>
+														<button id="AC01130P_saveButton"
+															onclick="saveUserData();">저장</button>
+														<button id="AC01130P_deleteUser"
+															onclick="deleteUser();">삭제</button>
+														<input type="hidden" id="AC01130P_sq" />
 													</div>
 												</td>
 											</tr>
 											<tr>
 												<th>사원번호</th>
-												<td id="AC01130P_setEno"></td>
-												<td><button id="open_modal_AC01121P">조회</button></td>
+												<td><input id="AC01110S_empNo" type="text" readonly="true"></td>
+												<td><button id="open_modal_AC01120P">조회</button></td>
 												<th>사용자명</th>
-												<td><input id="AC01130P_empName"></td>
+												<td><input id="AC01110S_empNm" type="text" readonly="true"></td>
 											</tr>
 											<tr>
 												<th>권한구분</th>
@@ -56,14 +59,16 @@
 															id="AC01130P_datepicker1">~<input type="text"
 															class="datepicker" id="AC01130P_datepicker2">
 														<div style="float: right;">
-															<button id="AC01130P_recall">즉시회수</button>
+															<button id="AC01130P_recall"
+																onclick="recall();">즉시회수</button>
 														</div>
 													</div>
 												</td>
 											</tr>
 											<tr>
 												<th>부여사유</th>
-												<td colspan="4"><input id="AC01130P_rgstRsn" type="text"></td>
+												<td colspan="4"><input id="AC01130P_rgstRsn" type="text"
+														style="width: 100%;"></td>
 											</tr>
 										</thead>
 									</table>

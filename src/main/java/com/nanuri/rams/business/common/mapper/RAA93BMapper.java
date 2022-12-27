@@ -1,14 +1,16 @@
 package com.nanuri.rams.business.common.mapper;
 
-import com.nanuri.rams.business.common.vo.RAA93BVo;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
+import com.nanuri.rams.business.common.vo.RAA93BVO;
 
 @Mapper
 public interface RAA93BMapper {
+    public List<RAA93BVO.MenuListVO> selectMenuList(String menuNm);    // 메뉴별권한관리 메뉴명 조회
+    
+    public List<RAA93BVO> selectAuthCodeMenu(String rghtCd);
 
-    public List<RAA93BVo> selectAuthCodeMenu(String rghtCd);
-
-    public int updateAuthCodeMenu(RAA93BVo requestDto);
+    public int updateAuthCodeMenu(RAA93BVO requestDto);
 }
