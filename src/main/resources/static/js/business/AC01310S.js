@@ -36,12 +36,16 @@ var makeMenuList = function (data) {
 
 };
 
+let lv1Id = '';
+let lv2Id = '';
+let lv3Id = '';
+
 // 메뉴 권한 조회 ( 해당 메뉴의 'tr' 더블클릭 )
 function selectMenuRow(e) {
 
-	var lv1Id = $(e).find('input:eq(0)').val();
-	var lv2Id = $(e).find('input:eq(1)').val();
-	var lv3Id = $(e).find('input:eq(2)').val();
+	lv1Id = $(e).find('input:eq(0)').val();
+	lv2Id = $(e).find('input:eq(1)').val();
+	lv3Id = $(e).find('input:eq(2)').val();
 
 	$.ajax({
 		url: '/menuByAuth',
@@ -50,49 +54,140 @@ function selectMenuRow(e) {
 			, "lv2Id": lv2Id
 			, "lv3Id": lv3Id
 		}, success: function (data) {
-			console.log(lv1Id, lv2Id, lv3Id);
-			makeMenuByAuthList(lv1Id, lv2Id, lv3Id, data);
+			// console.log(lv1Id, lv2Id, lv3Id);
+			makeMenuByAuthList(data);
 		},
 	})
 }
 
 /* 권한별 메뉴의 사용, 수정 여부 목록 출력 */
-var makeMenuByAuthList = function (lv1Id, lv2Id, lv3Id, data) {
-
-	let rowNum = "0"
+var makeMenuByAuthList = function (data) {
+	let rowNum = 0;
 	let html = '';
-	$.each(data, function (key, value) {
-		console.log(value.menuId)
-		if (value.menuId == lv2Id || value.menuId == null) {
-			rowNum++;
-			html += '<tr>';
-			html += '<td>' + rowNum + '</td>';														// 순번
-			html += '<td>' + value.rghtCd + '</td>';												// 권한코드
-			html += '<td>' + value.rghtCdNm + '</td>';												// 권한명
-			html += '<td>' + value.rghtCdExpl + '</td>';											// 권한설명
-			html += '<td>' + value.rghtCcd + '</td>';												// 권한구분
-			if (value.mdfyRghtCcd === "1" || value.mdfyRghtCcd === "2") {
-				html += '<td>' + '<input style="width: 15px;" type="checkbox" checked />' + '</td>';
-			} else {
-				html += '<td>' + '<input style="width: 15px;" type="checkbox" />' + '</td>';
-			}																						// 사용여부
-			if (value.mdfyRghtCcd === "2") {
-				html += '<td>' + '<input style="width: 15px;" type="checkbox" checked />' + '</td>';
-			} else {
-				html += '<td>' + '<input style="width: 15px;" type="checkbox" />' + '</td>';
-			}																						// 수정가능여부
-			html += '<td>' + value.hndlDt + '</td>';												// 처리일자;
-			html += '<td>' + value.hndlTm + '</td>';												// 처리시간;
-			html += '<td>' + value.hndlPEno + '</td>';												// 처리자;
-			html += '</tr>';
-		}
-	})
-	// console.log(html);
-	$('#AC01310S_makeMenuByAuthList').html(html);
 
+	/* make authority table */
+	$.each(data, function (key, value) {
+		rowNum++;
+		html += '<tr class="modifyAuthTable">';
+		html += '<td>' + rowNum + '</td>';
+		html += '<td id="setRghtCd">' + value.rghtCd + '</td>';
+		html += '<td>' + value.rghtCdNm + '</td>';
+		html += '<td>' + value.rghtCdExpl + '</td>';
+		html += '<td>' + value.rghtCcd + '</td>';
+		html += '<td>' + '<input id="setUseYn" style="width: 15px;" type="checkbox" onclick="checkboxUseYn(this);"/>' + '</td>';
+		html += '<td>' + '<input id="setModifyYn" style="width: 15px;" type="checkbox" onclick="checkboxModifyYn(this);"/>' + '</td>';
+		html += '<td id="setHndlDt"></td>';
+		html += '<td id="setHndlTm"></td>';
+		html += '<td id="setHndlPEno"></td>';
+		html += '</tr>';
+	})
+	$('#AC01310S_makeMenuByAuthList').html(html);
+	checkUseAndModifyYn(rowNum);
 };
 
+/* 메뉴별 권한관리 prop('checked) */
+var checkUseAndModifyYn = function (rowNum) {
+	$.ajax({
+		url: '/checkAvailableMenu',
+		data: {
+			'lv1Id': lv1Id
+			, 'lv2Id': lv2Id
+			, 'lv3Id': lv3Id
+		}, success: function (data) {
+			/* 
+			권한코드를 기준으로 DB에서 불러온 사용여부, 수정가능여부를 체크
+			make authority table의 rowNum으로 권한코드 한 행씩을 조회하여
+			DB데이터와 일치 하는 행이 있으면 사용가능, 수정가능 여부를 체크한다.
+			*/
+			for (var i = 0; i < rowNum; i++) {
+				var tableRghtCd = $('#AC01310S_makeMenuByAuthList').find('tr:eq(' + i + ') > td:eq(1)').html();
+				var target = $('#AC01310S_makeMenuByAuthList').find('tr:eq(' + i + ')');
+				$.each(data, function (key, val) {
+					if (tableRghtCd == val.rghtCd) {
+						if (val.mdfyRghtCcd === "1" || val.mdfyRghtCcd === "2") {
+							target.find('#setUseYn').prop('checked', true);
+						}
+						if (val.mdfyRghtCcd === "2") {
+							target.find('#setModifyYn').prop('checked', true);
+						}
+					}
+					// RAA95B insert, delete를 위한 sq 값
+					$('#AC01310S_saveSq').val(val.sq);
+				})
+			}
+		}, error: function (request, status, error) {
+			// console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		}
+	})
+}
 
+var saveUseMenu = function (i) {
+	let saveSq = $('#AC01310S_saveSq').val();
+	let useCheckbox = $('input:checkbox[id="setUseYn"]:checked');
+	let modifyCheckbox = $('input:checkbox[id="setModifyYn"]:checked');
+	let saveRghtCd = '';
+
+	let dtoParam = [];
+
+	useCheckbox.each(function (i) {
+		let tr = useCheckbox.parent().parent().eq(i);
+		saveRghtCd = tr.children().eq(1).html();
+		// console.log('useCheckbox saveRghtCd :' + saveRghtCd.html());
+		if (lv2Id != 'null' && lv3Id == 'null') {
+			dtoParam.push({
+				"sq": Number(saveSq)
+				, "rghtCd": saveRghtCd
+				, "mdfyRghtCcd": '1'
+				, "menuId": lv2Id
+				, "lv1Id": lv1Id
+			});
+		}
+	})
+	modifyCheckbox.each(function (i) {
+		let tr = modifyCheckbox.parent().parent().eq(i);
+		saveRghtCd = tr.children().eq(1).html();
+		// console.log('modifyCheckbox saveRghtCd :' + saveRghtCd.html());
+		if (lv2Id != 'null' && lv3Id == 'null') {
+			dtoParam.push({
+				"sq": Number(saveSq)
+				, "rghtCd": saveRghtCd
+				, "mdfyRghtCcd": '2'
+				, "menuId": lv2Id
+				, "lv1Id": lv1Id
+			});
+		}
+	})
+
+	console.log(dtoParam, lv1Id, lv2Id, lv3Id);
+
+	$.ajax({
+		url: '/saveUseMenu',
+		method: 'PATCH',
+		data: JSON.stringify(dtoParam),
+		contentType: "application/json; charset=UTF-8",
+		// dataType: 'json',
+		success: function (){
+			alert("Success!");
+		}, error: function (request, status, error) {
+			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+		}
+	})
+}
+
+/* 사용여부와 수정가능여부 클릭 모션 */
+function checkboxModifyYn(e) {
+	var checkedUseYn = $(e).parent().parent().children().eq(5).children();
+	if (!checkedUseYn.prop('checked')) {
+		checkedUseYn.prop('checked', true);
+	}
+}
+function checkboxUseYn(e){
+	var checkedUseYn = $(e);
+	var checkedModifyYn = $(e).parent().parent().children().eq(6).children();
+	if (checkedUseYn.prop('checked') == false) {
+		checkedModifyYn.prop('checked', false);
+	}
+}
 
 // when page loaded
 function setKeyDownFunction() {

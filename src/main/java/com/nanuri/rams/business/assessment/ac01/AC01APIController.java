@@ -1,18 +1,23 @@
 package com.nanuri.rams.business.assessment.ac01;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nanuri.rams.business.common.dto.RAA92BDTO;
 import com.nanuri.rams.business.common.dto.RAA94BDTO;
+import com.nanuri.rams.business.common.dto.RAA95BDTO;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
+import com.nanuri.rams.business.common.vo.RAA94BVO;
 import com.nanuri.rams.business.common.vo.RAA95BVO;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDeleteRequestDto;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
@@ -142,10 +147,27 @@ public class AC01APIController {
 	}
 
 	/* 권한별 메뉴화면 사용권한 조회 */
-	@GetMapping(value = "/menuByAuth")
-	public List<RAA95BVO.MenuByAuthVO> menuByAuth() {
+	@GetMapping(value="/menuByAuth")
+	public List<RAA94BVO.MenuByAuthVO> menuByAuth() {
 		return ac01Service.getMenuByAuth();
 	}
+
+	/* RAA95B 수정 조회 가능 여부 조회 */
+	@GetMapping(value="/checkAvailableMenu")
+	public List<RAA95BDTO> getAvailableMenu(@RequestParam Map<String, String> menuId) {
+		return ac01Service.getAvailableMenu(menuId);
+	}
+
+	/* RAA95B 조회, 수정 가능 여부 저장 */
+	@PatchMapping(value="/saveUseMenu")
+	public boolean registUseMenu(@RequestBody ArrayList<RAA95BVO.selectUseMenuVO> dtoList) {
+		return ac01Service.registUseMenu(dtoList);
+	}
+	
+	
+	
+
+	//============ End AC01310S( 메뉴별권한관리 관리 ) ============//
 
 	// ============ End AC01310S( 메뉴별권한관리 관리 ) ============//
 }

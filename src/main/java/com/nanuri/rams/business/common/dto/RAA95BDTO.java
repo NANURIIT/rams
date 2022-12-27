@@ -18,6 +18,4 @@ public class RAA95BDTO {
     private Date hndlDyTm;						/* 처리일시 */
     private String hndlDprtCd;					/* 처리부점코드 */
     private String hndlPEno;					/* 처리자사번 */
-
-	private String rowNum;
 }

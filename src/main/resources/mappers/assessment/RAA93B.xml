@@ -50,9 +50,9 @@
 			ON B.URL_DVD_CD = C.URL_DVD_CD
 		 WHERE 1=1
 		<if test='menuNm != null and menuNm != ""'>
-		   AND (A.LV1_NM LIKE CONCAT('%', #{menuNm}, '%')
-				OR B.LV2_NM LIKE CONCAT('%', #{menuNm}, '%')
-				OR C.LV3_NM LIKE CONCAT('%', #{menuNm}, '%'))
+		 AND ( A.LV1_NM  LIKE CONCAT('%', #{menuNm} ,'%')
+		       OR B.LV2_NM LIKE CONCAT('%', #{menuNm} ,'%')
+		       OR C.LV3_NM LIKE CONCAT('%', #{menuNm} ,'%') )
 		</if>
 	     ORDER BY A.SRT_NO ASC, B.SRT_NO ASC, C.SRT_NO ASC
 	</select>

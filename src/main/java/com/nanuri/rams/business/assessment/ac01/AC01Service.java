@@ -1,15 +1,18 @@
 package com.nanuri.rams.business.assessment.ac01;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 import com.nanuri.rams.business.common.dto.RAA92BDTO;
-import com.nanuri.rams.business.common.dto.RAA93BDTO;
 import com.nanuri.rams.business.common.dto.RAA94BDTO;
+import com.nanuri.rams.business.common.dto.RAA95BDTO;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
+import com.nanuri.rams.business.common.vo.RAA94BVO;
 import com.nanuri.rams.business.common.vo.RAA95BVO;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDeleteRequestDto;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
@@ -45,19 +48,16 @@ public interface AC01Service {
 
 	/* 사용자관리 */
 	public void insertUser(RAA92BDTO userManageDTO);                    								// 사용자 추가// 사용자 추가
-	
     public List<RAA92BVO.selectVO> getUserList(RAA92BVO.selectVO userVo);            					// 사용자 목록 조회
-    
     public void deleteUser(RAA92BDTO userManageDTO);                    								// 사용자 삭제(퇴사)
     
     public List<RAA94BDTO> selectAuthCode();                            							  	// 사용자관리 화면의 권한구분
 
 	/* 메뉴별권한관리 */
 	public List<RAA93BVO.MenuListVO> getMenuList(String menuNm);										// 메뉴별권한관리 메뉴명 조회
-	
-	public List<RAA95BVO.MenuByAuthVO> getMenuByAuth();													// 권한별 메뉴화면 사용권한 조회
-	
-	
+	public List<RAA94BVO.MenuByAuthVO> getMenuByAuth();													// 권한별 메뉴화면 사용권한 조회
+	public List<RAA95BDTO> getAvailableMenu(Map<String, String> menuId);								// RAA95B 수정 조회 가능 여부 조회
+	public boolean registUseMenu(ArrayList<RAA95BVO.selectUseMenuVO> dtoList);													// RAA95B 수정 조회 가능 여부 저장
 	
 	//============ start AC01210S(권한별 메뉴관리) ============//
 	
