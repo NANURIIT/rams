@@ -331,10 +331,10 @@ public class AC01ServiceImpl implements AC01Service {
   		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
   		SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
   		for (RAA94BDTO authCode : authCodes) {
-  			if (StringUtil.isAllWhitespace(authCode.getRgstPEno())) {
+  			if (authCode.getRgstPEno() == null) {
   				authCode.setRgstPEno("-");
   			}
-  			if (StringUtil.isAllWhitespace(authCode.getHndlPEno())) {
+  			if (authCode.getHndlPEno() == null) {
   				authCode.setHndlPEno("-");
   			}
   			Date formatDate = dateFormat.parse(authCode.getRgstDt());
@@ -349,13 +349,13 @@ public class AC01ServiceImpl implements AC01Service {
   		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
   		SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
   		for (RAA93BVO authCodeMenu : authCodeMenus) {
-  			if (StringUtil.isAllWhitespace(authCodeMenu.getHndlPEno())) {
+  			if (authCodeMenu.getHndlPEno() == null) {
   				authCodeMenu.setHndlPEno("-");
   			}
-  			if (StringUtil.isAllWhitespace(authCodeMenu.getHndlDyTm())) {
+  			if (authCodeMenu.getHndlDyTm() == null) {
   				authCodeMenu.setHndlDyTm("-");
   			}
-  			if (StringUtil.isAllWhitespace(authCodeMenu.getHndlPEno())) {
+  			if (authCodeMenu.getHndlPEno() == null) {
   				authCodeMenu.setHndlPEno("-");
   			}
   		}
