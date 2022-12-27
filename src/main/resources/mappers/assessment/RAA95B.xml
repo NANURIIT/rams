@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.RAA95BMapper">
-	
+
+<!-- RAA95B 조회 및 수정 가능 여부 조회 -->
 <select id="selectAvailableMenu" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO" parameterType='java.util.Map'>
 	/* 권한별 메뉴화면 사용권한 조회 */
 	SELECT RGHT_CD
@@ -21,6 +22,7 @@
 		</if>
 </select>
 
+<!-- RAA95B 조회 및 수정 가능 여부 저장 -->
 <insert id='insertUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
 	   INSERT INTO RAA95B (
 			  RGHT_CD
@@ -40,14 +42,9 @@
 			, #{hndlDprtCd}
 			, #{hndlPEno}
 			)
-		   ON DUPLICATE KEY
-	   UPDATE MDFY_RGHT_CCD 	= #{mdfyRghtCcd}
-			, HNDL_DY_TM 		= NOW()
-			, HNDL_DPRT_CD 		= #{hndlDprtCd}
-			, HNDL_P_ENO  		= #{hndlPEno}
-			, MENU_ID 			= #{menuId}
 </insert>
 
+<!-- RAA95B 조회 및 수정 가능 여부 삭제 -->
 <delete id='deleteUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
 	  DELETE
 		FROM RAA95B
@@ -56,52 +53,34 @@
 		 AND SQ			= #{sq}
 </delete>
 
-<select id="selectUseMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO" resultType="com.nanuri.rams.business.common.vo.RAA95BVO$selectUseMenuVO">
-	/* 권한별 메뉴화면 사용권한 조회 */
-	 SELECT *
-	   FROM RAA95B A
-	  WHERE MENU_ID
-	  	 IN ( SELECT B.HG_RNK_MENU_ID 
-				FROM RAA95B A
-		   LEFT JOIN RAA93B B
-				  ON A.MENU_ID = B.MENU_ID 
-			   WHERE A.MENU_ID = #{menuId}
-				 AND A.RGHT_CD = #{rghtCd} )
-		 OR MENU_ID = #{menuId}
-</select>
-<!-- <select id="selectUseMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO">
-	/* 권한별 메뉴화면 사용권한 조회 */
-	SELECT RGHT_CD
-		 , SQ
-		 , MENU_ID
-		 , MDFY_RGHT_CCD
-		 , HNDL_DY_TM
-		 , HNDL_DPRT_CD
-		 , HNDL_P_ENO
-	FROM RAA95B
-	WHERE 1=1
-		<if test='sq != null and sq != ""'>
-		AND SQ = #{sq}
-		</if>
-		<if test='rghtCd != null and rghtCd = ""'>
-		AND RGHT_CD = #{rghtCd}
-		</if>
-</select> -->
 
+<!-- 상위메뉴의 조회 여부를 수정하기 위해 데이터 유무 조회 -->
 <select id='selectMainMenuId' parameterType="com.nanuri.rams.business.common.vo.RAA95BVO$selectUseMenuVO" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO">
-	SELECT RGHT_CD
-		 , SQ
-		 , MENU_ID
-		 , MDFY_RGHT_CCD
-		 , HNDL_DY_TM
-		 , HNDL_DPRT_CD
-		 , HNDL_P_ENO
-	 FROM RAA95B A
-    WHERE A.MENU_ID 		= #{menuId}
-	  AND A.RGHT_CD 		= #{rghtCd}
+	  SELECT DISTINCT( MENU_ID )
+		FROM RAA95B A
+	   WHERE MENU_ID
+		  IN (
+			  SELECT DISTINCT( B.HG_RNK_MENU_ID )
+				 FROM RAA95B A
+			LEFT JOIN RAA93B B
+				   ON A.MENU_ID 	= B.MENU_ID 
+				WHERE A.MENU_ID 	= #{menuId}
+				  AND A.RGHT_CD 	= #{rghtCd}
+			 )
 </select>
 
+<!-- MAX(SQ) 값 리턴 -->
 <select id="selectMaxSq" resultType="int">
-SELECT MAX(SQ) FROM RAA95B
+	  SELECT MAX(SQ)
+		FROM RAA95B
 </select>
+
+<!-- selectMainMenuId로 RAA95B의 해당 데이터 삭제 -->
+<delete id="deleteMainMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+	  DELETE 
+		FROM RAA95B
+	   WHERE RGHT_CD	= #{rghtCd}
+	   	 AND MENU_ID	= #{menuId}
+</delete>
+
 </mapper>

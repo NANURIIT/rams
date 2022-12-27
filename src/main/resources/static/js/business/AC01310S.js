@@ -2,6 +2,11 @@ $(document).ready(function () {
 	setKeyDownFunction();
 });
 
+/* 전역변수 */
+let lv1Id = '';
+let lv2Id = '';
+let lv3Id = '';
+
 /* 메뉴명 조회 ( null 입력 시 전체 메뉴 조회 ) */
 var AC01310S_findClickbutton = function () {
 	let menuNm = $('#AC01310S_findMenu').val();
@@ -13,7 +18,6 @@ var AC01310S_findClickbutton = function () {
 			makeMenuList(data);
 		},
 	})
-
 }
 
 /* 메뉴 목록 출력 ( order by menu_id > 순번 rownum 정렬 ) */
@@ -35,10 +39,6 @@ var makeMenuList = function (data) {
 	$('#AC01310S_makeMenuList').html(html);
 
 };
-
-let lv1Id = '';
-let lv2Id = '';
-let lv3Id = '';
 
 // 메뉴 권한 조회 ( 해당 메뉴의 'tr' 더블클릭 )
 function selectMenuRow(e) {
@@ -110,6 +110,9 @@ var checkUseAndModifyYn = function (rowNum) {
 						if (val.mdfyRghtCcd === "2") {
 							target.find('#setModifyYn').prop('checked', true);
 						}
+						target.find('#setHndlDt').html(val.hndlDyTm.substring(0, 10));
+						target.find('#setHndlTm').html(val.hndlDyTm.substring(11, 19));
+						target.find('#setHndlPEno').html(val.hndlPEno);
 					}
 					// RAA95B insert, delete를 위한 sq 값
 					$('#AC01310S_saveSq').val(val.sq);
@@ -117,10 +120,12 @@ var checkUseAndModifyYn = function (rowNum) {
 			}
 		}, error: function (request, status, error) {
 			// console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			alert("Fail!");
 		}
 	})
 }
 
+/* 권한코드에 따른 사용, 수정 가능 여부를 체크 */
 var saveUseMenu = function (i) {
 	let saveSq = $('#AC01310S_saveSq').val();
 	let useCheckbox = $('input:checkbox[id="setUseYn"]:checked');
@@ -129,24 +134,27 @@ var saveUseMenu = function (i) {
 
 	let dtoParam = [];
 
+	/* 사용여부 */
 	useCheckbox.each(function (i) {
 		let tr = useCheckbox.parent().parent().eq(i);
 		saveRghtCd = tr.children().eq(1).html();
-		// console.log('useCheckbox saveRghtCd :' + saveRghtCd.html());
-		if (lv2Id != 'null' && lv3Id == 'null') {
-			dtoParam.push({
-				"sq": Number(saveSq)
-				, "rghtCd": saveRghtCd
-				, "mdfyRghtCcd": '1'
-				, "menuId": lv2Id
-				, "lv1Id": lv1Id
-			});
-		}
-	})
+		/* 수정 가능하면 dtoParam 생성 금지 */
+		if (!(tr.children().eq(6).children().prop('checked'))) {
+			if (lv2Id != 'null' && lv3Id == 'null') {
+				dtoParam.push({
+					"sq": Number(saveSq)
+					, "rghtCd": saveRghtCd
+					, "mdfyRghtCcd": '1'
+					, "menuId": lv2Id
+					, "lv1Id": lv1Id
+				});
+			};
+		};
+	});
+	/* 수정가능여부 */
 	modifyCheckbox.each(function (i) {
 		let tr = modifyCheckbox.parent().parent().eq(i);
 		saveRghtCd = tr.children().eq(1).html();
-		// console.log('modifyCheckbox saveRghtCd :' + saveRghtCd.html());
 		if (lv2Id != 'null' && lv3Id == 'null') {
 			dtoParam.push({
 				"sq": Number(saveSq)
@@ -158,18 +166,17 @@ var saveUseMenu = function (i) {
 		}
 	})
 
-	console.log(dtoParam, lv1Id, lv2Id, lv3Id);
-
 	$.ajax({
 		url: '/saveUseMenu',
 		method: 'PATCH',
 		data: JSON.stringify(dtoParam),
 		contentType: "application/json; charset=UTF-8",
 		// dataType: 'json',
-		success: function (){
+		success: function () {
 			alert("Success!");
 		}, error: function (request, status, error) {
-			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			// console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+			alert("Fail!")
 		}
 	})
 }
@@ -181,7 +188,7 @@ function checkboxModifyYn(e) {
 		checkedUseYn.prop('checked', true);
 	}
 }
-function checkboxUseYn(e){
+function checkboxUseYn(e) {
 	var checkedUseYn = $(e);
 	var checkedModifyYn = $(e).parent().parent().children().eq(6).children();
 	if (checkedUseYn.prop('checked') == false) {
@@ -202,5 +209,4 @@ function keyDownEnter() {
 			AC01310S_findClickbutton();     // TODO: 엔터 검색을 클릭버튼 누르는 펑션으로 실행..확인요망
 		}
 	});
-
 }
