@@ -42,13 +42,6 @@
 			, #{hndlDprtCd}
 			, #{hndlPEno}
 			)
-		   <!-- ON DUPLICATE KEY
-	   UPDATE RGHT_CD			= #{rghtCd}
-	   		, MDFY_RGHT_CCD 	= #{mdfyRghtCcd}
-			, HNDL_DY_TM 		= NOW()
-			, HNDL_DPRT_CD 		= #{hndlDprtCd}
-			, HNDL_P_ENO  		= #{hndlPEno}
-			, MENU_ID 			= #{menuId} -->
 </insert>
 
 <!-- RAA95B 조회 및 수정 가능 여부 삭제 -->
@@ -66,12 +59,14 @@
 	  SELECT DISTINCT( MENU_ID )
 		FROM RAA95B A
 	   WHERE MENU_ID
-		  IN ( SELECT DISTINCT( B.HG_RNK_MENU_ID )
+		  IN (
+			  SELECT DISTINCT( B.HG_RNK_MENU_ID )
 				 FROM RAA95B A
 			LEFT JOIN RAA93B B
-				   ON A.MENU_ID = B.MENU_ID 
+				   ON A.MENU_ID 	= B.MENU_ID 
 				WHERE A.MENU_ID 	= #{menuId}
-				  AND A.RGHT_CD 	= #{rghtCd} )
+				  AND A.RGHT_CD 	= #{rghtCd}
+			 )
 </select>
 
 <!-- MAX(SQ) 값 리턴 -->
