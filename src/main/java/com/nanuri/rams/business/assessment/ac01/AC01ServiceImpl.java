@@ -3,11 +3,12 @@ package com.nanuri.rams.business.assessment.ac01;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.nanuri.rams.business.common.dto.RAA92BDTO;
 import com.nanuri.rams.business.common.dto.RAA94BDTO;
+import com.nanuri.rams.business.common.dto.RAA95BDTO;
 import com.nanuri.rams.business.common.mapper.RAA90BMapper;
 import com.nanuri.rams.business.common.mapper.RAA92BMapper;
 import com.nanuri.rams.business.common.mapper.RAA93BMapper;
@@ -22,6 +24,7 @@ import com.nanuri.rams.business.common.mapper.RAA94BMapper;
 import com.nanuri.rams.business.common.mapper.RAA95BMapper;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
+import com.nanuri.rams.business.common.vo.RAA94BVO;
 import com.nanuri.rams.business.common.vo.RAA95BVO;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDeleteRequestDto;
 import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
@@ -142,9 +145,6 @@ public class AC01ServiceImpl implements AC01Service {
 
         String rgstDt = today.format(date);
         String rgstTm = now.format(time);
-        // String sq = String.valueOf(RAA92BMapper.getLastSq() + 1);
-        // String sq = "(SELECT NEXTVAL(RAA92B_SQ))";
-        // String insertSq = Optional.ofNullable(dto.getSq()).orElse(sq);
         String insertSq = Optional.ofNullable(dto.getSq()).orElse("");
         String eno = facade.getDetails().getEno();
         String dprtCd = facade.getDetails().getDprtCd();
@@ -205,25 +205,20 @@ public class AC01ServiceImpl implements AC01Service {
 
         List<RAA93BVO.MenuListVO> menuList = RAA93BMapper.selectMenuList(menuNm);
 
-        String name = "";
         String lvName = "";
         int rowNum = 0;
 
         for (RAA93BVO.MenuListVO menu : menuList) {
-            name = "";
             lvName = "";
             if (menu.getLv2Nm() != null && menu.getLv2Nm() != "") {
                 rowNum++;
-                name = menu.getLv1Nm() + " > " + menu.getLv2Nm();
                 lvName = menu.getLv2Id();
             }
             if (menu.getLv3Nm() != null && menu.getLv3Nm() != "") {
                 rowNum++;
-                name = menu.getLv1Nm() + " > " + menu.getLv2Nm() + " > " + menu.getLv3Nm();
                 lvName = menu.getLv3Id();
             }
             menu.setMenuId(lvName);
-            menu.setMenuName(name);
             menu.setRowNum(rowNum);
         }
 
@@ -232,25 +227,103 @@ public class AC01ServiceImpl implements AC01Service {
 
     /* 권한별 메뉴화면 사용권한 조회 */
     @Override
-    public List<RAA95BVO.MenuByAuthVO> getMenuByAuth() {
-        List<RAA95BVO.MenuByAuthVO> menuAuthList = RAA95BMapper.selectMenuByAuth();
+    public List<RAA94BVO.MenuByAuthVO> getMenuByAuth() {
+        List<RAA94BVO.MenuByAuthVO> menuAuthList = RAA94BMapper.selectMenuByAuth();
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
-        for (RAA95BVO.MenuByAuthVO menu : menuAuthList) {
-			String dateTime = Optional.ofNullable(menu.getHndlDyTm()).orElse("");
-			if (dateTime!=""){
-				menu.setHndlDt(dateTime.split(" ")[0]);
-				menu.setHndlTm(dateTime.split(" ")[1]);
-			} else {
-				menu.setHndlDt(dateTime);
-				menu.setHndlTm(dateTime);
-			}
-			String hndlPEno = Optional.ofNullable(menu.getHndlPEno()).orElse("");
-			menu.setHndlPEno(hndlPEno);
+        for (RAA94BVO.MenuByAuthVO menu : menuAuthList) {
+            if (menu.getHndlDyTm() != null) {
+                String date = dateformat.format(menu.getHndlDyTm());
+                String time = timeformat.format(menu.getHndlDyTm());
+                menu.setHndlDt(date);
+                menu.setHndlTm(time);
+            } else {
+                menu.setHndlDt("");
+                menu.setHndlTm("");
+            }
+            String hndlPEno = Optional.ofNullable(menu.getHndlPEno()).orElse("");
+            menu.setHndlPEno(hndlPEno);
+
+            // String dateTime = Optional.ofNullable(menu.getHndlDyTm()).orElse("");
+            // if (dateTime!=""){
+            // 	menu.setHndlDt(dateTime.split(" ")[0]);
+            // 	menu.setHndlTm(dateTime.split(" ")[1]);
+            // } else {
+            // 	menu.setHndlDt(dateTime);
+            // 	menu.setHndlTm(dateTime);
+            // }
+            // String hndlPEno = Optional.ofNullable(menu.getHndlPEno()).orElse("");
+            // menu.setHndlPEno(hndlPEno);
         }
 
         return menuAuthList;
+    }
+
+    /* RAA95B 수정 조회 가능 여부 조회 */
+    @Override
+    public List<RAA95BDTO> getAvailableMenu(Map<String, String> menuId) {
+        return RAA95BMapper.selectAvailableMenu(menuId);
+    }
+
+    @Override
+    public boolean registUseMenu(ArrayList<RAA95BVO.selectUseMenuVO> dtoList) {
+        int count = 0;
+        String hndlDprtCd = facade.getDetails().getDprtCd();
+        String hndlPEno = facade.getDetails().getEno();
+
+        /* 
+		 * 선택한 화면id값은 클라이언트에서 보내줌
+		 * 체크박스의 값이 있으면 그 값이 있는 SQ, RGHT_CD를 보내준다
+		 * 클라이언트 {menuId, sq, rghtCd, mdfyRghtCcd 각 화면 lvNId}
+		 * 
+		 * SQ와 RGHT_CD에 따른 값을 지워준다. 클라이언트의 request 파라미터 값
+		 * 상위화면도 같이 지워준다. 클라이언트 lv1Id (lv3의 경우 lv1,lv2Id)
+		 * 선택한 값을 넣어준다. (select max(sq)+1 from raa95b), 클라이언트의 menuId, rghtCd, mdfyRghtCcd
+		 * insert의 경우 해당 화면(1,2)과 상위 화면(1)을 같이 insert 한다.
+         */
+        for (RAA95BVO.selectUseMenuVO dto : dtoList) {
+            int maxSq = RAA95BMapper.selectMaxSq();
+            dto.setHndlDprtCd(hndlDprtCd);
+            dto.setHndlPEno(hndlPEno);
+            int sq = dto.getSq();
+            // int sq = Optional.ofNullable(dto.getSq()).orElse(maxSq);
+            // if (sq == 0) {
+            //     sq = maxSq + 1;
+            // }
+
+            if (sq == 0) {
+                /* 중복된 데이터가 없을 경우 */
+                sq = maxSq + 1;
+                dto.setSq(sq);
+				dto.setMenuId(dto.getMenuId());
+                count += RAA95BMapper.insertUseMenu(dto);
+				
+				// dto.setSq(maxSq);
+                // dto.setMenuId(dto.getLv1Id());
+                // count += RAA95BMapper.insertUseMenu(dto);
+            } else if (sq != 0) {
+				/* 중복된 데이터가 있을 경우 */
+                // delete and insert
+                dto.setSq(sq);
+                count += RAA95BMapper.deleteUseMenu(dto);
+                count += RAA95BMapper.insertUseMenu(dto);
+				
+                // // 상위 메뉴 SET
+                // dto.setMenuId(dto.getLv1Id());
+                // dto.setSq(sq - 1);
+				
+                // // delete and insert
+                // count += RAA95BMapper.deleteUseMenu(dto);
+                // count += RAA95BMapper.insertUseMenu(dto);
+            }
+			if(RAA95BMapper.selectMainMenuId(dto) != null && dto.getMdfyRghtCcd().equals("1")){
+				int selectSq = RAA95BMapper.selectMainMenuId(dto).getSq();
+				dto.setSq(selectSq);
+				dto.setMenuId(dto.getLv1Id());
+				count += RAA95BMapper.insertUseMenu(dto);
+			}
+        }
+        return count > 0;
     }
 
     //============ End AC01310S( 메뉴별권한 관리 ) ============//	
