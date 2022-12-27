@@ -998,7 +998,7 @@ h5 {
 .nav-header {
   padding: 33px 25px;
   background-color: #2F4050;
-  background-image: url("patterns/header-profile.png");
+  /* background-image: url("patterns/header-profile.png"); */
 }
 .caret {
   display: inline-block;
@@ -2850,7 +2850,7 @@ select.form-control:not([size]):not([multiple]) {
   margin: 0;
 }
 .input-group.date .input-group-addon {
-  border-right: 0;
+  border-left: 0;
 }
 .spinner-buttons.input-group-btn .btn-xs {
   line-height: 1.13;
