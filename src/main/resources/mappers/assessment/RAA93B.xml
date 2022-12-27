@@ -4,7 +4,11 @@
 	
 	<!-- 메뉴별권한관리 메뉴명 조회 --> 
 	<select id="selectMenuList" resultType="com.nanuri.rams.business.common.vo.RAA93BVO$MenuListVO" parameterType='String'>
-		SELECT A.LV1_ID
+		SELECT CONCAT( A.LV1_NM
+	 			   , IF(B.LV2_NM != '', CONCAT(' > ', B.LV2_NM), '')
+				   , IF(C.LV3_NM != '', CONCAT(' > ', C.LV3_NM), '')
+				   ) AS MENU_NAME
+			 , A.LV1_ID
 			 , A.LV1_NM
 			 , B.LV2_ID
 			 , B.LV2_NM

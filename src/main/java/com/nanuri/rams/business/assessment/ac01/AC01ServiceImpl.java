@@ -215,6 +215,7 @@ public class AC01ServiceImpl implements AC01Service {
     }
 
     //============ End AC01110S( 사용자 관리 ) ============//
+	
     //============ Start AC01310S( 메뉴별권한 관리 ) ============//	
 
     /* 메뉴명 조회 */
@@ -289,25 +290,11 @@ public class AC01ServiceImpl implements AC01Service {
         String hndlDprtCd = facade.getDetails().getDprtCd();
         String hndlPEno = facade.getDetails().getEno();
 
-        /* 
-		 * 선택한 화면id값은 클라이언트에서 보내줌
-		 * 체크박스의 값이 있으면 그 값이 있는 SQ, RGHT_CD를 보내준다
-		 * 클라이언트 {menuId, sq, rghtCd, mdfyRghtCcd 각 화면 lvNId}
-		 * 
-		 * SQ와 RGHT_CD에 따른 값을 지워준다. 클라이언트의 request 파라미터 값
-		 * 상위화면도 같이 지워준다. 클라이언트 lv1Id (lv3의 경우 lv1,lv2Id)
-		 * 선택한 값을 넣어준다. (select max(sq)+1 from raa95b), 클라이언트의 menuId, rghtCd, mdfyRghtCcd
-		 * insert의 경우 해당 화면(1,2)과 상위 화면(1)을 같이 insert 한다.
-         */
         for (RAA95BVO.selectUseMenuVO dto : dtoList) {
             int maxSq = raa95BMapper.selectMaxSq();
             dto.setHndlDprtCd(hndlDprtCd);
             dto.setHndlPEno(hndlPEno);
             int sq = dto.getSq();
-            // int sq = Optional.ofNullable(dto.getSq()).orElse(maxSq);
-            // if (sq == 0) {
-            //     sq = maxSq + 1;
-            // }
 
             if (sq == 0) {
                 /* 중복된 데이터가 없을 경우 */
@@ -316,9 +303,6 @@ public class AC01ServiceImpl implements AC01Service {
 				dto.setMenuId(dto.getMenuId());
                 count += raa95BMapper.insertUseMenu(dto);
 				
-				// dto.setSq(maxSq);
-                // dto.setMenuId(dto.getLv1Id());
-                // count += raa95BMapper.insertUseMenu(dto);
             } else if (sq != 0) {
 				/* 중복된 데이터가 있을 경우 */
                 // delete and insert
@@ -326,13 +310,6 @@ public class AC01ServiceImpl implements AC01Service {
                 count += raa95BMapper.deleteUseMenu(dto);
                 count += raa95BMapper.insertUseMenu(dto);
 				
-                // // 상위 메뉴 SET
-                // dto.setMenuId(dto.getLv1Id());
-                // dto.setSq(sq - 1);
-				
-                // // delete and insert
-                // count += raa95BMapper.deleteUseMenu(dto);
-                // count += raa95BMapper.insertUseMenu(dto);
             }
 			if(raa95BMapper.selectMainMenuId(dto) != null && dto.getMdfyRghtCcd().equals("1")){
 				int selectSq = raa95BMapper.selectMainMenuId(dto).getSq();
