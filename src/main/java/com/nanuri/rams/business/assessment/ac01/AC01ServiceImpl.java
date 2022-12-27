@@ -345,9 +345,6 @@ public class AC01ServiceImpl implements AC01Service {
   			if (StringUtil.isAllWhitespace(authCode.getRgstPEno())) {
   				authCode.setRgstPEno("-");
   			}
-  			if (StringUtil.isAllWhitespace(authCode.getHndlDyTm())) {
-  				authCode.setHndlDyTm("-");
-  			}
   			if (StringUtil.isAllWhitespace(authCode.getHndlPEno())) {
   				authCode.setHndlPEno("-");
   			}
