@@ -259,17 +259,6 @@ public class AC01ServiceImpl implements AC01Service {
             }
             String hndlPEno = Optional.ofNullable(menu.getHndlPEno()).orElse("");
             menu.setHndlPEno(hndlPEno);
-
-            // String dateTime = Optional.ofNullable(menu.getHndlDyTm()).orElse("");
-            // if (dateTime!=""){
-            // 	menu.setHndlDt(dateTime.split(" ")[0]);
-            // 	menu.setHndlTm(dateTime.split(" ")[1]);
-            // } else {
-            // 	menu.setHndlDt(dateTime);
-            // 	menu.setHndlTm(dateTime);
-            // }
-            // String hndlPEno = Optional.ofNullable(menu.getHndlPEno()).orElse("");
-            // menu.setHndlPEno(hndlPEno);
         }
 
         return menuAuthList;

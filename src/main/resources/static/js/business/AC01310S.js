@@ -110,6 +110,9 @@ var checkUseAndModifyYn = function (rowNum) {
 						if (val.mdfyRghtCcd === "2") {
 							target.find('#setModifyYn').prop('checked', true);
 						}
+						target.find('#setHndlDt').html(val.hndlDyTm.substring(0, 10));
+						target.find('#setHndlTm').html(val.hndlDyTm.substring(11, 19));
+						target.find('#setHndlPEno').html(val.hndlPEno);
 					}
 					// RAA95B insert, delete를 위한 sq 값
 					$('#AC01310S_saveSq').val(val.sq);
