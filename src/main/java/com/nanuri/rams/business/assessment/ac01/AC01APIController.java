@@ -24,105 +24,128 @@ import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-
-
 @Slf4j
 @RequiredArgsConstructor
 @RestController
 public class AC01APIController {
 
-	private final AC01Service AC01Service;
+	private final AC01Service ac01Service;
 
+	// ============ start AC01010S(공통코드관리) ============//
 	// 그룹코드정보 리스트 가져오기
 	@GetMapping(value = "/groupCodeInfoList")
 	public List<GroupCodeInfoDto> getGroupCodeInfoList(String cmnsCdGrp) throws ParseException {
-		return AC01Service.getGroupCodeInfoList(cmnsCdGrp);
+		return ac01Service.getGroupCodeInfoList(cmnsCdGrp);
 	}
 
 	@GetMapping(value = "/groupCodeInfo")
 	public List<CodeInfoDto> getGroupCodeInfo(String cmnsCdGrp) throws ParseException {
-		return AC01Service.getCodeInfoList(cmnsCdGrp);
+		return ac01Service.getCodeInfoList(cmnsCdGrp);
 	}
 
 	@PatchMapping(value = "/deleteGroupCodeInfo")
 	public boolean deleteGroupCodeInfo(@RequestBody List<String> cmnsCdGrp) {
-		return AC01Service.deleteGroupCodeInfo(cmnsCdGrp);
+		return ac01Service.deleteGroupCodeInfo(cmnsCdGrp);
 	}
 
 	@PatchMapping(value = "/deleteCodeInfo")
 	public boolean deleteCodeInfo(@RequestBody CodeInfoDeleteRequestDto requestDto) {
-		//log.debug("requestDto : {}", requestDto);
-		return AC01Service.deleteCodeInfo(requestDto);
+		// log.debug("requestDto : {}", requestDto);
+		return ac01Service.deleteCodeInfo(requestDto);
 	}
 
 	@GetMapping(value = "/commonCodeInfo")
 	public List<CommonCodeInfoDto> getCommonCodeInfo() {
-		return AC01Service.getCommonCodeName();
+		return ac01Service.getCommonCodeName();
 	}
 
 	// 코드정보 가져오기
 	@GetMapping(value = "/codeInfoList")
 	public List<CodeInfoDto> getCodeInfoList(GroupCodeInfoDto groupCodeInfoDto) {
-		return AC01Service.getCodeInfoList(groupCodeInfoDto);
+		return ac01Service.getCodeInfoList(groupCodeInfoDto);
 	}
 
 	// 그룹코드정보 등록하기
 	@PostMapping(value = "/registGroupCodeInfo")
 	public boolean registGroupCodeInfo(@RequestBody List<GroupCodeInfoSaveRequestDto> requestDtos) {
-		//log.debug("requestDtos : {}", requestDtos);
-		return AC01Service.registGroupCodeInfo(requestDtos);
+		return ac01Service.registGroupCodeInfo(requestDtos);
 	}
 
 	// 코드정보 등록하기
 	@PostMapping(value = "/registCodeInfo")
 	public boolean registCodeInfo(@RequestBody List<CodeInfoSaveRequestDto> requestDtos) {
-		//log.debug("requestDtos : {}", requestDtos);
-		return AC01Service.registCodeInfo(requestDtos);
+		return ac01Service.registCodeInfo(requestDtos);
 	}
+	// ============ end AC01010S(공통코드관리) ============//
 
-	//============ Start AC01110S( 사용자 관리 ) ============//
-	
+	// ============ Start AC01110S( 사용자 관리 ) ============//
+
 	/* 사용자 권한 추가 */
-    @PostMapping(value="/insertUser")
-    public void insertUser(@RequestBody RAA92BDTO userManageDTO) {
-        AC01Service.insertUser(userManageDTO);
-    };
+	@PostMapping(value = "/insertUser")
+	public void insertUser(@RequestBody RAA92BDTO userManageDTO) {
+		ac01Service.insertUser(userManageDTO);
+	};
 
-    /* 사용자 목록조회 */
-    @GetMapping(value="/getUserList")
-    public List<RAA92BVO.selectVO> getUserList(RAA92BVO.selectVO userVo ) {
-        return AC01Service.getUserList(userVo);
-    }
-    
-    /* 사용자 삭제(퇴사) */
-    @PatchMapping(value = "/deleteUser")
-	public void deleteUser(@RequestBody RAA92BDTO userManageDTO) {
-		AC01Service.deleteUser(userManageDTO);
+	/* 사용자 목록조회 */
+	@GetMapping(value = "/getUserList")
+	public List<RAA92BVO.selectVO> getUserList(RAA92BVO.selectVO userVo) {
+		return ac01Service.getUserList(userVo);
 	}
 
-    /* 사용자관리화면 권한구분 */
-    @GetMapping(value="/selectAuthCode")
-    public List<RAA94BDTO> selectAuthCode() {
-        return AC01Service.selectAuthCode();
-    }
+	/* 사용자 삭제(퇴사) */
+	@PatchMapping(value = "/deleteUser")
+	public void deleteUser(@RequestBody RAA92BDTO userManageDTO) {
+		ac01Service.deleteUser(userManageDTO);
+	}
 
-	//============ End AC01110S( 사용자 관리 ) ============//
+	/* 사용자관리화면 권한구분 */
+	@GetMapping(value = "/selectAuthCode")
+	public List<RAA94BDTO> selectAuthCode() {
+		return ac01Service.selectAuthCode();
+	}
 
-	//============ Start AC01310S( 메뉴별권한관리 관리 ) ============//
+	// ============ End AC01110S( 사용자 관리 ) ============//
+
+	// ============ start AC01210S(권한별 메뉴관리) ============//
+	@GetMapping(value = "/getAuthCode")
+	public List<RAA94BDTO> getAuthCode(String rghtCdNm) throws ParseException {
+		return ac01Service.getAuthCode(rghtCdNm);
+	}
+
+	@GetMapping(value = "/getAuthCodeMenu")
+	public List<RAA93BVO> getAuthCodeMenu(String rghtCd) {
+		return ac01Service.getAuthCodeMenu(rghtCd);
+	}
+
+	@PostMapping(value = "/registerAuthCode")
+	public boolean registerAuthCode(@RequestBody List<RAA94BDTO> requestDtos) {
+		return ac01Service.registerAuthCode(requestDtos);
+	}
+
+	@PatchMapping(value = "/deleteAuthCode")
+	public boolean deleteAuthCode(@RequestBody List<String> rghtCd) {
+		return ac01Service.deleteAuthCode(rghtCd);
+	}
+
+	@PostMapping(value = "/registerAuthCodeMenu")
+	public boolean registerAuthCodeMenu(@RequestBody List<RAA93BVO> requestDtos) {
+		return ac01Service.registerAuthCodeMenu(requestDtos);
+	}
+	// ============ end AC01210S(권한별 메뉴관리) ============//
+
+	// ============ Start AC01310S( 메뉴별권한관리 관리 ) ============//
 
 	/* 메뉴명 조회 */
-	@GetMapping(value="/findMenu")
+	@GetMapping(value = "/findMenu")
 	public List<RAA93BVO.MenuListVO> getMethodName(String menuNm) {
-		return AC01Service.getMenuList(menuNm);
+		return ac01Service.getMenuList(menuNm);
 	}
-	
+
 	/* 권한별 메뉴화면 사용권한 조회 */
-	@GetMapping(value="/menuByAuth")
+	@GetMapping(value = "/menuByAuth")
 	public List<RAA95BVO.MenuByAuthVO> menuByAuth() {
-		return AC01Service.getMenuByAuth();
+		return ac01Service.getMenuByAuth();
 	}
-	
 
-	//============ End AC01310S( 메뉴별권한관리 관리 ) ============//
-
+	// ============ End AC01310S( 메뉴별권한관리 관리 ) ============//
 }

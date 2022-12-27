@@ -2,41 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.RAA93BMapper">
 	
-<select id="selectMenuList" resultType="com.nanuri.rams.business.common.vo.RAA93BVO$MenuListVO" parameterType='String'>
-	/* 메뉴별권한관리 메뉴명 조회 */
+	<!-- 메뉴별권한관리 메뉴명 조회 --> 
+	<select id="selectMenuList" resultType="com.nanuri.rams.business.common.vo.RAA93BVO$MenuListVO" parameterType='String'>
 		SELECT A.LV1_ID
 			 , A.LV1_NM
 			 , B.LV2_ID
 			 , B.LV2_NM
 			 , C.LV3_ID
 			 , C.LV3_NM
-		  FROM (SELECT MENU_ID LV1_ID
+		  FROM (
+		        SELECT MENU_ID LV1_ID
 					 , MENU_NM LV1_NM
 					 , URL_DVD_CD
 					 , SRT_NO
 				  FROM RAA93B
-				 WHERE MENU_LV = 1) A
-     LEFT JOIN (SELECT B.LV2_ID
-   					 , B.LV2_NM
-					 , B.URL_DVD_CD
-					 , B.SRT_NO
-				  FROM (SELECT MENU_ID LV2_ID
-							 , MENU_NM LV2_NM
-							 , URL_DVD_CD
-							 , SRT_NO
-						  FROM RAA93B
-					     WHERE MENU_LV = 2) B) B
+				 WHERE MENU_LV = 1
+			   ) A
+          LEFT JOIN (
+                     SELECT B.LV2_ID
+   					      , B.LV2_NM
+					      , B.URL_DVD_CD
+					      , B.SRT_NO
+				       FROM (
+				             SELECT MENU_ID LV2_ID
+							      , MENU_NM LV2_NM
+							      , URL_DVD_CD
+							      , SRT_NO
+						       FROM RAA93B
+					          WHERE MENU_LV = 2
+					        ) B
+					) B
 			ON A.URL_DVD_CD = B.URL_DVD_CD
-	 LEFT JOIN (SELECT C.LV3_ID
-   					 , C.LV3_NM
-					 , C.URL_DVD_CD
-					 , C.SRT_NO
-				  FROM (SELECT MENU_ID LV3_ID
-							 , MENU_NM LV3_NM
-							 , URL_DVD_CD
-							 ,SRT_NO
-						  FROM RAA93B
-					     WHERE MENU_LV = 3) C) C
+	      LEFT JOIN (
+	                 SELECT C.LV3_ID
+   					      , C.LV3_NM
+					      , C.URL_DVD_CD
+					      , C.SRT_NO
+				       FROM (
+				             SELECT MENU_ID LV3_ID
+							      , MENU_NM LV3_NM
+							      , URL_DVD_CD
+							      , SRT_NO
+						       FROM RAA93B
+					          WHERE MENU_LV = 3
+					        ) C
+					) C
 			ON B.URL_DVD_CD = C.URL_DVD_CD
 		 WHERE 1=1
 		<if test='menuNm != null and menuNm != ""'>
@@ -44,7 +54,43 @@
 				OR B.LV2_NM LIKE CONCAT('%', #{menuNm}, '%')
 				OR C.LV3_NM LIKE CONCAT('%', #{menuNm}, '%'))
 		</if>
-	  ORDER BY A.SRT_NO ASC, B.SRT_NO ASC, C.SRT_NO ASC
-</select>
+	     ORDER BY A.SRT_NO ASC, B.SRT_NO ASC, C.SRT_NO ASC
+	</select>
+
+	<select id="selectAuthCodeMenu" parameterType="String" resultType="com.nanuri.rams.business.common.vo.RAA93BVo">
+        SELECT 93b.srt_no
+             , 93b.menu_id
+             , 95b.rght_cd
+             , 93b.menu_lv
+             , 93b.dlt_f
+             , 95b.mdfy_rght_ccd
+             , 93b.hndl_dy_tm
+             , 93b.hndl_p_eno
+          FROM RAA93B 93b
+    INNER JOIN RAA95B 95b
+            ON 93b.menu_id = 95b.menu_id
+         WHERE 1=1
+           AND 95b.rght_cd = #{rghtCd}
+           AND 93b.scrn_aplc_type_cd = 'S'
+    </select>
+    
+    <update id="updateAuthCodeMenu" parameterType="com.nanuri.rams.business.common.vo.RAA93BVo">
+        UPDATE RAA93B
+            <set>
+                <if test="dltF != null and dltF !=''">
+                    dlt_f = #{dltF},
+                </if>
+                hndl_p_eno = #{hndlPEno},
+                hndl_dy_tm = now()
+            </set>
+         WHERE 1=1
+           AND menu_id = #{menuId};
+        <if test="mdfyRghtCcd != null and mdfyRghtCcd !=''">
+        UPDATE RAA95B
+           SET mdfy_rght_ccd = #{mdfyRghtCcd}
+         WHERE 1=1
+           AND menu_id = #{menuId};
+        </if>
+    </update>
 
 </mapper>

@@ -21,4 +21,15 @@ public class RAA93BVO {
         private String lv3Id;
         private String lv3Nm;
     }
+    
+    private int srtNo;
+    private String menuId;
+    private String rghtCd;
+    private String menuLv;
+    private String dltF;
+    private String mdfyRghtCcd;
+    private String hndlDyTm;
+    private String hndlPEno;
+    
+    
 }
