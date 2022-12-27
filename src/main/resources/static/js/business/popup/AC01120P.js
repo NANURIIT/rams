@@ -1,68 +1,32 @@
 $(document).ready(function() {
-	
-	//setOpenModal();
-	
-	setKeyDownFunction();
-	
+	keyDownEnter();
 });
 
-$('.btn-AC01120P').on("click", function(){
+/**
+ * 모달 팝업 show
+ * @param {string} prefix 결과전달 ID의 prefix
+ */
+function callAC01120P(prefix){
+	reset_AC01120P();
+	$('#prefix').val(prefix);
 	$('#modal-AC01120P').modal('show');
-});
-
-// modal controll function
-function setOpenModal() {
-	let Modal = document.getElementById('AC01120P');
-	let OpenModal = document.getElementById("open_modal_AC01120P");
-	let CloseModal = document.getElementsByClassName("modal_close_AC01120P")[0];
-	
-	// open modal
-	OpenModal.onclick = function() {
-		Modal.style.display = "block";
-	}
-
-	// close modal
-	CloseModal.onclick = function() {
-		Modal.style.display = "none";
-		reset_AC01120P();
-	}
-	
-	// close modal
-	window.onclick = function(event) {
-		if (event.target === Modal) {
-			Modal.style.display = "none";
-			reset_AC01120P();
-		}
-	}
-
-	// close modal
-	$(document).keydown(function(e) {
-		//keyCode 구 브라우저, which 현재 브라우저
-		var code = e.keyCode || e.which;
-		if (code == 27) { // 27은 ESC 키번호
-			Modal.style.display = "none";
-			reset_AC01120P();
-		}
-
-	});
-
 }
 
-// reset AC01120P
+/**
+ * 모달 초기화
+ */
 function reset_AC01120P() {
 	$('#AC01120P_tbodyEmpList').html("");
+	$('#prefix').val("");
 	$('#AC01120P_empNm').val("");
 	$('#AC01120P_eno').val("");
 	$('#AC01120P_dprtCd').val("");
 	$('#AC01120P_dprtNm').val("");
 }
 
-// when page loaded
-function setKeyDownFunction() {
-	keyDownEnter();
-}
-
-// search employee or deal
+/**
+ * Enter key Event
+ */
 function keyDownEnter() {
 
 	$("input[id=AC01120P_empNm]").keydown(function(key) {
@@ -90,7 +54,9 @@ function keyDownEnter() {
 	});
 }
 
-// get employee list
+/**
+ * ajax 통신(조회)
+ */
 function getEmpList() {
 
 	var empNm = $("#AC01120P_empNm").val();
@@ -124,7 +90,9 @@ function getEmpList() {
 
 }
 
-// draw modal table employee 
+/**
+ * 결과값 table 생성
+ */
 function rebuildTable(data) {
 	var html = '';
 	var empList = data;
@@ -151,37 +119,37 @@ function rebuildTable(data) {
 
 };
 
-// close modal
+/**
+ * modal hide
+ */
 function modalClose(){
 	$('#modal-AC01120P').modal('hide');
 }
 
-// send to #rcvdEmpNm
+/**
+ * 부모창에 결과값 전달
+ */
 function setEmpNm(){
-	//tr(selected) = event.currentTarget;
-	//td(selected) = event.target;
 	var tr = event.currentTarget;
 	var td = $(tr).children();
 	
-	var empNo = td.eq(0).text();	// 직원번호
+	var eno = td.eq(0).text();	// 직원번호
 	var empNm = td.eq(1).text();	// 직원명
 	var dprtCd = td.eq(2).text();	// 부점코드
 	var dprtNm = td.eq(3).text();	// 부점명
 	var hdqtCd = td.eq(4).text();	// 본부코드
 	var hdqtNm = td.eq(5).text();	// 본부명
 	
-	
-	var pathname = $(location).attr('pathname');
-	var path = pathname.split('/');
-	var pageEmpNm = '#' + path[path.length - 1] + '_empNm';
-	var pageEmpNo = '#' + path[path.length - 1] + '_empNo';
-	var pageDprtCd = '#' + path[path.length - 1] + '_dprtCd';
-	var pageDprtNm = '#' + path[path.length - 1] + '_dprtNm';
-	var pageHdqtCd = '#' + path[path.length - 1] + '_hdqtCd';
-	var pageHdqtNm = '#' + path[path.length - 1] + '_hdqtNm';
-	
+	var prefix = $("#prefix").val();
+	var pageEmpNm = '#' + prefix + '_empNm';
+	var pageEno = '#' + prefix + '_eno';
+	var pageDprtCd = '#' + prefix + '_dprtCd';
+	var pageDprtNm = '#' + prefix + '_dprtNm';
+	var pageHdqtCd = '#' + prefix + '_hdqtCd';
+	var pageHdqtNm = '#' + prefix + '_hdqtNm';
+
 	$(pageEmpNm).val(empNm);
-	$(pageEmpNo).val(empNo);
+	$(pageEno).val(eno);
 	$(pageDprtCd).val(dprtCd);
 	$(pageDprtNm).val(dprtNm);
 	$(pageHdqtCd).val(hdqtCd);
