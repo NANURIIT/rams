@@ -102,11 +102,11 @@ public class AC01ServiceImpl implements AC01Service {
         for (CodeInfoDto codeInfo : codeInfoList) {
             Date formatDate = dateFormat.parse(codeInfo.getRgstDt());
             codeInfo.setRgstDt(newFormat.format(formatDate));
-            if (StringUtil.isAllWhitespace(codeInfo.getRgstPEno())) {
+            if (codeInfo.getRgstPEno() == null) {
                 codeInfo.setRgstPEno("-");
             }
 
-            if (StringUtil.isAllWhitespace(codeInfo.getHndlPEno())) {
+            if (codeInfo.getHndlPEno() == null) {
                 codeInfo.setHndlPEno("-");
             }
         }
