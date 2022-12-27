@@ -15,5 +15,5 @@ public interface RAA95BMapper {
 	public int deleteUseMenu(RAA95BDTO dto);										// RAA95B 수정 조회 가능 여부 삭제
 	public RAA95BDTO selectMainMenuId(RAA95BDTO dto);								// 상위메뉴의 조회 여부를 수정하기 위해 데이터 유무 조회
 	public int selectMaxSq();														// Primary key인 SQ의 충돌을 막기 위해 MAX(SQ) 값을 가져온다
-	public void deleteMainMenu(RAA95BDTO dto);										// 조회 된 mainMenuId로 RAA95B의 해당 데이터 삭제
+	public void deleteMainMenu(RAA95BDTO dto);										// selectMainMenuId로 RAA95B의 해당 데이터 삭제
 }

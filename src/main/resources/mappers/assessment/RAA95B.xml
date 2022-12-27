@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.RAA95BMapper">
-	
+
+<!-- RAA95B 조회 및 수정 가능 여부 조회 -->
 <select id="selectAvailableMenu" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO" parameterType='java.util.Map'>
 	/* 권한별 메뉴화면 사용권한 조회 */
 	SELECT RGHT_CD
@@ -21,6 +22,7 @@
 		</if>
 </select>
 
+<!-- RAA95B 조회 및 수정 가능 여부 저장 -->
 <insert id='insertUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
 	   INSERT INTO RAA95B (
 			  RGHT_CD
@@ -49,6 +51,7 @@
 			, MENU_ID 			= #{menuId} -->
 </insert>
 
+<!-- RAA95B 조회 및 수정 가능 여부 삭제 -->
 <delete id='deleteUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
 	  DELETE
 		FROM RAA95B
@@ -71,10 +74,13 @@
 				  AND A.RGHT_CD 	= #{rghtCd} )
 </select>
 
+<!-- MAX(SQ) 값 리턴 -->
 <select id="selectMaxSq" resultType="int">
-SELECT MAX(SQ) FROM RAA95B
+	  SELECT MAX(SQ)
+		FROM RAA95B
 </select>
 
+<!-- selectMainMenuId로 RAA95B의 해당 데이터 삭제 -->
 <delete id="deleteMainMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
 	  DELETE 
 		FROM RAA95B
