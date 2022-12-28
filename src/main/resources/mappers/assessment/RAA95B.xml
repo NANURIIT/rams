@@ -38,10 +38,17 @@
 			, #{sq}
 			, #{menuId}
 			, #{mdfyRghtCcd}
-			, DATE_FORMAT(NOW(),'%Y-%m-%d %H:%m:%s')
+			, NOW()
 			, #{hndlDprtCd}
 			, #{hndlPEno}
 			)
+		   <!-- ON DUPLICATE KEY
+	   UPDATE RGHT_CD			= #{rghtCd}
+	   		, MDFY_RGHT_CCD 	= #{mdfyRghtCcd}
+			, HNDL_DY_TM 		= NOW()
+			, HNDL_DPRT_CD 		= #{hndlDprtCd}
+			, HNDL_P_ENO  		= #{hndlPEno}
+			, MENU_ID 			= #{menuId} -->
 </insert>
 
 <!-- RAA95B 조회 및 수정 가능 여부 삭제 -->
@@ -83,4 +90,54 @@
 	   	 AND MENU_ID	= #{menuId}
 </delete>
 
+	<select id="selectAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+		SELECT *
+		  FROM RAA95B
+		 WHERE RGHT_CD = #{rghtCd}
+		   AND MENU_ID = #{menuId}
+	</select>
+
+	<insert id="insertAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+		INSERT INTO RAA95B (
+			rght_cd,
+			sq,
+			menu_id,
+			mdfy_rght_ccd,
+			hndl_dy_tm,
+			hndl_p_eno
+		) VALUES (
+			#{rghtCd},
+			NEXT VALUE FOR RAA95B_SQ,
+			#{menuId},
+			#{mdfyRghtCcd},
+			now(),
+			#{hndlPEno}
+		)
+	</insert>
+
+	<update id="updateAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+		UPDATE RAA95B
+		<set>
+			<if test="rghtCd != null and rghtCd !=''">
+				rght_cd = #{rghtCd},
+			</if>
+			<if test="menuId != null and menuId !=''">
+				menu_id = #{menuId},
+			</if>
+			<if test="mdfyRghtCcd != null and mdfyRghtCcd !=''">
+				mdfy_rght_ccd = #{mdfyRghtCcd},
+			</if>
+			hndl_dy_tm = now(),
+			hndl_p_eno = #{hndlPEno}
+		</set>
+		WHERE rght_cd = #{rghtCd}
+		  AND menu_id = #{menuId}
+	</update>
+
+	<delete id="deleteAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+		DELETE
+		  FROM RAA95B
+		 WHERE rght_cd = #{rghtCd}
+		   AND menu_id = #{menuId}
+	</delete>
 </mapper>
