@@ -344,8 +344,7 @@ function clickSaveMenuButton() {
     }
 
     if (authCodeMenuList.length > 0) {
-        console.log(authCodeMenuList);
-        // saveMenu(authCodeMenuList, authCode);
+        saveMenu(authCodeMenuList, authCode);
     }
 }
 

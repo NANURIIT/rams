@@ -69,8 +69,9 @@
              , 95b.hndl_dy_tm
              , 95b.hndl_p_eno
           FROM RAA93B 93b
-     LEFT JOIN (SELECT * FROM RAA95B WHERE rght_cd = #{rghtCd}) 95b
+     LEFT JOIN RAA95B 95b
             ON 93b.menu_id = 95b.menu_id
+		   AND 95b.rght_cd = #{rghtCd}
          WHERE 93b.scrn_aplc_type_cd = 'S'
       ORDER BY srt_no
     </select>

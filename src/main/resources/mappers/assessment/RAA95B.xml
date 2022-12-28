@@ -82,7 +82,7 @@
            AND MENU_ID = #{menuId}
     </delete>
 
-	<select id="selectAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+	<select id="selectAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO">
 		SELECT *
 		  FROM RAA95B
 		 WHERE RGHT_CD = #{rghtCd}
@@ -99,7 +99,7 @@
 			hndl_p_eno
 		) VALUES (
 			#{rghtCd},
-			#{sq},
+			NEXT VALUE FOR RAA95B_SQ,
 			#{menuId},
 			#{mdfyRghtCcd},
 			now(),
