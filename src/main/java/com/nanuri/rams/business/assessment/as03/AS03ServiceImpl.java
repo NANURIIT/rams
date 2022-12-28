@@ -36,6 +36,8 @@ public class AS03ServiceImpl implements AS03Service {
 	@Autowired
 	private AuthenticationFacade facade;
 
+	// ---------------search bar------------------
+
 	/**
 	 * 딜목록 조회
 	 * 
@@ -59,6 +61,8 @@ public class AS03ServiceImpl implements AS03Service {
 
 		return dealList;
 	};
+
+	// ---------------tab1 start------------------
 
 	// 담당직원 - 로그인유저정보
 	@Override
@@ -122,7 +126,7 @@ public class AS03ServiceImpl implements AS03Service {
 	public List<Map<String, Object>> getInvstCrncyCd() {
 		return raa91bMapper.getInvstCrncyCd();
 	};
-	
+
 	// 투자국가
 	@Override
 	public List<Map<String, Object>> getCntyCd() {
@@ -140,7 +144,7 @@ public class AS03ServiceImpl implements AS03Service {
 	public List<Map<String, Object>> getCheckItemCd() {
 		return raa91bMapper.getCheckItemCd();
 	};
-	
+
 	// 사업지역
 	@Override
 	public List<Map<String, Object>> getBsnsAreaCd() {
@@ -177,6 +181,8 @@ public class AS03ServiceImpl implements AS03Service {
 		return raa91bMapper.getCoprtnTypCd();
 	};
 
+	// ---------------tab2 start------------------
+
 	// 관련문서
 	@Override
 	public List<Map<String, Object>> getDocInfo(DocInfo docInfo) {
@@ -189,17 +195,23 @@ public class AS03ServiceImpl implements AS03Service {
 		return raa18bMapper.deleteDocInfo(docInfo);
 	};
 
+	// ---------------tab3 start------------------
+
 	// 기초자산종류
 	@Override
 	public List<Map<String, Object>> getBscAstsKndCd() {
 		return raa91bMapper.getBscAstsKndCd();
 	};
 
+	// ---------------tab4 start------------------
+
 	// 법인형태
 	@Override
 	public List<Map<String, Object>> getCncCmpnyClsfCd() {
 		return raa91bMapper.getCncCmpnyClsfCd();
 	};
+
+	// ---------------tab6 start------------------
 
 	// 담보유형
 	@Override
@@ -219,11 +231,12 @@ public class AS03ServiceImpl implements AS03Service {
 		return raa91bMapper.getRgtRnkCcd();
 	};
 
+	// ---------------tab8 start------------------
+
 	// 미이행시의무
 	@Override
 	public List<Map<String, Object>> getDbtNpFrmOblgCcd() {
 		return raa91bMapper.getDbtNpFrmOblgCcd();
-	};
-	
+	}
 
 }

@@ -294,9 +294,9 @@ function loadInvstGdsDtlsDvdCd() {
 function checkNumber(event) {
 	if (event.key >= 0 && event.key <= 9) {						// 1. 숫자입력 체크
 		var input = $("#tab1_datepicker1").val();
-		if (input == ""  {										// 2. 기표일 값이 없을경우 만기일 체크 안함
+		if (input == "") {										// 2. 기표일 값이 없을경우 만기일 체크 안함
 			return true;
-		} else {													// 2-1. 기표일 값이 있을경우 만기일 체크
+		} else {												// 2-1. 기표일 값이 있을경우 만기일 체크
 			calcDate();											// 개월수 계산하여 만기일 입력 fucntion
 			return true;
 		}
@@ -328,25 +328,18 @@ function calcDate() {
 	var dt = inputDate;
 	var cycle = inputInvstPrdMtC;
 	var nxt = '';
-	if (dt  != "" && cycle != '0') {
+	if (dt != "" && cycle != '0') {
 		if (cycle == '99') {
-			nxt   "-"
+			nxt = "-";
 		} else {
 			var arr1 = dt.split('-');
 			var date = new Date(arr1[0], arr1[1] - 1, arr1[2]);
 
-			var addMonthFirstDate = new Date(
-				date.getFullYear(),
-				date.getMonth() + parseInt(cycle),
-				1
-			);
-			var addMonthLastDate = new Date(
-				addMonthFirstDate.getFullYear(),
-				addMonthFirstDate.getMonth() + 1
-				, 0
-			);
+			var addMonthFirstDate = new Date(date.getFullYear(), date.getMonth() + parseInt(cycle), 1);
+			var addMonthLastDate = new Date(addMonthFirstDate.getFullYear(), addMonthFirstDate.getMonth() + 1, 0);
 
 			var result = addMonthFirstDate;
+			
 			if (date.getDate() > addMonthLastDate.getDate()) {
 				result.setDate(addMonthLastDate.getDate());
 			}
@@ -357,9 +350,10 @@ function calcDate() {
 			nxt = result.getFullYear() + "-" + fillZero(2, (result.getMonth() + 1).toString()) + "-" + fillZero(2, result.getDate().toString());
 		}
 	}
-
+	
+	//남는 길이만큼 0으로 채움
 	function fillZero(width, str) {
-		return str.length >= width ? str : new Array(width - str.length + 1).join('0') + str;//남는 길이만큼 0으로 채움
+		return str.length >= width ? str : new Array(width - str.length + 1).join('0') + str;		
 	}
 
 	$("#mtrtDt").val(nxt);
@@ -607,7 +601,7 @@ function tab1save() {
 	var invstGdsMdvdCd = $('#AS03210S_invstGdsMdvdCd').val();						// 투자상품중분류
 	var invstGdsSdvdCd = $('#AS03210S_invstGdsSdvdCd').val();						// 투자상품소분류
 	var invstGdsDtlsDvdCd = $('#AS03210S_invstGdsDtlsDvdCd').val();					// 투자상품상세분류
-	// 투자기간(INVST_PRD_DY_C) : 만기일 - 기표일
+																					// 투자기간(INVST_PRD_DY_C) : 만기일 - 기표일
 	var wrtDt = $('#tab1_datepicker1').val();										// 기표일
 	var mtrtDt = $('#mtrtDt').val();												// 만기일
 	var ibDealNm = $('#ibDealNm').val();											// 안건명
@@ -616,7 +610,7 @@ function tab1save() {
 	var crncyAmt = $('#crncyAmt').val();											// 부의금액
 	var cntyCd = $('#AS03210S_cntyCd').val();										// 투자국가
 	var aplcExchR = $('aplcExchR').val();											// 적용환율
-	// 부의금액(원)(AGR_AMT) : 부의금액 * 적용환율
+																					// 부의금액(원)(AGR_AMT) : 부의금액 * 적용환율
 	var tlErnAmt = $('#tlErnAmt').val();											// 투자수익
 	var rcvblErnAmt = $('#rcvblErnAmt').val();										// 수수료수익
 	var wrtErmAmt = $('#wrtErmAmt').val();											// 투자수익 
