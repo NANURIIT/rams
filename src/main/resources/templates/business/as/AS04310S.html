@@ -1,130 +1,110 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout}">
+	layout:decorate="~{layout/ramsLayout}">
 
-<th:block layout:fragment="title">
-	<title>협의체 회의자료</title>
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{css/plugins/touchspin/jquery.bootstrap-touchspin.min.css}"/>
 </th:block>
 
 <th:block layout:fragment="script">
-	<script th:src="@{/js/business/AS04310S.js}"></script>
-</th:block>
-
-<th:block layout:fragment="css">
-	
+	<script th:src="@{js/plugins/touchspin/jquery.bootstrap-touchspin.min.js}"></script>
+	<script th:src="@{js/common.js}"></script>
 </th:block>
 
 <th:block layout:fragment="customContent">
-	<div class="main_container">
-		<div class="search_wrap">
-			<table class="search_table search_top">
-				<colgroup>
-					<!-- <col style="width: 7%">
-					<col style="width: 15%">
-					<col style="width: 7%">
-					<col style="width: 15%">
-					<col style="width: 7%">
-					<col style="width: 15%">
-					<col style="width: 7%">
-					<col style="width: 15%"> -->
-				</colgroup>
-				<tr>
-					<th>결의협의체</th>
-					<td>
-						<select name="" id="">
-							<option value="">선택</option>
-							<option value="">1</option>
-							<option value="">2</option>
-							<option value="">3</option>
-						</select>
-					</td>
-					<th>결의년도</th>
-					<td>
-						<input type="number" name="" id="" min="2020" max="2030" value="2022" />
-					</td>
-					<th>회차정보</th>
-					<td><input type="text" name="" id="" /></td>
-					<th>결의일</th>
-					<td>
-						<div class="datepicker_wrap">
-							<input type="text" class="datepicker" id="datepicker1">
-							<input type="text" class="datepicker" id="datepicker2">
-						</div>
-					</td>
-					<td class="etc_td">
-						<div class="button_etc_wrap">
-							<button type="button">조회</button>
-						</div>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div class="contents_box">
-			<div style="font-weight: bold; font-size: 17px; padding-bottom: 10px;">안건정보
-				<div style="float: right;">
-					<button> Excel</button>
-				</div>
-			</div>
-			<table class="table_header">
-				<colgroup>
-					<!-- <col style=" width: 7%">
-						<col style="width: 15%">
-						<col style="width: 7%">
-						<col style="width: 15%">
-						<col style="width: 7%">
-						<col style="width: 15%">
-						<col style="width: 7%">
-						<col style="width: 15%"> -->
-				</colgroup>
-				<thead>
-					<tr>
-						<th>Deal 번호</th>
-						<th>안건명</th>
-						<th>신규/재부의정보</th>
-						<th>부수안건정보</th>
-						<th>전결항목</th>
-						<th>투자기간(개월)</th>
-						<th>부의예정일</th>
-						<th>전결협의체</th>
-						<th>부의금액(원)</th>
-						<th>결의일</th>
-					</tr>
-				</thead>
-			</table>
-			<div class="grid_wrap grid_wrapS">
-				<form>
-					<table>
-						<tbody>
-							<colgroup>
-								<col>
-								<col>
-								<col>
-								<col>
-								<col>
-								<col>
-								<col>
-								<col>
-								<col>
-								<col>
-							</colgroup>
-							<tr>
-								<td>1</td>
-								<td>2</td>
-								<td>3</td>
-								<td>4</td>
-								<td>5</td>
-								<td>6</td>
-								<td>7</td>
-								<td>8</td>
-								<td>9</td>
-								<td>10</td>
-							</tr>
-						</tbody>
-					</table>
-				</form>
-			</div>
-		</div>
-	</div>
+	<!-- 상단 타이틀 -->
+	<div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>[04310]협의체 회의자료</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="index.html">심사협의체</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <strong>협의체 회의자료</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+    
+    <!-- 내용 -->
+    <div class="wrapper wrapper-content animated fadeIn">
+    	<div class="row">
+    		<div class="col-lg-12">
+    			<div class="ibox ">
+    				<!-- 조회조건영역 -->
+	    			<div class="ibox-title">
+	    				<form method="get">
+	    					<div class="form-group form-inline row">
+	                            <div class="col-sm-2 input-group">
+		                            <label class="control-label px-2">결의협의체</label>
+		                           	<select class="form-control m-b" name="account">
+		                                   <option>option 1</option>
+		                                   <option>option 2</option>
+		                            </select>
+	                            </div>
+	                            <div class="col-sm-2 input-group">
+	                           		<label class="control-label px-2">결의년도</label>
+	                           		<input type="text" class="touchspin" value="2022" data-bts-min="2010" data-bts-max="2100">
+	                            </div>
+	                            <div class="col-sm-1 input-group">
+	                           		<label class="control-label px-2">회차</label>
+	                           		<input type="text" class="form-control">
+	                            </div>
+	                            <div class="col-sm-4 input-group">
+	                            	<label class="control-label">결의일</label>
+	                            	<span class="col-sm-5 input-group date">
+                                    	<input type="text" class="form-control" name="start" value="" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                	</span>
+									<span class="input-group-addon" style="border:0;"> ~ </span>
+                                	<span class="col-sm-5 input-group date">
+                                    	<input type="text" class="form-control" name="end" value="" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </span>
+	                            </div>
+								<div class="col-sm-3 text-right">		                       		
+		                       		<button class="btn btn-primary" type="submit">조회</button>
+		                       	</div>
+	                       	</div>
+	    				</form>
+	    			</div>
+	    			<!-- 조회결과 -->
+	    			<div class="ibox-content">
+	    				<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Deal 번호</th>
+									<th>안건명</th>
+									<th>신규/재부의정보</th>
+									<th>부수안건정보</th>
+									<th>전결항목</th>
+									<th>투자기간(개월)</th>
+									<th>부의예정일</th>
+									<th>전결협의체</th>
+									<th>부의금액(원)</th>
+									<th>결의일</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>2</td>
+									<td>3</td>
+									<td>4</td>
+									<td>5</td>
+									<td>6</td>
+									<td>7</td>
+									<td>8</td>
+									<td>9</td>
+									<td>10</td>
+								</tr>
+							</tbody>
+						</table>
+	    			</div>
+    			</div><!-- ibox -->
+    		</div>
+    	</div><!-- row -->
+    </div>
 </th:block>
 
 </html>
