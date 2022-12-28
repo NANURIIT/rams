@@ -303,11 +303,11 @@ public class AC01ServiceImpl implements AC01Service {
 
         for (RAA93BVO.MenuListVO menu : menuList) {
             lvName = "";
-            if (menu.getLv2Nm() != null && menu.getLv2Nm() != "") {
+            if (menu.getLv2Id() != null && menu.getLv2Id() != "") {
                 rowNum++;
                 lvName = menu.getLv2Id();
             }
-            if (menu.getLv3Nm() != null && menu.getLv3Nm() != "") {
+            if (menu.getLv3Id() != null && menu.getLv3Id() != "") {
                 rowNum++;
                 lvName = menu.getLv3Id();
             }
@@ -353,8 +353,7 @@ public class AC01ServiceImpl implements AC01Service {
         int count = 0;
         String hndlDprtCd = facade.getDetails().getDprtCd();
         String hndlPEno = facade.getDetails().getEno();
-        int maxSq = raa95BMapper.selectMaxSq();
-
+		
         for (RAA95BVO.selectUseMenuVO dto : dtoList) {
             dto.setHndlDprtCd(hndlDprtCd);
             dto.setHndlPEno(hndlPEno);
@@ -362,8 +361,8 @@ public class AC01ServiceImpl implements AC01Service {
 
             if (sq == 0) {
                 /* 중복된 데이터가 없을 경우 */
-                sq = maxSq + 1;
-                dto.setSq(sq);
+                // sq = maxSq + 1;
+                // dto.setSq(sq);
                 dto.setMenuId(dto.getMenuId());
                 count += raa95BMapper.insertUseMenu(dto);
             } else if (sq != 0) {

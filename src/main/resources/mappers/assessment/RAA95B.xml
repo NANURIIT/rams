@@ -35,7 +35,9 @@
 			)
 	   VALUES (
 			  #{rghtCd}
-			, #{sq}
+			, (
+			   SELECT NEXTVAL(RAA95B_SQ)
+			  )
 			, #{menuId}
 			, #{mdfyRghtCcd}
 			, DATE_FORMAT(NOW(),'%Y-%m-%d %H:%m:%s')
@@ -70,9 +72,10 @@
 </select>
 
 <!-- MAX(SQ) 값 리턴 -->
-<select id="selectMaxSq" resultType="int">
+<select id="selectMaxSq" resultType="int" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
 	  SELECT MAX(SQ)
 		FROM RAA95B
+	   WHERE RGHT_CD = #{rghtCd}
 </select>
 
 <!-- selectMainMenuId로 RAA95B의 해당 데이터 삭제 -->
