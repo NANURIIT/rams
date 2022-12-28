@@ -209,7 +209,7 @@
 							<div class="contents_list">
 								<div class="contents_list_title">부의금액</div>
 								<div class="contents_list_desc">
-									<input type="text" id="crncyAmt">
+									<input type="text" id="crncyAmt" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 								</div>
 							</div>
 							<div class="contents_list">
@@ -222,13 +222,13 @@
 							<div class="contents_list">
 								<div class="contents_list_title">적용환율</div>
 								<div class="contents_list_desc">
-									<input type="text" id="aplcExchR">
+									<input type="text" id="aplcExchR" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 								</div>
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">부의금액(원)</div>
 								<div class="contents_list_desc">
-									<input type="text" id="crncyAmtWn">
+									<input type="text" id="crncyAmtWn" readonly>
 								</div>
 							</div>
 						</div>
@@ -341,19 +341,19 @@
 							<div class="contents_list">
 								<div class="contents_list_title">전체수익</div>
 								<div class="contents_list_desc">
-									<input type="text">
+									<input type="text" id="tlErnAmt">
 								</div>
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">수수료수익</div>
 								<div class="contents_list_desc">
-									<input type="text">
+									<input type="text" id="rcvblErnAmt">
 								</div>
 							</div>
 							<div class="contents_list">
 								<div class="contents_list_title">투자수익</div>
 								<div class="contents_list_desc">
-									<input type="text">
+									<input type="text" id="wrtErnAmt">
 								</div>
 							</div>
 						</div>
@@ -364,7 +364,7 @@
 							<div class="contents_list">
 								<div class="contents_list_title">담보</div>
 								<div class="contents_list_desc">
-									<select id="AS03210S_mrtgF">
+									<select id="AS03210S_mrtgOfrF">
 										<option value="Y">Y</option>
 										<option value="N">N</option>
 									</select>
@@ -373,7 +373,7 @@
 							<div class="contents_list">
 								<div class="contents_list_title">보증</div>
 								<div class="contents_list_desc">
-									<select id="AS03210S_grtF">
+									<select id="AS03210S_ensrF">
 										<option value="Y">Y</option>
 										<option value="N">N</option>
 									</select>

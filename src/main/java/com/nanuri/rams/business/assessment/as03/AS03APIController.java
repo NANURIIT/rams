@@ -149,9 +149,8 @@ public class AS03APIController {
 
 	// 신규 deal 생성
 	@PostMapping(value = "/registDealInfo")
-	public int registDealInfo(RAA02BDTO paramData) {
-		//return as03Service.registDealInfo(paramData);
-		return 0;
+	public int registDealInfo(RAA02BDTO paramData) throws ParseException {
+		return as03Service.registDealInfo(paramData);
 	}
 
 	// ---------------tab2 start------------------

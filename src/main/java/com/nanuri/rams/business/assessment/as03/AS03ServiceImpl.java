@@ -7,11 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nanuri.rams.com.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nanuri.rams.business.common.dto.RAA02BDTO;
+import com.nanuri.rams.business.common.dto.RAA01BDTO;
 import com.nanuri.rams.business.common.mapper.RAA01BMapper;
 import com.nanuri.rams.business.common.mapper.RAA18BMapper;
 import com.nanuri.rams.business.common.mapper.RAA91BMapper;
@@ -19,6 +20,7 @@ import com.nanuri.rams.business.common.vo.RAA01BVO;
 import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
 import com.nanuri.rams.business.common.vo.RAA18BVO.DocInfo;
 import com.nanuri.rams.com.security.AuthenticationFacade;
+import com.nanuri.rams.com.utils.StringUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -180,6 +182,92 @@ public class AS03ServiceImpl implements AS03Service {
 	public List<Map<String, Object>> getCoprtnTypCd() {
 		return raa91bMapper.getCoprtnTypCd();
 	};
+
+	// 신규 deal 생성
+	@Override
+	public int registDealInfo(RAA02BDTO paramData) throws ParseException {
+
+		/*
+		 * 1. DTO 의 계산 가능한 정보를 계산하여 RAA02BDTO를 setting 한다.
+		 */
+
+		// IBDEAL번호
+
+		// 심사진행상태코드(INSPCT_PRGRS_ST_CD)
+		switch (paramData.getRaRsltnCcd()) {
+		case "2":
+		case "3":
+		case "4":
+		case "5":
+		case "6":
+			break;
+		case "1":
+			paramData.setInspctPrgrsStCd("100");
+			break;
+		}
+
+		// 투자기간일수(INVST_PRD_DY_C)
+		Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(paramData.getWrtDt());	// 기표일
+		Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(paramData.getMtrtDt());	// 만기일
+
+		long diffSec = (date2.getTime() - date1.getTime()) / 1000;						// 초 차이
+		long diffDays = diffSec / (24 * 60 * 60); 										// 일자수 차이
+
+		paramData.setInvstPrdDyC(String.valueOf(diffDays));								// 투자기간일수(INVST_PRD_DY_C)
+
+		/*
+		 * 2. RAA01BDTO를 setting 한다.
+		 */
+		
+		RAA01BDTO raa01bDTO = new RAA01BDTO();
+
+		// IB_DEAL_NO
+		// IB_DEAL_SQ
+		// DSC_DT
+		// DSC_SQ
+		// DSC_SQC
+		raa01bDTO.setIbDealNm(paramData.getIbDealNo());									// IBDEAL명
+		raa01bDTO.setIbDealPrgrsStCd(paramData.getInspctPrgrsStCd());					// IBDEAL상태코드
+		// DSC_RSLT_CD
+		raa01bDTO.setTlAmt(paramData.getCrncyAmt());									// 총금액
+		raa01bDTO.setPtcpAmt(paramData.getPtcpAmt());									// 참여금액
+		raa01bDTO.setTlErnAmt(paramData.getTlErnAmt());									// 총수익금액
+		raa01bDTO.setWrtErnAmt(paramData.getWrtErnAmt());								// 기표수익금액
+		raa01bDTO.setRcvblErnAmt(paramData.getRcvblErnAmt());							// 미수수익금액
+		// ENTP_CD
+		raa01bDTO.setEntpRnm(paramData.getCfmtEntpNm());								// 업체실명
+		// CORP_RGST_NO
+		// CRDT_GRD_CD
+		raa01bDTO.setWrtDt(paramData.getWrtDt());										// 기표일자
+		raa01bDTO.setMtrtDt(paramData.getMtrtDt());										// 만기일자
+		raa01bDTO.setInvstNtnCd(paramData.getInvstNtnCd());								// 투자국가코드
+		raa01bDTO.setInvstCrncyCd(paramData.getInvstCrncyCd());							// 투자통화코드
+		raa01bDTO.setCrncyAmt(paramData.getCrncyAmt());									// 통화금액
+		raa01bDTO.setInvstGdsLdvdCd(paramData.getInvstGdsLdvdCd());						// 투자상품대분류코드
+		raa01bDTO.setInvstGdsMdvdCd(paramData.getInvstGdsMdvdCd());						// 투자상품중분류코드
+		raa01bDTO.setInvstGdsSdvdCd(paramData.getInvstGdsSdvdCd());						// 투자상품소분류코드
+		raa01bDTO.setInvstGdsDtlsDvdCd(paramData.getInvstGdsDtlsDvdCd());				// 투자상품상세분류코드
+		// GDS_DVD_1_NM
+		// GDS_DVD_2_NM
+		// GDS_DVD_3_NM
+		// GDS_DVD_4_NM
+		raa01bDTO.setCoprtnTypCd(paramData.getCoprtnTypCd());							// 협업유형코드
+		raa01bDTO.setHdqtCd(paramData.getHdqtCd());										// 본부코드
+		raa01bDTO.setDprtCd(paramData.getDprtCd());										// 부점코드
+		raa01bDTO.setChrgPEno(paramData.getChrgPEno());									// 담당자사번
+		// WTHLD_TBL_NM
+		// FNL_UPT_DY_TM
+		// HNDL_DY_TM
+		raa01bDTO.setDprtCd(facade.getDetails().getDprtCd());							// 처리부점코드
+		raa01bDTO.setHndlPEno(facade.getDetails().getEno());							// 처리자사번
+		
+		/*
+		 * 3. RAA02BDTO, RAA01BDTO를 insert 한다.
+		 */
+		
+		
+		return 0;
+	}
 
 	// ---------------tab2 start------------------
 

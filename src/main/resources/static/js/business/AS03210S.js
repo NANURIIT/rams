@@ -3,6 +3,8 @@ $(document).ready(function() {
 	setDatePicker();
 
 	loadTabContents();
+	
+	checkErmAmt();
 
 });
 
@@ -381,6 +383,33 @@ function loadInvstCrncyCd() {
 	});
 }
 
+// 부의금액(원) 계산
+function checkErmAmt(){
+	// 투자금액
+	$('#crncyAmt').keyup(function(event){
+		if (event.key >= 0 && event.key <= 9) {						// 1. 숫자입력 체크
+			var input1 = $("#aplcExchR").val();
+			if (input1 != "") {										// 2. 적용환율 값이 있으면 계산
+				var input2 = $("#crncyAmt").val();
+			
+				$("#crncyAmtWn").val(input1 * input2);
+			}
+		}
+	})
+	
+	// 적용환율
+	$('#aplcExchR').keyup(function(event){
+		if (event.key >= 0 && event.key <= 9) {						// 1. 숫자입력 체크
+			var input1 = $("#crncyAmt").val();
+			if (input1 != "") {										// 2. 부의금액 값이 있으면 계산
+				var input2 = $("#aplcExchR").val();
+			
+				$("#crncyAmtWn").val(input1 * input2);
+			}
+		}
+	})
+}
+
 // 투자국가
 function loadCntyCd() {
 	$.ajax({
@@ -608,30 +637,30 @@ function tab1save() {
 	var ibDealSnmNm = $('#ibDealSnmNm').val();										// 안건약어명
 	var invstCrncyCd = $('#AS03210S_invstCrncyCd').val();							// 부의기준통화
 	var crncyAmt = $('#crncyAmt').val();											// 부의금액
-	var cntyCd = $('#AS03210S_cntyCd').val();										// 투자국가
+	var invstNtnCd = $('#AS03210S_cntyCd').val();									// 투자국가
 	var aplcExchR = $('aplcExchR').val();											// 적용환율
-																					// 부의금액(원)(AGR_AMT) : 부의금액 * 적용환율
+	var crncyAmtWn = $('crncyAmtWn').val();											// 부의금액(원)
 	var tlErnAmt = $('#tlErnAmt').val();											// 투자수익
 	var rcvblErnAmt = $('#rcvblErnAmt').val();										// 수수료수익
-	var wrtErmAmt = $('#wrtErmAmt').val();											// 투자수익 
+	var wrtErnAmt = $('#wrtErnAmt').val();											// 투자수익 
 	var indTypDvdCd = $('#AS03210S_indTypDvdCd').val();								// 고위험산업
 	var checkItemCd = $('#AS03210S_checkItemCd').val();								// 업무구분
 	var bsnsAreaCd = $('#AS03210S_bsnsAreaCd').val();								// 사업지역
 	var invstThingCcd = $('#AS03210S_invstThingCcd').val();							// 주요투자물건
 	var invstThingDtlsCcd = $('#AS03210S_invstThingDtlsCcd').val();					// 투자물건상세
-	var mrtgF = $('#AS03210S_mrtgF').val();											// 담보
-	var grtF = $('#AS03210S_grtF').val();											// 보증
+	var mrtgOfrF = $('#AS03210S_mrtgOfrF').val();									// 담보
+	var ensrF = $('#AS03210S_ensrF').val();											// 보증
 	var rspsbCmplCcd = $('#AS03210S_rspsbCmplCcd').val();							// 책임준공
 	var raRsltnCcd = $('#AS03210S_raRsltnCcd').val();								// 전결구분
 	var riskRcgNo = $('#AS03210S_riskRcgNo').val();									// 리스크승인번호
 	var hdqtCd = $('#AS03210S_hdqtCd').val();										// 본부코드
-	var hdqtNm = $('#AS03210S_hdqtNm').val();										// 본부명
+//	var hdqtNm = $('#AS03210S_hdqtNm').val();										// 본부명
 	var dprtCd = $('#AS03210S_dprtCd').val();										// 부서코드
-	var dprtNm = $('#AS03210S_dprtNm').val();										// 부서명
-	var eno = $('#AS03210S_eno').val();												// 직원코드
-	var empNm = $('#AS03210S_empNm').val();											// 직원명
+//	var dprtNm = $('#AS03210S_dprtNm').val();										// 부서명
+	var chrgPEno = $('#AS03210S_eno').val();										// 직원코드
+//	var empNm = $('#AS03210S_empNm').val();											// 직원명
 	var coprtnTypCd = $('#AS03210S_coprtnTypCd').val();								// 협업유형
-	var entpRnm = $('#AS03210S_entpRnm').val();										// 업체명
+	var cfmtEntpNm = $('#AS03210S_entpRnm').val();									// 업체명
 	var bsnsDprtCmmtRmrk1 = $('#AS03210S_bsnsDprtCmmtRmrk1').val();					// 사업부의견
 	var inspctDprtCmmtRmrk2 = $('#AS03210S_inspctDprtCmmtRmrk2').val();				// 심사부의견
 
@@ -649,29 +678,30 @@ function tab1save() {
 		, "ibDealSnmNm": ibDealSnmNm
 		, "invstCrncyCd": invstCrncyCd
 		, "crncyAmt": crncyAmt
-		, "cntyCd": cntyCd
+		, "invstNtnCd": invstNtnCd
 		, "aplcExchR": aplcExchR
+		, "ptcpAmt" : crncyAmtWn
 		, "tlErnAmt": tlErnAmt
 		, "rcvblErnAmt": rcvblErnAmt
-		, "wrtErmAmt": wrtErmAmt
+		, "wrtErnAmt": wrtErnAmt
 		, "indTypDvdCd": indTypDvdCd
 		, "checkItemCd": checkItemCd
-		, "bsnsAreaCd": bsnsAreaCd
+		, "raBsnsZoneCd": bsnsAreaCd
 		, "invstThingCcd": invstThingCcd
 		, "invstThingDtlsCcd": invstThingDtlsCcd
-		, "mrtgF": mrtgF
-		, "grtF": grtF
+		, "mrtgOfrF": mrtgOfrF
+		, "ensrF": ensrF
 		, "rspsbCmplCcd": rspsbCmplCcd
 		, "raRsltnCcd": raRsltnCcd
 		, "riskRcgNo": riskRcgNo
 		, "hdqtCd": hdqtCd
-		, "hdqtNm": hdqtNm
+//		, "hdqtNm": hdqtNm
 		, "dprtCd": dprtCd
-		, "dprtNm": dprtNm
-		, "eno": eno
-		, "empNm": empNm
+//		, "dprtNm": dprtNm
+		, "chrgPEno": chrgPEno
+//		, "empNm": empNm
 		, "coprtnTypCd": coprtnTypCd
-		, "entpRnm": entpRnm
+		, "cfmtEntpNm": cfmtEntpNm
 		, "bsnsDprtCmmtRmrk1": bsnsDprtCmmtRmrk1
 		, "inspctDprtCmmtRmrk2": inspctDprtCmmtRmrk2
 	};
@@ -694,12 +724,6 @@ function tab1save() {
 
 
 };
-
-
-
-
-
-
 
 
 

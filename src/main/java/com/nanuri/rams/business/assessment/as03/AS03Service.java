@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.nanuri.rams.business.common.dto.RAA02BDTO;
 import com.nanuri.rams.business.common.vo.RAA01BVO;
 import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
 import com.nanuri.rams.business.common.vo.RAA18BVO.DocInfo;
@@ -79,6 +80,9 @@ public interface AS03Service {
 
 	// 협업유형코드
 	public List<Map<String, Object>> getCoprtnTypCd();
+	
+	// 신규 deal 생성
+	public int registDealInfo(RAA02BDTO paramData) throws ParseException;
 
 	// ---------------tab2 start------------------
 
@@ -113,5 +117,7 @@ public interface AS03Service {
 
 	// 미이행시의무
 	public List<Map<String, Object>> getDbtNpFrmOblgCcd();
+
+	
 
 }
