@@ -126,4 +126,10 @@
 		  AND menu_id = #{menuId}
 	</update>
 
+	<delete id="deleteAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+		DELETE
+		  FROM RAA95B
+		 WHERE rght_cd = #{rghtCd}
+		   AND menu_id = #{menuId}
+	</delete>
 </mapper>

@@ -3,6 +3,22 @@ $(function () {
 
     clickDetailButton();
     doubleClickColumn();
+
+    $(document).on('click', '.can_use_yn', function() {
+        let useCheckBox = $(this);
+        let modifyCheckBox = $(this).parent().parent().find("td:eq(5)").find(".can_modify_yn");
+        if(!useCheckBox.prop('checked') && modifyCheckBox.prop('checked')) {
+            modifyCheckBox.prop('checked', false);
+        }
+    });
+
+    $(document).on('click', '.can_modify_yn', function() {
+        let useChecked = $(this).parent().parent().find("td:eq(4)").find(".can_use_yn");
+        let modifyChecked = $(this);
+        if(!useChecked.prop('checked') && modifyChecked.prop('checked')) {
+            useChecked.prop('checked', true);
+        }
+    });
 });
 
 function getAuthCode(rghtCdNm) {
@@ -320,20 +336,13 @@ function clickSaveMenuButton() {
         let menuModifyYn = $(tr[i]).find("td:eq(5)").find(".can_modify_yn").prop("checked");
         let menuModifyYnCheck = $(tr[i]).find("td:eq(5)").find(".modify_hidden_yn").val();
 
-        let flag = false;
-        
         if (!menuUseYnCheck || (menuUseYn && menuUseYnCheck === 'n') || (!menuUseYn && menuUseYnCheck === 'y')) {
-            flag = true;
+            authCodeMenu.isUsed = menuUseYn;
         }
 
         if (!menuModifyYnCheck || (menuModifyYn && menuModifyYnCheck === 'n') || (!menuModifyYn && menuModifyYnCheck === 'y')) {
-            flag = true;
-        }
-
-        if(flag && menuUseYn && !menuModifyYn) {
-            authCodeMenu.mdfyRghtCcd = '1';
-        } else if(flag && menuUseYn && menuUseYn) {
-            authCodeMenu.mdfyRghtCcd = '2';
+            authCodeMenu.isUsed = menuUseYn;
+            authCodeMenu.isModified = menuModifyYn;
         }
 
         if (!(Object.keys(authCodeMenu).length === 0)) {
@@ -344,6 +353,7 @@ function clickSaveMenuButton() {
     }
 
     if (authCodeMenuList.length > 0) {
+        console.log(authCodeMenuList);
         saveMenu(authCodeMenuList, authCode);
     }
 }

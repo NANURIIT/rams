@@ -5,6 +5,7 @@ import com.nanuri.rams.business.common.dto.RAA95BDTO;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 public class RAA95BVO {
     
@@ -25,5 +26,15 @@ public class RAA95BVO {
 		private String lv1Id;
 		private String lv2Id;
 		private String lv3Id;
+	}
+
+	@Getter
+	@Setter
+	@ToString
+	public static class menuUpdateRequestVO {
+		private String rghtCd;
+		private String menuId;
+		private Boolean isUsed = false;
+		private Boolean isModified = false;
 	}
 }

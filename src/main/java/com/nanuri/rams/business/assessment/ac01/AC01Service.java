@@ -69,7 +69,7 @@ public interface AC01Service {
 	
 	public boolean deleteAuthCode(List<String> rghtCd);
 	
-	public boolean registerAuthCodeMenu(List<RAA95BDTO> dtos);
+	public boolean registerAuthCodeMenu(List<RAA95BVO.menuUpdateRequestVO> voList);
 	
 	//============ end AC01210S(권한별 메뉴관리) ============//
 	

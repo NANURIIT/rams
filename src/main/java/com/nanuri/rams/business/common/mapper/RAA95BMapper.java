@@ -21,4 +21,5 @@ public interface RAA95BMapper {
 	public Optional<RAA95BDTO> selectAuthCodeMenu(RAA95BDTO dto);
 	public int updateAuthCodeMenu(RAA95BDTO dto);
 	public int insertAuthCodeMenu(RAA95BDTO dto);
+	public int deleteAuthCodeMenu(RAA95BDTO dto);
 }

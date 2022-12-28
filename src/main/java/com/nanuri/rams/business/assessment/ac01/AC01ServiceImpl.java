@@ -379,14 +379,33 @@ public class AC01ServiceImpl implements AC01Service {
     }
 
     @Override
-    public boolean registerAuthCodeMenu(List<RAA95BDTO> dtos) {
+    public boolean registerAuthCodeMenu(List<RAA95BVO.menuUpdateRequestVO> voList) {
         int count = 0;
-        for (RAA95BDTO dto : dtos) {
+        log.debug("voList : {}", voList);
+        for (RAA95BVO.menuUpdateRequestVO vo : voList) {
+            RAA95BDTO dto = new RAA95BDTO();
+            dto.setMenuId(vo.getMenuId());
+            dto.setRghtCd(vo.getRghtCd());
             dto.setHndlPEno(facade.getDetails().getEno());
-            if (raa95BMapper.selectAuthCodeMenu(dto).isEmpty()) {
-                count += raa95BMapper.insertAuthCodeMenu(dto);
-            } else {
-                count += raa95BMapper.updateAuthCodeMenu(dto);
+
+            if (raa95BMapper.selectAuthCodeMenu(dto).isPresent()) { // 신규등록이 아닐때
+                if (vo.getIsModified() == false && vo.getIsUsed() == false) {   // 사용가능여부 수정가능여부 모두 체크 해제
+                    count += raa95BMapper.deleteAuthCodeMenu(dto);
+                } else if (vo.getIsUsed() && vo.getIsModified()) {  // 사용가능여부, 수정가능여부 모두 체크
+                    dto.setMdfyRghtCcd("2");
+                    count += raa95BMapper.updateAuthCodeMenu(dto);
+                } else if(vo.getIsUsed() && vo.getIsModified() == false) {  // 사용가능여부만 체크
+                    dto.setMdfyRghtCcd("1");
+                    count += raa95BMapper.updateAuthCodeMenu(dto);
+                }
+            } else {   // 신규 등록일때
+                if (vo.getIsUsed() && vo.getIsModified() == false) {    // 사용가능여부만 체크
+                    dto.setMdfyRghtCcd("1");
+                    count += raa95BMapper.insertAuthCodeMenu(dto);
+                } else if (vo.getIsUsed() && vo.getIsModified()) {  // 사용가능, 수정가능여부 체크
+                    dto.setMdfyRghtCcd("2");
+                    count += raa95BMapper.insertAuthCodeMenu(dto);
+                }
             }
         }
         return count > 0;
