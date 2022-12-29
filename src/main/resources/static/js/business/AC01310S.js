@@ -16,7 +16,9 @@ var AC01310S_findClickbutton = function () {
 		data: { "menuNm": menuNm },
 		success: function (data) {
 			makeMenuList(data);
-		},
+		}, error: function (request, status, error) {
+			console.error("status : " + status + "error : " + error);
+		}
 	})
 }
 
@@ -125,11 +127,9 @@ var checkUseAndModifyYn = function (rowNum) {
 						target.find('#setHndlPEno').html(val.hndlPEno);
 					}
 				})
-				// $('#AC01310S_saveSq').val(sqList);
 			}
 		}, error: function (request, status, error) {
-			// console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-			alert("Fail!");
+			console.error("status : " + status + "error : " + error);
 		}
 	})
 }
@@ -250,8 +250,7 @@ var saveUseMenu = function (i) {
 				}
 			});
 		}, error: function (request, status, error) {
-			// console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-			alert("Fail!")
+			console.error("status : " + status + "error : " + error);
 		}
 	})
 }
