@@ -4,7 +4,7 @@
 	layout:decorate="~{layout/ramsLayout}">
 
 <th:block layout:fragment="script">
-
+	<script th:src="@{js/common.js}"></script>
 </th:block>
  
 <th:block layout:fragment="customContent">
@@ -21,9 +21,7 @@
                 </li>
             </ol>
         </div>
-        <div class="col-lg-2">
-
-        </div>
+        <div class="col-lg-2"></div>
     </div>
     
     <!-- 내용 -->
@@ -36,14 +34,16 @@
 	    				<form method="get">
 	    					<div class="form-group row">
 	    						<label class="col-sm-1 col-form-label">접수배정일</label>
-	                            <div class="col-sm-3">
-	                            	<div class="input-daterange input-group" id="datepicker">
-	                                    <input type="text" class="form-control-sm form-control" name="start" value="05/14/2014"/>
-	                                    <span class="input-group-addon">~</span>
-	                                    <input type="text" class="form-control-sm form-control" name="end" value="05/22/2014" />
-	                                </div>
-	                            </div>
-	                        	<div class="col-sm-8 text-left">
+	                            <div class="col-sm-4 input-group">
+	                            	<span class="col-sm-5 input-group date">
+                                    	<input type="text" class="form-control" name="start" value="" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                	</span>
+									<span class="input-group-addon" style="border:0;"> ~ </span>
+                                	<span class="col-sm-5 input-group date">
+                                    	<input type="text" class="form-control" name="end" value="" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </span>
+                                </div>
+	                            <div class="col-sm-7 text-left">
 	                        		<button class="btn btn-primary" type="submit">조회</button>
 	                        	</div>
 	                        </div>

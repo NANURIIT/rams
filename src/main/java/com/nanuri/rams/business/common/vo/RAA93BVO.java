@@ -15,11 +15,8 @@ public class RAA93BVO {
         private int rowNum;
         private String menuName;
         private String lv1Id;
-        private String lv1Nm;
         private String lv2Id;
-        private String lv2Nm;
         private String lv3Id;
-        private String lv3Nm;
     }
     
     private int srtNo;

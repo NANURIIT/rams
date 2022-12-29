@@ -148,7 +148,6 @@ public class AC01ServiceImpl implements AC01Service {
     }
 
     //============ end AC01010S(공통코드관리) ============//
-
     //============ Start AC01110S( 사용자 관리 ) ============//
     /* 사용자 추가 */
     @Override
@@ -212,19 +211,18 @@ public class AC01ServiceImpl implements AC01Service {
     }
 
     //============ End AC01110S( 사용자 관리 ) ============//
-	
     //============ start AC01210S(권한별 메뉴관리) ============//
     @Override
     public List<RAA94BDTO> getAuthCode(String rghtCdNm) throws ParseException {
-		List<RAA94BDTO> authCodes = raa94BMapper.selectAuthCode(rghtCdNm);
+        List<RAA94BDTO> authCodes = raa94BMapper.selectAuthCode(rghtCdNm);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
         for (RAA94BDTO authCode : authCodes) {
-			if (authCode.getRgstPEno() == null) {
-				authCode.setRgstPEno("-");
+            if (authCode.getRgstPEno() == null) {
+                authCode.setRgstPEno("-");
             }
             if (authCode.getHndlPEno() == null) {
-				authCode.setHndlPEno("-");
+                authCode.setHndlPEno("-");
             }
             Date formatDate = dateFormat.parse(authCode.getRgstDt());
             authCode.setRgstDt(newFormat.format(formatDate));
@@ -234,7 +232,7 @@ public class AC01ServiceImpl implements AC01Service {
 
     @Override
     public List<RAA93BVO> getAuthCodeMenu(String rghtCd) {
-		List<RAA93BVO> authCodeMenus = raa93BMapper.selectAuthCodeMenu(rghtCd);
+        List<RAA93BVO> authCodeMenus = raa93BMapper.selectAuthCodeMenu(rghtCd);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
         for (RAA93BVO authCodeMenu : authCodeMenus) {
@@ -245,7 +243,7 @@ public class AC01ServiceImpl implements AC01Service {
                 authCodeMenu.setHndlDyTm("-");
             }
             if (authCodeMenu.getHndlPEno() == null) {
-				authCodeMenu.setHndlPEno("-");
+                authCodeMenu.setHndlPEno("-");
             }
         }
         return authCodeMenus;
@@ -255,15 +253,15 @@ public class AC01ServiceImpl implements AC01Service {
     public boolean registerAuthCode(List<RAA94BDTO> requestDtos) {
         int count = 0;
         for (RAA94BDTO requestDto : requestDtos) {
-			if (raa94BMapper.getAuthCode(requestDto.getRghtCd()).isPresent()) {
-				throw new IllegalArgumentException("해당 권한코드가 존재합니다 : " + requestDto.getRghtCd());
+            if (raa94BMapper.getAuthCode(requestDto.getRghtCd()).isPresent()) {
+                throw new IllegalArgumentException("해당 권한코드가 존재합니다 : " + requestDto.getRghtCd());
             }
 
             if (raa94BMapper.getAuthCode(requestDto.getOldRghtCd()).isPresent()) {
-				requestDto.setHndlPEno(facade.getDetails().getEno());
+                requestDto.setHndlPEno(facade.getDetails().getEno());
                 count += raa94BMapper.updateAuthCode(requestDto);
             } else {
-				String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")).toString();
+                String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")).toString();
                 requestDto.setRgstDt(now);
                 requestDto.setRgstPEno(facade.getDetails().getEno());
                 count += raa94BMapper.insertAuthCode(requestDto);
@@ -271,27 +269,49 @@ public class AC01ServiceImpl implements AC01Service {
         }
         return count > 0;
     }
-	
+
     @Override
     public boolean deleteAuthCode(List<String> rghtCd) {
-		int count = 0;
+        int count = 0;
         count += raa94BMapper.deleteAuthCode(rghtCd);
         return count > 0;
     }
-	
+
     @Override
-    public boolean registerAuthCodeMenu(List<RAA93BVO> requestDtos) {
+    public boolean registerAuthCodeMenu(List<RAA95BVO.menuUpdateRequestVO> voList) {
         int count = 0;
-        for (RAA93BVO requestDto : requestDtos) {
-            requestDto.setHndlPEno(facade.getDetails().getEno());
-            count += raa93BMapper.updateAuthCodeMenu(requestDto);
+        log.debug("voList : {}", voList);
+        for (RAA95BVO.menuUpdateRequestVO vo : voList) {
+            RAA95BDTO dto = new RAA95BDTO();
+            dto.setMenuId(vo.getMenuId());
+            dto.setRghtCd(vo.getRghtCd());
+            dto.setHndlPEno(facade.getDetails().getEno());
+
+            if (raa95BMapper.selectAuthCodeMenu(dto).isPresent()) { // 신규등록이 아닐때
+                if (vo.getIsModified() == false && vo.getIsUsed() == false) {   // 사용가능여부 수정가능여부 모두 체크 해제
+                    count += raa95BMapper.deleteAuthCodeMenu(dto);
+                } else if (vo.getIsUsed() && vo.getIsModified()) {  // 사용가능여부, 수정가능여부 모두 체크
+                    dto.setMdfyRghtCcd("2");
+                    count += raa95BMapper.updateAuthCodeMenu(dto);
+                } else if (vo.getIsUsed() && vo.getIsModified() == false) {  // 사용가능여부만 체크
+                    dto.setMdfyRghtCcd("1");
+                    count += raa95BMapper.updateAuthCodeMenu(dto);
+                }
+            } else {   // 신규 등록일때
+                if (vo.getIsUsed() && vo.getIsModified() == false) {    // 사용가능여부만 체크
+                    dto.setMdfyRghtCcd("1");
+                    count += raa95BMapper.insertAuthCodeMenu(dto);
+                } else if (vo.getIsUsed() && vo.getIsModified()) {  // 사용가능, 수정가능여부 체크
+                    dto.setMdfyRghtCcd("2");
+                    count += raa95BMapper.insertAuthCodeMenu(dto);
+                }
+            }
         }
         return count > 0;
     }
-	
-    //============ end AC01210S(권한별 메뉴관리) ============//
 
-	//============ Start AC01310S( 메뉴별권한 관리 ) ============//	
+    //============ end AC01210S(권한별 메뉴관리) ============//
+    //============ Start AC01310S( 메뉴별권한 관리 ) ============//	
     /* 메뉴명 조회 */
     @Override
     public List<RAA93BVO.MenuListVO> getMenuList(String menuNm) {
@@ -303,11 +323,11 @@ public class AC01ServiceImpl implements AC01Service {
 
         for (RAA93BVO.MenuListVO menu : menuList) {
             lvName = "";
-            if (menu.getLv2Nm() != null && menu.getLv2Nm() != "") {
+            if (menu.getLv2Id() != null && menu.getLv2Id() != "") {
                 rowNum++;
                 lvName = menu.getLv2Id();
             }
-            if (menu.getLv3Nm() != null && menu.getLv3Nm() != "") {
+            if (menu.getLv3Id() != null && menu.getLv3Id() != "") {
                 rowNum++;
                 lvName = menu.getLv3Id();
             }
@@ -322,18 +342,7 @@ public class AC01ServiceImpl implements AC01Service {
     @Override
     public List<RAA94BDTO> getMenuByAuth() {
         List<RAA94BDTO> menuAuthList = raa94BMapper.selectRghtCd();
-        // SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        // SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm:ss");
         for (RAA94BDTO menu : menuAuthList) {
-            // if (menu.getHndlDyTm() != null) {
-            //     String date = dateformat.format(menu.getHndlDyTm());
-            //     String time = timeformat.format(menu.getHndlDyTm());
-            //     menu.setHndlDt(date);
-            //     menu.setHndlTm(time);
-            // } else {
-            //     menu.setHndlDt("");
-            //     menu.setHndlTm("");
-            // }
             String hndlPEno = Optional.ofNullable(menu.getHndlPEno()).orElse("");
             menu.setHndlPEno(hndlPEno);
         }
@@ -353,42 +362,53 @@ public class AC01ServiceImpl implements AC01Service {
         int count = 0;
         String hndlDprtCd = facade.getDetails().getDprtCd();
         String hndlPEno = facade.getDetails().getEno();
-        int maxSq = raa95BMapper.selectMaxSq();
+        int nextVal = raa95BMapper.nextVal();
 
         for (RAA95BVO.selectUseMenuVO dto : dtoList) {
             dto.setHndlDprtCd(hndlDprtCd);
             dto.setHndlPEno(hndlPEno);
             int sq = dto.getSq();
+            int totalDepth = 3;		// 화면메뉴의 최대값
 
-            if (sq == 0) {
-                /* 중복된 데이터가 없을 경우 */
-                sq = maxSq + 1;
-                dto.setSq(sq);
-                dto.setMenuId(dto.getMenuId());
+            if ((sq == 0) && (!dto.getMenuId().equals("rghtCdCancel")) && (dto.getLv3Id().equals("null"))) {			// 중복된 데이터가 없는 경우
+                dto.setSq(nextVal);
                 count += raa95BMapper.insertUseMenu(dto);
-            } else if (sq != 0) {
-                /* 중복된 데이터가 있을 경우 */
-                dto.setSq(sq);
-                count += raa95BMapper.deleteUseMenu(dto);
+                dto.setMenuId(dto.getLv1Id());
+                dto.setSq(nextVal + 1);
+                dto.setMdfyRghtCcd("1");		// 상위메뉴의 경우 조회 권한만
                 count += raa95BMapper.insertUseMenu(dto);
+            } else if (sq != 0 && (!dto.getMenuId().equals("rghtCdCancel"))) {	// 중복된 데이터가 있는 경우
+                count += raa95BMapper.updateUseMenu(dto);
+            } else if (sq != 0 && dto.getMenuId().equals("rghtCdCancel")) {		// 모든 권한을 취소하는 경우
+                for (int i = 0; i < totalDepth; i++) {
+                    dto.setSq(sq + i);
+                    count += raa95BMapper.deleteUseMenu(dto);
+                }
             }
 
-            /* 상위메뉴의 조회 가능여부를 RAA95B 테이블에 적재 */
-            if (raa95BMapper.selectMainMenuId(dto) != null) {
-                dto.setMenuId(raa95BMapper.selectMainMenuId(dto).getMenuId());
-                dto.setMdfyRghtCcd("1");
-                raa95BMapper.deleteMainMenu(dto);
-                dto.setSq(sq + 1);
+			/* lv3Id가 있는 경우 */
+            if (sq == 0 && (!dto.getLv3Id().equals("null"))) {		// 중복된 데이터가 없는 경우
+                dto.setSq(nextVal);
+                dto.setMenuId(dto.getLv3Id());
                 count += raa95BMapper.insertUseMenu(dto);
-            } else {
-                /* 상위메뉴가 없을 경우 */
+                dto.setMdfyRghtCcd("1");		// 상위메뉴의 경우 조회 권한만
+                dto.setMenuId(dto.getLv2Id());
+                dto.setSq(nextVal + 1);
+                count += raa95BMapper.insertUseMenu(dto);
                 dto.setMenuId(dto.getLv1Id());
-                dto.setSq(sq + 1);
+                dto.setSq(nextVal + 2);
                 count += raa95BMapper.insertUseMenu(dto);
+            } else if (sq != 0 && dto.getMenuId().equals("lv3Menu")) {	// 중복된 데이터가 있는 경우
+                count += raa95BMapper.updateUseMenu(dto);
+            } else if (sq != 0 && dto.getMenuId().equals("rghtCdCancel")) {		// 모든 권한을 취소하는 경우
+                for (int i = 0; i < totalDepth; i++) {
+                    dto.setSq(sq + i);
+                    count += raa95BMapper.deleteUseMenu(dto);
+                }
             }
         }
+        raa95BMapper.nextVal();		// nextVal + 1을 채우기 위해
         return count > 0;
     }
-
     //============ End AC01310S( 메뉴별권한 관리 ) ============//
 }

@@ -6,12 +6,15 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.nanuri.rams.business.common.dto.RAA02BDTO;
 import com.nanuri.rams.business.common.vo.RAA01BVO;
 import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
 import com.nanuri.rams.business.common.vo.RAA18BVO.DocInfo;
 
 @Service
 public interface AS03Service {
+
+	// ---------------search bar------------------
 
 	/**
 	 * deal info 가져오기
@@ -21,6 +24,8 @@ public interface AS03Service {
 	 * @throws ParseException
 	 */
 	public List<RAA01BVO> getDealInfo(DealInfo dealDto) throws ParseException;
+
+	// ---------------tab1 start------------------
 
 	// 담당직원 - 로그인유저정보
 	public Map<String, Object> getUserAuth();
@@ -48,7 +53,7 @@ public interface AS03Service {
 
 	// 부의기준통화
 	public List<Map<String, Object>> getInvstCrncyCd();
-	
+
 	// 투자국가
 	public List<Map<String, Object>> getCntyCd();
 
@@ -57,7 +62,7 @@ public interface AS03Service {
 
 	// 업무구분
 	public List<Map<String, Object>> getCheckItemCd();
-	
+
 	// 투자국가
 	public List<Map<String, Object>> getBsnsAreaCd();
 
@@ -75,6 +80,11 @@ public interface AS03Service {
 
 	// 협업유형코드
 	public List<Map<String, Object>> getCoprtnTypCd();
+	
+	// 신규 deal 생성
+	public int registDealInfo(RAA02BDTO paramData) throws ParseException;
+
+	// ---------------tab2 start------------------
 
 	// 관련문서
 	public List<Map<String, Object>> getDocInfo(DocInfo docInfo);
@@ -82,11 +92,17 @@ public interface AS03Service {
 	// 관련문서정보 제거
 	public int deleteDocInfo(DocInfo docInfo);
 
+	// ---------------tab3 start------------------
+
 	// 기초자산종류
 	public List<Map<String, Object>> getBscAstsKndCd();
 
+	// ---------------tab4 start------------------
+
 	// 법인형태
 	public List<Map<String, Object>> getCncCmpnyClsfCd();
+
+	// ---------------tab6 start------------------
 
 	// 담보유형
 	public List<Map<String, Object>> getMrtgKndCcd();
@@ -97,8 +113,11 @@ public interface AS03Service {
 	// 권리순위
 	public List<Map<String, Object>> getRgtRnkCcd();
 
+	// ---------------tab8 start------------------
+
 	// 미이행시의무
 	public List<Map<String, Object>> getDbtNpFrmOblgCcd();
+
 	
 
 }

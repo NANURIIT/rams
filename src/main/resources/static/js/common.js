@@ -30,6 +30,24 @@ $(function() {
 	$('#logout-btn').click(function () {
 		logout();
 	});
+	
+	
+	// datepicker 초기화
+	var mem = $('.input-group.date').datepicker({
+	    format: "yyyy-mm-dd",
+		todayBtn: "linked",
+	    keyboardNavigation: false,
+	    forceParse: false,
+	    calendarWeeks: true,
+	    autoclose: true
+	});
+	
+	//TouchSpin
+	$(".touchspin").TouchSpin({
+		verticalbuttons: true,
+        buttondown_class: 'btn btn-white',
+        buttonup_class: 'btn btn-white'
+    });
 
 });
 
@@ -584,3 +602,31 @@ Date.prototype.format = function (f) {
         }
     });
 };
+
+/**
+ * 콤마 찍기(live)
+ * @param {string or number} value 콤마찍기 필요한 <string or number> 값
+ * @returns {string} 세자리 ,값 표시된 콤마 String
+ */
+function comma(str) {
+	str = String(str);
+	return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+}
+
+function uncomma(str) {
+	str = String(str);
+	return str.replace(/[^\d]+/g, '');
+} 
+
+function inputNumberFormat(obj) {
+	obj.value = comma(uncomma(obj.value));
+}
+
+function inputOnlyNumberFormat(obj) {
+	obj.value = onlynumber(uncomma(obj.value));
+}
+
+function onlynumber(str) {
+	str = String(str);
+	return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1');
+}  

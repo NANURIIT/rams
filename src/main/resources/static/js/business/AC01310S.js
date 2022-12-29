@@ -6,6 +6,7 @@ $(document).ready(function () {
 let lv1Id = '';
 let lv2Id = '';
 let lv3Id = '';
+let sqList = [];
 
 /* 메뉴명 조회 ( null 입력 시 전체 메뉴 조회 ) */
 var AC01310S_findClickbutton = function () {
@@ -94,6 +95,7 @@ var checkUseAndModifyYn = function (rowNum) {
 			, 'lv2Id': lv2Id
 			, 'lv3Id': lv3Id
 		}, success: function (data) {
+			sqList = [];
 			/* 
 			권한코드를 기준으로 DB에서 불러온 사용여부, 수정가능여부를 체크
 			make authority table의 rowNum으로 권한코드 한 행씩을 조회하여
@@ -113,10 +115,13 @@ var checkUseAndModifyYn = function (rowNum) {
 						target.find('#setHndlDt').html(val.hndlDyTm.substring(0, 10));
 						target.find('#setHndlTm').html(val.hndlDyTm.substring(11, 19));
 						target.find('#setHndlPEno').html(val.hndlPEno);
+						// var numSq = Number(val.sq);
+						// sqList.push(numSq);
+						sqList.push(val.sq);
 					}
 					// RAA95B insert, delete를 위한 sq 값
-					$('#AC01310S_saveSq').val(val.sq);
 				})
+				$('#AC01310S_saveSq').val(sqList);
 			}
 		}, error: function (request, status, error) {
 			// console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -133,7 +138,10 @@ var saveUseMenu = function (i) {
 	let saveRghtCd = '';
 
 	let dtoParam = [];
+	let sqes = saveSq.split(',')
 
+	console.log(lv1Id, lv2Id, lv3Id);
+	
 	/* 사용여부 */
 	useCheckbox.each(function (i) {
 		let tr = useCheckbox.parent().parent().eq(i);
@@ -142,13 +150,25 @@ var saveUseMenu = function (i) {
 		if (!(tr.children().eq(6).children().prop('checked'))) {
 			if (lv2Id != 'null' && lv3Id == 'null') {
 				dtoParam.push({
-					"sq": Number(saveSq)
+					"sq": sqes[i]
 					, "rghtCd": saveRghtCd
 					, "mdfyRghtCcd": '1'
 					, "menuId": lv2Id
 					, "lv1Id": lv1Id
+					, "lv2Id": lv2Id
+					, "lv3Id": lv3Id
 				});
-			};
+			} else if (lv3Id != 'null') {
+				dtoParam.push({
+					"sq": sqes[i]
+					, "rghtCd": saveRghtCd
+					, "mdfyRghtCcd": '1'
+					, "menuId": lv3Id
+					, "lv1Id": lv1Id
+					, "lv2Id": lv2Id
+					, "lv3Id": lv3Id
+				});
+			}
 		};
 	});
 	/* 수정가능여부 */
@@ -157,21 +177,49 @@ var saveUseMenu = function (i) {
 		saveRghtCd = tr.children().eq(1).html();
 		if (lv2Id != 'null' && lv3Id == 'null') {
 			dtoParam.push({
-				"sq": Number(saveSq)
+				"sq": sqes[i]
 				, "rghtCd": saveRghtCd
 				, "mdfyRghtCcd": '2'
 				, "menuId": lv2Id
 				, "lv1Id": lv1Id
+				, "lv2Id": lv2Id
+				, "lv3Id": lv3Id
+			});
+		} else {
+			dtoParam.push({
+				"sq": sqes[i]
+				, "rghtCd": saveRghtCd
+				, "mdfyRghtCcd": '2'
+				, "menuId": lv3Id
+				, "lv1Id": lv1Id
+				, "lv2Id": lv2Id
+				, "lv3Id": lv3Id
 			});
 		}
 	})
+	/* 
+	체크된 항목이 없을 경우
+	전역으로 선언된 lv1Id, lv2Id, lv3Id를 가져와서 해당 화면에 대한 모든 권한을 지워준다.
+	*/
+	for (var i = 0; i < sqes.length; i++) {
+		if (!useCheckbox.is(':checked') && !modifyCheckbox.is(':checked')) {
+			dtoParam.push({
+				"sq": sqes[i]
+				, "menuId": "rghtCdCancel"
+				, "rghtCd": saveRghtCd
+				, "lv1Id": lv1Id
+				, "lv2Id": lv2Id
+				, "lv3Id": lv3Id
+			});
+		}
+	}
 
+	console.log(dtoParam);
 	$.ajax({
 		url: '/saveUseMenu',
 		method: 'PATCH',
 		data: JSON.stringify(dtoParam),
 		contentType: "application/json; charset=UTF-8",
-		// dataType: 'json',
 		success: function () {
 			alert("Success!");
 		}, error: function (request, status, error) {

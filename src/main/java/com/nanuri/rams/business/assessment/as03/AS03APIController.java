@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nanuri.rams.business.common.dto.RAA02BDTO;
 import com.nanuri.rams.business.common.vo.RAA01BVO;
 import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
 import com.nanuri.rams.business.common.vo.RAA18BVO.DocInfo;
@@ -21,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 public class AS03APIController {
 
 	private final AS03Service as03Service;
+
+	// ---------------search bar------------------
 
 	/**
 	 * deal list 가져오기
@@ -89,7 +92,7 @@ public class AS03APIController {
 	public List<Map<String, Object>> getInvstCrncyCd() {
 		return as03Service.getInvstCrncyCd();
 	}
-	
+
 	// 투자국가
 	@GetMapping(value = "/getCntyCd")
 	public List<Map<String, Object>> getCntyCd() {
@@ -107,7 +110,7 @@ public class AS03APIController {
 	public List<Map<String, Object>> getCheckItemCd() {
 		return as03Service.getCheckItemCd();
 	}
-	
+
 	// 투자국가
 	@GetMapping(value = "/getBsnsAreaCd")
 	public List<Map<String, Object>> getBsnsAreaCd() {
@@ -143,6 +146,14 @@ public class AS03APIController {
 	public List<Map<String, Object>> getCoprtnTypCd() {
 		return as03Service.getCoprtnTypCd();
 	}
+
+	// 신규 deal 생성
+	@PostMapping(value = "/registDealInfo")
+	public int registDealInfo(RAA02BDTO paramData) throws ParseException {
+		return as03Service.registDealInfo(paramData);
+	}
+
+	// ---------------tab2 start------------------
 
 	// 관련문서
 	@GetMapping(value = "/getDocInfo")

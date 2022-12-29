@@ -4,96 +4,48 @@
 	
 	<!-- 메뉴별권한관리 메뉴명 조회 --> 
 	<select id="selectMenuList" resultType="com.nanuri.rams.business.common.vo.RAA93BVO$MenuListVO" parameterType='String'>
-		SELECT CONCAT( A.LV1_NM
-	 			   , IF(B.LV2_NM != '', CONCAT(' > ', B.LV2_NM), '')
-				   , IF(C.LV3_NM != '', CONCAT(' > ', C.LV3_NM), '')
-				   ) AS MENU_NAME
-			 , A.LV1_ID
-			 , A.LV1_NM
-			 , B.LV2_ID
-			 , B.LV2_NM
-			 , C.LV3_ID
-			 , C.LV3_NM
-		  FROM (
-		        SELECT MENU_ID LV1_ID
-					 , MENU_NM LV1_NM
-					 , URL_DVD_CD
-					 , SRT_NO
-				  FROM RAA93B
-				 WHERE MENU_LV = 1
-			   ) A
-          LEFT JOIN (
-                     SELECT B.LV2_ID
-   					      , B.LV2_NM
-					      , B.URL_DVD_CD
-					      , B.SRT_NO
-				       FROM (
-				             SELECT MENU_ID LV2_ID
-							      , MENU_NM LV2_NM
-							      , URL_DVD_CD
-							      , SRT_NO
-						       FROM RAA93B
-					          WHERE MENU_LV = 2
-					        ) B
-					) B
-			ON A.URL_DVD_CD = B.URL_DVD_CD
-	      LEFT JOIN (
-	                 SELECT C.LV3_ID
-   					      , C.LV3_NM
-					      , C.URL_DVD_CD
-					      , C.SRT_NO
-				       FROM (
-				             SELECT MENU_ID LV3_ID
-							      , MENU_NM LV3_NM
-							      , URL_DVD_CD
-							      , SRT_NO
-						       FROM RAA93B
-					          WHERE MENU_LV = 3
-					        ) C
-					) C
-			ON B.URL_DVD_CD = C.URL_DVD_CD
-		 WHERE 1=1
+		  SELECT CONCAT (
+			  			     A.MENU_NM 
+	 					, IF(B.MENU_NM != '', CONCAT(' > ', B.MENU_NM), '')
+						, IF(C.MENU_NM != '', CONCAT(' > ', C.MENU_NM), '')
+						) 			AS MENU_NAME
+			   , A.MENU_ID			AS LV1_ID
+			   , B.MENU_ID			AS LV2_ID
+			   , C.MENU_ID			AS LV3_ID
+			FROM RAA93B A 
+	  INNER JOIN RAA93B B
+			  ON A.URL_DVD_CD 		= B.URL_DVD_CD 
+			 AND A.MENU_LV 			= 1
+			 AND B.MENU_LV 			= 2
+	   LEFT JOIN RAA93B C
+			  ON B.URL_DVD_CD 		= C.URL_DVD_CD
+			 AND C.MENU_LV 			= 3
+		   WHERE 1=1
 		<if test='menuNm != null and menuNm != ""'>
-		 AND ( A.LV1_NM  LIKE CONCAT('%', #{menuNm} ,'%')
-		       OR B.LV2_NM LIKE CONCAT('%', #{menuNm} ,'%')
-		       OR C.LV3_NM LIKE CONCAT('%', #{menuNm} ,'%') )
+			 AND (
+					 A.MENU_NM LIKE CONCAT('%', #{menuNm} ,'%')
+		    	  OR B.MENU_NM LIKE CONCAT('%', #{menuNm} ,'%')
+		       	  OR C.MENU_NM LIKE CONCAT('%', #{menuNm} ,'%')
+				 )
 		</if>
-	     ORDER BY A.SRT_NO ASC, B.SRT_NO ASC, C.SRT_NO ASC
+	     ORDER BY A.SRT_NO ASC
+		 		, B.SRT_NO ASC
+				, C.SRT_NO ASC
 	</select>
 
 	<select id="selectAuthCodeMenu" parameterType="String" resultType="com.nanuri.rams.business.common.vo.RAA93BVO">
         SELECT 93b.srt_no
              , 93b.menu_id
-             , 95b.rght_cd
              , 93b.menu_lv
-             , 93b.dlt_f
              , 95b.mdfy_rght_ccd
-             , 93b.hndl_dy_tm
-             , 93b.hndl_p_eno
+             , 95b.hndl_dy_tm
+             , 95b.hndl_p_eno
           FROM RAA93B 93b
-     LEFT JOIN (SELECT * FROM RAA95B WHERE rght_cd = #{rghtCd}) 95b
+     LEFT JOIN RAA95B 95b
             ON 93b.menu_id = 95b.menu_id
+		   AND 95b.rght_cd = #{rghtCd}
          WHERE 93b.scrn_aplc_type_cd = 'S'
       ORDER BY srt_no
     </select>
-    
-    <update id="updateAuthCodeMenu" parameterType="com.nanuri.rams.business.common.vo.RAA93BVO">
-        UPDATE RAA93B
-            <set>
-                <if test="dltF != null and dltF !=''">
-                    dlt_f = #{dltF},
-                </if>
-                hndl_p_eno = #{hndlPEno},
-                hndl_dy_tm = now()
-            </set>
-         WHERE 1=1
-           AND menu_id = #{menuId};
-        <if test="mdfyRghtCcd != null and mdfyRghtCcd !=''">
-        UPDATE RAA95B
-           SET mdfy_rght_ccd = #{mdfyRghtCcd}
-         WHERE 1=1
-           AND menu_id = #{menuId};
-        </if>
-    </update>
 
 </mapper>
