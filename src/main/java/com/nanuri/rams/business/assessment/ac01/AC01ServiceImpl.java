@@ -404,7 +404,11 @@ public class AC01ServiceImpl implements AC01Service {
                 dto.setSq(nextVal + 2);
                 count += raa95BMapper.insertUseMenu(dto);
             } else if (sq != 0 && dto.getMenuId().equals("lv3Menu")) {	// 중복된 데이터가 있는 경우
-                count += raa95BMapper.updateAuthCodeMenu(dto);
+				if (!raa95BMapper.isExist(dto)) {
+                    count += raa95BMapper.insertUseMenu(dto);
+                } else if (raa95BMapper.isExist(dto)) {
+                    count += raa95BMapper.updateAuthCodeMenu(dto);
+                }
             } else if (sq != 0 && dto.getMenuId().equals("rghtCdCancel")) {		// 모든 권한을 취소하는 경우
                 for (int i = 0; i < totalDepth; i++) {
                     dto.setSq(sq + i);
