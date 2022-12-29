@@ -36,6 +36,12 @@ public class AS03APIController {
 	public List<RAA01BVO> getDealInfo(DealInfo dealDto) throws ParseException {
 		return as03Service.getDealInfo(dealDto);
 	}
+	
+	// RADEAL구분코드
+	@GetMapping(value = "/getRaDealCcd")
+	public List<Map<String, Object>> getRaDealCcd() {
+		return as03Service.getRaDealCcd();
+	}
 
 	// ---------------tab1 start------------------
 
@@ -150,7 +156,12 @@ public class AS03APIController {
 	// 신규 deal 생성
 	@PostMapping(value = "/registDealInfo")
 	public int registDealInfo(RAA02BDTO paramData) throws ParseException {
-		return as03Service.registDealInfo(paramData);
+		
+		Map<String, Object> dealInfoMap = as03Service.registDealInfo(paramData);
+		
+		as03Service.registHistoy(dealInfoMap);
+		
+		return 0;
 	}
 
 	// ---------------tab2 start------------------

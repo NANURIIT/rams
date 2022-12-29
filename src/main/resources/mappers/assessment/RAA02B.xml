@@ -22,11 +22,23 @@
 		 </if>
 	</sql> -->
 	
-	<!-- 신규 안건 생성 -->
-	<!-- 임시 -->
-	<sql id="AS03220_INSERT_RAA02B">
+	<!-- RADEAL구분코드 -->
+	<select id="getRaDealSq" parameterType="String" resultType="String">
+		SELECT LPAD (
+		             NVL( MAX(RA_DEAL_SQ), 0 ) + 1
+		             , 4, 0
+		            ) AS RA_DEAL_SQ
+		  FROM RAA02B
+		 WHERE 1=1
+		   AND RA_DEAL_CCD = #{raDealCcd}
+		   AND DPRT_CD = #{dprtCd}
+	</select>
+	
+	<!-- 신규 deal 생성 -->
+	<insert id="insertDealInfo" parameterType="com.nanuri.rams.business.common.dto.RAA02BDTO" >
 		INSERT INTO RAA02B
-		       ( IB_DEAL_NO								<!-- IBDEAL번호 -->
+		       ( 
+		         IB_DEAL_NO								<!-- IBDEAL번호 -->
 		       , RISK_INSPCT_CCD						<!-- 리스크심사구분코드 -->
 		       , LST_C_CASE_CCD							<!-- 부수안건구분코드 -->
 		       , RA_DEAL_CCD							<!-- RADEAL구분코드 -->
@@ -40,7 +52,7 @@
 		       , UPT_P_ENO								<!-- 변경자사번 -->
 		       , UPT_RSN_CNTNT							<!-- 변경사유내용 -->
 		       , RE_RGST_DT								<!-- 재등록일자 -->
-		       , HDQT CD								<!-- 본부코드 -->
+		       , HDQT_CD								<!-- 본부코드 -->
 		       , DPRT_CD								<!-- 부점코드 -->
 		       , CHRG_P_ENO								<!-- 담당자사번 -->
 		       , COPRTN_TYP_CD							<!-- 협업유형코드 -->
@@ -49,8 +61,8 @@
 		       , INVST_CRNCY_CD							<!-- 투자통화코드 -->
 		       , CRNCY_AMT								<!-- 통화금액 -->
 		       , INVST_PRD_DY_C							<!-- 투자기간일수 -->
-		       , PY_EXPT_DT								<!-- 지급예정일자 -->
-		       , CC_EXPT_DT								<!-- 해지예정일자 -->
+		       , WRT_EXPT_DT							<!-- 지급예정일자 -->
+		       , MTRT_EXPT_DT							<!-- 해지예정일자 -->
 		       , TL_ERN_AMT								<!-- 총수익금액 -->
 		       , WRT_ERN_AMT							<!-- 기표수익금액 -->
 		       , RCVBL_ERN_AMT							<!-- 미수수익금액 -->
@@ -129,60 +141,61 @@
 			   , HNDL_DPRT_CD							<!-- 처리부점코드 -->
 			   , HNDL_P_ENO								<!-- 처리자번 -->
 			   )
-		VALUES ( #{IB_DEAL_NO}							<!-- IBDEAL번호 -->
-		       , #{RISK_INSPCT_CCD}						<!-- 리스크심사구분코드 -->
-		       , #{LST_C_CASE_CCD}						<!-- 부수안건구분코드 -->
-		       , #{RA_DEAL_CCD}							<!-- RADEAL구분코드 -->
-		       , #{FST_RGST_P_DPRT_CD}					<!-- 최초등록자부점코드 -->
-		       , #{RA_STD_YR_MM}						<!-- RA기준년월 -->
-		       , TO_NUMBER(#{RA_DEAL_SQ})				<!-- RADEAL일련번호 -->
-		       , #{RISK_RCG_NO}							<!-- 리스크승인번호 -->
-		       , TRIM(#{IB_DEAL_NM})					<!-- IBDEAL명 -->
+		VALUES ( 
+		         #{ibDealNo}							<!-- IBDEAL번호 -->
+		       , #{riskInspctCcd}						<!-- 리스크심사구분코드 -->
+		       , #{lstCCaseCcd}							<!-- 부수안건구분코드 -->
+		       , #{raDealCcd}							<!-- RADEAL구분코드 -->
+		       , #{fstRgstPDprtCd}						<!-- 최초등록자부점코드 -->
+		       , #{raStdYrMm}							<!-- RA기준년월 -->
+		       , CAST(#{raDealSq} AS INT)				<!-- RADEAL일련번호 -->
+		       , #{riskRcgNo}							<!-- 리스크승인번호 -->
+		       , TRIM(#{ibDealNm})						<!-- IBDEAL명 -->
 		       , ''										<!-- 소유자사번 -->
 		       , (
-		       	  CASE WHEN #{RA_RSLTN_CCD} = '1'
+		       	  CASE WHEN #{raRsltnCcd} = '1'
 		       	       THEN ''
-		       	       ELSE TO_CHAR(SYSDATE, 'YYYYMMDD')
+		       	       ELSE DATE_FORMAT(CURDATE(), '%Y%m%d')
 		       	   END
 		         )										<!-- 최초등록일자 -->
 		       , ''										<!-- 변경자사번 -->
 		       , ''										<!-- 변경사유내용 -->
-		       , TO_CHAR(SYSDATE, 'YYYYMMDD')			<!-- 재등록일자 -->
-		       , #{HDQT CD}								<!-- 본부코드 -->
-		       , #{DPRT_CD}								<!-- 부점코드 -->
-		       , #{CHRG_P_ENO}							<!-- 담당자사번 -->
-		       , #{COPRTN_TYP_CD}						<!-- 협업유형코드 -->
-		       , NVL(#{PTCP_AMT}, 0)					<!-- 참여금액 -->
-		       , #{INVST_NTN_CD}						<!-- 투자국가코드 -->
-		       , #{INVST_CRNCY_CD}						<!-- 투자통화코드 -->
-		       , NVL(#{CRNCY_AMT}, 0)					<!-- 통화금액 -->
-		       , NVL(#{INVST_PRD_DY_C}, 0)				<!-- 투자기간일수 -->
+		       , DATE_FORMAT(CURDATE(), '%Y%m%d')		<!-- 재등록일자 -->
+		       , #{hdqtCd}								<!-- 본부코드 -->
+		       , #{dprtCd}								<!-- 부점코드 -->
+		       , #{chrgPEno}							<!-- 담당자사번 -->
+		       , #{coprtnTypCd}							<!-- 협업유형코드 -->
+		       , NVL(#{ptcpAmt}, 0)						<!-- 참여금액 -->
+		       , #{invstNtnCd}							<!-- 투자국가코드 -->
+		       , #{invstCrncyCd}						<!-- 투자통화코드 -->
+		       , NVL(#{crncyAmt}, 0)					<!-- 통화금액 -->
+		       , NVL(#{invstPrdDyC}, 0)					<!-- 투자기간일수 -->
 		       , ''										<!-- 지급예정일자 -->
 		       , ''										<!-- 해지예정일자 -->
-		       , NVL(#{TL_ERN_AMT}, 0)					<!-- 총수익금액 -->
-		       , NVL(#{WRT_ERN_AMT}, 0)					<!-- 기표수익금액 -->
-		       , NVL(#{RCVBL_ERN_AMT}, 0)				<!-- 미수수익금액 -->
-		       , #{INVST_GDS_LDVD_CD}					<!-- 투자상품대분류코드 -->
-			   , #{INVST_GDS_MDVD_CD}					<!-- 투자상품중분류코드 -->
-			   , #{INVST_GDS_SDVD_CD}					<!-- 투자상품소분류코드 -->
-			   , ''										<!-- 투자상품상세분류코드 -->
+		       , NVL(#{tlErnAmt}, 0)					<!-- 총수익금액 -->
+		       , NVL(#{wrtErnAmt}, 0)					<!-- 기표수익금액 -->
+		       , NVL(#{rcvblErnAmt}, 0)					<!-- 미수수익금액 -->
+		       , #{invstGdsLdvdCd}						<!-- 투자상품대분류코드 -->
+			   , #{invstGdsMdvdCd}						<!-- 투자상품중분류코드 -->
+			   , #{invstGdsSdvdCd}						<!-- 투자상품소분류코드 -->
+			   , #{invstGdsDtlsDvdCd}					<!-- 투자상품상세분류코드 -->
 			   , ''										<!-- 관리지표해당여부 -->
-			   , #{IND_TYP_DVD_CD}						<!-- 업종분류코드 -->
-			   , #{CHECK_ITEM_CD}						<!-- 점검항목코드 -->
-			   , #{MRTG_OFR_F}							<!-- 담보제공여부 -->
-			   , #{ENSR_F}								<!-- 보증여부 -->
-			   , #{RSPSB_CMPL_CCD}						<!-- 책임준공구분코드 -->
+			   , #{indTypDvdCd}							<!-- 업종분류코드 -->
+			   , #{checkItemCd}							<!-- 점검항목코드 -->
+			   , #{mrtgOfrF}							<!-- 담보제공여부 -->
+			   , #{ensrF}								<!-- 보증여부 -->
+			   , #{rspsbCmplCcd}						<!-- 책임준공구분코드 -->
 			   , ''										<!-- 리스크심사결의구분코드 -->
 			   , ''										<!-- 최초협의여부 -->
 			   , ''										<!-- 보고시작일자 -->
 			   , ''										<!-- 공문접수일자 -->
 			   , ''										<!-- 적용예정일자 -->
 			   , (
-		       	  CASE WHEN (#{RA_RSLTN_CCD} = '2'
-		       	         OR #{RA_RSLTN_CCD} = '3'
-		       	         OR #{RA_RSLTN_CCD} = '4'
-		       	         OR #{RA_RSLTN_CCD} = '5'
-		       	         OR #{RA_RSLTN_CCD} = '6')
+		       	  CASE WHEN (#{raRsltnCcd} = '2'
+		       	         OR #{raRsltnCcd} = '3'
+		       	         OR #{raRsltnCcd} = '4'
+		       	         OR #{raRsltnCcd} = '5'
+		       	         OR #{raRsltnCcd} = '6')
 		       	       THEN '350'
 		       	       ELSE '100'
 		       	   END
@@ -191,26 +204,26 @@
 			   , ''										<!-- 약정일자 -->
 			   , 0										<!-- 약정금액 -->
 			   , ''										<!-- 요청문서번호 -->
-			   , #{WRT_DT}								<!-- 기표일자 -->
-			   , #{MTRT_DT}								<!-- 만기일자 -->
+			   , #{wrtDt}								<!-- 기표일자 -->
+			   , #{mtrtDt}								<!-- 만기일자 -->
 			   , 0										<!-- 현금성자산기표금액 -->
 			   , ''										<!-- 종료일자 -->
 			   , ''										<!-- 임의종료구분코드 -->
 			   , ''										<!-- 종료기본내용 -->
 			   , ''										<!-- 심사취소처리구분코드 -->
-			   , #{IB_DEAL_SNM_NM}						<!-- IBDEAL약어명 -->
+			   , #{ibDealSnmNm}							<!-- IBDEAL약어명 -->
 			   , ''										<!-- 변경후심사진행상태코드 -->
-			   , #{FNC_GDS_DVD_CD}						<!-- 금융상품분류코드 -->
-			   , #{RA_BSNS_ZONE_CD}						<!-- RA사업지역코드 -->
-			   , #{INVST_THING_CCD}						<!-- 투자물건구분코드 -->
-			   , #{INVST_THING_DTLS_CCD}				<!-- 투자물건상세구분코드 -->
+			   , #{fncGdsDvdCd}							<!-- 금융상품분류코드 -->
+			   , #{raBsnsZoneCd}						<!-- RA사업지역코드 -->
+			   , #{invstThingCcd}						<!-- 투자물건구분코드 -->
+			   , #{invstThingDtlsCcd}					<!-- 투자물건상세구분코드 -->
 			   , ''										<!-- 변경일자 -->
-			   , TRIM(#{BSNS_DPRT_CMMT_RMRK1})			<!-- 사업부서의견비고1 -->
-			   , TRIM(#{INSPCT_DPRT_CMMT_RMRK2})		<!-- 심사부서의견비고2 -->
+			   , TRIM(#{bsnsDprtCmmtRmrk1})				<!-- 사업부서의견비고1 -->
+			   , TRIM(#{inspctDprtCmmtRmrk2})			<!-- 심사부서의견비고2 -->
 			   , ''										<!-- 결의협의회구분코드 -->
 			   , ''										<!-- 준거채무 -->
 			   , ''										<!-- WM상품기타 -->
-			   , #{RA_RSLTN_CCD}						<!-- RA결의구분코드 -->
+			   , #{raRsltnCcd}							<!-- RA결의구분코드 -->
 			   , ''										<!-- 주요투자대상명 -->
 			   , ''										<!-- RA펀드위험등급코드 -->
 			   , 0										<!-- 판매수수료율 -->
@@ -223,15 +236,15 @@
 			   , 0										<!-- 최저담보비율 -->
 			   , 0										<!-- 기준일담보비율 -->
 			   , ''										<!-- 기타금융조건 -->
-			   , NVL(#{APLC_EXCH_R}, 0)					<!-- 적용환율 -->
-			   , NVL(#{RA_ETC_FEE_R}, 0)				<!-- RA기타수수료율 -->
-			   , NVL(#{RA_LSRT_FEE_R}, 0)				<!-- RA실권수수료율 -->
-			   , NVL(#{RA_UDWRT_FEE_R}, 0)				<!-- RA인수수수료율 -->
-			   , #{UDWRT_FNC_ISNG_DT}					<!-- 인수금융발행일자 -->
-			   , #{UDWRT_FNC_SBMS_DT}					<!-- 인수금융제출일자 -->
-			   , #{UDWRT_FNC_SBS_DT}					<!-- 인수금융청약일자 -->
+			   , NVL(#{aplcExchR}, 0)					<!-- 적용환율 -->
+			   , NVL(#{raEtcFeeR}, 0)					<!-- RA기타수수료율 -->
+			   , NVL(#{raLsrtFeeR}, 0)					<!-- RA실권수수료율 -->
+			   , NVL(#{raUdwrtFeeR}, 0)					<!-- RA인수수수료율 -->
+			   , #{udwrtFncIsngDt}						<!-- 인수금융발행일자 -->
+			   , #{udwrtFncSbmsDt}						<!-- 인수금융제출일자 -->
+			   , #{udwrtFncSbsDt}						<!-- 인수금융청약일자 -->
 			   , ''										<!-- 대체투자여부 -->
-			   , #{BSNS_STTS_CCD}						<!-- 사업단계구분코드 -->
+			   , #{bsnsSttsCcd}							<!-- 사업단계구분코드 -->
 			   , 'N'									<!-- 기초자산입력예정여부 -->
 			   , 'N'									<!-- 내부등급입력예정여부 -->
 			   , ''										<!-- 준거기업명 -->
@@ -240,13 +253,122 @@
 			   , 0										<!-- 최소가입금액 -->
 			   , 0										<!-- WM성과보수 -->
 			   , 0										<!-- 계좌담보비율 -->
-			   , #{INSPCT_DPRT_CCD}						<!-- 심사부서구분코드 -->
+			   , #{inspctDprtCcd}						<!-- 심사부서구분코드 -->
 			   , ''										<!-- 연결회사입력예정여부 -->
-			   , SYSDATE								<!-- 처리일시 -->
-			   , #{HNDL_DPRT_CD}						<!-- 처리부점코드 -->
-			   , #{HNDL_P_ENO}							<!-- 처리자번 -->
+			   , CURRENT_TIMESTAMP()					<!-- 처리일시 -->
+			   , #{hndlDprtCd}							<!-- 처리부점코드 -->
+			   , #{hndlPEno}							<!-- 처리자번 -->
 			   )
-	</sql>
+	</insert>
+	
+	<!-- 히스토리 데이터 취득 -->
+	<select id="copyDealInfO" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA02HDTO">
+		SELECT IB_DEAL_NO								<!-- IBDEAL번호 -->
+		     , RISK_INSPCT_CCD							<!-- 리스크심사구분코드 -->
+		     , LST_C_CASE_CCD							<!-- 부수안건구분코드 -->
+		     , RA_DEAL_CCD								<!-- RADEAL구분코드 -->
+		     , FST_RGST_P_DPRT_CD						<!-- 최초등록자부점코드 -->
+		     , RA_STD_YR_MM								<!-- RA기준년월 -->
+		     , RA_DEAL_SQ								<!-- RADEAL일련번호 -->
+		     , RISK_RCG_NO								<!-- 리스크승인번호 -->
+		     , IB_DEAL_NM								<!-- IBDEAL명 -->
+		     , OWN_P_ENO								<!-- 소유자사번 -->
+		     , FST_RGST_DT								<!-- 최초등록일자 -->
+		     , UPT_P_ENO								<!-- 변경자사번 -->
+		     , UPT_RSN_CNTNT							<!-- 변경사유내용 -->
+		     , RE_RGST_DT								<!-- 재등록일자 -->
+		     , HDQT_CD									<!-- 본부코드 -->
+		     , DPRT_CD									<!-- 부점코드 -->
+		     , CHRG_P_ENO								<!-- 담당자사번 -->
+		     , COPRTN_TYP_CD							<!-- 협업유형코드 -->
+		     , PTCP_AMT									<!-- 참여금액 -->
+		     , INVST_NTN_CD								<!-- 투자국가코드 -->
+		     , INVST_CRNCY_CD							<!-- 투자통화코드 -->
+		     , CRNCY_AMT								<!-- 통화금액 -->
+		     , INVST_PRD_DY_C							<!-- 투자기간일수 -->
+		     , WRT_EXPT_DT								<!-- 지급예정일자 -->
+		     , MTRT_EXPT_DT								<!-- 해지예정일자 -->
+		     , TL_ERN_AMT								<!-- 총수익금액 -->
+		     , WRT_ERN_AMT								<!-- 기표수익금액 -->
+		     , RCVBL_ERN_AMT							<!-- 미수수익금액 -->
+		     , INVST_GDS_LDVD_CD						<!-- 투자상품대분류코드 -->
+			 , INVST_GDS_MDVD_CD						<!-- 투자상품중분류코드 -->
+			 , INVST_GDS_SDVD_CD						<!-- 투자상품소분류코드 -->
+			 , INVST_GDS_DTLS_DVD_CD					<!-- 투자상품상세분류코드 -->
+			 , MNG_DRCTG_APP_F							<!-- 관리지표해당여부 -->
+			 , IND_TYP_DVD_CD							<!-- 업종분류코드 -->
+			 , CHECK_ITEM_CD							<!-- 점검항목코드 -->
+			 , MRTG_OFR_F								<!-- 담보제공여부 -->
+			 , ENSR_F									<!-- 보증여부 -->
+			 , RSPSB_CMPL_CCD							<!-- 책임준공구분코드 -->
+			 , RISK_INSPCT_RSLTN_CCD					<!-- 리스크심사결의구분코드 -->
+			 , FST_CNFRNC_F								<!-- 최초협의여부 -->
+			 , RPR_STRT_DT								<!-- 보고시작일자 -->
+			 , OFCL_DOC_ACPT_DT							<!-- 공문접수일자 -->
+			 , APLC_EXPT_DT								<!-- 적용예정일자 -->
+			 , INSPCT_PRGRS_ST_CD						<!-- 심사진행상태코드 -->
+			 , NHNDL_RSN_CNTNT							<!-- 미처리사유내용 -->
+			 , AGR_DT									<!-- 약정일자 -->
+			 , AGR_AMT									<!-- 약정금액 -->
+			 , RQS_DOC_NO								<!-- 요청문서번호 -->
+			 , WRT_DT									<!-- 기표일자 -->
+			 , MTRT_DT									<!-- 만기일자 -->
+			 , CSH_NTR_ASTS_WRT_AMT						<!-- 현금성자산기표금액 -->
+			 , END_DT									<!-- 종료일자 -->
+			 , OPTNL_END_CCD							<!-- 임의종료구분코드 -->
+			 , END_BSS_CNTNT							<!-- 종료기본내용 -->
+			 , INSPCT_CNCL_HNDL_CCD						<!-- 심사취소처리구분코드 -->
+			 , IB_DEAL_SNM_NM							<!-- IBDEAL약어명 -->
+			 , UPTA_INSPCT_PRGRS_ST_CD					<!-- 변경후심사진행상태코드 -->
+			 , FNC_GDS_DVD_CD							<!-- 금융상품분류코드 -->
+			 , RA_BSNS_ZONE_CD							<!-- RA사업지역코드 -->
+			 , INVST_THING_CCD							<!-- 투자물건구분코드 -->
+			 , INVST_THING_DTLS_CCD						<!-- 투자물건상세구분코드 -->
+			 , UPT_DT									<!-- 변경일자 -->
+			 , BSNS_DPRT_CMMT_RMRK1						<!-- 사업부서의견비고1 -->
+			 , INSPCT_DPRT_CMMT_RMRK2					<!-- 심사부서의견비고2 -->
+			 , RSLTN_CNFRNC_CCD							<!-- 결의협의회구분코드 -->
+			 , CFMT_DBT									<!-- 준거채무 -->
+			 , WM_GDS_ETC								<!-- WM상품기타 -->
+			 , RA_RSLTN_CCD								<!-- RA결의구분코드 -->
+			 , MAIN_INVST_TRGT_NM						<!-- 주요투자대상명 -->
+			 , RA_FND_RSK_GRD_CD						<!-- RA펀드위험등급코드 -->
+			 , MKTG_FEE_R								<!-- 판매수수료율 -->
+			 , TL_RCPS_R								<!-- 종보수율 -->
+			 , TRUST_RCPS_R								<!-- 신탁보수율 -->
+			 , DL_DPRT_CD1								<!-- 거래부점코드1 -->
+			 , DL_DPRT_CD2								<!-- 거래부점코드2 -->
+			 , DL_DPRT_CD3								<!-- 거래부정코드3 -->
+			 , ASTS_VAL_AMT								<!-- 자산평가금액 -->
+			 , MIN_MRTG_RT								<!-- 최저담보비율 -->
+			 , STD_DY_MRTG_RT							<!-- 기준일담보비율 -->
+			 , ETC_FNC_CNDT								<!-- 기타금융조건 -->
+			 , APLC_EXCH_R								<!-- 적용환율 -->
+			 , RA_ETC_FEE_R								<!-- RA기타수수료율 -->
+			 , RA_LSRT_FEE_R							<!-- RA실권수수료율 -->
+			 , RA_UDWRT_FEE_R							<!-- RA인수수수료율 -->
+			 , UDWRT_FNC_ISNG_DT						<!-- 인수금융발행일자 -->
+			 , UDWRT_FNC_SBMS_DT						<!-- 인수금융제출일자 -->
+			 , UDWRT_FNC_SBS_DT							<!-- 인수금융청약일자 -->
+			 , TRSNS_INVST_F							<!-- 대체투자여부 -->
+			 , BSNS_STTS_CCD							<!-- 사업단계구분코드 -->
+			 , BSC_ASTS_INPT_EXPT_F						<!-- 기초자산입력예정여부 -->
+			 , INS_GRD_INPT_EXPT_F						<!-- 내부등급입력예정여부 -->
+			 , CFMT_ENTP_NM								<!-- 준거기업명 -->
+			 , ADVTCNQ_GDS_F							<!-- 고난도상품여부 -->
+			 , JN_QLFCT									<!-- 가입자격 -->
+			 , MN_JN_AMT								<!-- 최소가입금액 -->
+			 , WM_OTCM_RCPS_R							<!-- WM성과보수 -->
+			 , AC_MRTG_RT								<!-- 계좌담보비율 -->
+			 , INSPCT_DPRT_CCD							<!-- 심사부서구분코드 -->
+			 , CNC_CMPNY_INPT_EXPT_F					<!-- 연결회사입력예정여부 -->
+			 , HNDL_DY_TM								<!-- 처리일시 -->
+			 , HNDL_DPRT_CD								<!-- 처리부점코드 -->
+			 , HNDL_P_ENO								<!-- 처리자번 -->
+		  FROM RAA02B
+		 WHERE 1=1
+		   AND IB_DEAL_NO = #{ibDealNo} 
+	</select>
 
 
 
