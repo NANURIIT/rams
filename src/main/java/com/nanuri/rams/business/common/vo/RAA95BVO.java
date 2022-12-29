@@ -13,5 +13,7 @@ public class RAA95BVO {
 		private String lv1Id;
 		private String lv2Id;
 		private String lv3Id;
+
+		private int nextVal;
 	}
 }
