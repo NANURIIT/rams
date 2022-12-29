@@ -24,6 +24,7 @@ import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
 import com.nanuri.rams.business.common.vo.RAA18BVO.DocInfo;
 import com.nanuri.rams.com.security.AuthenticationFacade;
 import com.nanuri.rams.com.utils.StringUtil;
+import com.nanuri.rams.com.utils.Utils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,14 +56,9 @@ public class AS03ServiceImpl implements AS03Service {
 	@Override
 	public List<RAA01BVO> getDealInfo(DealInfo dealInfo) throws ParseException {
 
-		SimpleDateFormat newFormat = new SimpleDateFormat("yyyyMMdd");
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
 		String date = dealInfo.getDscDate();
-		if (!StringUtil.isAllWhitespace(date)) {
-			Date formatDate = dateFormat.parse(date);
-			dealInfo.setDscDate(newFormat.format(formatDate));
-		}
+		date = Utils.changeDateFormat(date, "yyyy-MM-dd","yyyyMMdd");
+		dealInfo.setDscDate(date);
 
 		List<RAA01BVO> dealList = raa01bMapper.getDealInfo(dealInfo);
 
