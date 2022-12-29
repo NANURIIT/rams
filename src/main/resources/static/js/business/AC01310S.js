@@ -48,42 +48,48 @@ function selectMenuRow(e) {
 	lv2Id = $(e).find('input:eq(1)').val();
 	lv3Id = $(e).find('input:eq(2)').val();
 
-	$.ajax({
-		url: '/menuByAuth',
-		data: {
-			"lv1Id": lv1Id
-			, "lv2Id": lv2Id
-			, "lv3Id": lv3Id
-		}, success: function (data) {
-			// console.log(lv1Id, lv2Id, lv3Id);
-			makeMenuByAuthList(data);
-		},
-	})
+	let idParam = {
+		"lv1Id": lv1Id
+		, "lv2Id": lv2Id
+		, "lv3Id": lv3Id
+	}
+
+	makeMenuByAuthList(idParam);
 }
 
 /* 권한별 메뉴의 사용, 수정 여부 목록 출력 */
-var makeMenuByAuthList = function (data) {
+var makeMenuByAuthList = function (idParam) {
 	let rowNum = 0;
 	let html = '';
 
-	/* make authority table */
-	$.each(data, function (key, value) {
-		rowNum++;
-		html += '<tr class="modifyAuthTable">';
-		html += '<td>' + rowNum + '</td>';
-		html += '<td id="setRghtCd">' + value.rghtCd + '</td>';
-		html += '<td>' + value.rghtCdNm + '</td>';
-		html += '<td>' + value.rghtCdExpl + '</td>';
-		html += '<td>' + value.rghtCcd + '</td>';
-		html += '<td>' + '<input id="setUseYn" style="width: 15px;" type="checkbox" onclick="checkboxUseYn(this);"/>' + '</td>';
-		html += '<td>' + '<input id="setModifyYn" style="width: 15px;" type="checkbox" onclick="checkboxModifyYn(this);"/>' + '</td>';
-		html += '<td id="setHndlDt"></td>';
-		html += '<td id="setHndlTm"></td>';
-		html += '<td id="setHndlPEno"></td>';
-		html += '</tr>';
+	$.ajax({
+		url: '/menuByAuth',
+		data: idParam,
+		success: function (data) {
+
+			/* make authority table */
+			$.each(data, function (key, value) {
+				rowNum++;
+				html += '<tr class="modifyAuthTable">';
+				html += '<td>' + rowNum + '</td>';
+				html += '<td id="setRghtCd">' + value.rghtCd + '</td>';
+				html += '<td>' + value.rghtCdNm + '</td>';
+				html += '<td>' + value.rghtCdExpl + '</td>';
+				html += '<td>' + value.rghtCcd + '</td>';
+				html += '<td>' + '<input id="setUseYn" style="width: 15px;" type="checkbox" onclick="checkboxUseYn(this);"/>' + '</td>';
+				html += '<td>' + '<input id="setModifyYn" style="width: 15px;" type="checkbox" onclick="checkboxModifyYn(this);"/>' + '</td>';
+				html += '<td id="setHndlDt"></td>';
+				html += '<td id="setHndlTm"></td>';
+				html += '<td id="setHndlPEno"></td>';
+				html += '</tr>';
+			})
+			$('#AC01310S_makeMenuByAuthList').html(html);
+			checkUseAndModifyYn(rowNum);
+		}, fail: function (status, err) {
+			return console.error("error status : " + status + "error reason : " + err);
+		},
 	})
-	$('#AC01310S_makeMenuByAuthList').html(html);
-	checkUseAndModifyYn(rowNum);
+
 };
 
 /* 메뉴별 권한관리 prop('checked) */
@@ -115,8 +121,6 @@ var checkUseAndModifyYn = function (rowNum) {
 						target.find('#setHndlDt').html(val.hndlDyTm.substring(0, 10));
 						target.find('#setHndlTm').html(val.hndlDyTm.substring(11, 19));
 						target.find('#setHndlPEno').html(val.hndlPEno);
-						// var numSq = Number(val.sq);
-						// sqList.push(numSq);
 						sqList.push(val.sq);
 					}
 					// RAA95B insert, delete를 위한 sq 값
@@ -138,10 +142,14 @@ var saveUseMenu = function (i) {
 	let saveRghtCd = '';
 
 	let dtoParam = [];
-	let sqes = saveSq.split(',')
+	let sqes = saveSq.split(',');
 
-	console.log(lv1Id, lv2Id, lv3Id);
-	
+	let idParam = {
+		"lv1Id": lv1Id
+		, "lv2Id": lv2Id
+		, "lv3Id": lv3Id
+	};
+
 	/* 사용여부 */
 	useCheckbox.each(function (i) {
 		let tr = useCheckbox.parent().parent().eq(i);
@@ -221,7 +229,17 @@ var saveUseMenu = function (i) {
 		data: JSON.stringify(dtoParam),
 		contentType: "application/json; charset=UTF-8",
 		success: function () {
-			alert("Success!");
+			openPopup({
+				title: '성공',
+				text: '저장이 완료되었습니다.',
+				type: 'success',
+				callback: function () {
+					$(document).on('click', '.confirm', function () {
+						makeMenuByAuthList(idParam);
+						$('#AC01310S_makeMenuByAuthList').find('tr:eq(0)').focus();
+					});
+				}
+			});
 		}, error: function (request, status, error) {
 			// console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 			alert("Fail!")

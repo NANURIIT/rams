@@ -370,6 +370,7 @@ public class AC01ServiceImpl implements AC01Service {
             int sq = dto.getSq();
             int totalDepth = 3;		// 화면메뉴의 최대값
 
+            /* lv3Id가 없는 경우 */
             if ((sq == 0) && (!dto.getMenuId().equals("rghtCdCancel")) && (dto.getLv3Id().equals("null"))) {			// 중복된 데이터가 없는 경우
                 dto.setSq(nextVal);
                 count += raa95BMapper.insertUseMenu(dto);
@@ -378,7 +379,11 @@ public class AC01ServiceImpl implements AC01Service {
                 dto.setMdfyRghtCcd("1");		// 상위메뉴의 경우 조회 권한만
                 count += raa95BMapper.insertUseMenu(dto);
             } else if (sq != 0 && (!dto.getMenuId().equals("rghtCdCancel"))) {	// 중복된 데이터가 있는 경우
-                count += raa95BMapper.updateUseMenu(dto);
+                if (!raa95BMapper.isExist(dto)) {
+                    count += raa95BMapper.insertUseMenu(dto);
+                } else if (raa95BMapper.isExist(dto)) {
+                    count += raa95BMapper.updateAuthCodeMenu(dto);
+                }
             } else if (sq != 0 && dto.getMenuId().equals("rghtCdCancel")) {		// 모든 권한을 취소하는 경우
                 for (int i = 0; i < totalDepth; i++) {
                     dto.setSq(sq + i);
@@ -386,7 +391,7 @@ public class AC01ServiceImpl implements AC01Service {
                 }
             }
 
-			/* lv3Id가 있는 경우 */
+            /* lv3Id가 있는 경우 */
             if (sq == 0 && (!dto.getLv3Id().equals("null"))) {		// 중복된 데이터가 없는 경우
                 dto.setSq(nextVal);
                 dto.setMenuId(dto.getLv3Id());
@@ -399,7 +404,7 @@ public class AC01ServiceImpl implements AC01Service {
                 dto.setSq(nextVal + 2);
                 count += raa95BMapper.insertUseMenu(dto);
             } else if (sq != 0 && dto.getMenuId().equals("lv3Menu")) {	// 중복된 데이터가 있는 경우
-                count += raa95BMapper.updateUseMenu(dto);
+                count += raa95BMapper.updateAuthCodeMenu(dto);
             } else if (sq != 0 && dto.getMenuId().equals("rghtCdCancel")) {		// 모든 권한을 취소하는 경우
                 for (int i = 0; i < totalDepth; i++) {
                     dto.setSq(sq + i);

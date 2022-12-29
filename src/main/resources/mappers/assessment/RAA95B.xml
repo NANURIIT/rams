@@ -42,13 +42,6 @@
 				, #{hndlDprtCd}
 				, #{hndlPEno}
 				)
-			<!-- ON DUPLICATE KEY
-		UPDATE RGHT_CD			= #{rghtCd}
-				, MDFY_RGHT_CCD 	= #{mdfyRghtCcd}
-				, HNDL_DY_TM 		= NOW()
-				, HNDL_DPRT_CD 		= #{hndlDprtCd}
-				, HNDL_P_ENO  		= #{hndlPEno}
-				, MENU_ID 			= #{menuId} -->
 	</insert>
 
 	<!-- RAA95B 조회 및 수정 가능 여부 삭제 -->
@@ -59,18 +52,7 @@
 			<!-- AND RGHT_CD	= #{rghtCd} -->
 	</delete>
 
-	<update id="updateUseMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
-		UPDATE RAA95B
-		<set>
-			   MDFY_RGHT_CCD 	= #{mdfyRghtCcd}
-			 , HNDL_DY_TM 		= NOW()
-			 , HNDL_DPRT_CD 	= #{hndlDprtCd}
-			 , HNDL_P_ENO 		= #{hndlPEno}
-		</set>
-		 WHERE SQ 				= #{sq}
-		   AND RGHT_CD 			= #{rghtCd}
-	</update>
-
+	<!-- SQ 값 구하기 -->
 	<select id="nextVal" resultType="int">
 		SELECT NEXTVAL(RAA95B_SQ)
 	</select>
@@ -112,11 +94,19 @@
 			<if test="mdfyRghtCcd != null and mdfyRghtCcd !=''">
 				mdfy_rght_ccd = #{mdfyRghtCcd},
 			</if>
+			<if test='hndlDprtCd != null and hndlDprtCd !=""'>
+				HNDL_DPRT_CD = #{hndlDprtCd},
+			</if>
 			hndl_dy_tm = now(),
 			hndl_p_eno = #{hndlPEno}
 		</set>
 		WHERE rght_cd = #{rghtCd}
+		<if test='menuId != null and menuId !=""'>
 		  AND menu_id = #{menuId}
+		</if>
+		<if test='sq != null and sq !=""'>
+		  AND MENU_ID = #{sq}
+		</if>
 	</update>
 
 	<delete id="deleteAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
@@ -125,4 +115,14 @@
 		 WHERE rght_cd = #{rghtCd}
 		   AND menu_id = #{menuId}
 	</delete>
+
+	<!-- 업데이트 시 SQ에 해당 권한코드 데이터가 있는지 유무 -->
+	<select id="isExist" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO" resultType="boolean">
+		SELECT IF(
+				  COUNT(*) = 0, 0, 1
+				 ) AS isExist
+		  FROM RAA95B
+		 WHERE RGHT_CD 	= #{rghtCd}
+		   AND SQ 		= #{sq}
+	</select>
 </mapper>
