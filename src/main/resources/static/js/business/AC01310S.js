@@ -54,6 +54,7 @@ function selectMenuRow(e) {
 	}
 
 	makeMenuByAuthList(idParam);
+	scrollAction();
 }
 
 /* 권한별 메뉴의 사용, 수정 여부 목록 출력 */
@@ -243,8 +244,7 @@ var saveUseMenu = function (i) {
 				type: 'success',
 				callback: function () {
 					$(document).on('click', '.confirm', function () {
-						var position = $('#AC01310S_makeMenuByAuthList').find('tr:eq(0)').position();
-						$('.grid_wrap').animate({scrollTop: position}, 300);
+						scrollAction();
 						makeMenuByAuthList(idParam);
 					});
 				}
@@ -284,4 +284,10 @@ function keyDownEnter() {
 			AC01310S_findClickbutton();     // TODO: 엔터 검색을 클릭버튼 누르는 펑션으로 실행..확인요망
 		}
 	});
+}
+
+/* 스크롤 액션 (테이블 reload 시 맨위로 스크롤 이동) */
+function scrollAction() {
+	var position = $('#AC01310S_makeMenuByAuthList').find('tr:eq(0)').position();
+	$('.grid_wrap').animate({ scrollTop: position });
 }
