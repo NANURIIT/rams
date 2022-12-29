@@ -272,28 +272,28 @@ public class AC01ServiceImpl implements AC01Service {
 
     @Override
     public boolean deleteAuthCode(List<String> rghtCd) {
-		int count = 0;
+        int count = 0;
         count += raa94BMapper.deleteAuthCode(rghtCd);
         return count > 0;
     }
-	
+
     @Override
     public boolean registerAuthCodeMenu(List<RAA95BVO.menuUpdateRequestVO> voList) {
         int count = 0;
         log.debug("voList : {}", voList);
         for (RAA95BVO.menuUpdateRequestVO vo : voList) {
-			RAA95BDTO dto = new RAA95BDTO();
+            RAA95BDTO dto = new RAA95BDTO();
             dto.setMenuId(vo.getMenuId());
             dto.setRghtCd(vo.getRghtCd());
             dto.setHndlPEno(facade.getDetails().getEno());
-			
+
             if (raa95BMapper.selectAuthCodeMenu(dto).isPresent()) { // 신규등록이 아닐때
                 if (vo.getIsModified() == false && vo.getIsUsed() == false) {   // 사용가능여부 수정가능여부 모두 체크 해제
                     count += raa95BMapper.deleteAuthCodeMenu(dto);
                 } else if (vo.getIsUsed() && vo.getIsModified()) {  // 사용가능여부, 수정가능여부 모두 체크
                     dto.setMdfyRghtCcd("2");
                     count += raa95BMapper.updateAuthCodeMenu(dto);
-                } else if(vo.getIsUsed() && vo.getIsModified() == false) {  // 사용가능여부만 체크
+                } else if (vo.getIsUsed() && vo.getIsModified() == false) {  // 사용가능여부만 체크
                     dto.setMdfyRghtCcd("1");
                     count += raa95BMapper.updateAuthCodeMenu(dto);
                 }
@@ -309,86 +309,106 @@ public class AC01ServiceImpl implements AC01Service {
         }
         return count > 0;
     }
-	
+
     //============ end AC01210S(권한별 메뉴관리) ============//
-	
-	//============ Start AC01310S( 메뉴별권한 관리 ) ============//	
-	/* 메뉴명 조회 */
-	@Override
-	public List<RAA93BVO.MenuListVO> getMenuList(String menuNm) {
-	
-		List<RAA93BVO.MenuListVO> menuList = raa93BMapper.selectMenuList(menuNm);
-	
-		String lvName = "";
-		int rowNum = 0;
-	
-		for (RAA93BVO.MenuListVO menu : menuList) {
-			lvName = "";
-			if (menu.getLv2Id() != null && menu.getLv2Id() != "") {
-				rowNum++;
-				lvName = menu.getLv2Id();
-			}
-			if (menu.getLv3Id() != null && menu.getLv3Id() != "") {
-				rowNum++;
-				lvName = menu.getLv3Id();
-			}
-			menu.setMenuId(lvName);
-			menu.setRowNum(rowNum);
-		}
-	
-		return menuList;
-	}
-	
-	/* 권한별 메뉴화면 사용권한 조회 */
-	@Override
-	public List<RAA94BDTO> getMenuByAuth() {
-		List<RAA94BDTO> menuAuthList = raa94BMapper.selectRghtCd();
-		for (RAA94BDTO menu : menuAuthList) {
-			String hndlPEno = Optional.ofNullable(menu.getHndlPEno()).orElse("");
-			menu.setHndlPEno(hndlPEno);
-		}
-	
-		return menuAuthList;
-	}
-	
-	/* RAA95B 수정 조회 가능 여부 조회 */
-	@Override
-	public List<RAA95BDTO> getAvailableMenu(Map<String, String> menuId) {
-		return raa95BMapper.selectAvailableMenu(menuId);
-	}
-	
-	/* RAA95B 조회 및 수정 여부 INSERT and DELETE */
-	@Override
-	public boolean registUseMenu(ArrayList<RAA95BVO.selectUseMenuVO> dtoList) {
-		int count = 0;
-		String hndlDprtCd = facade.getDetails().getDprtCd();
-		String hndlPEno = facade.getDetails().getEno();
-		int nextVal = raa95BMapper.nextVal();
-	
-		for (RAA95BVO.selectUseMenuVO dto : dtoList) {
-			dto.setHndlDprtCd(hndlDprtCd);
-			dto.setHndlPEno(hndlPEno);
-			int sq = dto.getSq();
-			int totalDepth = 3;		// 화면메뉴의 최대값
-	
-			if (sq == 0&& (!dto.getMenuId().equals("rghtCdCancel"))) {			// 중복된 데이터가 없는 경우
-				dto.setSq(nextVal);
-				count += raa95BMapper.insertUseMenu(dto);
-				dto.setMenuId(dto.getLv1Id());
-				dto.setSq(nextVal + 1);
-				dto.setMdfyRghtCcd("1");
-				count += raa95BMapper.insertUseMenu(dto);
-			} else if (sq != 0 && (!dto.getMenuId().equals("rghtCdCancel"))) {	// 중복된 데이터가 있는 경우
-				count += raa95BMapper.updateUseMenu(dto);
-			} else if (sq != 0 && dto.getMenuId().equals("rghtCdCancel")) {		// 모든 권한을 취소하는 경우
-				for (int i = 0; i < totalDepth; i++) {
-					dto.setSq(sq + i);
-					count += raa95BMapper.deleteUseMenu(dto);
-				}
-			}
-		}
-		raa95BMapper.nextVal();		// nextVal + 1을 채우기 위해
-		return count > 0;
-	}
-	//============ End AC01310S( 메뉴별권한 관리 ) ============//
+    //============ Start AC01310S( 메뉴별권한 관리 ) ============//	
+    /* 메뉴명 조회 */
+    @Override
+    public List<RAA93BVO.MenuListVO> getMenuList(String menuNm) {
+
+        List<RAA93BVO.MenuListVO> menuList = raa93BMapper.selectMenuList(menuNm);
+
+        String lvName = "";
+        int rowNum = 0;
+
+        for (RAA93BVO.MenuListVO menu : menuList) {
+            lvName = "";
+            if (menu.getLv2Id() != null && menu.getLv2Id() != "") {
+                rowNum++;
+                lvName = menu.getLv2Id();
+            }
+            if (menu.getLv3Id() != null && menu.getLv3Id() != "") {
+                rowNum++;
+                lvName = menu.getLv3Id();
+            }
+            menu.setMenuId(lvName);
+            menu.setRowNum(rowNum);
+        }
+
+        return menuList;
+    }
+
+    /* 권한별 메뉴화면 사용권한 조회 */
+    @Override
+    public List<RAA94BDTO> getMenuByAuth() {
+        List<RAA94BDTO> menuAuthList = raa94BMapper.selectRghtCd();
+        for (RAA94BDTO menu : menuAuthList) {
+            String hndlPEno = Optional.ofNullable(menu.getHndlPEno()).orElse("");
+            menu.setHndlPEno(hndlPEno);
+        }
+
+        return menuAuthList;
+    }
+
+    /* RAA95B 수정 조회 가능 여부 조회 */
+    @Override
+    public List<RAA95BDTO> getAvailableMenu(Map<String, String> menuId) {
+        return raa95BMapper.selectAvailableMenu(menuId);
+    }
+
+    /* RAA95B 조회 및 수정 여부 INSERT and DELETE */
+    @Override
+    public boolean registUseMenu(ArrayList<RAA95BVO.selectUseMenuVO> dtoList) {
+        int count = 0;
+        String hndlDprtCd = facade.getDetails().getDprtCd();
+        String hndlPEno = facade.getDetails().getEno();
+        int nextVal = raa95BMapper.nextVal();
+
+        for (RAA95BVO.selectUseMenuVO dto : dtoList) {
+            dto.setHndlDprtCd(hndlDprtCd);
+            dto.setHndlPEno(hndlPEno);
+            int sq = dto.getSq();
+            int totalDepth = 3;		// 화면메뉴의 최대값
+
+            if ((sq == 0) && (!dto.getMenuId().equals("rghtCdCancel")) && (dto.getLv3Id().equals("null"))) {			// 중복된 데이터가 없는 경우
+                dto.setSq(nextVal);
+                count += raa95BMapper.insertUseMenu(dto);
+                dto.setMenuId(dto.getLv1Id());
+                dto.setSq(nextVal + 1);
+                dto.setMdfyRghtCcd("1");		// 상위메뉴의 경우 조회 권한만
+                count += raa95BMapper.insertUseMenu(dto);
+            } else if (sq != 0 && (!dto.getMenuId().equals("rghtCdCancel"))) {	// 중복된 데이터가 있는 경우
+                count += raa95BMapper.updateUseMenu(dto);
+            } else if (sq != 0 && dto.getMenuId().equals("rghtCdCancel")) {		// 모든 권한을 취소하는 경우
+                for (int i = 0; i < totalDepth; i++) {
+                    dto.setSq(sq + i);
+                    count += raa95BMapper.deleteUseMenu(dto);
+                }
+            }
+
+			/* lv3Id가 있는 경우 */
+            if (sq == 0 && (!dto.getLv3Id().equals("null"))) {		// 중복된 데이터가 없는 경우
+                dto.setSq(nextVal);
+                dto.setMenuId(dto.getLv3Id());
+                count += raa95BMapper.insertUseMenu(dto);
+                dto.setMdfyRghtCcd("1");		// 상위메뉴의 경우 조회 권한만
+                dto.setMenuId(dto.getLv2Id());
+                dto.setSq(nextVal + 1);
+                count += raa95BMapper.insertUseMenu(dto);
+                dto.setMenuId(dto.getLv1Id());
+                dto.setSq(nextVal + 2);
+                count += raa95BMapper.insertUseMenu(dto);
+            } else if (sq != 0 && dto.getMenuId().equals("lv3Menu")) {	// 중복된 데이터가 있는 경우
+                count += raa95BMapper.updateUseMenu(dto);
+            } else if (sq != 0 && dto.getMenuId().equals("rghtCdCancel")) {		// 모든 권한을 취소하는 경우
+                for (int i = 0; i < totalDepth; i++) {
+                    dto.setSq(sq + i);
+                    count += raa95BMapper.deleteUseMenu(dto);
+                }
+            }
+        }
+        raa95BMapper.nextVal();		// nextVal + 1을 채우기 위해
+        return count > 0;
+    }
+    //============ End AC01310S( 메뉴별권한 관리 ) ============//
 }

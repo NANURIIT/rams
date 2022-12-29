@@ -24,9 +24,6 @@
 
 	<!-- RAA95B 조회 및 수정 가능 여부 저장 -->
 	<insert id='insertUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
-		<!-- <selectKey keyProperty="nextVal" resultType="int" order="BEFORE">
-		SELECT NEXTVAL(RAA95B_SQ)
-		</selectKey> -->
 		INSERT INTO RAA95B (
 				RGHT_CD
 				, SQ
@@ -65,11 +62,13 @@
 	<update id="updateUseMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
 		UPDATE RAA95B
 		<set>
-			MDFY_RGHT_CCD = #{mdfyRghtCcd}
-			, HNDL_DY_TM = #{hndlDyTm}
-			, HNDL_DPRT_CD = #{hndlDprtCd}
-			, HNDL_P_ENO = #{hndlPEno}
+			   MDFY_RGHT_CCD 	= #{mdfyRghtCcd}
+			 , HNDL_DY_TM 		= NOW()
+			 , HNDL_DPRT_CD 	= #{hndlDprtCd}
+			 , HNDL_P_ENO 		= #{hndlPEno}
 		</set>
+		 WHERE SQ 				= #{sq}
+		   AND RGHT_CD 			= #{rghtCd}
 	</update>
 
 	<select id="nextVal" resultType="int">
