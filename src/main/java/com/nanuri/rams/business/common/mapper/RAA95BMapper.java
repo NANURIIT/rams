@@ -2,6 +2,7 @@ package com.nanuri.rams.business.common.mapper;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,4 +16,9 @@ public interface RAA95BMapper {
 	public int deleteUseMenu(RAA95BDTO dto);										// RAA95B 수정 조회 가능 여부 삭제
 	public int nextVal();
 	public int updateUseMenu(RAA95BDTO dto);
+
+	public Optional<RAA95BDTO> selectAuthCodeMenu(RAA95BDTO dto);
+	public int updateAuthCodeMenu(RAA95BDTO dto);
+	public int insertAuthCodeMenu(RAA95BDTO dto);
+	public int deleteAuthCodeMenu(RAA95BDTO dto);
 }

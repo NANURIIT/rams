@@ -3,6 +3,22 @@ $(function () {
 
     clickDetailButton();
     doubleClickColumn();
+
+    $(document).on('click', '.can_use_yn', function() {
+        let useCheckBox = $(this);
+        let modifyCheckBox = $(this).parent().parent().find("td:eq(5)").find(".can_modify_yn");
+        if(!useCheckBox.prop('checked') && modifyCheckBox.prop('checked')) {
+            modifyCheckBox.prop('checked', false);
+        }
+    });
+
+    $(document).on('click', '.can_modify_yn', function() {
+        let useChecked = $(this).parent().parent().find("td:eq(4)").find(".can_use_yn");
+        let modifyChecked = $(this);
+        if(!useChecked.prop('checked') && modifyChecked.prop('checked')) {
+            useChecked.prop('checked', true);
+        }
+    });
 });
 
 function getAuthCode(rghtCdNm) {
@@ -121,23 +137,19 @@ function getAuthCodeMenu(rghtCd) {
                     html += '<tr>';
                     html += '   <td>' + value.srtNo + '</td>';
                     html += '   <td>' + value.menuId + '</td>';
-                    if (isEmpty(value.rghtCd)) {
-                        html += '   <td> - </td>';
-                    } else {
-                        html += '   <td>' + value.rghtCd + '</td>';
-                    }
+                    html += '   <td>'+ rghtCd +'</td>';
                     html += '   <td>' + value.menuLv + '</td>';
-                    if (value.dltF === 'N') {
-                        html += '   <td><input style="width: 15px;" class="can_use_yn" type="checkbox" checked><input type="hidden" class="use_hidden_yn" value="y"></td>';
-                    } else {
+                    if (isEmpty(value.mdfyRghtCcd)) {
                         html += '   <td><input style="width: 15px;" class="can_use_yn" type="checkbox"><input type="hidden" class="use_hidden_yn" value="n"></td>';
+                        html += '   <td><input style="width: 15px;" class="can_modify_yn" type="checkbox"><input type="hidden" class="modify_hidden_yn" value="n"></td>';
+                    } else if(value.mdfyRghtCcd === '1') {
+                        html += '   <td><input style="width: 15px;" class="can_use_yn" type="checkbox" checked><input type="hidden" class="use_hidden_yn" value="y"></td>';
+                        html += '   <td><input style="width: 15px;" class="can_modify_yn" type="checkbox"><input type="hidden" class="modify_hidden_yn" value="n"></td>';
+                    } else {
+                        html += '   <td><input style="width: 15px;" class="can_use_yn" type="checkbox" checked><input type="hidden" class="use_hidden_yn" value="y"></td>';
+                        html += '   <td><input style="width: 15px;" class="can_modify_yn" type="checkbox" checked><input type="hidden" class="modify_hidden_yn" value="y"></td>';
                     }
 
-                    if (value.mdfyRghtCcd === '2') {
-                        html += '   <td><input style="width: 15px;" class="can_modify_yn" type="checkbox" checked><input type="hidden" class="modify_hidden_yn" value="y"></td>';
-                    } else {
-                        html += '   <td><input style="width: 15px;" class="can_modify_yn" type="checkbox"><input type="hidden" class="modify_hidden_yn" value="n"></td>';
-                    }
                     html += '   <td>' + value.hndlDyTm.substring(0, 10) + '</td>';
                     if (value.hndlDyTm === '-') {
                         html += '   <td> - </td>';
@@ -325,20 +337,23 @@ function clickSaveMenuButton() {
         let menuModifyYnCheck = $(tr[i]).find("td:eq(5)").find(".modify_hidden_yn").val();
 
         if (!menuUseYnCheck || (menuUseYn && menuUseYnCheck === 'n') || (!menuUseYn && menuUseYnCheck === 'y')) {
-            authCodeMenu.dltF = menuUseYn ? 'N' : 'Y';
+            authCodeMenu.isUsed = menuUseYn;
         }
 
         if (!menuModifyYnCheck || (menuModifyYn && menuModifyYnCheck === 'n') || (!menuModifyYn && menuModifyYnCheck === 'y')) {
-            authCodeMenu.mdfyRghtCcd = menuModifyYn ? '2' : '1';
+            authCodeMenu.isUsed = menuUseYn;
+            authCodeMenu.isModified = menuModifyYn;
         }
 
         if (!(Object.keys(authCodeMenu).length === 0)) {
             authCodeMenu.menuId = $(tr[i]).find("td:eq(1)").text();
+            authCodeMenu.rghtCd = authCode;
             authCodeMenuList.push(authCodeMenu);
         }
     }
 
     if (authCodeMenuList.length > 0) {
+        console.log(authCodeMenuList);
         saveMenu(authCodeMenuList, authCode);
     }
 }
@@ -352,7 +367,16 @@ function saveMenu(authCodeMenuList, authCode) {
         url: '/registerAuthCodeMenu',
         data: authCodeMenuList,
         success: function () {
-            getAuthCodeMenu(authCode);
+            openPopup({
+                title : '성공', 
+                text : '저장이 완료되었습니다.', 
+                type : 'success', 
+                callback : function() {
+                    $(document).on('click', '.confirm', function() {
+                        getAuthCodeMenu(authCode);
+                    });
+                }
+            });
         },
         fail: function (response) {
             let message = response.responseJSON.message;
