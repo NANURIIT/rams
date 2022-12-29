@@ -2,75 +2,80 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.RAA95BMapper">
 
-<!-- RAA95B 조회 및 수정 가능 여부 조회 -->
-<select id="selectAvailableMenu" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO" parameterType='java.util.Map'>
-	/* 권한별 메뉴화면 사용권한 조회 */
-	SELECT RGHT_CD
-		 , SQ
-		 , MENU_ID
-		 , MDFY_RGHT_CCD
-		 , HNDL_DY_TM
-		 , HNDL_DPRT_CD
-		 , HNDL_P_ENO
-	FROM RAA95B
-	WHERE 1=1
-		<if test='lv3Id == "null"'>
-		AND MENU_ID = #{lv2Id}
-		</if>
-		<if test='lv3Id != "null"'>
-		AND MENU_ID = #{lv3Id}
-		</if>
-</select>
-
-<!-- RAA95B 조회 및 수정 가능 여부 저장 -->
-<insert id='insertUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
-	<!-- <selectKey keyProperty="nextVal" resultType="int" order="BEFORE">
-       SELECT NEXTVAL(RAA95B_SQ)
-    </selectKey> -->
-	   INSERT INTO RAA95B (
-			  RGHT_CD
+	<!-- RAA95B 조회 및 수정 가능 여부 조회 -->
+	<select id="selectAvailableMenu" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO" parameterType='java.util.Map'>
+		/* 권한별 메뉴화면 사용권한 조회 */
+		SELECT RGHT_CD
 			, SQ
 			, MENU_ID
 			, MDFY_RGHT_CCD
 			, HNDL_DY_TM
 			, HNDL_DPRT_CD
 			, HNDL_P_ENO
-			)
-	   VALUES (
-			  #{rghtCd}
-			, #{sq}
-			, #{menuId}
-			, #{mdfyRghtCcd}
-			, NOW()
-			, #{hndlDprtCd}
-			, #{hndlPEno}
-			)
-		   <!-- ON DUPLICATE KEY
-	   UPDATE RGHT_CD			= #{rghtCd}
-	   		, MDFY_RGHT_CCD 	= #{mdfyRghtCcd}
-			, HNDL_DY_TM 		= NOW()
-			, HNDL_DPRT_CD 		= #{hndlDprtCd}
-			, HNDL_P_ENO  		= #{hndlPEno}
-			, MENU_ID 			= #{menuId} -->
-</insert>
-
-<!-- RAA95B 조회 및 수정 가능 여부 삭제 -->
-<delete id='deleteUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
-	  DELETE
 		FROM RAA95B
-	   WHERE SQ			= #{sq}
-		 <!-- AND RGHT_CD	= #{rghtCd} -->
-</delete>
+		WHERE 1=1
+			<if test='lv3Id == "null"'>
+			AND MENU_ID = #{lv2Id}
+			</if>
+			<if test='lv3Id != "null"'>
+			AND MENU_ID = #{lv3Id}
+			</if>
+	</select>
 
-<update id="updateUseMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
-	UPDATE RAA95B
-	<set>
-		 MDFY_RGHT_CCD = #{mdfyRghtCcd}
-		 , HNDL_DY_TM = #{hndlDyTm}
-		 , HNDL_DPRT_CD = #{hndlDprtCd}
-		 , HNDL_P_ENO = #{hndlPEno}
-	</set>
-</update>
+	<!-- RAA95B 조회 및 수정 가능 여부 저장 -->
+	<insert id='insertUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
+		<!-- <selectKey keyProperty="nextVal" resultType="int" order="BEFORE">
+		SELECT NEXTVAL(RAA95B_SQ)
+		</selectKey> -->
+		INSERT INTO RAA95B (
+				RGHT_CD
+				, SQ
+				, MENU_ID
+				, MDFY_RGHT_CCD
+				, HNDL_DY_TM
+				, HNDL_DPRT_CD
+				, HNDL_P_ENO
+				)
+		VALUES (
+				#{rghtCd}
+				, #{sq}
+				, #{menuId}
+				, #{mdfyRghtCcd}
+				, NOW()
+				, #{hndlDprtCd}
+				, #{hndlPEno}
+				)
+			<!-- ON DUPLICATE KEY
+		UPDATE RGHT_CD			= #{rghtCd}
+				, MDFY_RGHT_CCD 	= #{mdfyRghtCcd}
+				, HNDL_DY_TM 		= NOW()
+				, HNDL_DPRT_CD 		= #{hndlDprtCd}
+				, HNDL_P_ENO  		= #{hndlPEno}
+				, MENU_ID 			= #{menuId} -->
+	</insert>
+
+	<!-- RAA95B 조회 및 수정 가능 여부 삭제 -->
+	<delete id='deleteUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
+		DELETE
+			FROM RAA95B
+		WHERE SQ			= #{sq}
+			<!-- AND RGHT_CD	= #{rghtCd} -->
+	</delete>
+
+	<update id="updateUseMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+		UPDATE RAA95B
+		<set>
+			MDFY_RGHT_CCD = #{mdfyRghtCcd}
+			, HNDL_DY_TM = #{hndlDyTm}
+			, HNDL_DPRT_CD = #{hndlDprtCd}
+			, HNDL_P_ENO = #{hndlPEno}
+		</set>
+	</update>
+
+	<select id="nextVal" resultType="int">
+		SELECT NEXTVAL(RAA95B_SQ)
+	</select>
+
 	<select id="selectAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO">
 		SELECT *
 		  FROM RAA95B
