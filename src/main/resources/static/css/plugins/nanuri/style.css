@@ -1,9 +1,3 @@
-/*
- *
- *   INSPINIA - Responsive Admin Theme
- *   version 2.9.4
- *
-*/
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,300,500,700");
 @font-face {
@@ -9845,8 +9839,12 @@ body.md-skin {
   }
 }
 
+/* single table */
+.tableFixHeader          { overflow: auto; height: 560px; }
+.tableFixHeader thead th { position: sticky; top: 0; z-index: 1; }
 
-.tableFixHead          { overflow: auto; height: 300px; }
+/* double table */
+.tableFixHead          { overflow: auto; height: 200px; }
 .tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
 
 /* Just common table stuff. Really. */
