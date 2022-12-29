@@ -31,8 +31,8 @@ public class RAA02BDTO {
 	private String invstCrncyCd;								// 투자통화코드
 	private String crncyAmt;									// 통화금액
 	private String invstPrdDyC;									// 투자기간일수
-	private String pyExptDt;									// 지급예정일자
-	private String ccExptDt;									// 해지예정일자
+	private String wrtExptDt;									// 지급예정일자
+	private String mtrtExptDt;									// 해지예정일자
 	private String tlErnAmt;									// 총수익금액
 	private String wrtErnAmt;									// 기표수익금액
 	private String rcvblErnAmt;									// 미수수익금액
@@ -101,7 +101,7 @@ public class RAA02BDTO {
 	private String insGrdInptExptF;								// 내부등급입력예정여부
 	private String cfmtEntpNm;									// 준거기업명
 	private String advtcnqGdsF;									// 고난도상품여부
-	private String jnGlfct;										// 가입자격
+	private String jnQlfct;										// 가입자격
 	private String mnJnAmt;										// 최소가입금액
 	private String wmOtcmRcpsR;									// WM성과보수
 	private String acMrtgRt;									// 계좌담보비율

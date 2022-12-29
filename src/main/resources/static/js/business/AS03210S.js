@@ -2,6 +2,7 @@ $(document).ready(function() {
 
 	setDatePicker();
 
+	loadRaDealCcd();
 	loadTabContents();
 	
 	checkErmAmt();
@@ -87,6 +88,27 @@ function getDocInfo(ibDealNo) {
 				html += '</tr>';
 			}
 			$('#AS03210S_docInfo').html(html);
+		}
+	});
+}
+
+// RADEAL 구분코드 
+function loadRaDealCcd() {
+	$.ajax({
+		type: "GET",
+		url: "/getRaDealCcd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_raDealCcd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_raDealCcd').html(html);
 		}
 	});
 }
@@ -626,6 +648,7 @@ function tab1save() {
 	var riskInspctCcd = $('#AS03210S_riskInspctCcd').val();							// 리스크심사구분
 	var lstCCaseCcd = $('#AS03210S_lstCCaseCcd').val();								// 부수안건
 	var inspctDprtCcd = $('#AS03210S_inspctDprtCcd').val();							// 심사부서구분 
+	var raDealCcd = $('#AS03210S_raDealCcd').val();									// RADEAL구분코드
 	var invstGdsLdvdCd = $('#AS03210S_invstGdsLdvdCd').val();						// 투자상품대분류
 	var invstGdsMdvdCd = $('#AS03210S_invstGdsMdvdCd').val();						// 투자상품중분류
 	var invstGdsSdvdCd = $('#AS03210S_invstGdsSdvdCd').val();						// 투자상품소분류
@@ -668,6 +691,7 @@ function tab1save() {
 		"riskInspctCcd": riskInspctCcd
 		, "lstCCaseCcd": lstCCaseCcd
 		, "inspctDprtCcd": inspctDprtCcd
+		, "raDealCcd": raDealCcd
 		, "invstGdsLdvdCd": invstGdsLdvdCd
 		, "invstGdsMdvdCd": invstGdsMdvdCd
 		, "invstGdsSdvdCd": invstGdsSdvdCd
@@ -714,7 +738,14 @@ function tab1save() {
 		data: paramData,
 		dataType: "json",
 		success: function() {
-			swal("success!");
+			swal({
+				title: "success!"
+				
+			},function(isConfirm){
+				if(isConfirm){
+					location.reload();
+				}	
+			});
 		},
 		error: function(errorCd) {
 			swal("deal정보를 생성하는데 실패하였습니다. sql 에러 코드를 확인해주세요.\n error code:" + errorCd);
