@@ -5,41 +5,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.nanuri.rams.business.common.dto.*;
+import com.nanuri.rams.business.common.vo.RAA90BVO;
 import org.springframework.stereotype.Service;
 
-import com.nanuri.rams.business.common.dto.RAA92BDTO;
-import com.nanuri.rams.business.common.dto.RAA94BDTO;
-import com.nanuri.rams.business.common.dto.RAA95BDTO;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
 import com.nanuri.rams.business.common.vo.RAA95BVO;
-import com.nanuri.rams.business.itmanager.dto.CodeInfoDeleteRequestDto;
-import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
-import com.nanuri.rams.business.itmanager.dto.CodeInfoSaveRequestDto;
-import com.nanuri.rams.business.itmanager.dto.CommonCodeInfoDto;
-import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoDto;
-import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto;
 
 @Service
 public interface AC01Service {
 	
 	//============ start AC01010S(공통코드관리) ============//
 
-	public List<GroupCodeInfoDto> getGroupCodeInfoList(String cmnsCdGrp) throws ParseException;			// 그룹코드정보 리스트 가져오기
+	public List<RAA90BDTO> getGroupCodeInfoList(String cmnsCdGrp) throws ParseException;			// 그룹코드정보 리스트 가져오기
 
-	public List<CodeInfoDto> getCodeInfoList(String cmnsCdGrp) throws ParseException;
+	public List<RAA91BDTO> getCodeInfoList(String cmnsCdGrp) throws ParseException;
 
 	public boolean deleteGroupCodeInfo(List<String> cmnsCdGrp);
 
-	public List<CodeInfoDto> getCodeInfoList(GroupCodeInfoDto groupCodeInfoDto); 						// 코드정보 가져오기
+	public List<RAA91BDTO> getCodeInfoList(RAA90BDTO groupCodeInfoDto); 						// 코드정보 가져오기
 
-	public boolean registGroupCodeInfo(List<GroupCodeInfoSaveRequestDto> requestDtos); 					// 그룹코드정보 등록하기
+	public boolean registGroupCodeInfo(List<RAA90BVO.GroupCodeInfoSaveRequestVO> requestDtos); 					// 그룹코드정보 등록하기
 
-	public boolean registCodeInfo(List<CodeInfoSaveRequestDto> requestDtos); 							// 코드정보 등록하기
+	public boolean registCodeInfo(List<RAA90BVO.CodeInfoSaveRequestVO> vo); 							// 코드정보 등록하기
 
-	public boolean deleteCodeInfo(CodeInfoDeleteRequestDto requestDto);
+	public boolean deleteCodeInfo(RAA90BVO.CodeInfoDeleteRequestVO requestDto);
 
-	public List<CommonCodeInfoDto> getCommonCodeName(); 												// 조회할 코드구분(코드이름) 가져오기
+	public List<RAA90BVO.CommonCodeInfoVO> getCommonCodeName(); 												// 조회할 코드구분(코드이름) 가져오기
 	
 	//============ end AC01010S(공통코드관리) ============//
 	

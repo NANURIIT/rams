@@ -12,12 +12,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.nanuri.rams.business.common.dto.*;
+import com.nanuri.rams.business.common.vo.RAA90BVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nanuri.rams.business.common.dto.RAA92BDTO;
-import com.nanuri.rams.business.common.dto.RAA94BDTO;
-import com.nanuri.rams.business.common.dto.RAA95BDTO;
 import com.nanuri.rams.business.common.mapper.RAA90BMapper;
 import com.nanuri.rams.business.common.mapper.RAA92BMapper;
 import com.nanuri.rams.business.common.mapper.RAA93BMapper;
@@ -26,12 +25,6 @@ import com.nanuri.rams.business.common.mapper.RAA95BMapper;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
 import com.nanuri.rams.business.common.vo.RAA95BVO;
-import com.nanuri.rams.business.itmanager.dto.CodeInfoDeleteRequestDto;
-import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
-import com.nanuri.rams.business.itmanager.dto.CodeInfoSaveRequestDto;
-import com.nanuri.rams.business.itmanager.dto.CommonCodeInfoDto;
-import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoDto;
-import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto;
 import com.nanuri.rams.com.security.AuthenticationFacade;
 
 import lombok.RequiredArgsConstructor;
@@ -52,27 +45,27 @@ public class AC01ServiceImpl implements AC01Service {
 
     //============ start AC01010S(공통코드관리) ============//
     @Override
-    public List<CodeInfoDto> getCodeInfoList(GroupCodeInfoDto groupCodeInfoDto) {
+    public List<RAA91BDTO> getCodeInfoList(RAA90BDTO dto) {
         return null;
     }
 
     @Override
     // TODO 코드구분 값을 파라미터로 넣어야 하나 데이터가 없어 임시로 지정
-    public List<GroupCodeInfoDto> getGroupCodeInfoList(String cmnsCdGrp) throws ParseException {
+    public List<RAA90BDTO> getGroupCodeInfoList(String cmnsCdGrp) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
-        List<GroupCodeInfoDto> groupCodeInfoList = raa90BMapper.getGroupCodeInfoList(cmnsCdGrp);
-        for (GroupCodeInfoDto groupCodeInfo : groupCodeInfoList) {
-            Date formatDate = dateFormat.parse(groupCodeInfo.getRgstDt());
-            groupCodeInfo.setRgstDt(newFormat.format(formatDate));
+        List<RAA90BDTO> dtoList = raa90BMapper.getGroupCodeInfoList(cmnsCdGrp);
+        for (RAA90BDTO dto : dtoList) {
+            Date formatDate = dateFormat.parse(dto.getRgstDt());
+            dto.setRgstDt(newFormat.format(formatDate));
         }
-        return groupCodeInfoList;
+        return dtoList;
     }
 
     @Override
-    public boolean registGroupCodeInfo(List<GroupCodeInfoSaveRequestDto> requestDtos) {
+    public boolean registGroupCodeInfo(List<RAA90BVO.GroupCodeInfoSaveRequestVO> requestDtos) {
         int count = 0;
-        for (GroupCodeInfoSaveRequestDto requestDto : requestDtos) {
+        for (RAA90BVO.GroupCodeInfoSaveRequestVO requestDto : requestDtos) {
             if (raa90BMapper.getGroupCodeInfo(requestDto.getCmnsCdGrp()).isPresent()) {
                 throw new IllegalArgumentException("해당 그룹코드가 존재합니다. " + requestDto.getCmnsCdGrp());
             }
@@ -93,57 +86,57 @@ public class AC01ServiceImpl implements AC01Service {
     }
 
     @Override
-    public List<CodeInfoDto> getCodeInfoList(String cmnsCdGrp) throws ParseException {
+    public List<RAA91BDTO> getCodeInfoList(String cmnsCdGrp) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd");
-        List<CodeInfoDto> codeInfoList = raa90BMapper.getCodeInfoList(cmnsCdGrp);
-        for (CodeInfoDto codeInfo : codeInfoList) {
-            Date formatDate = dateFormat.parse(codeInfo.getRgstDt());
-            codeInfo.setRgstDt(newFormat.format(formatDate));
-            if (codeInfo.getRgstPEno() == null) {
-                codeInfo.setRgstPEno("-");
+        List<RAA91BDTO> dtoList = raa90BMapper.getCodeInfoList(cmnsCdGrp);
+        for (RAA91BDTO dto : dtoList) {
+            Date formatDate = dateFormat.parse(dto.getRgstDt());
+            dto.setRgstDt(newFormat.format(formatDate));
+            if (dto.getRgstPEno() == null) {
+                dto.setRgstPEno("-");
             }
 
-            if (codeInfo.getHndlPEno() == null) {
-                codeInfo.setHndlPEno("-");
+            if (dto.getHndlPEno() == null) {
+                dto.setHndlPEno("-");
             }
         }
 
-        return codeInfoList;
+        return dtoList;
     }
 
     @Override
-    public boolean registCodeInfo(List<CodeInfoSaveRequestDto> requestDtos) {
+    public boolean registCodeInfo(List<RAA90BVO.CodeInfoSaveRequestVO> vo) {
         int count = 0;
-        for (CodeInfoSaveRequestDto requestDto : requestDtos) {
-            if (raa90BMapper.getCodeInfo(requestDto.getCmnsCdGrp(), requestDto.getCdVlId()).isPresent()) {
-                throw new IllegalArgumentException("해당 코드가 존재합니다." + requestDto.getCmnsCdGrp() + " : " + requestDto.getCdVlId());
+        for (RAA90BVO.CodeInfoSaveRequestVO requestVO : vo) {
+            if (raa90BMapper.getCodeInfo(requestVO.getCmnsCdGrp(), requestVO.getCdVlId()).isPresent()) {
+                throw new IllegalArgumentException("해당 코드가 존재합니다." + requestVO.getCmnsCdGrp() + " : " + requestVO.getCdVlId());
             }
 
-            if (raa90BMapper.getCodeInfo(requestDto.getCmnsCdGrp(), requestDto.getOldCdVlId()).isEmpty()) {
+            if (raa90BMapper.getCodeInfo(requestVO.getCmnsCdGrp(), requestVO.getOldCdVlId()).isEmpty()) {
                 // 신규등록
-                Integer seq = raa90BMapper.getMaxSeq(requestDto.getCmnsCdGrp()) == null
-                        ? 1 : raa90BMapper.getMaxSeq(requestDto.getCmnsCdGrp()) + 1;
-                requestDto.setCdSq(seq);
-                requestDto.setRgstPEno(facade.getDetails().getEno());
-                count += raa90BMapper.insertCodeInfo(requestDto);
+                Integer seq = raa90BMapper.getMaxSeq(requestVO.getCmnsCdGrp()) == null
+                        ? 1 : raa90BMapper.getMaxSeq(requestVO.getCmnsCdGrp()) + 1;
+                requestVO.setCdSq(seq);
+                requestVO.setRgstPEno(facade.getDetails().getEno());
+                count += raa90BMapper.insertCodeInfo(requestVO);
             } else {
                 // 수정
-                requestDto.setHndlPEno(facade.getDetails().getEno());
-                count += raa90BMapper.registCodeInfo(requestDto);
+                requestVO.setHndlPEno(facade.getDetails().getEno());
+                count += raa90BMapper.registCodeInfo(requestVO);
             }
         }
         return count > 0;
     }
 
     @Override
-    public boolean deleteCodeInfo(CodeInfoDeleteRequestDto requestDto) {
+    public boolean deleteCodeInfo(RAA90BVO.CodeInfoDeleteRequestVO requestDto) {
         return raa90BMapper.deleteCodeInfo(requestDto.getCmnsCdGrp(), requestDto.getCdVlIds()) > 0;
     }
 
     // 공통코드 조회하는 페이지가 로딩되면서 데이터베이스에 있는 데이터 중 해당 값을 조회목록에 넣어준다.
     @Override
-    public List<CommonCodeInfoDto> getCommonCodeName() {
+    public List<RAA90BVO.CommonCodeInfoVO> getCommonCodeName() {
         return raa90BMapper.getCommonCodeName();
     }
 
