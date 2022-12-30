@@ -3,7 +3,7 @@
 <mapper namespace="com.nanuri.rams.business.common.mapper.RAA90BMapper">
 
     <!--  select박스에 담을 공통코드 호출  -->
-    <select id="getCommonCodeName" resultType="com.nanuri.rams.business.itmanager.dto.CommonCodeInfoDto">
+    <select id="getCommonCodeName" resultType="com.nanuri.rams.business.common.vo.RAA90BVO$CommonCodeInfoVO">
         SELECT DISTINCT (cmns_cd_nm),
                         cmns_cd_grp,
                         cmns_cd_grp_expl
@@ -12,7 +12,7 @@
     </select>
 
     <!--  그룹코드 호출  -->
-	<select id="getGroupCodeInfoList" resultType="com.nanuri.rams.business.itmanager.dto.GroupCodeInfoDto" parameterType="String">
+	<select id="getGroupCodeInfoList" resultType="com.nanuri.rams.business.common.dto.RAA90BDTO" parameterType="String">
         SELECT cmns_cd_grp					<!-- 공통코드그룹 -->
              , cmns_cd_nm					<!-- 공통코드명 -->
              , cmns_cd_clsf					<!-- 공통코드구분 -->
@@ -29,7 +29,7 @@
 		</if>
 	</select>
 
-    <select id="getGroupCodeInfo" parameterType="String" resultType="com.nanuri.rams.business.itmanager.dto.GroupCodeInfoDto">
+    <select id="getGroupCodeInfo" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA90BDTO">
         SELECT cmns_cd_grp					<!-- 공통코드그룹 -->
              , cmns_cd_nm					<!-- 공통코드명 -->
              , cmns_cd_clsf					<!-- 공통코드구분 -->
@@ -53,7 +53,7 @@
     </update>
 
     <!--  상세코드 호출  -->
-    <select id="getCodeInfoList" resultType="com.nanuri.rams.business.itmanager.dto.CodeInfoDto" parameterType="String">
+    <select id="getCodeInfoList" resultType="com.nanuri.rams.business.common.dto.RAA91BDTO" parameterType="String">
         SELECT cd_vl_id
              , cd_vl_nm
              , rslt_cd_vl
@@ -70,7 +70,7 @@
         FROM RAA90B
     </select>
 
-    <update id="registGroupCodeInfo" parameterType="com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto">
+    <update id="registGroupCodeInfo" parameterType="com.nanuri.rams.business.common.vo.RAA90BVO$GroupCodeInfoSaveRequestVO">
         UPDATE RAA90B
         <set>
             <if test="cmnsCdGrp != null and cmnsCdGrp !=''">
@@ -93,7 +93,7 @@
         WHERE cmns_cd_grp = #{oldCmnsCdGrp}
     </update>
 
-    <insert id="insertGroupCodeInfo" parameterType="com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto">
+    <insert id="insertGroupCodeInfo" parameterType="com.nanuri.rams.business.common.vo.RAA90BVO$GroupCodeInfoSaveRequestVO">
         INSERT INTO RAA90B (
             cmns_cd_grp,
             cmns_cd_nm,
@@ -111,7 +111,7 @@
         )
     </insert>
 
-    <update id="registCodeInfo" parameterType="com.nanuri.rams.business.itmanager.dto.CodeInfoSaveRequestDto">
+    <update id="registCodeInfo" parameterType="com.nanuri.rams.business.common.vo.RAA90BVO$CodeInfoSaveRequestVO">
         UPDATE RAA91B
         <set>
             <if test="cdVlId != null and cdVlId !=''">
@@ -130,7 +130,7 @@
           AND cd_vl_id = #{oldCdVlId}
     </update>
 
-    <insert id="insertCodeInfo" parameterType="com.nanuri.rams.business.itmanager.dto.CodeInfoSaveRequestDto">
+    <insert id="insertCodeInfo" parameterType="com.nanuri.rams.business.common.vo.RAA90BVO$CodeInfoSaveRequestVO">
         INSERT INTO RAA91B (
             cmns_cd_grp,
             cd_vl_id,
@@ -156,7 +156,7 @@
          WHERE cmns_cd_grp = #{cmnsCdGrp}
     </select>
 
-    <select id="getCodeInfo" resultType="com.nanuri.rams.business.itmanager.dto.CodeInfoDto">
+    <select id="getCodeInfo" resultType="com.nanuri.rams.business.common.dto.RAA91BDTO">
         SELECT cd_vl_id
              , cd_vl_nm
              , rslt_cd_vl
