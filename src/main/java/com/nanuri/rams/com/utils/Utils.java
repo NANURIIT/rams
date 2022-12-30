@@ -7,15 +7,20 @@ import java.util.Date;
 public class Utils {
 
 	/**
-	 * 날짜형식 변환 : String - String
-	 * @param   : input Date
-	 * @format1 : 변환전 포맷 
-	 * @format2 : 변환후 포맷
-	 * @formatExample : "yyyyMMdd", "yyyy-MM-dd", "yyyy/MM/dd"
+	 * <pre>
+	 * 날짜형식 변환.
+	 * isAllWhitespace 로 null check 도 한다.
+	 * </pre>
+	 * 
+	 * @param Stinrg paramDate : inputed Date
+	 * @param String dateFormat : 변환후 포맷 (Example : "yyyyMMdd", "yyyy-MM-dd", "yyyy/MM/dd")
+	 * 
+	 * @return formattedDate
+	 * @exception return paramDate(origin)
 	 */
-	public static String changeDateFormat(String param, String format1, String format2) {
+	public static String changeDateFormat(String paramDate, String dateFormat) {
 
-		if (!StringUtil.isAllWhitespace(param)  && !StringUtil.isAllWhitespace(format1) && !StringUtil.isAllWhitespace(format2)) {
+		if (!StringUtil.isAllWhitespace(paramDate)  && !StringUtil.isAllWhitespace(dateFormat)) {
 
 			SimpleDateFormat df1 = new SimpleDateFormat("yyyyMMdd");
 			SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -24,43 +29,34 @@ public class Utils {
 			Date dt;
 
 			try {
-				switch (format1) {
-				case "yyyyMMdd":
-					dt = df1.parse(param);
+				if(paramDate.contains("-")) {
 
-					if (format2 == "yyyy-MM-dd") {
-						param = df2.format(dt);
-					} else if (format2 == "yyyy/MM/dd") {
-						param = df3.format(dt);
-					}
-				case "yyyy-MM-dd":
-					dt = df2.parse(param);
+					dt = df2.parse(paramDate);
 
-					if (format2 == "yyyyMMdd") {
-						param = df1.format(dt);
-					} else if (format2 == "yyyy/MM/dd") {
-						param = df3.format(dt);
-					}
+					if (dateFormat.contains("/")) { paramDate = df3.format(dt); }
+					else { paramDate = df1.format(dt); }
+					
+					return paramDate;
+				} else if(paramDate.contains("/")) {
+					dt = df3.parse(paramDate);
 
-				case "yyyy/MM/dd":
-					dt = df3.parse(param);
+					if (dateFormat.contains("-")) { paramDate = df2.format(dt); }
+					else { paramDate = df1.format(dt); }
+					
+					return paramDate;
+				} else {
+					dt = df1.parse(paramDate);
 
-					if (format2 == "yyyyMMdd") {
-						param = df1.format(dt);
-					} else if (format2 == "yyyy-MM-dd") {
-						param = df2.format(dt);
-					}
-
-					break;
-				default:
-					return param;
+					if (dateFormat.contains("/")) { paramDate = df3.format(dt); }
+					else if (dateFormat.contains("-")) { paramDate = df2.format(dt); }
+					
+					return paramDate;
 				}
-
 			} catch (ParseException e) {
-				return param;
+				return paramDate;
 			}
-
+		}else {
+			return paramDate;
 		}
-		return param;
 	}
 }

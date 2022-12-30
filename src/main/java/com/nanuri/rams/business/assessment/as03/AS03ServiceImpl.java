@@ -57,7 +57,7 @@ public class AS03ServiceImpl implements AS03Service {
 	public List<RAA01BVO> getDealInfo(DealInfo dealInfo) throws ParseException {
 
 		String date = dealInfo.getDscDate();
-		date = Utils.changeDateFormat(date, "yyyy-MM-dd","yyyyMMdd");
+		date = Utils.changeDateFormat(date,"yyyyMMdd");
 		dealInfo.setDscDate(date);
 
 		List<RAA01BVO> dealList = raa01bMapper.getDealInfo(dealInfo);
