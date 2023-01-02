@@ -1,167 +1,119 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layout/layout}">
-
-<th:block layout:fragment="title"><title>메뉴별권한관리</title></th:block>
+    layout:decorate="~{layout/ramsLayout}">
 
 <th:block layout:fragment="script">
-	<script th:src="@{/js/business/AC01310S.js}"></script>
+	<script th:src="@{js/common.js}"></script>
+	<script th:src="@{js/business/ac/AC01310S.js}"></script>
 </th:block>
 
-<!-- code.html st -->
 <th:block layout:fragment="customContent">
-    <div class="main_container">
-        <div class="search_wrap">
-            <table class="search_table search_top">
-                <colgroup>
-                    <col style="width: 10%;">
-                    <col style="width: 90%;">
-                </colgroup>
-                <tr>
-                    <th>메뉴명</th>
-                    <td class="etc_td">
-                        <input type="text" id="AC01310S_findMenu">
-                        <div  class="button_etc_wrap">
-                            <button type="button" onclick="AC01310S_findClickbutton();">조회</button>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+	<!-- 상단 타이틀 -->
+	<div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>[01310]메뉴별권한관리</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="index.html">관리자</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <strong>메뉴별권한관리</strong>
+                </li>
+            </ol>
         </div>
-        <div class="contents_box">
-            <table class="table_header">
-                <colgroup>
-                    <col style="width: 10%;">
-                    <col style="width: 60%;">
-                    <col style="width: 30%;">
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>순번</th>
-                        <th>메뉴명</th>
-                        <th>메뉴화면ID</th>
-                    </tr>
-                </thead>
-            </table>
-            <div class="grid_wrap">
-                <form>
-                    <table>
-                        <colgroup>
-                            <col style="width: 10%;">
-                            <col style="width: 60%;">
-                            <col style="width: 30%;">
-                        </colgroup>
-                        <tbody id="AC01310S_makeMenuList">
-                        </tbody>
-                    </table>
-                </form>
-            </div>
-        </div>
-        <div class="contents_box">
-            <div class="button_wrap">
-                <!-- <button type="button">행추가</button>
-                <button type="button">행삭제</button> -->
-                <button type="button" onclick="saveUseMenu();">저장</button>
-            </div>
-            <table class="table_header">
-                <colgroup>
-                    <col style="width: 10%;">
-                    <col style="width: 10%;">
-                    <col style="width: 10%;">
-                    <col style="width: 10%;">
-                    <col style="width: 10%;">
-                    <col style="width: 10%;">
-                    <col style="width: 10%;">
-                    <col style="width: 10%;">
-                    <col style="width: 10%;">
-                    <col style="width: 10%;">
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>순번</th>
-                        <th>권한코드</th>
-                        <th>권한명</th>
-                        <th>권한설명</th>
-                        <th>권한구분</th>
-                        <th>사용여부</th>
-                        <th>수정가능여부</th>
-                        <th>처리일자</th>
-                        <th>처리시간</th>
-                        <th>처리자</th>
-                    </tr>
-                </thead>
-            </table>
-            <div class="grid_wrap">
-                <form>
-                    <table>
-                        <colgroup>
-                            <col style="width: 10%;">
-                            <col style="width: 10%;">
-                            <col style="width: 10%;">
-                            <col style="width: 10%;">
-                            <col style="width: 10%;">
-                            <col style="width: 10%;">
-                            <col style="width: 10%;">
-                            <col style="width: 10%;">
-                            <col style="width: 10%;">
-                            <col style="width: 10%;">
-                        </colgroup>
-                        <tbody id="AC01310S_makeMenuByAuthList">
-                            <!-- <tr>
-                                <td>1</td>
-                                <td>AG10</td>
-                                <td>사업부 담당자</td>
-                                <td>사업부(자기부서)</td>
-                                <td>해당부서</td>
-                                <td> - </td>
-                                <td> - </td>
-                                <td> - </td>
-                                <td> - </td>
-                                <td> - </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>AG11</td>
-                                <td>사업부 부서원</td>
-                                <td>사업부(자기부서)</td>
-                                <td>해당부서</td>
-                                <td><input style="width: 15px;" type="checkbox" checked></td>
-                                <td><input style="width: 15px;" type="checkbox" checked></td>
-                                <td>2022-07-25</td>
-                                <td>12:00:00</td>
-                                <td>SI22467</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>AG12</td>
-                                <td>사업부 부서장</td>
-                                <td>사업부(자기부서)</td>
-                                <td>해당부서</td>
-                                <td><input style="width: 15px;" type="checkbox" checked></td>
-                                <td><input style="width: 15px;" type="checkbox" checked></td>
-                                <td>2022-07-25</td>
-                                <td>12:00:00</td>
-                                <td>SI22467</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>AG20</td>
-                                <td>심사부 심사역</td>
-                                <td>심사부(기업금융심사부)</td>
-                                <td>해당부서</td>
-                                <td><input style="width: 15px;" type="checkbox" checked></td>
-                                <td><input style="width: 15px;" type="checkbox" checked></td>
-                                <td>2022-07-25</td>
-                                <td>12:00:00</td>
-                                <td>SI22467</td>
-                            </tr> -->
-                        </tbody>
-                    </table>
-                </form>
-            </div>
-        </div>
+        <div class="col-lg-2"></div>
     </div>
-    <!-- code.html ed -->
+	<!-- 내용 -->
+    <div class="wrapper wrapper-content animated fadeIn">
+    	<div class="row">
+    		<!-- 조회영역 -->
+    		<div class="col-lg-12">
+    			<div class="white-bg border-bottom dashboard-header">
+   					<div class="form-group row form-inline">
+   						<div class="col-sm-3 input-group">
+                            <label class="control-label px-2">메뉴명</label>
+                           	<input type="text" class="form-control" id="AC01310S_findMenu">
+                        </div>
+                        <div class="col-sm-1">
+                        	<button class="btn btn-primary" type="button" id="authCodeSearchButton" onclick="AC01310S_findClickbutton();">조회</button>
+                       	</div>
+   					</div>
+    			</div>
+    		</div>
+    		<!-- 조회결과 -->
+    		<div class="col-lg-12">
+    			<div class="white-bg dashboard-header">
+    				<div class="col-sm-12">
+    					<div class="ibox ">
+		   					<div class="ibox-title">
+		   						<h5>그룹코드</h5>
+		   					</div>
+		    				<div class="ibox-content">
+		    					<div class="tableFixHead">
+				    				<table class="table table-bordered">
+				    					<colgroup>
+						                    <col style="width: 10%;">
+						                    <col style="width: 60%;">
+						                    <col style="width: 30%;">
+						                </colgroup>
+						                <thead>
+						                    <tr>
+						                        <th>순번</th>
+						                        <th>메뉴명</th>
+						                        <th>메뉴화면ID</th>
+						                    </tr>
+						                </thead>
+										<tbody id="AC01310S_makeMenuList">
+										</tbody>
+									</table>
+								</div>
+			    			</div>
+		   				</div><!-- ibox -->
+		   				<div class="ibox ">
+		   					<div class="ibox-title">
+		   						<h5>상세코드</h5>
+		   						<div class="ibox-tools">		                       		
+		                       		<button class="btn btn-success btn-xs" type="button" id="AC01310S_saveSq" onclick="saveUseMenu();">저장</button>
+		                       	</div>
+		   					</div>
+		    				<div class="ibox-content">
+		    					<div class="tableFixHead">
+				    				<table class="table table-bordered">
+				    					<colgroup>
+						                    <col style="width: 5%;">
+						                    <col style="width: 7%;">
+						                    <col style="width: 15%;">
+						                    <col style="width: 26%;">
+						                    <col style="width: 10%;">
+						                    <col style="width: 10%;">
+						                    <col style="width: 10%;">
+						                    <col style="width: 10%;">
+						                    <col style="width: 7%;">
+						                </colgroup>
+						                <thead>
+						                    <tr>
+						                        <th>순번</th>
+						                        <th>권한코드</th>
+						                        <th>권한명</th>
+						                        <th>권한설명</th>
+						                        <th>사용여부</th>
+						                        <th>수정가능여부</th>
+						                        <th>처리일자</th>
+						                        <th>처리시간</th>
+						                        <th>처리자</th>
+						                    </tr>
+						                </thead>
+										<tbody id="AC01310S_makeMenuByAuthList">
+										</tbody>
+									</table>
+								</div>
+			    			</div>
+		   				</div><!-- ibox -->
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
 </th:block>
 
 </html>

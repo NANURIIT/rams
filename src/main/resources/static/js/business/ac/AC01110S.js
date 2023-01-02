@@ -12,7 +12,7 @@ $(document).ready(function () {
  * 조회 버튼 클릭 이벤트
  */
 var runFindUser = function () {
-	let empNm = $("#empNm").val();
+	let empNm = $("empNm").val();
 	let rghtCd = $("#AC01110S_rghtCd option:selected").val();
 	let dltY = $('#AC01110S_dltY:checked').length;
 	// console.log(rghtCd);
