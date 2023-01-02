@@ -362,7 +362,7 @@ public class AC01ServiceImpl implements AC01Service {
             dto.setHndlPEno(hndlPEno);
             int sq = dto.getSq();
             int totalDepth = 3;		// 화면메뉴의 최대값
-			int rollNum = 1;
+			int rollNum = 1;		// sq value로 쓰인 NEXTVAL()의 값을 매칭시키기 위한 변수
 
             /* lv3Id가 없는 경우 */
             if ((sq == 0) && (!dto.getMenuId().equals("rghtCdCancel")) && (dto.getLv3Id().equals("null"))) {			// 중복된 데이터가 없는 경우
@@ -417,7 +417,6 @@ public class AC01ServiceImpl implements AC01Service {
             }
 			rollNum++;
         }
-        raa95BMapper.nextVal();		// nextVal + 1을 채우기 위해
         return count > 0;
     }
     //============ End AC01310S( 메뉴별권한 관리 ) ============//
