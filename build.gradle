@@ -40,7 +40,7 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-crypto:5.5.0'
 	
 	implementation 'com.google.guava:guava:30.1.1-jre'
-	implementation group: 'com.github.zhanhb', name: 'thymeleaf-layout-dialect', version: '2.4.1'
+	implementation group: 'com.github.zhanhb', name: 'thymeleaf-layout-dialect', version: '3.0.0'
 	
 	implementation 'org.apache.commons:commons-lang3'
 	implementation 'javax.servlet:jstl'
@@ -56,6 +56,10 @@ dependencies {
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.8'
     
     implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+
+	/* Swagger-ui */
+	implementation 'io.springfox:springfox-swagger2:2.9.2'
+    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
     
     // https://mvnrepository.com/artifact/ch.simas.qlrm/qlrm
 	implementation 'ch.simas.qlrm:qlrm:1.7.1'

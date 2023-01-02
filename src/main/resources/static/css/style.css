@@ -20,8 +20,10 @@
     font-size: 13px;
 }
 .header .header_wrap .header_button_wrap button {
+	font-size: 13px;
     vertical-align: baseline;
     padding: 0 3px;
+    height: 25px;
 }
 
 .sidenav {
@@ -64,6 +66,7 @@
     text-align: left;
 }
 .search_wrap .search_table tr td button {
+	font-size: 13px;
     height: 25px;
     line-height: 1;
     padding: 0 3px;
@@ -87,6 +90,9 @@
     padding: 20px 0 10px;
 }
 .button_wrap button {
+	font-size: 13px;
+	height : 25px;
+	line-height: 1;
     padding: 0 3px;
 }
 
@@ -101,6 +107,9 @@
 }
 .grid_wrap245 {
     height: 245px;
+}
+.grid_harf {
+    width: calc(48%);
 }
 .grid_wrap tr th,
 .grid_wrap tr td {
@@ -140,7 +149,7 @@
 }
 .contents_list_wrap3 {
     top: 20px;
-    left: 1020px;
+    left: 1070px;
 }
 .contents_list_wrap4 {
     top: 100px;
@@ -152,15 +161,15 @@
 }
 .contents_list_wrap6 {
     top: 100px;
-    left: 670px;
+    left: 720px;
 }
 .contents_list_wrap7 {
     top: 100px;
-    left: 1020px;
+    left: 1070px;
 }
 .contents_list_wrap8 {
     top: 240px;
-    left: 1020px;
+    left: 1070px;
 }
 .contents_list_wrap9 {
     top: 320px;
@@ -172,18 +181,19 @@
 }
 .contents_list_wrap11 {
     top: 320px;
-    left: 670px;
+    left: 720px;
 }
 .contents_list_wrap12 {
     top: 320px;
-    left: 1020px;
+    left: 1070px;
 }
-.contents_list_wrap13 .contents_list .contents_list_descT {
-    width: 500px;
+.contents_list_wrap13 .contents_list .contents_list_descT,
+.contents_list_wrap14 .contents_list .contents_list_descT {
+    width: 600px;
 }
 .contents_list_wrap13 .contents_list .contents_list_descT textarea,
 .contents_list_wrap14 .contents_list .contents_list_descT textarea {
-    width: 600px;
+    width: 100%;
     height: 40px;
     resize: none;
 }
@@ -193,15 +203,99 @@
 }
 .contents_list_wrap14 {
     top: 470px;
-    left: 670px;
+    left: 720px;
 }
 .contents_list_wrap15 {
+    top: 357px;
+    left: 370px;
+}
+.contents_list_wrap16 {
     top: 357px;
     left: 370px;
 }
 .contents_list_wrap15 .contents_list .contents_list_title {
     width: 160px;
 }
+.contents_list_wrap17 .contents_list .contents_list_title {
+    width: 150px;
+}
+.contents_list_wrap18 {
+    left: 670px;
+}
+/* 안건 진행정보 관리 */
+.contents_list_wrap19 {
+    top: 20px;
+    left: 20px;
+    right: 20px;
+}
+.contents_list_wrap20 {
+    top: 20px;
+    left: 370px;
+}
+.contents_list_wrap21 {
+    top: 220px;
+    left: 20px;
+}
+
+/* 협의체부의 및 결과 */
+.contents_list_wrap22 {
+    top: 20px;
+    left: 20px;
+}
+.contents_list_wrap23 {
+    top: 20px;
+    left: 500px;
+}
+.contents_list_wrap24 {
+    top: 20px;
+    left: 960px;
+}
+.contents_list_wrap25 {
+    top: 200px;
+    left: 20px;
+}
+.contents_list_wrap26 {
+    top: 200px;
+    left: 1000px;
+}
+.contents_list_wrap27 {
+    top: 390px;
+    left: 20px;
+}
+.contents_list_wrap28 {
+    top: 390px;
+    left: 500px;
+}
+
+/* 안건 진행정보관리 */
+.contents_list_wrap29 {
+    top: 20px;
+    left: calc(48% + 17px);
+}
+.contents_list_wrap30 {
+    top: 70px;
+    left: 20px;
+    right: 20px;
+}
+.contents_list_wrap31 {
+    top: 70px;
+    left: calc(48% + 17px);
+}
+.contents_list_wrap32 {
+    top: 397px;
+    left: 20;
+}
+.contents_list_wrap33 {
+    top: 397px;
+    left: calc(48% + 17px);
+}
+
+.contents_list_wrap19 .contents_list .contents_list_title,
+.contents_list_wrap20 .contents_list .contents_list_title,
+.contents_list_wrap21 .contents_list .contents_list_title {
+    width: 150px;
+}
+
 .content_list_caption_wrap {
     position: relative;
     padding-bottom: 7px;
@@ -223,12 +317,19 @@
     top: 0;
     left: 0;
 }
+.content_list_caption_wrapS {
+    text-align: center;
+}
+.content_list_caption_wrap .content_list_captionS::after {
+    content: none;
+}
 .content_list_caption_wrap .content_list_button {
     position: absolute;
     top: 0;
     right: 0;
 }
 .content_list_caption_wrap .content_list_button button {
+	font-size: 13px;
     height: 30px;
     line-height: 1;
     padding: 0 3px;
@@ -246,11 +347,14 @@
     line-height: 25px;
     font-size: 13px;
 }
+/* width 에서 필요한 길이 생성하여 사용하시오. default 는 아래의 150px */
 .contents_list  .contents_list_desc {
-    width: 150px;
+    /* width: 150px; */
     vertical-align: top;
 }
+
 .contents_list  .contents_list_desc button {
+	font-size: 13px;
     height: 25px;
     line-height: 1;
     padding: 0 3px;
@@ -261,14 +365,19 @@
     height: 25px;
 }
 
-.contents_list  .contents_list_descL {
-    width: 450px;
+.contents_list .contents_list_desc500 {
+    width: 500px;
 }
-.contents_list  .contents_list_descL select,
-.contents_list  .contents_list_descL input {
-    width: 450px;
+.contents_list .contents_list_desc300 {
+    width: 300px;
 }
 
+.contents_list  .contents_list_desc500 select,
+.contents_list  .contents_list_desc500 input,
+.contents_list  .contents_list_desc300 select,
+.contents_list  .contents_list_desc300 input {
+    width: 100%;
+}
 
 .contents_list  .contents_list_descS select,
 .contents_list  .contents_list_descS input {
@@ -289,8 +398,82 @@
     bottom: 15px;
     right: 20px;
 }
-.tab_button_wrap > button {
+.tab_button_wrap > button,
+.tab_button_wrap2 > button {
     font-size: 13px;
     padding: 2px 5px;
     margin-left: 5px;
+}
+.tab_button_wrap2 {
+    position: absolute;
+    bottom: 15px;
+    right: calc(51% + 5px);
+}
+
+
+/*심사의뢰_딜번호찾기(팝업)*/
+.modal_wrap {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+.modal_content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1280px;
+    padding: 50px 20px 20px;
+    background-color: #fff;
+    border: 1px solid #777;
+}
+.modal_close {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: #777;
+    font-size: 30px;
+    cursor: pointer;
+}
+.modal_content .wrap {
+    width: calc(100% - 20px);
+}
+.modal_content .main {
+    min-width: auto;
+}
+.modal_content .main_container {
+    margin: 0;
+    padding: 0;
+}
+.modal_content table tr td input,
+.modal_content table tr td select {
+    width: 150px;
+}
+.datepicker{
+	height:25px;
+	background-image: url("/images/calendar_icon.svg");
+	background-repeat: no-repeat;
+	background-position: right -1px;
+	border: 1px solid;
+	border-radius: 3px;
+}
+.daterange{
+	display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+/* width */
+.width150{
+	width: 150px !important; 
+}
+.width280{
+	width: 280px !important; 
+}
+.width80{
+	width: 80px !important; 
 }

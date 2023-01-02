@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanuri.rams.business.common.mapper.RAA01BMapper">
+
+	<!-- deal 정보 검색 -->
+	<select id="getDealInfo" parameterType="com.nanuri.rams.business.common.vo.RAA01BVO$DealInfo" resultType="java.util.HashMap">
+		SELECT r01b.IB_DEAL_NO							<!-- IBDEAL번호 -->
+		     , r01b.IB_DEAL_NM							<!-- IBDEAL명 -->
+		     , r01b.DSC_DT								<!-- DSC일자 -->
+		     , r99a.DPRT_NM								<!-- 담당부서명 -->
+		     , r99a.EMP_NM								<!-- 담당자명 -->
+		     , r01b.ENTP_RNM							<!-- 업체명 -->
+		  FROM RAA01B r01b, RAA99A r99a
+		 WHERE 1=1
+		   AND r01b.CHRG_P_ENO = r99a.ENO
+		 <if test="dealNo != ''">
+		   AND r01b.IB_DEAL_NO LIKE #{dealNo}
+		 </if>
+		 <if test="dealNm != ''">
+		   AND r01b.IB_DEAL_NM LIKE #{dealNm}
+		 </if>
+		 <if test="dscDate != ''">
+		   AND r01b.DSC_DT LIKE #{dscDate}
+		 </if>
+	</select>
+
+	<!-- 신규 deal 생성 -->
+	<insert id="insertDealInfo" parameterType="com.nanuri.rams.business.common.dto.RAA01BDTO" >
+		INSERT INTO RAA01B
+		       ( 
+		         IB_DEAL_NO								<!-- IBDEAL번호 -->
+		       , IB_DEAL_SQ								<!-- IBDEAL일련번호 -->
+		       , DSC_DT									<!-- DSC일자 -->
+		       , IB_DEAL_NM								<!-- IBDEAL명 -->
+		       , TL_AMT									<!-- 총금액 -->
+		       , PTCP_AMT								<!-- 참여금액 -->
+		       , TL_ERN_AMT								<!-- 총수익금액 -->
+		       , WRT_ERN_AMT							<!-- 기표수익금액 -->
+		       , RCVBL_ERN_AMT							<!-- 미수수익금액 -->
+		       , ENTP_RNM								<!-- 업체실명 -->
+		       , CRDT_GRD_CD							<!-- 신용등급코드 -->
+		       , WRT_DT									<!-- 기표일자 -->
+		       , MTRT_DT								<!-- 만기일자 -->
+		       , INVST_NTN_CD							<!-- 투자국가코드 -->
+		       , INVST_CRNCY_CD							<!-- 투자통화코드 -->
+		       , CRNCY_AMT								<!-- 통화금액 -->
+		       , INVST_GDS_LDVD_CD						<!-- 투자상품대분류코드 -->
+			   , INVST_GDS_MDVD_CD						<!-- 투자상품중분류코드 -->
+			   , INVST_GDS_SDVD_CD						<!-- 투자상품소분류코드 -->
+			   , INVST_GDS_DTLS_DVD_CD					<!-- 투자상품상세분류코드 -->
+			   , COPRTN_TYP_CD							<!-- 협업유형코드 -->
+		       , HDQT_CD								<!-- 본부코드 -->
+		       , DPRT_CD								<!-- 부점코드 -->
+		       , CHRG_P_ENO								<!-- 담당자사번 -->
+			   , WTHLD_TBL_NM							<!-- 원천테이블명 -->
+			   , HNDL_DPRT_CD							<!-- 처리부점코드 -->
+			   , HNDL_P_ENO								<!-- 처리자사번 -->
+		       )
+		VALUES ( 
+		         #{ibDealNo}							<!-- IBDEAL번호 -->
+		       , NEXT VALUE FOR RAA01B_SQ				<!-- IBDEAL일련번호 -->
+		       , DATE_FORMAT(CURDATE(), '%Y%m%d')		<!-- DSC일자 -->
+		       , TRIM(#{ibDealNm})						<!-- IBDEAL명 -->
+		       , CAST(NVL(#{tlAmt}, 0) AS INT)			<!-- 총금액 -->
+		       , CAST(NVL(#{ptcpAmt}, 0) AS INT)		<!-- 참여금액 -->
+		       , CAST(NVL(#{tlErnAmt}, 0) AS INT)		<!-- 총수익금액 -->
+		       , CAST(NVL(#{wrtErnAmt}, 0) AS INT)		<!-- 기표수익금액 -->
+		       , CAST(NVL(#{rcvblErnAmt}, 0) AS INT)	<!-- 미수수익금액 -->
+		       , TRIM(#{entpCd})						<!-- 업체실명 -->
+		       , ''										<!-- 신용등급코드 -->
+		       , #{wrtDt}								<!-- 기표일자 -->
+		       , #{mtrtDt}								<!-- 만기일자 -->
+		       , #{invstNtnCd}							<!-- 투자국가코드 -->
+		       , #{invstCrncyCd}						<!-- 투자통화코드 -->
+		       , NVL(#{crncyAmt}, 0)					<!-- 통화금액 -->
+		       , #{invstGdsLdvdCd}						<!-- 투자상품대분류코드 -->
+		       , #{invstGdsMdvdCd}						<!-- 투자상품중분류코드 -->
+		       , #{invstGdsSdvdCd}						<!-- 투자상품소분류코드 -->
+		       , #{invstGdsDtlsDvdCd}					<!-- 투자상품상세분류코드 -->
+		       , #{coprtnTypCd}							<!-- 협업유형코드 -->
+		       , #{hdqtCd}								<!-- 본부코드 -->
+		       , #{dprtCd}								<!-- 부점코드 -->
+		       , TRIM(#{chrgPEno})						<!-- 담당자사번 -->
+		       , ''										<!-- 원천테이블명 -->
+		       , #{hndlDprtCd}							<!-- 처리부점코드 -->
+		       , #{hndlPEno}							<!-- 처리자사번 -->
+		       )
+	</insert>
+
+</mapper>

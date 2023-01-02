@@ -1,4 +1,5 @@
 $(function() {
+	
     $('.tabs-nav a').click(function() {
 
         // Check for active

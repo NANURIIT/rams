@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<th:block layout:fragment="script">
+	<script th:src="@{/js/tab.js}"></script>
+	<script th:src="@{/js/business/AS03210S.js}"></script>
+	<script th:src="@{/js/business/AS02020P.js}"></script>
+	<script th:src="@{/js/business/AC01120P.js}"></script>
+</th:block>
+
+<th:block layout:fragment="customContent">
+	<div class="main_container">
+		<div class="hiddenInfo">
+			<input type="hidden" id="AS03210S_selectedDealNo"/>
+		</div>
+		<div class="search_wrap">
+			<table class="search_table search_top">
+				<colgroup>
+					<col style="width: 7%;">
+					<col style="width: 22%;">
+					<col style="width: 7%;">
+					<col style="width: 50%;">
+				</colgroup>
+				<tr>
+					<th>구분</th>
+					<td>
+						<select id="AS03210S_raDealCcd">
+						</select>
+					</td>
+					<th>Deal 번호</th>
+					<td class="etc_td"><input type="text" id="AS03210S_ibDealNo">
+						<button type="button" id="open_modal_AS02020P">조회</button>
+						<button type="button">DSC안건가져오기</button>
+						<div class="button_etc_wrap">
+							<button type="button">조회</button>
+							<button type="button">심사요청</button>
+							<button type="button">심사요청취소</button>
+							<button type="button">심사보류</button>
+						</div></td>
+				</tr>
+			</table>
+		</div>
+		<div class="contents_box">
+			<table class="table_header">
+				<colgroup>
+					<col style="width: 5%;">
+					<col style="width: 15%;">
+					<col style="width: 15%;">
+					<col style="width: 5%;">
+					<col style="width: 7%;">
+					<col style="width: 7%;">
+				</colgroup>
+				<thead>
+					<tr>
+						<th>삭제</th>
+						<th>그룹코드</th>
+						<th>그룹명</th>
+						<th>코드성격</th>
+						<th>코드길이</th>
+						<th>코드관리</th>
+					</tr>
+				</thead>
+			</table>
+			<div class="grid_wrap grid_wrapS">
+				<form>
+					<table>
+						<colgroup>
+							<col style="width: 5%;">
+							<col style="width: 15%;">
+							<col style="width: 15%;">
+							<col style="width: 5%;">
+							<col style="width: 7%;">
+							<col style="width: 7%;">
+						</colgroup>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>수신계좌조회구분코드</td>
+								<td>DPS_ACCO_IQRY_DIV</td>
+								<td>1</td>
+								<td>Field</td>
+								<td>0</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+		<div class="contents_box">
+			<div class="tab_wrap">
+				<div class="tabs-nav">
+					<ul>
+						<li class="active"><a href="#tab1">안건구조</a></li>
+						<li><a href="#tab2">관련문서</a></li>
+						<li><a href="#tab3">기초자산</a></li>
+						<li><a href="#tab4">관계사</a></li>
+						<li><a href="#tab5">내부등급</a></li>
+						<li><a href="#tab6">담보</a></li>
+						<li><a href="#tab7">보증</a></li>
+						<li><a href="#tab8">책임준공</a></li>
+					</ul>
+				</div>
+
+				<section class="tabs-content">
+					<div id="tab1" class="tab">
+						<div class="contents_list_wrap contents_list_wrap1">
+							<div class="contents_list">
+								<div class="contents_list_title">리스크심사구분</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_riskInspctCcd">
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">부수안건</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_lstCCaseCcd">
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap2">
+							<div class="contents_list">
+								<div class="contents_list_title">안건명</div>
+								<div class="contents_list_desc contents_list_desc500">
+									<input type="text" id="ibDealNm">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">약어명</div>
+								<div class="contents_list_desc contents_list_desc500">
+									<input type="text" id="ibDealSnmNm">
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap3">
+							<div class="contents_list">
+								<div class="contents_list_title">전결구분</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_raRsltnCcd">
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">리스크승인번호</div>
+								<div class="contents_list_desc">
+									<input type="text" id="AS03210S_riskRcgNo">
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap4">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">투자형태</div>
+								<div class="content_list_button">
+									<button>금융상품분류찾기</button>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">심사부서구분</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_inspctDprtCcd">
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">투자상품대분류</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_invstGdsLdvdCd">
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">투자상품중분류</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_invstGdsMdvdCd">
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">투자상품소분류</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_invstGdsSdvdCd">
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">투자상품상세분류</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_invstGdsDtlsDvdCd">
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap5">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">부의금액(국가/통화)</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">부의기준통화</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_invstCrncyCd">
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">부의금액</div>
+								<div class="contents_list_desc">
+									<input type="text" id="crncyAmt" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">투자국가</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_cntyCd">
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">적용환율</div>
+								<div class="contents_list_desc">
+									<input type="text" id="aplcExchR" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">부의금액(원)</div>
+								<div class="contents_list_desc">
+									<input type="text" id="crncyAmtWn" readonly>
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap6">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">투자분류</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">고위험산업</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_indTypDvdCd">
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">업무구분</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_checkItemCd">
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">사업지역</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_bsnsAreaCd">
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">주요투자물건</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_invstThingCcd">
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">투자물건상세</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_invstThingDtlsCcd">
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap7">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">담당직원</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">본부</div>
+								<div
+									class="contents_list_desc contents_list_descS contents_list_descE">
+									<input type="text" id="AS03210S_hdqtCd" readonly> <input type="text" id="AS03210S_hdqtNm" readonly>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">부서</div>
+								<div class="contents_list_desc contents_list_descS contents_list_descE">
+									<input type="text" id="AS03210S_dprtCd" readonly> <input type="text" id="AS03210S_dprtNm" readonly>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">직원</div>
+								<div class="contents_list_desc contents_list_descS">
+									<input type="text" id="AS03210S_eno" readonly> <input type="text" id="AS03210S_empNm" readonly>
+									<button type="button" id="open_modal_AC01120P">찾기</button>
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap8">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">주관형태</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">협업유형</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_coprtnTypCd">
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap9">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">투자기간</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">투자기간(개월)</div>
+								<div class="contents_list_desc">
+									<input type="text" onkeyup="return checkNumber(event);" id="invstPrdMtC">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">기표일(예정)</div>
+								<div class="contents_list_desc">
+									<div class="datepicker_wrap">
+										<input type="text" class="datepicker" id="tab1_datepicker1">
+									</div>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">만기일(예정)</div>
+								<div class="contents_list_desc">
+									<input type="text" id="mtrtDt" readonly>
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap10">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">투자수익(원)</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">전체수익</div>
+								<div class="contents_list_desc">
+									<input type="text" id="tlErnAmt">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">수수료수익</div>
+								<div class="contents_list_desc">
+									<input type="text" id="rcvblErnAmt">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">투자수익</div>
+								<div class="contents_list_desc">
+									<input type="text" id="wrtErnAmt">
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap11">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">채권보전</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">담보</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_mrtgOfrF">
+										<option value="Y">Y</option>
+										<option value="N">N</option>
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">보증</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_ensrF">
+										<option value="Y">Y</option>
+										<option value="N">N</option>
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">책임준공</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_rspsbCmplCcd">
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap12">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">업체정보</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">업체명</div>
+								<div class="contents_list_desc">
+									<input id="AS03210S_entpRnm" type="text">
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap13">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">사업부 의견</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_desc contents_list_descT">
+									<textarea id="AS03210S_bsnsDprtCmmtRmrk1"></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap14">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">심사부 의견</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_desc contents_list_descT">
+									<textarea id="AS03210S_inspctDprtCmmtRmrk2"></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button>초기화</button>
+							<button onclick="tab1save();">저장</button>
+						</div>
+					</div>
+					<div id="tab2" class="tab">
+						<div class="contents_box">
+							<table class="table_header">
+								<colgroup>
+									<col style="width: 50%;">
+									<col style="width: 50%;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>문서번호</th>
+										<th>최종문서여부</th>
+									</tr>
+								</thead>
+							</table>
+							<div class="grid_wrap grid_wrap245">
+								<form>
+									<table>
+										<colgroup>
+											<col style="width: 50%;">
+											<col style="width: 50%;">
+										</colgroup>
+										<tbody id="AS03210S_docInfo">
+										</tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap9">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">문서</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">문서번호</div>
+								<div class="contents_list_desc contents_list_desc">
+									<input id="AS03210S_docNo" class="width280" type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">최종문서여부</div>
+								<div class="contents_list_desc contents_list_desc">
+									<select id="AS03210S_fnlDocF" class="width280">
+										<option value="Y">Y</option>
+										<option value="N" selected>N</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button onclick="tab2BtnReset();">초기화</button>
+							<button onclick="tab2BtnDelete();">삭제</button>
+							<button onclick="tab2BtnSave();">저장</button>
+						</div>
+					</div>
+					<div id="tab3" class="tab">
+						<div class="contents_box">
+							<table class="table_header">
+								<colgroup>
+									<col style="width: 20%;">
+									<col style="width: 20%;">
+									<col style="width: 20%;">
+									<col style="width: 20%;">
+									<col style="width: 20%;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>기초자산유형</th>
+										<th>기초자산명</th>
+										<th>기초자산평가액</th>
+										<th>법인번호</th>
+										<th>법인명</th>
+									</tr>
+								</thead>
+							</table>
+							<div class="grid_wrap grid_wrap245">
+								<form>
+									<table>
+										<colgroup>
+											<col style="width: 20%;">
+											<col style="width: 20%;">
+											<col style="width: 20%;">
+											<col style="width: 20%;">
+											<col style="width: 20%;">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>2</td>
+												<td>3</td>
+												<td>4</td>
+												<td>5</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap9">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">기초자산정보</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">기초자산종류</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_bscAstsKndCd">
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">기초자산명</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">기초자산 평가액</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap15">
+							<div class="contents_list">
+								<div class="contents_list_title">기초자산발행사법인번호</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">법인명</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button>초기화</button>
+							<button>삭제</button>
+							<button>저장</button>
+						</div>
+					</div>
+					<div id="tab4" class="tab">
+						<div class="contents_box">
+							<table class="table_header">
+								<colgroup>
+									<col style="width: 33%;">
+									<col style="width: 33%;">
+									<col style="width: 33%;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>형태</th>
+										<th>법인명</th>
+										<th>법인번호</th>
+									</tr>
+								</thead>
+							</table>
+							<div class="grid_wrap grid_wrap245">
+								<form>
+									<table>
+										<colgroup>
+											<col style="width: 33%;">
+											<col style="width: 33%;">
+											<col style="width: 33%;">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>2</td>
+												<td>3</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap9">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">관계사정보</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">법인형태</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_cncCmpnyClsfCd">
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap16">
+							<div class="contents_list">
+								<div class="contents_list_title">법인번호</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">법인명</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button>초기화</button>
+							<button>삭제</button>
+							<button>저장</button>
+						</div>
+					</div>
+					<div id="tab5" class="tab">
+						<div class="contents_box">
+							<table class="table_header">
+								<colgroup>
+									<col style="width: 16.6%;">
+									<col style="width: 16.6%;">
+									<col style="width: 16.6%;">
+									<col style="width: 16.6%;">
+									<col style="width: 16.6%;">
+									<col style="width: 16.6%;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>내부등급대상여부</th>
+										<th>SL대상여부</th>
+										<th>SL번호</th>
+										<th>내부등급</th>
+										<th>차주 법인번호</th>
+										<th>내부등급</th>
+									</tr>
+								</thead>
+							</table>
+							<div class="grid_wrap grid_wrap245">
+								<form>
+									<table>
+										<colgroup>
+											<col style="width: 16.6%;">
+											<col style="width: 16.6%;">
+											<col style="width: 16.6%;">
+											<col style="width: 16.6%;">
+											<col style="width: 16.6%;">
+											<col style="width: 16.6%;">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>2</td>
+												<td>3</td>
+												<td>4</td>
+												<td>5</td>
+												<td>6</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+						<div
+							class="contents_list_wrap contents_list_wrap9 contents_list_wrap17">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">내부등급 정보</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">내부등급대상여부</div>
+								<div class="contents_list_desc">
+									<select>
+										<option value="Y" selected>Y</option>
+										<option value="N">N</option>
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">SL대상여부</div>
+								<div class="contents_list_desc">
+									<select>
+										<option value="Y" selected>Y</option>
+										<option value="N">N</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap10">
+							<div class="content_list_caption_wrap content_list_caption_wrapS">
+								<div class="content_list_caption content_list_captionS">SL대상</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">법인번호</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">법인명</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap18">
+							<div class="content_list_caption_wrap content_list_caption_wrapS">
+								<div class="content_list_caption content_list_captionS">SL대상아닌경우</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">법인번호</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">법인명</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button>초기화</button>
+							<button>삭제</button>
+							<button>저장</button>
+						</div>
+					</div>
+					<div id="tab6" class="tab">
+						<div class="contents_box">
+							<table class="table_header">
+								<colgroup>
+									<col style="width: 33%;">
+									<col style="width: 33%;">
+									<col style="width: 33%;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>담보종류</th>
+										<th>담보명</th>
+										<th>담보평가액</th>
+									</tr>
+								</thead>
+							</table>
+							<div class="grid_wrap grid_wrap245">
+								<form>
+									<table>
+										<colgroup>
+											<col style="width: 33%;">
+											<col style="width: 33%;">
+											<col style="width: 33%;">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>2</td>
+												<td>3</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap9">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">담보</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">담보유형</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_mrtgKndCcd">
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">담보상세</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_mrtgDtlsCcd">
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">담보명</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap16">
+							<div class="contents_list">
+								<div class="contents_list_title">담보평가액</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">권리순위</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_rgtRnkCcd">
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button>초기화</button>
+							<button>삭제</button>
+							<button>저장</button>
+						</div>
+					</div>
+					<div id="tab7" class="tab">
+						<div class="contents_box">
+							<table class="table_header">
+								<colgroup>
+									<col style="width: 20%;">
+									<col style="width: 20%;">
+									<col style="width: 20%;">
+									<col style="width: 40%;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>법인번호</th>
+										<th>기관명</th>
+										<th>보증금액</th>
+										<th>보증내용</th>
+									</tr>
+								</thead>
+							</table>
+							<div class="grid_wrap grid_wrap245">
+								<form>
+									<table>
+										<colgroup>
+											<col style="width: 20%;">
+											<col style="width: 20%;">
+											<col style="width: 20%;">
+											<col style="width: 40%;">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>2</td>
+												<td>3</td>
+												<td>4</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap9">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">보증기관정보</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">법인번호</div>
+								<div class="contents_list_desc">
+									<div class="contents_list_desc">
+										<input type="text">
+									</div>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">기관명</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap16">
+							<div class="contents_list">
+								<div class="contents_list_title">보증금액</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">보증내용</div>
+								<div class="contents_list_desc">
+									<div class="contents_list_desc">
+										<input type="text">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button>초기화</button>
+							<button>삭제</button>
+							<button>저장</button>
+						</div>
+					</div>
+					<div id="tab8" class="tab">
+						<div class="contents_box">
+							<table class="table_header">
+								<colgroup>
+									<col style="width: 25%;">
+									<col style="width: 25%;">
+									<col style="width: 25%;">
+									<col style="width: 25%;">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>법인번호</th>
+										<th>기관명</th>
+										<th>미이행시의무</th>
+										<th>손해배상 최대범위</th>
+									</tr>
+								</thead>
+							</table>
+							<div class="grid_wrap grid_wrap245">
+								<form>
+									<table>
+										<colgroup>
+											<col style="width: 25%;">
+											<col style="width: 25%;">
+											<col style="width: 25%;">
+											<col style="width: 25%;">
+										</colgroup>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td>2</td>
+												<td>3</td>
+												<td>4</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap9">
+							<div class="content_list_caption_wrap">
+								<div class="content_list_caption">책임준공기관정보</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">법인번호</div>
+								<div class="contents_list_desc">
+									<div class="contents_list_desc">
+										<input type="text">
+									</div>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">기관명</div>
+								<div class="contents_list_desc">
+									<input type="text">
+								</div>
+							</div>
+						</div>
+						<div class="contents_list_wrap contents_list_wrap15">
+							<div class="contents_list">
+								<div class="contents_list_title">미이행시의무</div>
+								<div class="contents_list_desc">
+									<select id="AS03210S_dbtNpFrmOblgCcd">
+									</select>
+								</div>
+							</div>
+							<div class="contents_list">
+								<div class="contents_list_title">손해배상 최대범위</div>
+								<div class="contents_list_desc">
+									<div class="contents_list_desc">
+										<input type="text">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab_button_wrap">
+							<button>초기화</button>
+							<button>삭제</button>
+							<button>저장</button>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
+</th:block>
+</html>

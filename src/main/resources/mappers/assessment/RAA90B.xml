@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanuri.rams.business.common.mapper.RAA90BMapper">
+
+    <!--  select박스에 담을 공통코드 호출  -->
+    <select id="getCommonCodeName" resultType="com.nanuri.rams.business.common.vo.RAA90BVO$CommonCodeInfoVO">
+        SELECT DISTINCT (cmns_cd_nm),
+                        cmns_cd_grp,
+                        cmns_cd_grp_expl
+          FROM RAA90B
+         ORDER BY cmns_cd_grp ASC
+    </select>
+
+    <!--  그룹코드 호출  -->
+	<select id="getGroupCodeInfoList" resultType="com.nanuri.rams.business.common.dto.RAA90BDTO" parameterType="String">
+        SELECT cmns_cd_grp					<!-- 공통코드그룹 -->
+             , cmns_cd_nm					<!-- 공통코드명 -->
+             , cmns_cd_clsf					<!-- 공통코드구분 -->
+             , cd_lngth						<!-- 코드길이 -->
+             , trnsfrm_aft_cd_grp			<!-- 변환후코드그룹 -->
+             , cmns_cd_grp_expl				<!-- 공통코드그룹설명 -->
+             , use_f						<!-- 사용여부 -->
+             , rgst_dt
+ 		<include refid="CommonMapper.commonDto" />
+          FROM RAA90B
+         WHERE 1=1
+		<if test="cmns_cd_grp != null and cmns_cd_grp !=''">
+           AND cmns_cd_grp = #{cmnsCdGrp}
+		</if>
+	</select>
+
+    <select id="getGroupCodeInfo" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA90BDTO">
+        SELECT cmns_cd_grp					<!-- 공통코드그룹 -->
+             , cmns_cd_nm					<!-- 공통코드명 -->
+             , cmns_cd_clsf					<!-- 공통코드구분 -->
+             , cd_lngth						<!-- 코드길이 -->
+             , trnsfrm_aft_cd_grp			<!-- 변환후코드그룹 -->
+             , cmns_cd_grp_expl				<!-- 공통코드그룹설명 -->
+             , use_f						<!-- 사용여부 -->
+             , rgst_dt
+        <include refid="CommonMapper.commonDto" />
+          FROM RAA90B
+         WHERE cmns_cd_grp = #{cmnsCdGrp}
+    </select>
+
+    <update id="deleteGroupCodeInfo" parameterType="java.util.List">
+        UPDATE RAA90B
+           SET USE_F = 'N'
+         WHERE cmns_cd_grp IN
+        <foreach collection="list" item="cmnsCdGrp" index="index" open="(" separator="," close=")">
+            #{cmnsCdGrp}
+        </foreach>
+    </update>
+
+    <!--  상세코드 호출  -->
+    <select id="getCodeInfoList" resultType="com.nanuri.rams.business.common.dto.RAA91BDTO" parameterType="String">
+        SELECT cd_vl_id
+             , cd_vl_nm
+             , rslt_cd_vl
+             , cd_sq
+             , use_f
+        <include refid="CommonMapper.commonDto" />
+          FROM RAA91B
+         WHERE cmns_cd_grp = #{cmnsCdGrp}
+    </select>
+
+    <select id="selectTotalCount" resultType="int">
+        SELECT
+            count(*)
+        FROM RAA90B
+    </select>
+
+    <update id="registGroupCodeInfo" parameterType="com.nanuri.rams.business.common.vo.RAA90BVO$GroupCodeInfoSaveRequestVO">
+        UPDATE RAA90B
+        <set>
+            <if test="cmnsCdGrp != null and cmnsCdGrp !=''">
+                cmns_cd_grp = #{cmnsCdGrp},
+            </if>
+            <if test="cmnsCdNm != null and cmnsCdNm !=''">
+                cmns_cd_nm = #{cmnsCdNm},
+            </if>
+            <if test="cdLngth != null and cdLngth !=''">
+                cd_lngth = #{cdLngth},
+            </if>
+            <if test="useF != null and useF !=''">
+                use_f = #{useF},
+            </if>
+
+            <if test="cmnsCdGrpExpl != null and cmnsCdGrpExpl !=''">
+                cmns_cd_grp_expl = #{cmnsCdGrpExpl},
+            </if>
+        </set>
+        WHERE cmns_cd_grp = #{oldCmnsCdGrp}
+    </update>
+
+    <insert id="insertGroupCodeInfo" parameterType="com.nanuri.rams.business.common.vo.RAA90BVO$GroupCodeInfoSaveRequestVO">
+        INSERT INTO RAA90B (
+            cmns_cd_grp,
+            cmns_cd_nm,
+            cd_lngth,
+            use_f,
+            cmns_cd_grp_expl,
+            rgst_dt
+        ) VALUES (
+            #{cmnsCdGrp},
+            #{cmnsCdNm},
+            #{cdLngth},
+            #{useF},
+            #{cmnsCdGrpExpl},
+            DATE_FORMAT(now(), '%Y%m%d')
+        )
+    </insert>
+
+    <update id="registCodeInfo" parameterType="com.nanuri.rams.business.common.vo.RAA90BVO$CodeInfoSaveRequestVO">
+        UPDATE RAA91B
+        <set>
+            <if test="cdVlId != null and cdVlId !=''">
+                cd_vl_id = #{cdVlId},
+            </if>
+            <if test="cdVlNm != null and cdVlNm !=''">
+                cd_vl_nm = #{cdVlNm},
+            </if>
+            <if test="useF != null and useF !=''">
+                use_f = #{useF},
+            </if>
+            hndl_dy_tm = now(),
+            hndl_p_eno = #{hndlPEno}
+        </set>
+        WHERE cmns_cd_grp = #{cmnsCdGrp}
+          AND cd_vl_id = #{oldCdVlId}
+    </update>
+
+    <insert id="insertCodeInfo" parameterType="com.nanuri.rams.business.common.vo.RAA90BVO$CodeInfoSaveRequestVO">
+        INSERT INTO RAA91B (
+            cmns_cd_grp,
+            cd_vl_id,
+            cd_vl_nm,
+            use_f,
+            cd_sq,
+            rgst_dt,
+            rgst_p_eno
+        ) VALUES (
+            #{cmnsCdGrp},
+            #{cdVlId},
+            #{cdVlNm},
+            #{useF},
+            #{cdSq},
+            DATE_FORMAT(now(), '%Y%m%d'),
+            #{rgstPEno}
+        )
+    </insert>
+
+    <select id="getMaxSeq" parameterType="String" resultType="Integer">
+        SELECT MAX(cd_sq)
+          FROM RAA91B
+         WHERE cmns_cd_grp = #{cmnsCdGrp}
+    </select>
+
+    <select id="getCodeInfo" resultType="com.nanuri.rams.business.common.dto.RAA91BDTO">
+        SELECT cd_vl_id
+             , cd_vl_nm
+             , rslt_cd_vl
+             , cd_sq
+             , use_f
+        <include refid="CommonMapper.commonDto" />
+          FROM RAA91B
+         WHERE cmns_cd_grp = #{cmnsCdGrp}
+           AND cd_vl_id = #{cdVlId}
+    </select>
+
+    <update id="deleteCodeInfo">
+        UPDATE RAA91B
+           SET use_f = 'N'
+         WHERE cmns_cd_grp = #{cmnsCdGrp}
+           AND cd_vl_id IN
+        <foreach collection="cdVlIds" item="cdVlId" index="index" open="(" separator="," close=")">
+            #{cdVlId}
+        </foreach>
+    </update>
+</mapper>

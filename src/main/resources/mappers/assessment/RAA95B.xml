@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanuri.rams.business.common.mapper.RAA95BMapper">
+
+	<!-- RAA95B 조회 및 수정 가능 여부 조회 -->
+	<select id="selectAvailableMenu" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO" parameterType='java.util.Map'>
+		/* 권한별 메뉴화면 사용권한 조회 */
+		SELECT RGHT_CD
+			, SQ
+			, MENU_ID
+			, MDFY_RGHT_CCD
+			, HNDL_DY_TM
+			, HNDL_DPRT_CD
+			, HNDL_P_ENO
+		FROM RAA95B
+		WHERE 1=1
+			<if test='lv3Id == "null"'>
+			AND MENU_ID = #{lv2Id}
+			</if>
+			<if test='lv3Id != "null"'>
+			AND MENU_ID = #{lv3Id}
+			</if>
+	</select>
+
+	<!-- RAA95B 조회 및 수정 가능 여부 저장 -->
+	<insert id='insertUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
+		INSERT INTO RAA95B (
+				RGHT_CD
+				, SQ
+				, MENU_ID
+				, MDFY_RGHT_CCD
+				, HNDL_DY_TM
+				, HNDL_DPRT_CD
+				, HNDL_P_ENO
+				)
+		VALUES (
+				#{rghtCd}
+				, #{sq}
+				, #{menuId}
+				, #{mdfyRghtCcd}
+				, NOW()
+				, #{hndlDprtCd}
+				, #{hndlPEno}
+				)
+	</insert>
+
+	<!-- RAA95B 조회 및 수정 가능 여부 삭제 -->
+	<delete id='deleteUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
+		DELETE
+		  FROM RAA95B
+		 WHERE SQ			= #{sq}
+		   AND RGHT_CD		= #{rghtCd}
+	</delete>
+
+	<!-- SQ 값 구하기 -->
+	<select id="nextVal" resultType="int">
+		SELECT NEXTVAL(RAA95B_SQ)
+	</select>
+
+	<select id="selectAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO" resultType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+		SELECT *
+		  FROM RAA95B
+		 WHERE RGHT_CD = #{rghtCd}
+		   AND MENU_ID = #{menuId}
+	</select>
+
+	<insert id="insertAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+		INSERT INTO RAA95B (
+			rght_cd,
+			sq,
+			menu_id,
+			mdfy_rght_ccd,
+			hndl_dy_tm,
+			hndl_p_eno
+		) VALUES (
+			#{rghtCd},
+			NEXT VALUE FOR RAA95B_SQ,
+			#{menuId},
+			#{mdfyRghtCcd},
+			now(),
+			#{hndlPEno}
+		)
+	</insert>
+
+	<update id="updateAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+		UPDATE RAA95B
+		<set>
+			<if test="rghtCd != null and rghtCd !=''">
+				rght_cd = #{rghtCd},
+			</if>
+			<if test="menuId != null and menuId !=''">
+				menu_id = #{menuId},
+			</if>
+			<if test="mdfyRghtCcd != null and mdfyRghtCcd !=''">
+				mdfy_rght_ccd = #{mdfyRghtCcd},
+			</if>
+			<if test='hndlDprtCd != null and hndlDprtCd !=""'>
+				HNDL_DPRT_CD = #{hndlDprtCd},
+			</if>
+			hndl_dy_tm = now(),
+			hndl_p_eno = #{hndlPEno}
+		</set>
+		WHERE rght_cd = #{rghtCd}
+		<if test='menuId != null and menuId !=""'>
+		  AND menu_id = #{menuId}
+		</if>
+		<if test='sq != null and sq !=""'>
+		  AND MENU_ID = #{sq}
+		</if>
+	</update>
+
+	<delete id="deleteAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO">
+		DELETE
+		  FROM RAA95B
+		 WHERE rght_cd = #{rghtCd}
+		   AND menu_id = #{menuId}
+	</delete>
+
+	<!-- 업데이트 시 SQ에 해당 권한코드 데이터가 있는지 유무 -->
+	<select id="isExist" parameterType="com.nanuri.rams.business.common.dto.RAA95BDTO" resultType="boolean">
+		SELECT IF(
+				  COUNT(*) = 0, 0, 1
+				 ) AS isExist
+		  FROM RAA95B
+		 WHERE RGHT_CD 	= #{rghtCd}
+		   AND SQ 		= #{sq}
+	</select>
+</mapper>

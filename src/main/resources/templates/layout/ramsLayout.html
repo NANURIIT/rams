@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- 공통헤드 -->
+<th:block th:replace="layout/fragments/ramsHead :: headFragment"></th:block>
+	
+<body>
+	<div id="wrapper">
+		
+		<!-- leftFragment -->
+		<th:block th:replace="layout/fragments/ramsLeft :: leftFragment"></th:block>
+		
+		<div id="page-wrapper" class="gray-bg">
+		
+			<!-- topFragment -->
+			<th:block th:replace="layout/fragments/ramsTop :: topFragment"></th:block>
+			
+			<!-- customContent -->
+			<th:block layout:fragment="customContent"></th:block>
+			
+			<!-- footerFragment -->
+			<th:block th:replace="layout/fragments/ramsFooter :: footerFragment"></th:block>
+					
+		</div>	
+	</div>
+	
+	<!-- modal popup -->
+	<th:block layout:fragment="modalpopup"></th:block>
+		
+	<!-- Mainly scripts -->
+    <script th:src="@{js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{js/plugins/popper/popper.min.js}"></script>
+    <script th:src="@{js/bootstrap.js}"></script>
+    <script th:src="@{js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script th:src="@{js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+    <script th:src="@{js/plugins/inspinia/inspinia.js}"></script>
+    <script th:src="@{js/plugins/pace/pace.min.js}"></script>
+    <script th:src="@{js/plugins/jqueryMask/jquery.mask.min.js}"></script>
+    <script th:src="@{js/plugins/sweetalert/sweetalert.min.js}"></script>
+    
+    <script th:src="@{js/plugins/datepicker/bootstrap-datepicker.js}"></script>
+    
+    <th:block layout:fragment="script"></th:block>
+  	<!-- Last compiled javascript -->
+    
+</body>
+</html>

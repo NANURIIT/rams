@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/ramsLayout}">
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{css/plugins/touchspin/jquery.bootstrap-touchspin.min.css}"/>
+</th:block>
+
+<th:block layout:fragment="script">
+	<script th:src="@{js/plugins/touchspin/jquery.bootstrap-touchspin.min.js}"></script>
+	<script th:src="@{js/common.js}"></script>
+	<script th:src="@{js/business/popup/AC01120P.js}"></script>
+	<script th:src="@{js/business/as/AS04210S.js}"></script>
+</th:block>
+
+<th:block layout:fragment="modalpopup">
+	<th:block th:replace="business/popup/AC01120P :: AC01120P"></th:block>
+</th:block>
+
+<th:block layout:fragment="customContent">
+	<!-- 상단 타이틀 -->
+	<div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>[04210]협의체 결과</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="index.html">심사협의체</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <strong>협의체 결과</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+    
+    <!-- 내용 -->
+    <div class="wrapper wrapper-content animated fadeIn">
+    	<div class="row">
+    		<div class="col-lg-12">
+    			<div class="white-bg border-bottom dashboard-header">
+    				<form method="get">
+	   					<div class="form-group row form-inline">
+	   						<div class="col-sm-2 input-group">
+	                            <label class="control-label px-2">결의협의체</label>
+	                           	<select class="form-control m-b" name="account">
+	                                   <option>option 1</option>
+	                                   <option>option 2</option>
+	                            </select>
+                            </div>
+                            <div class="col-sm-2 input-group">
+                           		<label class="control-label px-2">결의년도</label>
+                           		<input type="text" class="touchspin" value="2022" data-bts-min="2010" data-bts-max="2100">
+                            </div>
+                            <div class="col-sm-1 input-group">
+                           		<label class="control-label px-2">회차</label>
+                           		<input type="text" class="form-control">
+                            </div>
+                            <div class="col-sm-2 input-group">
+                            	<label class="control-label">결의일</label>
+                            	<span class="col-sm-10 input-group date">
+                                   	<input type="text" class="form-control" name="start" value="" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                               	</span>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                            	<label class="col-sm-2 control-label">위원</label>
+	                            <div class="col-sm-10">
+	                            	<div class="input-group">
+	                            		<input type="hidden" id="acdnt_eno" name="acdnt_eno">
+	                            		<input type="text" class="form-control" id="acdnt_empNm" name="acdnt_empNm">
+	                            		<span class="input-group-append">
+	                                        <button type="button" class="btn btn-default" onclick="callAC01120P('acdnt')"><i class="fa fa-search"></i></button>
+	                                    </span>
+	                            	</div>
+	                            </div>
+                            </div>
+                            <div class="col-sm-1">
+								<button class="btn btn-primary" type="submit">조회</button>
+	                       	</div>
+							<div class="col-sm-1 text-right">
+								<button class="btn btn-warning" type="submit">쪽지발송</button>	
+	                       	</div>
+	   					</div>
+	   				</form>
+    			</div>
+    		</div>
+    		<div class="col-lg-12">
+    			<div class="white-bg dashboard-header">
+    				<div class="col-sm-12">
+    					<div class="ibox ">
+		   					<div class="ibox-title">
+		   						<h5>안건</h5>
+		   						<div class="ibox-tools">		                       		
+		                       		<button class="btn btn-danger btn-xs" type="submit">안건제외</button>
+		                       	</div>
+		   					</div>
+		    				<div class="ibox-content">
+			    				<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>결의협의체</th>
+											<th>회차</th>
+											<th>안건번호</th>
+											<th>안건명</th>
+											<th>참여금액(원)</th>
+											<th>결의일자</th>
+											<th>결의시간</th>
+											<th>부서</th>
+											<th>직원</th>
+											<th>심사역</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>2</td>
+											<td>3</td>
+											<td>4</td>
+											<td>5</td>
+											<td>6</td>
+											<td>7</td>
+											<td>8</td>
+											<td>9</td>
+											<td>10</td>
+										</tr>
+									</tbody>
+								</table>
+			    			</div>
+		   				</div>
+    				</div>
+    				<div class="col-sm-12">
+    					<div class="ibox ">
+		   					<div class="ibox-title">
+		   						<h5>의결내용</h5>
+		   						<div class="ibox-tools">		                       		
+		                       		<button class="btn btn-success btn-xs" type="submit">확정</button>
+		                       		<button class="btn btn-danger btn-xs" type="submit">확정취소</button>
+		                       	</div>
+		   					</div>
+		    				<div class="ibox-content">
+			    				<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th colspan="2">참석위원</th>
+											<th colspan="2">대리참석자</th>
+											<th rowspan="2">참석여부</th>
+											<th rowspan="2">찬반</th>
+											<th rowspan="2">심의의견</th>
+											<th rowspan="2">등록연월</th>
+										</tr>
+										<tr>
+											<th>직원번호</th>
+											<th>성명</th>
+											<th>직원번호</th>
+											<th>성명</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>2</td>
+											<td>3</td>
+											<td>4</td>
+											<td>5</td>
+											<td>6</td>
+											<td>7</td>
+											<td>8</td>
+										</tr>
+									</tbody>
+								</table>
+			    			</div>
+		   				</div>
+    				</div>
+    				<div class="col-sm-12">
+    					<div class="ibox ">
+		   					<div class="ibox-title">
+		   						<h5>협의결과</h5>
+		   					</div>
+		    				<div class="ibox-content">
+			    				<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th rowspan="2">안건명</th>
+											<th rowspan="2">신규/재부의정보</th>
+											<th rowspan="2">부수안건정보</th>
+											<th rowspan="2">참여금액(원)</th>
+											<th rowspan="2">결의결과</th>
+											<th rowspan="2">승인금액(원)</th>
+											<th colspan="2">승인조건</th>
+											<th rowspan="2">리스트승인번호</th>
+										</tr>
+										<tr>
+											<th>셀다운</th>
+											<th>기타</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>2</td>
+											<td>3</td>
+											<td>4</td>
+											<td>5</td>
+											<td>6</td>
+											<td>7</td>
+											<td>8</td>
+											<td>9</td>
+										</tr>
+									</tbody>
+								</table>
+								<div class="col-sm-12">
+									<div class="form-group form-inline row">
+										<div class="col-sm-3 input-group">
+											<label class="control-label px-2">결의결과</label>
+			                            	<input type="text" class="form-control">
+										</div>
+										<div class="col-sm-3 input-group">
+											<label class="control-label px-2">승인금액(원)</label>
+			                            	<input type="text" class="form-control" onkeyup="inputNumberFormat(this);">
+										</div>
+										<div class="col-sm-3 input-group">
+											<label class="control-label px-2">승인조건<br>(셀다운)</label>
+			                            	<input type="text" class="form-control">
+										</div>
+										<div class="col-sm-3 input-group">
+											<label class="control-label px-2">승인조건<br>(기타)</label>
+			                            	<input type="text" class="form-control">
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 pb-2 text-right">
+									<button class="btn btn-success btn-xs" type="submit">확정</button>
+		                       		<button class="btn btn-danger btn-xs" type="submit">확정취소</button>
+								</div>
+			    			</div>
+		   				</div>
+    				</div>
+    			</div>
+    		</div>
+    	</div><!-- row -->
+    </div>
+</th:block>
+
+</html>

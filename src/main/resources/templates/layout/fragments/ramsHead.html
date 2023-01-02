@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:fragment="headFragment">
+    <th:block layout:fragment="title"><title>Risk & Assessment Management System</title></th:block>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" th:href="@{/images/nanuriit.png}" type="image/x-icon">
+    
+    <!-- css -->
+    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{font-awesome/css/font-awesome.css}">
+    
+    <link rel="stylesheet" th:href="@{css/plugins/sweetalert/sweetalert.css}">
+    <link rel="stylesheet" th:href="@{css/plugins/daterangepicker/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{css/plugins/datepicker/datepicker3.css}"/>
+    
+    <th:block layout:fragment="css"></th:block>
+    
+    <!-- Last compiled css -->
+    <link rel="stylesheet" th:href="@{css/animate.css}">
+    <link rel="stylesheet" th:href="@{css/plugins/nanuri/style.css}"/>
+</head>
+</html>
