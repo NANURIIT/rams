@@ -47,9 +47,9 @@
 	<!-- RAA95B 조회 및 수정 가능 여부 삭제 -->
 	<delete id='deleteUseMenu' parameterType='com.nanuri.rams.business.common.dto.RAA95BDTO'>
 		DELETE
-			FROM RAA95B
-		WHERE SQ			= #{sq}
-			<!-- AND RGHT_CD	= #{rghtCd} -->
+		  FROM RAA95B
+		 WHERE SQ			= #{sq}
+		   AND RGHT_CD		= #{rghtCd}
 	</delete>
 
 	<!-- SQ 값 구하기 -->

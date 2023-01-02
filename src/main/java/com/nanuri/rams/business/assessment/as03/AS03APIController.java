@@ -26,15 +26,31 @@ public class AS03APIController {
 	// ---------------search bar------------------
 
 	/**
-	 * deal list 가져오기
+	 * deal info 가져오기
 	 * 
-	 * @param dealDto
-	 * @return
-	 * @throws ParseException
+	 * @param DealInfo(VO)
 	 */
 	@GetMapping(value = "/getDealInfo")
 	public List<RAA01BVO> getDealInfo(DealInfo dealDto) throws ParseException {
 		return as03Service.getDealInfo(dealDto);
+	}
+	
+	/**
+	 * deal list 가져오기
+	 * 
+	 * @param DealInfo(VO)
+	 */
+	@GetMapping(value = "/getDealList")
+	public List<RAA02BDTO> getDealList(DealInfo dealDto) throws ParseException {
+		return as03Service.getDealList(dealDto);
+	}
+	
+	
+	
+	// RADEAL구분코드
+	@GetMapping(value = "/getRaDealCcd")
+	public List<Map<String, Object>> getRaDealCcd() {
+		return as03Service.getRaDealCcd();
 	}
 
 	// ---------------tab1 start------------------
@@ -150,7 +166,12 @@ public class AS03APIController {
 	// 신규 deal 생성
 	@PostMapping(value = "/registDealInfo")
 	public int registDealInfo(RAA02BDTO paramData) throws ParseException {
-		return as03Service.registDealInfo(paramData);
+		
+		Map<String, Object> dealInfoMap = as03Service.registDealInfo(paramData);
+		
+		as03Service.registHistoy(dealInfoMap);
+		
+		return 0;
 	}
 
 	// ---------------tab2 start------------------

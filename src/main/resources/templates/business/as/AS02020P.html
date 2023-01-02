@@ -24,9 +24,9 @@
 										</colgroup>
 										<tr>
 											<th>Deal번호</th>
-											<td><input type="text" id="AS02020P_dealNo"></td>
+											<td><input type="text" id="AS02020P_ibDealNo"></td>
 											<th>Deal명</th>
-											<td><input type="text" id="AS02020P_dealNm"></td>
+											<td><input type="text" id="AS02020P_ibDealNm"></td>
 											<th>DSC일자</th>
 											<td class="etc_td">
 												<div class="datepicker_wrap">
@@ -51,12 +51,12 @@
 										</colgroup>
 										<thead>
 											<tr>
-												<th>삭제</th>
-												<th>그룹코드</th>
-												<th>그룹명</th>
-												<th>코드성격</th>
-												<th>코드길이</th>
-												<th>코드관리</th>
+												<th>Deal번호</th>
+												<th>Deal명</th>
+												<th>DSC일자</th>
+												<th>담당부서</th>
+												<th>담당자</th>
+												<th>업체명</th>
 											</tr>
 										</thead>
 									</table>
@@ -71,15 +71,7 @@
 													<col style="width: 7%;">
 													<col style="width: 7%;">
 												</colgroup>
-												<tbody>
-													<tr ondblclick="setDealInfo();">
-														<td>1</td>
-														<td>수신계좌조회구분코드</td>
-														<td>DPS_ACCO_IQRY_DIV</td>
-														<td>1</td>
-														<td>Field</td>
-														<td>0</td>
-													</tr>
+												<tbody id="AS02020P_dealInfoList">
 												</tbody>
 											</table>
 										</form>

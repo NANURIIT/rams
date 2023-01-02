@@ -19,11 +19,19 @@ public interface AS03Service {
 	/**
 	 * deal info 가져오기
 	 * 
-	 * @param dealInfo
-	 * @return
-	 * @throws ParseException
+	 * @param DealInfo(VO)
 	 */
 	public List<RAA01BVO> getDealInfo(DealInfo dealDto) throws ParseException;
+	
+	/**
+	 * deal list 가져오기
+	 * 
+	 * @param DealInfo(VO)
+	 */
+	public List<RAA02BDTO> getDealList(DealInfo dealDto);
+	
+	// RADEAL구분코드
+	public List<Map<String, Object>> getRaDealCcd();
 
 	// ---------------tab1 start------------------
 
@@ -82,7 +90,10 @@ public interface AS03Service {
 	public List<Map<String, Object>> getCoprtnTypCd();
 	
 	// 신규 deal 생성
-	public int registDealInfo(RAA02BDTO paramData) throws ParseException;
+	public Map<String, Object> registDealInfo(RAA02BDTO paramData) throws ParseException;
+	
+	// 히스토리 데이터 취득
+	public void registHistoy(Map<String, Object> dealInfoMap);
 
 	// ---------------tab2 start------------------
 
@@ -117,6 +128,12 @@ public interface AS03Service {
 
 	// 미이행시의무
 	public List<Map<String, Object>> getDbtNpFrmOblgCcd();
+
+	
+
+	
+
+	
 
 	
 

@@ -1,13 +1,13 @@
 $(document).ready(function() {
 
-	setOpenModal();
+	setOpenModal_AC01120P();
 
-	setKeyDownFunction();
+	setKeyDownFunction_AC01120P();
 
 });
 
 // modal controll function
-function setOpenModal() {
+function setOpenModal_AC01120P() {
 	let Modal = document.getElementById('AC01120P');
 	let OpenModal = document.getElementById("open_modal_AC01120P");
 	let CloseModal = document.getElementsByClassName("modal_close_AC01120P")[0];
@@ -54,12 +54,12 @@ function reset_AC01120P() {
 };
 
 // when page loaded
-function setKeyDownFunction() {
-	keyDownEnter();
+function setKeyDownFunction_AC01120P() {
+	keyDownEnter_AC01120P();
 };
 
 // search employee or deal
-function keyDownEnter() {
+function keyDownEnter_AC01120P() {
 
 	$("input[id=AC01120P_empNm]").keydown(function(key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
@@ -111,42 +111,35 @@ function getEmpList() {
 		data: dtoParam,
 		dataType: "json",
 		success: function(data) {
-			var a = '';
-			$('#AC01120P_tbodyEmpList').html(a);
-			//console.log(data);
-			rebuildTable(data);
+			var html = '';
+			var empList = data;
+			$('#AC01120P_tbodyEmpList').html(html);
+
+			if (empList.length > 0) {
+				$.each(empList, function(key, value) {
+					//console.log(value);
+					html += '<tr ondblclick="setEmpNm();">';
+					html += '<td>' + value.ENO + '</td>';
+					html += '<td>' + value.EMP_NM + '</td>';
+					html += '<td>' + value.DPRT_CD + '</td>';
+					html += '<td>' + value.DPRT_NM + '</td>';
+					html += '<td>' + value.HDQT_CD + '</td>';
+					html += '<td>' + value.HDQT_NM + '</td>';
+					html += '</tr>';
+				})
+			} else {
+				html += '<tr>';
+				html += '<td colspan="6" style="text-align: center">데이터가 없습니다.</td>';
+				html += '</tr>';
+			}
+			//console.log(html);
+			$('#AC01120P_tbodyEmpList').html(html);
 		}
 	});
 };
 
-// draw modal table employee 
-function rebuildTable(data) {
-	var html = '';
-	var empList = data;
-
-	if (empList.length > 0) {
-		$.each(empList, function(key, value) {
-			//console.log(value);
-			html += '<tr onclick="setEmpNm();">';
-			html += '<td>' + value.ENO + '</td>';
-			html += '<td>' + value.EMP_NM + '</td>';
-			html += '<td>' + value.DPRT_CD + '</td>';
-			html += '<td>' + value.DPRT_NM + '</td>';
-			html += '<td>' + value.HDQT_CD + '</td>';
-			html += '<td>' + value.HDQT_NM + '</td>';
-			html += '</tr>';
-		})
-	} else {
-		html += '<tr>';
-		html += '<td colspan="6" style="text-align: center">데이터가 없습니다.</td>';
-		html += '</tr>';
-	}
-	//console.log(html);
-	$('#AC01120P_tbodyEmpList').html(html);
-};
-
 // close modal
-function modalClose() {
+function modalClose_AC01120P() {
 	let Modal = document.getElementById('AC01120P');
 	Modal.style.display = "none";
 };
@@ -183,5 +176,5 @@ function setEmpNm() {
 	$(pageHdqtNm).val(hdqtNm);
 
 	reset_AC01120P();
-	modalClose();
+	modalClose_AC01120P();
 };

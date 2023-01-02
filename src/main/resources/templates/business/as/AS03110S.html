@@ -1,59 +1,60 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/ramsLayout}">
 
 <th:block layout:fragment="script">
 	<script th:src="@{js/common.js}"></script>
 </th:block>
- 
+
 <th:block layout:fragment="customContent">
 	<!-- 상단 타이틀 -->
 	<div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-lg-10">
-            <h2>[03110]심사배정안건조회</h2>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="index.html">심사정보</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <strong>심사배정안건조회</strong>
-                </li>
-            </ol>
-        </div>
-        <div class="col-lg-2"></div>
-    </div>
-    
-    <!-- 내용 -->
-    <div class="wrapper wrapper-content animated fadeIn">
-	    <div class="row">
-	    	<div class="col-lg-12">
-	    		<div class="ibox ">
-	    			<!-- 조회조건영역 -->
-	    			<div class="ibox-title text-right">
-	    				<form method="get">
-	    					<div class="form-group row">
-	    						<label class="col-sm-1 col-form-label">접수배정일</label>
-	                            <div class="col-sm-4 input-group">
-	                            	<span class="col-sm-5 input-group date">
-                                    	<input type="text" class="form-control" name="start" value="" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                	</span>
+		<div class="col-lg-10">
+			<h2>[03110]심사배정안건조회</h2>
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="index.html">심사정보</a>
+				</li>
+				<li class="breadcrumb-item">
+					<strong>심사배정안건조회</strong>
+				</li>
+			</ol>
+		</div>
+		<div class="col-lg-2"></div>
+	</div>
+
+	<!-- 내용 -->
+	<div class="wrapper wrapper-content animated fadeIn">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="ibox ">
+					<!-- 조회조건영역 -->
+					<div class="ibox-title text-right">
+						<form method="get">
+							<div class="form-group row">
+								<label class="col-sm-1 col-form-label">접수배정일</label>
+								<div class="col-sm-4 input-group">
+									<span class="col-sm-5 input-group date">
+										<input type="text" class="form-control" name="start" value=""><span
+											class="input-group-addon"><i class="fa fa-calendar"></i></span>
+									</span>
 									<span class="input-group-addon" style="border:0;"> ~ </span>
-                                	<span class="col-sm-5 input-group date">
-                                    	<input type="text" class="form-control" name="end" value="" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                    </span>
-                                </div>
-	                            <div class="col-sm-7 text-left">
-	                        		<button class="btn btn-primary" type="submit">조회</button>
-	                        	</div>
-	                        </div>
-	    				</form>
-	    			</div>
-	    			
-	    			<!-- 조회결과 -->
-	    			<div class="ibox-content">
-	    				<div class="tableFixHeader">
-		    				<table class="table table-bordered">
+									<span class="col-sm-5 input-group date">
+										<input type="text" class="form-control" name="end" value=""><span
+											class="input-group-addon"><i class="fa fa-calendar"></i></span>
+									</span>
+								</div>
+								<div class="col-sm-7 text-left">
+									<button class="btn btn-primary" type="submit">조회</button>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<!-- 조회결과 -->
+					<div class="ibox-content">
+						<div class="tableFixHeader">
+							<table class="table table-bordered">
 								<thead>
 									<tr>
 										<th>접수배정일</th>
@@ -84,10 +85,11 @@
 								</tbody>
 							</table>
 						</div>
-	    			</div>
-	    		</div>
-	    	</div>
-	    </div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </th:block>
+
 </html>

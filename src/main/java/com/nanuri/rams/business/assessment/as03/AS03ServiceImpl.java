@@ -11,16 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nanuri.rams.business.common.dto.RAA02BDTO;
 import com.nanuri.rams.business.common.dto.RAA01BDTO;
+import com.nanuri.rams.business.common.dto.RAA02BDTO;
+import com.nanuri.rams.business.common.dto.RAA02HDTO;
 import com.nanuri.rams.business.common.mapper.RAA01BMapper;
+import com.nanuri.rams.business.common.mapper.RAA02BMapper;
+import com.nanuri.rams.business.common.mapper.RAA02HMapper;
 import com.nanuri.rams.business.common.mapper.RAA18BMapper;
 import com.nanuri.rams.business.common.mapper.RAA91BMapper;
 import com.nanuri.rams.business.common.vo.RAA01BVO;
 import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
 import com.nanuri.rams.business.common.vo.RAA18BVO.DocInfo;
 import com.nanuri.rams.com.security.AuthenticationFacade;
-import com.nanuri.rams.com.utils.StringUtil;
+import com.nanuri.rams.com.utils.Utils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +35,8 @@ import lombok.extern.slf4j.Slf4j;
 public class AS03ServiceImpl implements AS03Service {
 
 	private final RAA01BMapper raa01bMapper;
+	private final RAA02BMapper raa02bMapper;
+	private final RAA02HMapper raa02hMapper;
 	private final RAA91BMapper raa91bMapper;
 	private final RAA18BMapper raa18bMapper;
 
@@ -43,26 +48,40 @@ public class AS03ServiceImpl implements AS03Service {
 	/**
 	 * 딜목록 조회
 	 * 
-	 * @param raa02bDto
+	 * @param DealInfo(VO)
 	 * @return
 	 * @throws ParseException
 	 */
 	@Override
 	public List<RAA01BVO> getDealInfo(DealInfo dealInfo) throws ParseException {
 
-		SimpleDateFormat newFormat = new SimpleDateFormat("yyyyMMdd");
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
 		String date = dealInfo.getDscDate();
-		if (!StringUtil.isAllWhitespace(date)) {
-			Date formatDate = dateFormat.parse(date);
-			dealInfo.setDscDate(newFormat.format(formatDate));
-		}
+		date = Utils.changeDateFormat(date,"yyyyMMdd");
+		dealInfo.setDscDate(date);
 
 		List<RAA01BVO> dealList = raa01bMapper.getDealInfo(dealInfo);
 
 		return dealList;
 	};
+	
+	/**
+	 * 딜목록 조회
+	 * 
+	 * @param DealInfo(VO)
+	 * @return
+	 * @throws ParseException
+	 */
+	@Override
+	public List<RAA02BDTO> getDealList(DealInfo DealInfo) {
+		return raa02bMapper.getDealList(DealInfo);
+	}
+	
+	
+	// RADEAL구분코드
+	@Override
+	public List<Map<String, Object>> getRaDealCcd() {
+		return raa91bMapper.getRaDealCcd();
+	}
 
 	// ---------------tab1 start------------------
 
@@ -185,35 +204,67 @@ public class AS03ServiceImpl implements AS03Service {
 
 	// 신규 deal 생성
 	@Override
-	public int registDealInfo(RAA02BDTO paramData) throws ParseException {
+	public Map<String, Object> registDealInfo(RAA02BDTO paramData) throws ParseException {
 
 		/*
 		 * 1. DTO 의 계산 가능한 정보를 계산하여 RAA02BDTO를 setting 한다.
 		 */
 
-		// IBDEAL번호
+		Date dt = new Date();
+		String yyyy = String.valueOf(dt.getYear() + 1900);
+		String yyyymm = yyyy.concat(String.valueOf(dt.getMonth() + 1));
 
-		// 심사진행상태코드(INSPCT_PRGRS_ST_CD)
-		switch (paramData.getRaRsltnCcd()) {
-		case "2":
-		case "3":
-		case "4":
-		case "5":
-		case "6":
-			break;
-		case "1":
-			paramData.setInspctPrgrsStCd("100");
-			break;
-		}
+		String wrtDt = paramData.getWrtDt();
+		String mtrtDt = paramData.getMtrtDt();
+		String ibDealNo = "";
+		String raDealCcd = paramData.getRaDealCcd();
+		String dprtCd = paramData.getDprtCd();
+
+		// 최초등록자부점코드(FST_RGST_P_DPRT_CD)
+		paramData.setFstRgstPDprtCd(facade.getDetails().getDprtCd());
+
+		// RA기준년월(RA_STD_YR_MM)
+
+		paramData.setRaStdYrMm(yyyymm.substring(2));
 
 		// 투자기간일수(INVST_PRD_DY_C)
-		Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(paramData.getWrtDt());	// 기표일
-		Date date2 = new SimpleDateFormat("yyyy-MM-dd").parse(paramData.getMtrtDt());	// 만기일
 
-		long diffSec = (date2.getTime() - date1.getTime()) / 1000;						// 초 차이
+		SimpleDateFormat sf1 = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sf2 = new SimpleDateFormat("yyyyMMdd");
+
+		Date df1 = sf1.parse(wrtDt);	// 기표일
+		Date df2 = sf1.parse(mtrtDt);	// 만기일
+
+		long diffSec = (df2.getTime() - df1.getTime()) / 1000;							// 초 차이
 		long diffDays = diffSec / (24 * 60 * 60); 										// 일자수 차이
 
 		paramData.setInvstPrdDyC(String.valueOf(diffDays));								// 투자기간일수(INVST_PRD_DY_C)
+
+		// WRT_DT (yyyy-mm-dd -> yyyymmdd)
+		// MTRT_DT
+		
+		paramData.setWrtDt(sf2.format(df1));
+		paramData.setMtrtDt(sf2.format(df2));
+		
+		// RA_DEAL_SQ
+		
+		String raDealSq = raa02bMapper.getRaDealSq(raDealCcd, dprtCd);
+		paramData.setRaDealSq(raDealSq);
+		
+		// IB_DEAL_NO
+		// ibDealNo(12) = ibDealNo(1) + dprtCd(3) + yymm(4) + raDealSq(4)
+		
+		switch (raDealCcd) {
+		case "1": ibDealNo = "D";
+			break;
+		case "2": ibDealNo = "E";
+			break;
+		default: ibDealNo = "W";
+			break;
+		}
+		
+		ibDealNo = ibDealNo + dprtCd + yyyymm.substring(2) + raDealSq;
+		paramData.setIbDealNo(ibDealNo);
 
 		/*
 		 * 2. RAA01BDTO를 setting 한다.
@@ -221,12 +272,12 @@ public class AS03ServiceImpl implements AS03Service {
 		
 		RAA01BDTO raa01bDTO = new RAA01BDTO();
 
-		// IB_DEAL_NO
+		raa01bDTO.setIbDealNo(paramData.getIbDealNo());									// IBDEAL번호
 		// IB_DEAL_SQ
 		// DSC_DT
 		// DSC_SQ
 		// DSC_SQC
-		raa01bDTO.setIbDealNm(paramData.getIbDealNo());									// IBDEAL명
+		raa01bDTO.setIbDealNm(paramData.getIbDealNm());									// IBDEAL명
 		raa01bDTO.setIbDealPrgrsStCd(paramData.getInspctPrgrsStCd());					// IBDEAL상태코드
 		// DSC_RSLT_CD
 		raa01bDTO.setTlAmt(paramData.getCrncyAmt());									// 총금액
@@ -238,8 +289,8 @@ public class AS03ServiceImpl implements AS03Service {
 		raa01bDTO.setEntpRnm(paramData.getCfmtEntpNm());								// 업체실명
 		// CORP_RGST_NO
 		// CRDT_GRD_CD
-		raa01bDTO.setWrtDt(paramData.getWrtDt());										// 기표일자
-		raa01bDTO.setMtrtDt(paramData.getMtrtDt());										// 만기일자
+		//raa01bDTO.setWrtDt(paramData.getWrtDt());										// 기표일자
+		//raa01bDTO.setMtrtDt(paramData.getMtrtDt());										// 만기일자
 		raa01bDTO.setInvstNtnCd(paramData.getInvstNtnCd());								// 투자국가코드
 		raa01bDTO.setInvstCrncyCd(paramData.getInvstCrncyCd());							// 투자통화코드
 		raa01bDTO.setCrncyAmt(paramData.getCrncyAmt());									// 통화금액
@@ -260,13 +311,31 @@ public class AS03ServiceImpl implements AS03Service {
 		// HNDL_DY_TM
 		raa01bDTO.setDprtCd(facade.getDetails().getDprtCd());							// 처리부점코드
 		raa01bDTO.setHndlPEno(facade.getDetails().getEno());							// 처리자사번
-		
+
 		/*
 		 * 3. RAA02BDTO, RAA01BDTO를 insert 한다.
 		 */
-		
-		
-		return 0;
+
+		raa02bMapper.insertDealInfo(paramData);
+		raa01bMapper.insertDealInfo(raa01bDTO);
+
+		Map<String, Object> dealInfoMap = new HashMap<String, Object>();
+		dealInfoMap.put("ibDealNo", ibDealNo);
+
+		return dealInfoMap;
+	}
+
+	// 히스토리 데이터 취득
+	@Override
+	public void registHistoy(Map<String, Object> dealInfoMap) {
+
+		String ibDealNo = dealInfoMap.get("ibDealNo").toString();
+
+		// 1. RAA02HDTO를 set 하여 insert 한다.
+		RAA02HDTO raa02hDTO = raa02bMapper.copyDealInfO(ibDealNo);
+
+		raa02hMapper.insertDealInfo(raa02hDTO);
+
 	}
 
 	// ---------------tab2 start------------------
@@ -326,5 +395,11 @@ public class AS03ServiceImpl implements AS03Service {
 	public List<Map<String, Object>> getDbtNpFrmOblgCcd() {
 		return raa91bMapper.getDbtNpFrmOblgCcd();
 	}
+
+	
+
+	
+
+	
 
 }

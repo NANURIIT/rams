@@ -1,7 +1,10 @@
 $(document).ready(function() {
 
 	setDatePicker();
+	
+	setKeyDownFunction_AS03210S();
 
+	loadRaDealCcd();
 	loadTabContents();
 	
 	checkErmAmt();
@@ -42,10 +45,73 @@ function setDatePicker() {
 	});
 }
 
+
+function setKeyDownFunction_AS03210S() {
+	
+	$("input[id=AS03210S_ibDealNo]").keydown(function(key) {
+		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
+			getDealList();
+		}
+	});
+};
+
+// deal List 가져오기
+function getDealList(){
+	var raDealCcd = $("#AS03210S_raDealCcd").val();
+	var ibDealNo = $("#AS03210S_ibDealNo").val();
+	
+	var dtoParam = {
+		"raDealCcd": raDealCcd
+		, "ibDealNo": ibDealNo
+	};
+	
+	$.ajax({
+		type: "GET",
+		url: "/getDealList",
+		data: dtoParam,
+		dataType: "json",
+		success: function(data) {
+			var html = '';
+			var dealList = data;
+			$('#AS03210S_ibDealList').html(html);
+			
+			//console.log(dealList);
+
+			if (dealList.length > 0) {
+				$.each(dealList, function(key, value) {
+					//console.log(value);
+					html += '<tr ondblclick="setTabContents();">';
+					//html += '<tr>';
+					html += '<td>' + value.ibDealNo + '</td>';
+					html += '<td>' + value.riskInspctCcd + '</td>';
+					html += '<td>' + value.lstCCaseCcd + '</td>';
+					html += '<td>' + value.chrgPEno + '</td>';
+					html += '<td>' + value.inspctPrgrsStCd + '</td>';
+					html += '<td>' + value.ibDealNm + '</td>';
+					html += '</tr>';
+				})
+			} else {
+				html += '<tr>';
+				html += '<td colspan="6" style="text-align: center">데이터가 없습니다.</td>';
+				html += '</tr>';
+			}
+			//console.log(html);
+			$('#AS03210S_ibDealList').html(html);
+		}
+	});
+	
+};
+
 // 화면에서 deal Info 검색 후 더블클릭 set
 function setTabContents() {
-
-	var ibDealNo = $('#AS03210S_selectedDealNo').val();
+	//tr(selected) = event.currentTarget;
+	//td(selected) = event.target;
+	var tr = event.currentTarget;
+	var td = $(tr).children();
+	var ibDealNo = td.eq(0).text();
+	$('#AS03210S_selectedDealNo').val(ibDealNo);
+	
+	console.log("ibDealNo: " + ibDealNo);
 
 	//setTab1();
 	//setTab2(ibDealNo);
@@ -87,6 +153,27 @@ function getDocInfo(ibDealNo) {
 				html += '</tr>';
 			}
 			$('#AS03210S_docInfo').html(html);
+		}
+	});
+}
+
+// RADEAL 구분코드 
+function loadRaDealCcd() {
+	$.ajax({
+		type: "GET",
+		url: "/getRaDealCcd",
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_raDealCcd').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<option value="' + value.CD_VL_ID + '">' + value.CD_VL_NM + '</option>';
+				});
+			}
+			$('#AS03210S_raDealCcd').html(html);
 		}
 	});
 }
@@ -626,6 +713,7 @@ function tab1save() {
 	var riskInspctCcd = $('#AS03210S_riskInspctCcd').val();							// 리스크심사구분
 	var lstCCaseCcd = $('#AS03210S_lstCCaseCcd').val();								// 부수안건
 	var inspctDprtCcd = $('#AS03210S_inspctDprtCcd').val();							// 심사부서구분 
+	var raDealCcd = $('#AS03210S_raDealCcd').val();									// RADEAL구분코드
 	var invstGdsLdvdCd = $('#AS03210S_invstGdsLdvdCd').val();						// 투자상품대분류
 	var invstGdsMdvdCd = $('#AS03210S_invstGdsMdvdCd').val();						// 투자상품중분류
 	var invstGdsSdvdCd = $('#AS03210S_invstGdsSdvdCd').val();						// 투자상품소분류
@@ -668,6 +756,7 @@ function tab1save() {
 		"riskInspctCcd": riskInspctCcd
 		, "lstCCaseCcd": lstCCaseCcd
 		, "inspctDprtCcd": inspctDprtCcd
+		, "raDealCcd": raDealCcd
 		, "invstGdsLdvdCd": invstGdsLdvdCd
 		, "invstGdsMdvdCd": invstGdsMdvdCd
 		, "invstGdsSdvdCd": invstGdsSdvdCd
@@ -714,7 +803,14 @@ function tab1save() {
 		data: paramData,
 		dataType: "json",
 		success: function() {
-			swal("success!");
+			swal({
+				title: "success!"
+				
+			},function(isConfirm){
+				if(isConfirm){
+					location.reload();
+				}	
+			});
 		},
 		error: function(errorCd) {
 			swal("deal정보를 생성하는데 실패하였습니다. sql 에러 코드를 확인해주세요.\n error code:" + errorCd);

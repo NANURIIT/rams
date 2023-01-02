@@ -6,7 +6,6 @@ $(document).ready(function () {
 let lv1Id = '';
 let lv2Id = '';
 let lv3Id = '';
-let sqList = [];
 
 /* 메뉴명 조회 ( null 입력 시 전체 메뉴 조회 ) */
 var AC01310S_findClickbutton = function () {
@@ -17,7 +16,9 @@ var AC01310S_findClickbutton = function () {
 		data: { "menuNm": menuNm },
 		success: function (data) {
 			makeMenuList(data);
-		},
+		}, error: function (request, status, error) {
+			console.error("status : " + status + "error : " + error);
+		}
 	})
 }
 
@@ -26,17 +27,23 @@ var makeMenuList = function (data) {
 
 	let html = '';
 
-	$.each(data, function (key, value) {
-		html += '<tr ondblclick="selectMenuRow(this);">';
-		html += '<td>' + value.rowNum + '</td>';
-		html += '<td>' + value.menuName + '</td>';
-		html += '<td>' + value.menuId + '</td>';
-		html += '<input class="menuIdValue" type="hidden" value="' + value.lv1Id + '" />';
-		html += '<input class="menuIdValue" type="hidden" value="' + value.lv2Id + '" />';
-		html += '<input class="menuIdValue" type="hidden" value="' + value.lv3Id + '" />';
+	if (data.length <= 0) {
+		html += '<tr>';
+		html += '    <td colspan="3" style="text-align: center">데이터가 없습니다.</td>';
 		html += '</tr>';
-	})
-	// console.log(html);
+	} else if (data.length > 0) {
+		$.each(data, function (key, value) {
+			html += '<tr ondblclick="selectMenuRow(this);">';
+			html += '<td>' + value.rowNum + '</td>';
+			html += '<td>' + value.menuName + '</td>';
+			html += '<td>' + value.menuId + '</td>';
+			html += '<input class="menuIdValue" type="hidden" value="' + value.lv1Id + '" />';
+			html += '<input class="menuIdValue" type="hidden" value="' + value.lv2Id + '" />';
+			html += '<input class="menuIdValue" type="hidden" value="' + value.lv3Id + '" />';
+			html += '</tr>';
+		})
+		// console.log(html);
+	}
 	$('#AC01310S_makeMenuList').html(html);
 
 };
@@ -55,6 +62,7 @@ function selectMenuRow(e) {
 	}
 
 	makeMenuByAuthList(idParam);
+	scrollAction();
 }
 
 /* 권한별 메뉴의 사용, 수정 여부 목록 출력 */
@@ -70,8 +78,8 @@ var makeMenuByAuthList = function (idParam) {
 			/* make authority table */
 			$.each(data, function (key, value) {
 				rowNum++;
-				html += '<tr class="modifyAuthTable">';
-				html += '<td>' + rowNum + '</td>';
+				html += '<tr>';
+				html += '<td id="sqValue">' + rowNum + '</td>';
 				html += '<td id="setRghtCd">' + value.rghtCd + '</td>';
 				html += '<td>' + value.rghtCdNm + '</td>';
 				html += '<td>' + value.rghtCdExpl + '</td>';
@@ -85,6 +93,7 @@ var makeMenuByAuthList = function (idParam) {
 			})
 			$('#AC01310S_makeMenuByAuthList').html(html);
 			checkUseAndModifyYn(rowNum);
+			$('#AC01310S_makeMenuByAuthList').find('tr:eq(0)').focus();
 		}, fail: function (status, err) {
 			return console.error("error status : " + status + "error reason : " + err);
 		},
@@ -101,7 +110,6 @@ var checkUseAndModifyYn = function (rowNum) {
 			, 'lv2Id': lv2Id
 			, 'lv3Id': lv3Id
 		}, success: function (data) {
-			sqList = [];
 			/* 
 			권한코드를 기준으로 DB에서 불러온 사용여부, 수정가능여부를 체크
 			make authority table의 rowNum으로 권한코드 한 행씩을 조회하여
@@ -114,35 +122,32 @@ var checkUseAndModifyYn = function (rowNum) {
 					if (tableRghtCd == val.rghtCd) {
 						if (val.mdfyRghtCcd === "1" || val.mdfyRghtCcd === "2") {
 							target.find('#setUseYn').prop('checked', true);
+							target.find('#setRghtCd').val(val.sq);
 						}
 						if (val.mdfyRghtCcd === "2") {
 							target.find('#setModifyYn').prop('checked', true);
+							target.find('#setRghtCd').val(val.sq);
 						}
 						target.find('#setHndlDt').html(val.hndlDyTm.substring(0, 10));
 						target.find('#setHndlTm').html(val.hndlDyTm.substring(11, 19));
 						target.find('#setHndlPEno').html(val.hndlPEno);
-						sqList.push(val.sq);
 					}
-					// RAA95B insert, delete를 위한 sq 값
 				})
-				$('#AC01310S_saveSq').val(sqList);
 			}
 		}, error: function (request, status, error) {
-			// console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-			alert("Fail!");
+			console.error("status : " + status + "error : " + error);
 		}
 	})
 }
 
 /* 권한코드에 따른 사용, 수정 가능 여부를 체크 */
 var saveUseMenu = function (i) {
-	let saveSq = $('#AC01310S_saveSq').val();
 	let useCheckbox = $('input:checkbox[id="setUseYn"]:checked');
 	let modifyCheckbox = $('input:checkbox[id="setModifyYn"]:checked');
 	let saveRghtCd = '';
+	let sq = '';
 
 	let dtoParam = [];
-	let sqes = saveSq.split(',');
 
 	let idParam = {
 		"lv1Id": lv1Id
@@ -154,11 +159,12 @@ var saveUseMenu = function (i) {
 	useCheckbox.each(function (i) {
 		let tr = useCheckbox.parent().parent().eq(i);
 		saveRghtCd = tr.children().eq(1).html();
+		sq = tr.children().eq(1).val();
 		/* 수정 가능하면 dtoParam 생성 금지 */
 		if (!(tr.children().eq(6).children().prop('checked'))) {
 			if (lv2Id != 'null' && lv3Id == 'null') {
 				dtoParam.push({
-					"sq": sqes[i]
+					"sq": sq
 					, "rghtCd": saveRghtCd
 					, "mdfyRghtCcd": '1'
 					, "menuId": lv2Id
@@ -168,7 +174,7 @@ var saveUseMenu = function (i) {
 				});
 			} else if (lv3Id != 'null') {
 				dtoParam.push({
-					"sq": sqes[i]
+					"sq": sq
 					, "rghtCd": saveRghtCd
 					, "mdfyRghtCcd": '1'
 					, "menuId": lv3Id
@@ -183,9 +189,10 @@ var saveUseMenu = function (i) {
 	modifyCheckbox.each(function (i) {
 		let tr = modifyCheckbox.parent().parent().eq(i);
 		saveRghtCd = tr.children().eq(1).html();
+		sq = tr.children().eq(1).val();
 		if (lv2Id != 'null' && lv3Id == 'null') {
 			dtoParam.push({
-				"sq": sqes[i]
+				"sq": sq
 				, "rghtCd": saveRghtCd
 				, "mdfyRghtCcd": '2'
 				, "menuId": lv2Id
@@ -195,7 +202,7 @@ var saveUseMenu = function (i) {
 			});
 		} else {
 			dtoParam.push({
-				"sq": sqes[i]
+				"sq": sq
 				, "rghtCd": saveRghtCd
 				, "mdfyRghtCcd": '2'
 				, "menuId": lv3Id
@@ -204,47 +211,62 @@ var saveUseMenu = function (i) {
 				, "lv3Id": lv3Id
 			});
 		}
-	})
+	});
 	/* 
 	체크된 항목이 없을 경우
 	전역으로 선언된 lv1Id, lv2Id, lv3Id를 가져와서 해당 화면에 대한 모든 권한을 지워준다.
 	*/
-	for (var i = 0; i < sqes.length; i++) {
-		if (!useCheckbox.is(':checked') && !modifyCheckbox.is(':checked')) {
-			dtoParam.push({
-				"sq": sqes[i]
-				, "menuId": "rghtCdCancel"
-				, "rghtCd": saveRghtCd
-				, "lv1Id": lv1Id
-				, "lv2Id": lv2Id
-				, "lv3Id": lv3Id
-			});
-		}
-	}
-
-	console.log(dtoParam);
-	$.ajax({
-		url: '/saveUseMenu',
-		method: 'PATCH',
-		data: JSON.stringify(dtoParam),
-		contentType: "application/json; charset=UTF-8",
-		success: function () {
-			openPopup({
-				title: '성공',
-				text: '저장이 완료되었습니다.',
-				type: 'success',
-				callback: function () {
-					$(document).on('click', '.confirm', function () {
-						makeMenuByAuthList(idParam);
-						$('#AC01310S_makeMenuByAuthList').find('tr:eq(0)').focus();
-					});
-				}
-			});
-		}, error: function (request, status, error) {
-			// console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-			alert("Fail!")
+	let tableRow = $('#AC01310S_makeMenuByAuthList').children();
+	tableRow.each(function (i) {
+		let hndlPEno = $(this).children().eq(9).text();
+		if (hndlPEno.length > 0) {
+			sq = tableRow.eq(i).children().eq(1).val();
+			saveRghtCd = tableRow.eq(i).children().eq(1).html();
+			let use = $(this).children().eq(5).children();
+			let modify = $(this).children().eq(6).children();
+			if (!use.is(':checked') && !modify.is(':checked')) {
+				dtoParam.push({
+					"sq": sq
+					, "menuId": "rghtCdCancel"
+					, "rghtCd": saveRghtCd
+					, "lv1Id": lv1Id
+					, "lv2Id": lv2Id
+					, "lv3Id": lv3Id
+				});
+			}
 		}
 	})
+
+	if (dtoParam.length > 0) {
+		$.ajax({
+			url: '/saveUseMenu',
+			method: 'PATCH',
+			data: JSON.stringify(dtoParam),
+			contentType: "application/json; charset=UTF-8",
+			success: function () {
+				openPopup({
+					title: '성공',
+					text: '저장이 완료되었습니다.',
+					type: 'success',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							scrollAction();
+							makeMenuByAuthList(idParam);
+						});
+					}
+				});
+			}, error: function (request, status, error) {
+				console.error("status : " + status + "error : " + error);
+			}
+		})
+	} else if (dtoParam.length <= null) {
+		openPopup({
+			title: '실패',
+			text: '화면을 선택해주세요.',
+			type: 'error',
+		});
+	}
+
 }
 
 /* 사용여부와 수정가능여부 클릭 모션 */
@@ -275,4 +297,10 @@ function keyDownEnter() {
 			AC01310S_findClickbutton();     // TODO: 엔터 검색을 클릭버튼 누르는 펑션으로 실행..확인요망
 		}
 	});
+}
+
+/* 스크롤 액션 (테이블 reload 시 맨위로 스크롤 이동) */
+function scrollAction() {
+	var position = $('#AC01310S_makeMenuByAuthList').find('tr:eq(0)').position();
+	$('.grid_wrap').animate({ scrollTop: position });
 }

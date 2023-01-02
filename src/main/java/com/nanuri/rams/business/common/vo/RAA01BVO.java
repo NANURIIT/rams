@@ -10,9 +10,10 @@ public class RAA01BVO {
 	@Getter
 	@Setter
 	public static class DealInfo {
-		private String dealNo;				//	IBDEAL번호
-	    private String dealNm;				//	IBDEA명
+		private String ibDealNo;			//	IBDEAL번호
+	    private String ibDealNm;			//	IBDEA명
 	    private String dscDate;				//	DSC일자
+	    private String raDealCcd;			//	RADEAL구분코드
 	}
 	
 	

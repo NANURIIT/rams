@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.nanuri.rams.business.common.dto.*;
+import com.nanuri.rams.business.common.vo.RAA90BVO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,18 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nanuri.rams.business.common.dto.RAA92BDTO;
-import com.nanuri.rams.business.common.dto.RAA94BDTO;
-import com.nanuri.rams.business.common.dto.RAA95BDTO;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
 import com.nanuri.rams.business.common.vo.RAA95BVO;
-import com.nanuri.rams.business.itmanager.dto.CodeInfoDeleteRequestDto;
-import com.nanuri.rams.business.itmanager.dto.CodeInfoDto;
-import com.nanuri.rams.business.itmanager.dto.CodeInfoSaveRequestDto;
-import com.nanuri.rams.business.itmanager.dto.CommonCodeInfoDto;
-import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoDto;
-import com.nanuri.rams.business.itmanager.dto.GroupCodeInfoSaveRequestDto;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,12 +31,12 @@ public class AC01APIController {
 	// ============ start AC01010S(공통코드관리) ============//
 	// 그룹코드정보 리스트 가져오기
 	@GetMapping(value = "/groupCodeInfoList")
-	public List<GroupCodeInfoDto> getGroupCodeInfoList(String cmnsCdGrp) throws ParseException {
+	public List<RAA90BDTO> getGroupCodeInfoList(String cmnsCdGrp) throws ParseException {
 		return ac01Service.getGroupCodeInfoList(cmnsCdGrp);
 	}
 
 	@GetMapping(value = "/groupCodeInfo")
-	public List<CodeInfoDto> getGroupCodeInfo(String cmnsCdGrp) throws ParseException {
+	public List<RAA91BDTO> getGroupCodeInfo(String cmnsCdGrp) throws ParseException {
 		return ac01Service.getCodeInfoList(cmnsCdGrp);
 	}
 
@@ -53,31 +46,31 @@ public class AC01APIController {
 	}
 
 	@PatchMapping(value = "/deleteCodeInfo")
-	public boolean deleteCodeInfo(@RequestBody CodeInfoDeleteRequestDto requestDto) {
+	public boolean deleteCodeInfo(@RequestBody RAA90BVO.CodeInfoDeleteRequestVO requestDto) {
 		// log.debug("requestDto : {}", requestDto);
 		return ac01Service.deleteCodeInfo(requestDto);
 	}
 
 	@GetMapping(value = "/commonCodeInfo")
-	public List<CommonCodeInfoDto> getCommonCodeInfo() {
+	public List<RAA90BVO.CommonCodeInfoVO> getCommonCodeInfo() {
 		return ac01Service.getCommonCodeName();
 	}
 
 	// 코드정보 가져오기
 	@GetMapping(value = "/codeInfoList")
-	public List<CodeInfoDto> getCodeInfoList(GroupCodeInfoDto groupCodeInfoDto) {
+	public List<RAA91BDTO> getCodeInfoList(RAA90BDTO groupCodeInfoDto) {
 		return ac01Service.getCodeInfoList(groupCodeInfoDto);
 	}
 
 	// 그룹코드정보 등록하기
 	@PostMapping(value = "/registGroupCodeInfo")
-	public boolean registGroupCodeInfo(@RequestBody List<GroupCodeInfoSaveRequestDto> requestDtos) {
+	public boolean registGroupCodeInfo(@RequestBody List<RAA90BVO.GroupCodeInfoSaveRequestVO> requestDtos) {
 		return ac01Service.registGroupCodeInfo(requestDtos);
 	}
 
 	// 코드정보 등록하기
 	@PostMapping(value = "/registCodeInfo")
-	public boolean registCodeInfo(@RequestBody List<CodeInfoSaveRequestDto> requestDtos) {
+	public boolean registCodeInfo(@RequestBody List<RAA90BVO.CodeInfoSaveRequestVO> requestDtos) {
 		return ac01Service.registCodeInfo(requestDtos);
 	}
 	// ============ end AC01010S(공통코드관리) ============//
@@ -162,11 +155,6 @@ public class AC01APIController {
 	public boolean registUseMenu(@RequestBody ArrayList<RAA95BVO.selectUseMenuVO> dtoList) {
 		return ac01Service.registUseMenu(dtoList);
 	}
-	
-	
-	
 
 	//============ End AC01310S( 메뉴별권한관리 관리 ) ============//
-
-	// ============ End AC01310S( 메뉴별권한관리 관리 ) ============//
 }
