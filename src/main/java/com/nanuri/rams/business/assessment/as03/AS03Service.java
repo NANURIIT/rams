@@ -19,11 +19,16 @@ public interface AS03Service {
 	/**
 	 * deal info 가져오기
 	 * 
-	 * @param dealInfo
-	 * @return
-	 * @throws ParseException
+	 * @param DealInfo(VO)
 	 */
 	public List<RAA01BVO> getDealInfo(DealInfo dealDto) throws ParseException;
+	
+	/**
+	 * deal list 가져오기
+	 * 
+	 * @param DealInfo(VO)
+	 */
+	public List<RAA02BDTO> getDealList(DealInfo dealDto);
 	
 	// RADEAL구분코드
 	public List<Map<String, Object>> getRaDealCcd();
@@ -123,6 +128,8 @@ public interface AS03Service {
 
 	// 미이행시의무
 	public List<Map<String, Object>> getDbtNpFrmOblgCcd();
+
+	
 
 	
 

@@ -70,13 +70,13 @@ function keyDownEnter_AS02020P() {
 
 function getDealInfo() {
 
-	var dealNo = $("#AS02020P_dealNo").val();
-	var dealNm = $("#AS02020P_dealNm").val();
+	var ibDealNo = $("#AS02020P_ibDealNo").val();
+	var ibDealNm = $("#AS02020P_ibDealNm").val();
 	var dscDate = $("#AS02020P_datepicker1").val();
 
 	var dtoParam = {
-		"dealNo": dealNo
-		, "dealNm": dealNm
+		"ibDealNo": ibDealNo
+		, "ibDealNm": ibDealNm
 		, "dscDate": dscDate
 	};
 

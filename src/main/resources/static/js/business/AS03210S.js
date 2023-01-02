@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
 	setDatePicker();
+	
+	setKeyDownFunction_AS03210S();
 
 	loadRaDealCcd();
 	loadTabContents();
@@ -43,10 +45,73 @@ function setDatePicker() {
 	});
 }
 
+
+function setKeyDownFunction_AS03210S() {
+	
+	$("input[id=AS03210S_ibDealNo]").keydown(function(key) {
+		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
+			getDealList();
+		}
+	});
+};
+
+// deal List 가져오기
+function getDealList(){
+	var raDealCcd = $("#AS03210S_raDealCcd").val();
+	var ibDealNo = $("#AS03210S_ibDealNo").val();
+	
+	var dtoParam = {
+		"raDealCcd": raDealCcd
+		, "ibDealNo": ibDealNo
+	};
+	
+	$.ajax({
+		type: "GET",
+		url: "/getDealList",
+		data: dtoParam,
+		dataType: "json",
+		success: function(data) {
+			var html = '';
+			var dealList = data;
+			$('#AS03210S_ibDealList').html(html);
+			
+			//console.log(dealList);
+
+			if (dealList.length > 0) {
+				$.each(dealList, function(key, value) {
+					//console.log(value);
+					html += '<tr ondblclick="setTabContents();">';
+					//html += '<tr>';
+					html += '<td>' + value.ibDealNo + '</td>';
+					html += '<td>' + value.riskInspctCcd + '</td>';
+					html += '<td>' + value.lstCCaseCcd + '</td>';
+					html += '<td>' + value.chrgPEno + '</td>';
+					html += '<td>' + value.inspctPrgrsStCd + '</td>';
+					html += '<td>' + value.ibDealNm + '</td>';
+					html += '</tr>';
+				})
+			} else {
+				html += '<tr>';
+				html += '<td colspan="6" style="text-align: center">데이터가 없습니다.</td>';
+				html += '</tr>';
+			}
+			//console.log(html);
+			$('#AS03210S_ibDealList').html(html);
+		}
+	});
+	
+};
+
 // 화면에서 deal Info 검색 후 더블클릭 set
 function setTabContents() {
-
-	var ibDealNo = $('#AS03210S_selectedDealNo').val();
+	//tr(selected) = event.currentTarget;
+	//td(selected) = event.target;
+	var tr = event.currentTarget;
+	var td = $(tr).children();
+	var ibDealNo = td.eq(0).text();
+	$('#AS03210S_selectedDealNo').val(ibDealNo);
+	
+	console.log("ibDealNo: " + ibDealNo);
 
 	//setTab1();
 	//setTab2(ibDealNo);

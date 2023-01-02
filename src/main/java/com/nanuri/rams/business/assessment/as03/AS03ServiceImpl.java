@@ -23,7 +23,6 @@ import com.nanuri.rams.business.common.vo.RAA01BVO;
 import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
 import com.nanuri.rams.business.common.vo.RAA18BVO.DocInfo;
 import com.nanuri.rams.com.security.AuthenticationFacade;
-import com.nanuri.rams.com.utils.StringUtil;
 import com.nanuri.rams.com.utils.Utils;
 
 import lombok.RequiredArgsConstructor;
@@ -49,7 +48,7 @@ public class AS03ServiceImpl implements AS03Service {
 	/**
 	 * 딜목록 조회
 	 * 
-	 * @param raa02bDto
+	 * @param DealInfo(VO)
 	 * @return
 	 * @throws ParseException
 	 */
@@ -64,6 +63,19 @@ public class AS03ServiceImpl implements AS03Service {
 
 		return dealList;
 	};
+	
+	/**
+	 * 딜목록 조회
+	 * 
+	 * @param DealInfo(VO)
+	 * @return
+	 * @throws ParseException
+	 */
+	@Override
+	public List<RAA02BDTO> getDealList(DealInfo DealInfo) {
+		return raa02bMapper.getDealList(DealInfo);
+	}
+	
 	
 	// RADEAL구분코드
 	@Override
@@ -383,6 +395,8 @@ public class AS03ServiceImpl implements AS03Service {
 	public List<Map<String, Object>> getDbtNpFrmOblgCcd() {
 		return raa91bMapper.getDbtNpFrmOblgCcd();
 	}
+
+	
 
 	
 

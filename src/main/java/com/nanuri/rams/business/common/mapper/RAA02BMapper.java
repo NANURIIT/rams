@@ -1,10 +1,13 @@
 package com.nanuri.rams.business.common.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.nanuri.rams.business.common.dto.RAA02BDTO;
 import com.nanuri.rams.business.common.dto.RAA02HDTO;
+import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
 
 @Mapper
 public interface RAA02BMapper {
@@ -17,6 +20,9 @@ public interface RAA02BMapper {
 	
 	// 히스토리 데이터 취득
 	RAA02HDTO copyDealInfO(@Param("ibDealNo") String ibDealNo);
+
+	// Deal List 정보 취득
+	List<RAA02BDTO> getDealList(DealInfo dealInfo);
 
 	
 

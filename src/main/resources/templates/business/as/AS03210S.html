@@ -34,7 +34,7 @@
 						<button type="button" id="open_modal_AS02020P">조회</button>
 						<button type="button">DSC안건가져오기</button>
 						<div class="button_etc_wrap">
-							<button type="button">조회</button>
+							<button type="button" onclick="getDealList();">조회</button>
 							<button type="button">심사요청</button>
 							<button type="button">심사요청취소</button>
 							<button type="button">심사보류</button>
@@ -45,21 +45,21 @@
 		<div class="contents_box">
 			<table class="table_header">
 				<colgroup>
-					<col style="width: 5%;">
+					<col style="width: 10%;">
 					<col style="width: 15%;">
 					<col style="width: 15%;">
-					<col style="width: 5%;">
-					<col style="width: 7%;">
-					<col style="width: 7%;">
+					<col style="width: 10%;">
+					<col style="width: 10%;">
+					<col>
 				</colgroup>
 				<thead>
 					<tr>
-						<th>삭제</th>
-						<th>그룹코드</th>
-						<th>그룹명</th>
-						<th>코드성격</th>
-						<th>코드길이</th>
-						<th>코드관리</th>
+						<th>Deal번호</th>
+						<th>신규/재부의정보</th>
+						<th>부수안건정보</th>
+						<th>심사역</th>
+						<th>진행상태</th>
+						<th>안건명</th>
 					</tr>
 				</thead>
 			</table>
@@ -67,22 +67,14 @@
 				<form>
 					<table>
 						<colgroup>
-							<col style="width: 5%;">
+							<col style="width: 10%;">
 							<col style="width: 15%;">
 							<col style="width: 15%;">
-							<col style="width: 5%;">
-							<col style="width: 7%;">
-							<col style="width: 7%;">
+							<col style="width: 10%;">
+							<col style="width: 10%;">
+							<col>
 						</colgroup>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td>수신계좌조회구분코드</td>
-								<td>DPS_ACCO_IQRY_DIV</td>
-								<td>1</td>
-								<td>Field</td>
-								<td>0</td>
-							</tr>
+						<tbody id="AS03210S_ibDealList">
 						</tbody>
 					</table>
 				</form>
