@@ -29,7 +29,7 @@ var makeMenuList = function (data) {
 
 	if (data.length <= 0) {
 		html += '<tr>';
-		html += '    <td colspan="10" style="text-align: center">데이터가 없습니다.</td>';
+		html += '    <td colspan="3" style="text-align: center">데이터가 없습니다.</td>';
 		html += '</tr>';
 	} else if (data.length > 0) {
 		$.each(data, function (key, value) {
@@ -44,7 +44,7 @@ var makeMenuList = function (data) {
 		})
 		// console.log(html);
 	}
-		$('#AC01310S_makeMenuList').html(html);
+	$('#AC01310S_makeMenuList').html(html);
 
 };
 
@@ -237,28 +237,36 @@ var saveUseMenu = function (i) {
 		}
 	})
 
-	console.log(dtoParam);
-	$.ajax({
-		url: '/saveUseMenu',
-		method: 'PATCH',
-		data: JSON.stringify(dtoParam),
-		contentType: "application/json; charset=UTF-8",
-		success: function () {
-			openPopup({
-				title: '성공',
-				text: '저장이 완료되었습니다.',
-				type: 'success',
-				callback: function () {
-					$(document).on('click', '.confirm', function () {
-						scrollAction();
-						makeMenuByAuthList(idParam);
-					});
-				}
-			});
-		}, error: function (request, status, error) {
-			console.error("status : " + status + "error : " + error);
-		}
-	})
+	if (dtoParam.length > 0) {
+		$.ajax({
+			url: '/saveUseMenu',
+			method: 'PATCH',
+			data: JSON.stringify(dtoParam),
+			contentType: "application/json; charset=UTF-8",
+			success: function () {
+				openPopup({
+					title: '성공',
+					text: '저장이 완료되었습니다.',
+					type: 'success',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							scrollAction();
+							makeMenuByAuthList(idParam);
+						});
+					}
+				});
+			}, error: function (request, status, error) {
+				console.error("status : " + status + "error : " + error);
+			}
+		})
+	} else if (dtoParam.length <= null) {
+		openPopup({
+			title: '실패',
+			text: '화면을 선택해주세요.',
+			type: 'error',
+		});
+	}
+
 }
 
 /* 사용여부와 수정가능여부 클릭 모션 */
