@@ -9,14 +9,18 @@ function callAC01130P(){
 	$('#modal-AC01130P').modal('show');
 }
 
-// 오늘의 날짜
+/**
+ * 오늘의 날짜
+ */
 var today = new Date();
 var year = today.getFullYear();
 var month = today.getMonth() + 1;
 var day = today.getDate();
 var recallDay = year + "-" + month + "-" + day;
 
-// AC01130P 팝업 페이지 초기화
+/**
+ * AC01130P 팝업 페이지 초기화
+ */
 var resetTable = function () {
 	$('#AC01130P_eno').val("");
 	$('#AC01130P_empNm').val("");
@@ -36,7 +40,9 @@ function openModalAC01120P(){
 	});
 }
 
-// 권한 저장
+/**
+ * 권한 저장 ajax
+ */
 var saveUserData = function () {
 	let eno = $('#AC01130P_eno').val();
 	let empNm = $('#AC01130P_empNm').val();
@@ -84,14 +90,17 @@ var saveUserData = function () {
 	});
 }
 
-// close AC01130P modal
+/**
+ * close AC01130P modal
+ */
 function modalClose_AC01130P() {
 	resetTable();
 	$('#modal-AC01130P').modal('hide');
 }
 
-
-// 사용자 삭제(사원 퇴사)
+/**
+ * 사용자 삭제(사원 퇴사) ajax
+ */
 var deleteUser = function () {
 
 	let eno = $('#AC01130P_eno').val();
@@ -122,7 +131,9 @@ var deleteUser = function () {
 	});
 };
 
-/* 쿼리 실행 시 페이지 리로드 */
+/**
+ * 쿼리 실행 시 페이지 리로드 
+ */
 var reload = function (empNm) {
 	// let emp = $('#AC01130P_empNm').val();
 	let rghtCd = $("#AC01130P_rghtCd option:selected").val();
@@ -131,7 +142,9 @@ var reload = function (empNm) {
 	findUser(empNm, rghtCd, dltY);
 }
 
-// 권한 회수
+/**
+ * 즉시회수 버튼 클릭 이벤트
+ */
 var recall = function () {
 	$('#AC01130P_datepicker2').val(recallDay);
 };
