@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<th:block th:fragment="AC01130P">
+	<!-- modal -->
+	<div id="modal-AC01130P" class="modal fade" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 1050;">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header metis-modal-header">
+					<h4 class="modal-title">사용자관리</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-sm-12">						
+							<table class="table-bordered">
+								<colgroup>
+									<col style="width: 15%;">
+									<col style="width: 35%;">
+									<col style="width: 15%;">
+									<col style="width: 35%;">
+								</colgroup>
+								<tr>
+									<th>사원번호</th>
+									<td>
+										<div class="input-group">
+		                            		<input type="hidden" id="AC01130P_sq">
+		                            		<input type="text" class="form-control" id="AC01130P_eno" name="AC01130P_eno">
+		                            		<span class="input-group-append">
+	                                               <button type="button" class="btn btn-default" onclick="callAC01120P('AC01130P')"><i class="fa fa-search"></i></button>
+	                                           </span>
+		                            	</div>
+		                            </td>
+		                            <th>직원명</th>
+		                            <td>
+		                            	<input type="text" class="form-control" id="AC01130P_empNm" name="AC01130P_empNm">
+		                            </td>
+								</tr>
+								<tr>
+									<th>권한구분</th>
+									<td colspan="3">
+										<select class="form-control col-sm-5" id="AC01130P_rghtCd">
+	                                        <option value="1">해당부서</option>
+											<option value="2" selected>전체</option>
+											<option value="3">해당본부</option>
+		                                </select>
+									</td>
+								</tr>
+								<tr>
+									<th>부여기간</th>
+									<td colspan="3">
+										<div class="form-row">
+											<span class="col-sm-3 input-group date">
+		                                    	<input type="text" class="form-control" id="AC01130P_datepicker1" value="" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		                                	</span>
+											<p> ~ </p>
+		                                	<span class="col-sm-3 input-group date">
+		                                    	<input type="text" class="form-control" id="AC01130P_datepicker2" value="" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		                                    </span>
+	                                
+	                                		<button class="btn btn-warning btn-xs" type="button" id="AC01130P_recall" onclick="recall();">즉시회수</button>
+		                                </div>
+									</td>
+								</tr>
+								<tr>
+									<th>부여사유</th>
+									<td colspan="3">
+										<input type="text" class="form-control" id="AC01130P_rgstRsn">
+									</td>
+								</tr>
+								<tr>
+									<th>등록자</th>
+									<td id="AC01130P_rgstPEno"></td>
+									<th>등록일</th>
+									<td id="AC01130P_rgstDt"></td>
+								</tr>
+								<tr>
+									<th>최종처리자</th>
+									<td id="AC01130P_hndlPEno"></td>
+									<th>최종처리일</th>
+									<td id="AC01130P_hndlDyTm"></td>
+								</tr>
+							</table>
+							<div class="col-sm-12 text-right py-2">
+								<button class="btn btn-success" type="button" id="AC01130P_saveButton" onclick="saveUserData();">저장</button>
+		                   		<button class="btn btn-danger" type="button" id="AC01130P_deleteUser" onclick="deleteUser();">삭제</button>
+		                   		<button class="btn btn-default" type="button" onclick="modalClose_AC01130P();">닫기</button>
+							</div>
+						</div>
+					</div><!-- row -->
+				</div>
+			</div>
+		</div>
+	</div>		
+</th:block>
+
+</html>
