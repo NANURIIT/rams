@@ -35,9 +35,9 @@ jobs:
       with:
         arguments: build
 
-  # deploy :
-  #   runs-on : self-hosted
-  #   needs : build
-  #   steps : 
-  #     - name : Depoly
-  #       run : cd ~/rams && RUNNER_TRACKING_ID="" && ./startNanuriWork.sh &
+  deploy :
+    runs-on : self-hosted
+    needs : build
+    steps : 
+      - name : Depoly
+        run : cd ~/rams && RUNNER_TRACKING_ID="" && ./startRams.sh &
