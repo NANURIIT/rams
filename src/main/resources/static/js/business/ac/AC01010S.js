@@ -251,10 +251,10 @@ var getGroupCodeInfoList = function (cmnsCdGrp) {
 				} else {
 					groupCodeInfoHTML += '  <td><input style="width:100%" class="group_code_use_yn" type="checkbox"><input class="hidden_yn" type="hidden" value="n"></td>';
 				}
-					groupCodeInfoHTML += '  <td><button class="groupCodeDetail btn btn-warning btn-xs" id="' + groupCodeInfo.cmnsCdGrp + '"><i class="fa fa-arrow-down"></i>&nbsp;상세</button></td>';
-					groupCodeInfoHTML += '  <td>' + groupCodeInfo.rgstDt + '</td>';
-					groupCodeInfoHTML += '  <td></td>';
-					groupCodeInfoHTML += '  <td></td>';
+					groupCodeInfoHTML += '  <td style="text-align:center;"><button class="groupCodeDetail btn btn-warning btn-xs" id="' + groupCodeInfo.cmnsCdGrp + '"><i class="fa fa-arrow-down"></i>&nbsp;상세</button></td>';
+					groupCodeInfoHTML += '  <td style="text-align:center;">' + groupCodeInfo.rgstDt + '</td>';
+					groupCodeInfoHTML += '  <td style="text-align:center;"></td>';
+					groupCodeInfoHTML += '  <td style="text-align:center;"></td>';
 					groupCodeInfoHTML += '</tr>';
 			}
 		} else {
@@ -341,14 +341,14 @@ var getGroupCodeInfo = function (cmnsCdGrp) {
 				} else {
 					codeInfoHTML += '   <td><input class="code_use_yn" style="width:100%" type="checkbox"><input class="hidden_yn" type="hidden" value="n"></td>';
 				}
-					codeInfoHTML += '   <td>' + codeInfo.rgstDt + '</td>';
-					codeInfoHTML += '   <td>' + codeInfo.rgstPEno + '</td>';
+					codeInfoHTML += '   <td style="text-align:center;">' + codeInfo.rgstDt + '</td>';
+					codeInfoHTML += '   <td style="text-align:center;">' + codeInfo.rgstPEno + '</td>';
 				if(isEmpty(codeInfo.hndlDyTm)) {
-					codeInfoHTML += '   <td> - </td>';
+					codeInfoHTML += '   <td style="text-align:center;"> - </td>';
 				} else {
-					codeInfoHTML += '   <td>' + codeInfo.hndlDyTm + '</td>';
+					codeInfoHTML += '   <td style="text-align:center;">' + codeInfo.hndlDyTm + '</td>';
 				}
-					codeInfoHTML += '   <td>' + codeInfo.hndlPEno + '</td>';
+					codeInfoHTML += '   <td style="text-align:center;">' + codeInfo.hndlPEno + '</td>';
 					codeInfoHTML += '</tr>';
 			}
 		} else {
