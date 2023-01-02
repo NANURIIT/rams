@@ -122,7 +122,7 @@ function rebuildTable(data) {
 /**
  * modal hide
  */
-function modalClose(){
+function modalClose_AC01120P(){
 	$('#modal-AC01120P').modal('hide');
 }
 
@@ -156,5 +156,5 @@ function setEmpNm(){
 	$(pageHdqtNm).val(hdqtNm);
 	
 	reset_AC01120P();
-	modalClose();
+	modalClose_AC01120P();
 }
