@@ -27,18 +27,24 @@ var makeMenuList = function (data) {
 
 	let html = '';
 
-	$.each(data, function (key, value) {
-		html += '<tr ondblclick="selectMenuRow(this);">';
-		html += '<td>' + value.rowNum + '</td>';
-		html += '<td>' + value.menuName + '</td>';
-		html += '<td>' + value.menuId + '</td>';
-		html += '<input class="menuIdValue" type="hidden" value="' + value.lv1Id + '" />';
-		html += '<input class="menuIdValue" type="hidden" value="' + value.lv2Id + '" />';
-		html += '<input class="menuIdValue" type="hidden" value="' + value.lv3Id + '" />';
+	if (data.length <= 0) {
+		html += '<tr>';
+		html += '    <td colspan="10" style="text-align: center">데이터가 없습니다.</td>';
 		html += '</tr>';
-	})
-	// console.log(html);
-	$('#AC01310S_makeMenuList').html(html);
+	} else if (data.length > 0) {
+		$.each(data, function (key, value) {
+			html += '<tr ondblclick="selectMenuRow(this);">';
+			html += '<td>' + value.rowNum + '</td>';
+			html += '<td>' + value.menuName + '</td>';
+			html += '<td>' + value.menuId + '</td>';
+			html += '<input class="menuIdValue" type="hidden" value="' + value.lv1Id + '" />';
+			html += '<input class="menuIdValue" type="hidden" value="' + value.lv2Id + '" />';
+			html += '<input class="menuIdValue" type="hidden" value="' + value.lv3Id + '" />';
+			html += '</tr>';
+		})
+		// console.log(html);
+	}
+		$('#AC01310S_makeMenuList').html(html);
 
 };
 

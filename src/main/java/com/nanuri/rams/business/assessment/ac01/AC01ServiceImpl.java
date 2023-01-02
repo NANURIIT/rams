@@ -362,6 +362,7 @@ public class AC01ServiceImpl implements AC01Service {
             dto.setHndlPEno(hndlPEno);
             int sq = dto.getSq();
             int totalDepth = 3;		// 화면메뉴의 최대값
+			int rollNum = 1;
 
             /* lv3Id가 없는 경우 */
             if ((sq == 0) && (!dto.getMenuId().equals("rghtCdCancel")) && (dto.getLv3Id().equals("null"))) {			// 중복된 데이터가 없는 경우
@@ -371,6 +372,9 @@ public class AC01ServiceImpl implements AC01Service {
                 dto.setSq(nextVal + 1);
                 dto.setMdfyRghtCcd("1");		// 상위메뉴의 경우 조회 권한만
                 count += raa95BMapper.insertUseMenu(dto);
+				if(rollNum < totalDepth-1){
+					raa95BMapper.nextVal();		// nextVal + 1을 채우기 위해
+				}
             } else if (sq != 0 && (!dto.getMenuId().equals("rghtCdCancel"))) {	// 중복된 데이터가 있는 경우
                 if (!raa95BMapper.isExist(dto)) {
                     count += raa95BMapper.insertUseMenu(dto);
@@ -378,7 +382,7 @@ public class AC01ServiceImpl implements AC01Service {
                     count += raa95BMapper.updateAuthCodeMenu(dto);
                 }
             } else if (sq != 0 && dto.getMenuId().equals("rghtCdCancel")) {		// 모든 권한을 취소하는 경우
-                for (int i = 0; i < totalDepth; i++) {
+                for (int i = 0; i < totalDepth-1; i++) {
                     dto.setSq(sq + i);
                     count += raa95BMapper.deleteUseMenu(dto);
                 }
@@ -396,6 +400,9 @@ public class AC01ServiceImpl implements AC01Service {
                 dto.setMenuId(dto.getLv1Id());
                 dto.setSq(nextVal + 2);
                 count += raa95BMapper.insertUseMenu(dto);
+				if(rollNum < totalDepth){
+					raa95BMapper.nextVal();		// nextVal + 1을 채우기 위해
+				}
             } else if (sq != 0 && dto.getMenuId().equals("lv3Menu")) {	// 중복된 데이터가 있는 경우
 				if (!raa95BMapper.isExist(dto)) {
                     count += raa95BMapper.insertUseMenu(dto);
@@ -408,6 +415,7 @@ public class AC01ServiceImpl implements AC01Service {
                     count += raa95BMapper.deleteUseMenu(dto);
                 }
             }
+			rollNum++;
         }
         raa95BMapper.nextVal();		// nextVal + 1을 채우기 위해
         return count > 0;
