@@ -28,16 +28,16 @@ jobs:
     #   with:
     #     java-version: '11'
     #     distribution: 'temurin'
-#     - name : granted execute to gradlew
-#       run : cd ~/actions-runner/_work/nanuri-work/nanuri-work | chmod +x gradlew
-#     - name: Build with Gradle
-#       uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
-#       with:
-#         arguments: build
+    - name : granted execute to gradlew
+      run : cd ~/rams/rams/rams/rams | chmod +x gradlew
+    - name: Build with Gradle
+      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
+      with:
+        arguments: build
 
-#   deploy :
-#     runs-on : self-hosted
-#     needs : build
-#     steps : 
-#       - name : Depoly
-#         run : cd ~/actions-runner && RUNNER_TRACKING_ID="" && ./startNanuriWork.sh &
+  # deploy :
+  #   runs-on : self-hosted
+  #   needs : build
+  #   steps : 
+  #     - name : Depoly
+  #       run : cd ~/rams && RUNNER_TRACKING_ID="" && ./startNanuriWork.sh &
