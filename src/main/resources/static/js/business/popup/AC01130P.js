@@ -1,11 +1,11 @@
 $(document).ready(function () {
-	
+
 });
 
 /**
  * 모달 팝업 show
  */
-function callAC01130P(){
+function callAC01130P() {
 	$('#modal-AC01130P').modal('show');
 }
 
@@ -34,8 +34,8 @@ var resetTable = function () {
 	$('#AC01130P_hndlDyTm').text("");
 };
 
-function openModalAC01120P(){
-	$('#open_modal_AC01120P').click(function(){
+function openModalAC01120P() {
+	$('#open_modal_AC01120P').click(function () {
 		resetTable();
 	});
 }
@@ -72,22 +72,38 @@ var saveUserData = function () {
 		, "sq": sq
 	}
 
-	$.ajax({
-		method: 'POST',
-		url: '/insertUser',
-		data: JSON.stringify(dtoParam),
-		contentType: "application/json; charset=UTF-8",
-		// dataType: 'json',
-		success: function (response) {
-			// alert(response);
-			resetTable();
-			modalClose_AC01130P();
-			reload(empNm);
-		},
-		error: function (request, status, error) {
-			console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-		}
-	});
+	if (dtoParam.rghtCd != "") {
+		$.ajax({
+			method: 'POST',
+			url: '/insertUser',
+			data: JSON.stringify(dtoParam),
+			contentType: "application/json; charset=UTF-8",
+			// dataType: 'json',
+			success: function () {
+				openPopup({
+					title: '성공',
+					text: '저장이 완료되었습니다.',
+					type: 'success',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							resetTable();
+							modalClose_AC01130P();
+							reload(empNm);
+						})
+					}
+				})
+			},
+			error: function (request) {
+				console.log("code:" + request.status);
+			}
+		});
+	} else if (dtoParam.rghtCd == "") {			// 권한구분을 '전체(value == null)'로 선택했을 때
+		openPopup({
+			title: '실패',
+			text: '권한구분을 선택해주세요.',
+			type: 'error',
+		})
+	}
 }
 
 /**

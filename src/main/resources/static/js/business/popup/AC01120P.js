@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
 	keyDownEnter();
 });
 
@@ -6,7 +6,7 @@ $(document).ready(function() {
  * 모달 팝업 show
  * @param {string} prefix 결과전달 ID의 prefix
  */
-function callAC01120P(prefix){
+function callAC01120P(prefix) {
 	reset_AC01120P();
 	$('#prefix').val(prefix);
 	$('#modal-AC01120P').modal('show');
@@ -29,25 +29,25 @@ function reset_AC01120P() {
  */
 function keyDownEnter() {
 
-	$("input[id=AC01120P_empNm]").keydown(function(key) {
+	$("input[id=AC01120P_empNm]").keydown(function (key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
 			getEmpList();
 		}
 	});
 
-	$("input[id=AC01120P_eno]").keydown(function(key) {
+	$("input[id=AC01120P_eno]").keydown(function (key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
 			getEmpList();
 		}
 	});
 
-	$("input[id=AC01120P_dprtCd]").keydown(function(key) {
+	$("input[id=AC01120P_dprtCd]").keydown(function (key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
 			getEmpList();
 		}
 	});
 
-	$("input[id=AC01120P_dprtNm]").keydown(function(key) {
+	$("input[id=AC01120P_dprtNm]").keydown(function (key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
 			getEmpList();
 		}
@@ -73,17 +73,14 @@ function getEmpList() {
 		, "hdqtNm": ""
 	}
 
-	//console.log(data);
-
 	$.ajax({
 		type: "GET",
 		url: "/findEmpList",
 		data: dtoParam,
 		dataType: "json",
-		success: function(data) {
+		success: function (data) {
 			var a = '';
 			$('#AC01120P_tbodyEmpList').html(a);
-			//console.log(data);
 			rebuildTable(data);
 		}
 	});
@@ -97,10 +94,13 @@ function rebuildTable(data) {
 	var html = '';
 	var empList = data;
 
-	if (empList.length > 0) {
-		$.each(empList, function(key, value) {
-			//console.log(value);
-			html += '<tr onclick="setEmpNm();">';
+	if (empList.length <= 0) {
+		html += '<tr>';
+		html += '<td colspan="6" style="text-align: center">데이터가 없습니다.</td>';
+		html += '</tr>';
+	} else if (empList.length > 0) {
+		$.each(empList, function (key, value) {
+			html += '<tr onclick="setEmpNm(this);">';
 			html += '<td>' + value.ENO + '</td>';
 			html += '<td>' + value.EMP_NM + '</td>';
 			html += '<td>' + value.DPRT_CD + '</td>';
@@ -109,12 +109,7 @@ function rebuildTable(data) {
 			html += '<td>' + value.HDQT_NM + '</td>';
 			html += '</tr>';
 		})
-	} else {
-		html += '<tr>';
-		html += '<td colspan="6" style="text-align: center">데이터가 없습니다.</td>';
-		html += '</tr>';
 	}
-	//console.log(html);
 	$('#AC01120P_tbodyEmpList').html(html);
 
 };
@@ -122,25 +117,27 @@ function rebuildTable(data) {
 /**
  * modal hide
  */
-function modalClose_AC01120P(){
+function modalClose_AC01120P() {
 	$('#modal-AC01120P').modal('hide');
 }
 
 /**
  * 부모창에 결과값 전달
  */
-function setEmpNm(){
-	var tr = event.currentTarget;
+function setEmpNm(e) {
+	var tr = $(e);						// function을 호출한 곳의 값을 가져온다. (this)
+	// console.log(tr.html());
+	// var tr = event.currentTarget;	// event가 deprecated된 같은 기능
 	var td = $(tr).children();
-	
+
 	var eno = td.eq(0).text();	// 직원번호
 	var empNm = td.eq(1).text();	// 직원명
 	var dprtCd = td.eq(2).text();	// 부점코드
 	var dprtNm = td.eq(3).text();	// 부점명
 	var hdqtCd = td.eq(4).text();	// 본부코드
 	var hdqtNm = td.eq(5).text();	// 본부명
-	
-	var prefix = $("#prefix").val();
+
+	var prefix = $("#prefix").val();		// id 값에 일관성을 주고, 다른 변수와 겹치는 것을 방지하기 위해 prefix된 페이지 name을 각 id에 붙여준다.
 	var pageEmpNm = '#' + prefix + '_empNm';
 	var pageEno = '#' + prefix + '_eno';
 	var pageDprtCd = '#' + prefix + '_dprtCd';
@@ -154,7 +151,7 @@ function setEmpNm(){
 	$(pageDprtNm).val(dprtNm);
 	$(pageHdqtCd).val(hdqtCd);
 	$(pageHdqtNm).val(hdqtNm);
-	
+
 	reset_AC01120P();
 	modalClose_AC01120P();
 }
