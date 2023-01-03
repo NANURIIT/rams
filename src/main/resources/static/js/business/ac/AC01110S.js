@@ -1,7 +1,7 @@
 $(document).ready(function () {
-	//Enter key event
+	// Enter key event
 	findKeydown();
-	//
+	// 페이지 로딩 시 권한구분의 <select> 데이터로 RAA94B.RGHT_CD_NM을 가져온다.
 	selectAuthCode();
 });
 
@@ -15,11 +15,13 @@ var runFindUser = function () {
 	let empNm = $("#empNm").val();
 	let rghtCd = $("#AC01110S_rghtCd option:selected").val();
 	let dltY = $('#AC01110S_dltY:checked').length;
-	// console.log(rghtCd);
 	findUser(empNm, rghtCd, dltY);
 }
 /**
  * 사용자조회 ajax 호출
+ * @param {String} empNm 검색어 - 직원명(사번)
+ * @param {String} rghtCd <select> 권한구분
+ * @param {int} dltY 과거이력포함(1), 미포함(0, default)
  */
 var findUser = function (empNm, rghtCd, dltY) {
 
@@ -45,6 +47,7 @@ var findUser = function (empNm, rghtCd, dltY) {
 
 /**
  * 사용자목록
+ * @param {JSON} data Ajax(/getUserList) response 데이터
  */
 function rebuildUserManageTable(data) {
 	var html = '';
@@ -58,8 +61,10 @@ function rebuildUserManageTable(data) {
 			html += '    <td>' + value.empNm + '</td>';
 			html += '    <td>' + value.pstn + '</td>';
 			html += '    <td class="rght_cd_nm">' + value.rghtCdNm + '</td>';
-			html += '    <td>' + value.aplcStrtDt + '</td>';
-			html += '    <td>' + value.aplcEndDt + '</td>';
+			html += '    <td>' + value.aplcStrtDt.substr(0, 4) + '-' + value.aplcStrtDt.substr(4, 2) + '-' + value.aplcStrtDt.substr(6, 2) + '</td>';
+			html += '    <td>' + value.aplcEndDt.substr(0, 4) + '-' + value.aplcEndDt.substr(4, 2) + '-' + value.aplcEndDt.substr(6, 2) + '</td>';
+			// html += '    <td>' + value.aplcStrtDt + '</td>';
+			// html += '    <td>' + value.aplcEndDt + '</td>';
 			html += '    <td>' + value.rgstRsn + '</td>';
 			html += '    <td>' + value.rgstPEno + '</td>';
 			html += '    <td>' + value.hndlPEno + '</td>';
@@ -107,9 +112,10 @@ var selectAuthCode = function () {
 
 /**
  * 권한구분 목록 
+ * @param {JSON} data Ajax(/selectAuthCode) response 데이터
  */
 var makeRghtCdList = function (data) {
-	var html = '<div><option value="">전체</option></div>';
+	var html = '<div><option value="">전체</option></div>';		// value가 null인 데이터로 조회하면 전체 데이터가 나와야한다.
 
 	$.each(data, function (key, value) {
 		html += '<div>';
@@ -133,28 +139,29 @@ function openModal() {
 
 /**
  * 사용자 조회 (더블 클릭 및 사용자 추가에서 사용)
+ * @param {this} e 더블 클릭 이벤트가 실행된 <tr>
  */
 function selectRgthUser(e) {
 	openModal();
 	var sq = $(e).find('input').val();
 	var eno = $(e).find('td:eq(1)').html();
-	// console.log("sq : " + sq + ", eno : " + eno);
 	selectAuthUser(sq, eno);
 }
 
 /**
  * 사용자 조회 ajax (더블 클릭 및 사용자 추가에서 사용)
+ * @param {String} sq 수정할 권한의 SQ
+ * @param {String} eno 수정할 권한의 사원번호
  */
 var selectAuthUser = function (sq, eno) {
 	let dtoParam = {
 		"sq": sq
-	   ,"eno": eno
+		,"eno": eno
 	}
 
 	$.ajax({
 		url: "/getUserList",
 		data: dtoParam,
-		// dataType: "json",
 		success: function (userInfo) {
 			addAuth(userInfo);
 		},
@@ -163,6 +170,7 @@ var selectAuthUser = function (sq, eno) {
 
 /**
  * 사용자 추가 팝업 값 셋팅
+ * @param {JSON} userInfo Ajax(/getUserList) response 데이터
  */
 var addAuth = function (userInfo) {
 	for (idx in userInfo) {
