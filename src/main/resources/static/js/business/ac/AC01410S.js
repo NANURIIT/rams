@@ -1,4 +1,4 @@
-$(document).ready(function($) {
+$(document).ready(function() {
 
 menuSearch();
 
@@ -11,7 +11,7 @@ menuSearch();
  */
 function menuSearch() {
 	$(document).on('click', '#menuSearch', function() {
-		let menuNm = $('#menuName').val()
+		let menuNm = $('#menuNm').val()
 		getmenuSearchList(menuNm);
 	});
 }

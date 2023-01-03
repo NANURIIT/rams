@@ -47,5 +47,18 @@
          WHERE 93b.scrn_aplc_type_cd = 'S'
       ORDER BY srt_no
     </select>
+    
+    <select id="selectHighMenuList" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA93BDTO">
+    	SELECT MENU_ID
+    		 , MENU_NM
+    		 , SRT_NO
+    		 , URL_PRMTR_CNTNT
+    		 , SHRT_NM
+    		 , URL_DVD_CD
+    		 , HNDL_DY_TM
+    		 , HNDL_P_ENO
+ 		  FROM RAA93B
+ 		 WHERE MENU_NM = #{menuNm}
+    </select>
 
 </mapper>

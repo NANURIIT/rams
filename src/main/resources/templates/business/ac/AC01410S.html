@@ -4,6 +4,7 @@
 
 <th:block layout:fragment="script">
 	<script th:src="@{js/common.js}"></script>
+	<script th:src="@{js/business/ac/AC01410S.js}"></script>
 </th:block>
 
 <th:block layout:fragment="customContent">
@@ -32,10 +33,10 @@
    					<div class="form-group row form-inline">
    						<div class="col-sm-3 input-group">
                             <label class="control-label px-2">메뉴명</label>
-                           	<input type="text" class="form-control">
+                           	<input type="text" class="form-control" id="menuNm">
                            </div>
                            <div class="col-sm-1">
-							<button class="btn btn-primary" type="button" id="commonCodeSearch">조회</button>
+							<button class="btn btn-primary" type="button" id="menuSearch">조회</button>
                        	</div>
    					</div>
     			</div>
@@ -48,9 +49,9 @@
 		   					<div class="ibox-title">
 		   						<h5>상위메뉴</h5>
 		   						<div class="ibox-tools">		                       		
-		                       		<button class="btn btn-default btn-xs" type="button" onclick="addGroupCodeRow();">행추가</button>
-		                       		<button class="btn btn-default btn-xs" type="button" onclick="deleteGroupCodeRow();">행삭제</button>
-		                       		<button class="btn btn-success btn-xs" type="button" onclick="clickSaveGroupCode();">저장</button>
+		                       		<button class="btn btn-default btn-xs" type="button" onclick="">행추가</button>
+		                       		<button class="btn btn-default btn-xs" type="button" onclick="">행삭제</button>
+		                       		<button class="btn btn-success btn-xs" type="button" onclick="">저장</button>
 		                       	</div>
 		   					</div>
 		    				<div class="ibox-content">
@@ -92,9 +93,9 @@
 		   					<div class="ibox-title">
 		   						<h5>하위메뉴</h5>
 		   						<div class="ibox-tools">		                       		
-		                       		<button class="btn btn-default btn-xs" type="button" onclick="addCodeRow();">행추가</button>
-		                       		<button class="btn btn-default btn-xs" type="button" onclick="deleteCodeRow();">행삭제</button>
-		                       		<button class="btn btn-success btn-xs" type="button" onclick="clickSaveCode();">저장</button>
+		                       		<button class="btn btn-default btn-xs" type="button" onclick="">행추가</button>
+		                       		<button class="btn btn-default btn-xs" type="button" onclick="">행삭제</button>
+		                       		<button class="btn btn-success btn-xs" type="button" onclick="">저장</button>
 		                       	</div>
 		   					</div>
 		    				<div class="ibox-content">

@@ -157,4 +157,19 @@ public class AC01APIController {
 	}
 
 	//============ End AC01310S( 메뉴별권한관리 관리 ) ============//
+
+	// =========== Start AC01410S( 메뉴관리) ============//
+	// 그룹코드정보 리스트 가져오기
+	@GetMapping(value = "/highMenuList")
+	public List<RAA93BDTO> selectHighMenuList(@RequestParam String menuNm){ 
+		return ac01Service.selectHighMenuList(menuNm);
+	}
+
+	// ============ End AC01410S( 메뉴관리 ) ============//
+	
+	
+	
+	
+	
+	
 }
