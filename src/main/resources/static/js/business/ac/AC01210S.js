@@ -148,7 +148,7 @@ function getAuthCodeMenu(rghtCd) {
             let html = '';
             if (authCodeMenu.length > 0) {
                 $.each(authCodeMenu, function (key, value) {
-                    console.log(key);
+                    //console.log(key);
                     html += '<tr>';
                     html += '   <td>' + (key + 1) + '</td>';
                     html += '   <td>' + value.menuId + '</td>';
@@ -372,7 +372,7 @@ function clickSaveMenuButton() {
     }
 
     if (authCodeMenuList.length > 0) {
-        console.log(authCodeMenuList);
+        //console.log(authCodeMenuList);
         saveMenu(authCodeMenuList, authCode);
     }
 }
