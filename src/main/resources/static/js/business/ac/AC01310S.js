@@ -13,8 +13,8 @@ let lv3Id = '';
 /**
  * 메뉴명 조회 ( null 입력 시 전체 메뉴 조회 )
  */
-function AC01310S_findClickbutton() {
-	let menuNm = $('#AC01310S_findMenu').val();
+function findClickbutton() {
+	let menuNm = $('#findMenu').val();
 
 	$.ajax({
 		url: '/findMenu',
@@ -29,6 +29,7 @@ function AC01310S_findClickbutton() {
 
 /**
  * 사용여부와 수정가능여부 클릭 모션
+ * @param {this} 체크박스 클릭 이벤트 발생한 <input>
  */
 function checkboxModifyYn(e) {		// 수정가능여부
 	var modifyYn = $(e);
@@ -38,7 +39,7 @@ function checkboxModifyYn(e) {		// 수정가능여부
 		checkedUseYn.prop('checked', true);
 	}
 }
-function checkboxUseYn(e) {			// 사용여부
+function checkboxUseYn(e) {		// 사용여부
 	var useYn = $(e);
 	var thisTr = useYn.parent().parent();
 	var checkedModifyYn = thisTr.find('td:eq(5)').children();	// 수정가능여부 상태확인
@@ -54,9 +55,9 @@ function checkboxUseYn(e) {			// 사용여부
  * 메뉴명 조회란에서 엔터 입력
  */
 function keyDownEnter() {
-	$("input[id=AC01310S_findMenu]").keydown(function (key) {
-		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
-			AC01310S_findClickbutton();
+	$("input[id=findMenu]").keydown(function (key) {
+		if (key.keyCode == 13) {		// 엔터키 입력 시 실행 (엔터의 keyCode 13)
+			findClickbutton();
 		}
 	});
 }
@@ -65,8 +66,8 @@ function keyDownEnter() {
  * 스크롤 액션 (테이블 reload 시 맨위로 스크롤 이동)
  */
 function scrollAction() {
-	var position = $('#AC01310S_makeMenuByAuthList').find('tr:eq(0)').position();
-	$('.tableFixHead').animate({scrollTop: position});
+	var position = $('#makeMenuByAuthList').find('tr:eq(0)').position();	// 테이블 데이터 중 최상단 row의 position 위치를 받아오기.
+	$('.tableFixHead').animate({scrollTop: position});						// 받아온 위치값으로 원하는 <table>의 '상위태그 class'를 타겟으로 animate 조절.
 }
 
 /*******************************************************************
@@ -74,6 +75,7 @@ function scrollAction() {
  *******************************************************************/
 /**
  * 메뉴 목록 출력 ( order by menu_id > 순번 rownum 정렬 )
+ * @param {data} ajax로 response 받은 JSON data
  */
 function makeMenuList(data) {
 
@@ -89,18 +91,19 @@ function makeMenuList(data) {
 			html += '<td style="text-align:right;">' + value.rowNum + '</td>';
 			html += '<td>' + value.menuName + '</td>';
 			html += '<td>' + value.menuId + '</td>';
-			html += '<input class="menuIdValue" type="hidden" value="' + value.lv1Id + '" />';
-			html += '<input class="menuIdValue" type="hidden" value="' + value.lv2Id + '" />';
-			html += '<input class="menuIdValue" type="hidden" value="' + value.lv3Id + '" />';
+			html += '<input type="hidden" value="' + value.lv1Id + '" />';
+			html += '<input type="hidden" value="' + value.lv2Id + '" />';
+			html += '<input type="hidden" value="' + value.lv3Id + '" />';
 			html += '</tr>';
 		})
 	}
-	$('#AC01310S_makeMenuList').html(html);
+	$('#makeMenuList').html(html);
 
 };
 
 /**
- * 메뉴 권한 조회 ( 해당 메뉴의 'tr' 더블클릭 )
+ * 메뉴 권한 조회 ( 상단 그리드의 메뉴, 항목 더블클릭 )
+ * @param {this} 더블클릭 이벤트 발생한 <tr>
  */
 function selectMenuRow(e) {
 
@@ -123,6 +126,7 @@ function selectMenuRow(e) {
  *******************************************************************/
 /**
  * 권한별 메뉴의 사용, 수정 여부 목록 출력
+ * @param {MENU_ID MAP} 메뉴ID 값을 담아 서버에 요청
  */
 var makeMenuByAuthList = function (idParam) {
 	let rowNum = 0;
@@ -136,7 +140,7 @@ var makeMenuByAuthList = function (idParam) {
 			/* make authority table */
 			$.each(data, function (key, value) {
 				rowNum++;
-				html += '<tr class="modifyAuthTable">';
+				html += '<tr>';
 				html += '<td style="text-align:right;">' + rowNum + '</td>';
 				html += '<td id="setRghtCd">' + value.rghtCd + '</td>';
 				html += '<td>' + value.rghtCdNm + '</td>';
@@ -148,7 +152,7 @@ var makeMenuByAuthList = function (idParam) {
 				html += '<td style="text-align:center;" id="setHndlPEno"></td>';
 				html += '</tr>';
 			})
-			$('#AC01310S_makeMenuByAuthList').html(html);
+			$('#makeMenuByAuthList').html(html);
 			checkUseAndModifyYn(rowNum);
 		}, fail: function (status) {
 			return console.error("error status : " + status);
@@ -159,6 +163,7 @@ var makeMenuByAuthList = function (idParam) {
 
 /**
  * 메뉴별 권한관리 prop('checked')
+ * @param {int} rowNum for문을 테이블의 길이 만큼으로 제한하기 위해
  */
 var checkUseAndModifyYn = function (rowNum) {
 	$.ajax({
@@ -174,8 +179,8 @@ var checkUseAndModifyYn = function (rowNum) {
 			DB데이터와 일치 하는 행이 있으면 사용가능, 수정가능 여부를 체크한다.
 			*/
 			for (var i = 0; i < rowNum; i++) {
-				var tableRghtCd = $('#AC01310S_makeMenuByAuthList').find('tr:eq(' + i + ') > td:eq(1)').html();
-				var target = $('#AC01310S_makeMenuByAuthList').find('tr:eq(' + i + ')');
+				var tableRghtCd = $('#makeMenuByAuthList').find('tr:eq(' + i + ') > td:eq(1)').html();
+				var target = $('#makeMenuByAuthList').find('tr:eq(' + i + ')');
 				$.each(data, function (key, val) {
 					if (tableRghtCd == val.rghtCd) {
 						if (val.mdfyRghtCcd === "1" || val.mdfyRghtCcd === "2") {
@@ -201,7 +206,7 @@ var checkUseAndModifyYn = function (rowNum) {
 /**
  * 권한코드에 따른 사용, 수정 가능 여부를 체크
  */
-var saveUseMenu = function (i) {
+var saveUseMenu = function () {
 	let useCheckbox = $('input:checkbox[id="setUseYn"]:checked');
 	let modifyCheckbox = $('input:checkbox[id="setModifyYn"]:checked');
 	let saveRghtCd = '';
@@ -277,7 +282,7 @@ var saveUseMenu = function (i) {
 	해당 화면의 lv1Id, lv2Id, lv3Id와 권한코드, SQ를 넘겨
 	해당하는 데이터를 수정한다.
 	*/
-	let tableRow = $('#AC01310S_makeMenuByAuthList').children();
+	let tableRow = $('#makeMenuByAuthList').children();
 	tableRow.each(function (i) {
 		let hndlPEno = $(this).children().eq(8).text();
 		if (hndlPEno != 0) {

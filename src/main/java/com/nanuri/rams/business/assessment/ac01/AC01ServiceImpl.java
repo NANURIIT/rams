@@ -141,7 +141,9 @@ public class AC01ServiceImpl implements AC01Service {
     }
 
     //============ end AC01010S(공통코드관리) ============//
+
     //============ Start AC01110S( 사용자 관리 ) ============//
+
     /* 사용자 추가 */
     @Override
     public void insertUser(RAA92BDTO dto) {
@@ -204,6 +206,7 @@ public class AC01ServiceImpl implements AC01Service {
     }
 
     //============ End AC01110S( 사용자 관리 ) ============//
+
     //============ start AC01210S(권한별 메뉴관리) ============//
     @Override
     public List<RAA94BDTO> getAuthCode(String rghtCdNm) throws ParseException {
@@ -304,7 +307,9 @@ public class AC01ServiceImpl implements AC01Service {
     }
 
     //============ end AC01210S(권한별 메뉴관리) ============//
+
     //============ Start AC01310S( 메뉴별권한 관리 ) ============//	
+	
     /* 메뉴명 조회 */
     @Override
     public List<RAA93BVO.MenuListVO> getMenuList(String menuNm) {
@@ -349,7 +354,17 @@ public class AC01ServiceImpl implements AC01Service {
         return raa95BMapper.selectAvailableMenu(menuId);
     }
 
-    /* RAA95B 조회 및 수정 여부 INSERT and DELETE */
+    /**
+	 * RAA95B 조회 및 수정 여부 INSERT and DELETE
+	 * 
+	 * 메뉴의 상위메뉴가 존재하여 lvId로 화면ID를 받아온다.
+	 * 화면의 depth(LV)에 따라 순차(하위메뉴 > 상위메뉴 [> 최상위메뉴 ...])적으로 SQ를 할당하여 insert
+	 * SELECT NEXTVAL(SQ)를 이용하여 유니크한 int value를 받아오고 (NEXTVAL(SQ)을 매번 실행하지 않는다)
+	 * 다음 insert를 위해 rollNum(실행횟수)만큼 NEXTVAL(SQ)를 DB에 실행 요청한다.
+	 * 
+	 * 화면 권한 삭제의 경우 menuId : 'rghtCdCancel'(default parameter)란 값이 요청되면
+	 * SQ와 권한코드로 delete 쿼리를 depth만큼 실행한다.
+	 */
     @Override
     public boolean registUseMenu(ArrayList<RAA95BVO.selectUseMenuVO> dtoList) {
         int count = 0;
@@ -365,7 +380,7 @@ public class AC01ServiceImpl implements AC01Service {
 			int rollNum = 1;		// sq value로 쓰인 NEXTVAL()의 값을 매칭시키기 위한 변수
 
             /* lv3Id가 없는 경우 */
-            if ((sq == 0) && (!dto.getMenuId().equals("rghtCdCancel")) && (dto.getLv3Id().equals("null"))) {			// 중복된 데이터가 없는 경우
+            if ((sq == 0) && (!dto.getMenuId().equals("rghtCdCancel")) && dto.getLv3Id().equals("null")) {			// 중복된 데이터가 없는 경우
                 dto.setSq(nextVal);
                 count += raa95BMapper.insertUseMenu(dto);
                 dto.setMenuId(dto.getLv1Id());
@@ -375,13 +390,13 @@ public class AC01ServiceImpl implements AC01Service {
 				if(rollNum < totalDepth-1){
 					raa95BMapper.nextVal();		// nextVal + 1을 채우기 위해
 				}
-            } else if (sq != 0 && (!dto.getMenuId().equals("rghtCdCancel"))) {	// 중복된 데이터가 있는 경우
+            } else if (sq != 0 && (!dto.getMenuId().equals("rghtCdCancel")) && dto.getLv3Id().equals("null")) {		// 중복된 데이터가 있는 경우
                 if (!raa95BMapper.isExist(dto)) {
                     count += raa95BMapper.insertUseMenu(dto);
                 } else if (raa95BMapper.isExist(dto)) {
                     count += raa95BMapper.updateAuthCodeMenu(dto);
                 }
-            } else if (sq != 0 && dto.getMenuId().equals("rghtCdCancel")) {		// 모든 권한을 취소하는 경우
+            } else if (sq != 0 && dto.getMenuId().equals("rghtCdCancel") && dto.getLv3Id().equals("null")) {		// 모든 권한을 취소하는 경우
                 for (int i = 0; i < totalDepth-1; i++) {
                     dto.setSq(sq + i);
                     count += raa95BMapper.deleteUseMenu(dto);
@@ -389,7 +404,7 @@ public class AC01ServiceImpl implements AC01Service {
             }
 
             /* lv3Id가 있는 경우 */
-            if (sq == 0 && (!dto.getLv3Id().equals("null"))) {		// 중복된 데이터가 없는 경우
+            if (sq == 0 && (!dto.getMenuId().equals("rghtCdCancel")) && (!dto.getLv3Id().equals("null"))) {			// 중복된 데이터가 없는 경우
                 dto.setSq(nextVal);
                 dto.setMenuId(dto.getLv3Id());
                 count += raa95BMapper.insertUseMenu(dto);
@@ -403,14 +418,15 @@ public class AC01ServiceImpl implements AC01Service {
 				if(rollNum < totalDepth){
 					raa95BMapper.nextVal();		// nextVal + 1을 채우기 위해
 				}
-            } else if (sq != 0 && dto.getMenuId().equals("lv3Menu")) {	// 중복된 데이터가 있는 경우
+            } else if (sq != 0 && (!dto.getMenuId().equals("rghtCdCancel")) && (!dto.getLv3Id().equals("null"))) {	// 중복된 데이터가 있는 경우
 				if (!raa95BMapper.isExist(dto)) {
-                    count += raa95BMapper.insertUseMenu(dto);
+					count += raa95BMapper.insertUseMenu(dto);
                 } else if (raa95BMapper.isExist(dto)) {
-                    count += raa95BMapper.updateAuthCodeMenu(dto);
+					count += raa95BMapper.updateAuthCodeMenu(dto);
                 }
-            } else if (sq != 0 && dto.getMenuId().equals("rghtCdCancel")) {		// 모든 권한을 취소하는 경우
+            } else if (sq != 0 && dto.getMenuId().equals("rghtCdCancel") && (!dto.getLv3Id().equals("null"))) {		// 모든 권한을 취소하는 경우
                 for (int i = 0; i < totalDepth; i++) {
+					System.out.println("      ######### " + dto.getLv3Id().getClass().getName());
                     dto.setSq(sq + i);
                     count += raa95BMapper.deleteUseMenu(dto);
                 }
