@@ -42,6 +42,10 @@ public class AC01Controller {
         return "business/ac/AC01310S";
     }
     
+    /**
+     * 메뉴관리 화면이동
+     * @return
+     */
     @GetMapping(value = {"/AC01410S"})
     public String getAC1410S() {
     	return "business/ac/AC01410S";
