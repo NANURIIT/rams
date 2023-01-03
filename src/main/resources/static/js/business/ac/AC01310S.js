@@ -32,20 +32,20 @@ function findClickbutton() {
  * @param {this} 체크박스 클릭 이벤트 발생한 <input>
  */
 function checkboxModifyYn(e) {		// 수정가능여부
-	var modifyYn = $(e);
-	var thisTr = modifyYn.parent().parent();
-	var checkedUseYn = thisTr.find('td:eq(4)').children();	// 사용여부 상태확인
-	if (modifyYn.is(':checked')) {
-		checkedUseYn.prop('checked', true);
+	let modifyYn = $(e);
+	let thisTr = modifyYn.parent().parent();
+	let checkedUseYn = thisTr.find('td:eq(4)').children();
+	if (modifyYn.is(':checked')) {					// 수정가능 여부를 체크(사용)할 때,
+		checkedUseYn.prop('checked', true);			// 사용 여부도 체크를 한다.
 	}
 }
 function checkboxUseYn(e) {		// 사용여부
-	var useYn = $(e);
-	var thisTr = useYn.parent().parent();
-	var checkedModifyYn = thisTr.find('td:eq(5)').children();	// 수정가능여부 상태확인
-	if (!useYn.is(':checked')) {
-		if (checkedModifyYn.is(':checked')) {
-			checkedModifyYn.prop('checked', false);
+	let useYn = $(e);
+	let thisTr = useYn.parent().parent();
+	let checkedModifyYn = thisTr.find('td:eq(5)').children();
+	if (!useYn.is(':checked')) {							// 사용 여부를 취소할 때,
+		if (checkedModifyYn.is(':checked')) {				// 수정가능 여부가 체크 되어 있으면,
+			checkedModifyYn.prop('checked', false);			// 수정가능 여부를 취소한다.
 		}
 	}
 
@@ -66,7 +66,7 @@ function keyDownEnter() {
  * 스크롤 액션 (테이블 reload 시 맨위로 스크롤 이동)
  */
 function scrollAction() {
-	var position = $('#makeMenuByAuthList').find('tr:eq(0)').position();	// 테이블 데이터 중 최상단 row의 position 위치를 받아오기.
+	let position = $('#makeMenuByAuthList').find('tr:eq(0)').position();	// 테이블 데이터 중 최상단 row의 position 위치를 받아오기.
 	$('.tableFixHead').animate({scrollTop: position});						// 받아온 위치값으로 원하는 <table>의 '상위태그 class'를 타겟으로 animate 조절.
 }
 
