@@ -61,18 +61,18 @@
 		       , NEXT VALUE FOR RAA01B_SQ				<!-- IBDEAL일련번호 -->
 		       , DATE_FORMAT(CURDATE(), '%Y%m%d')		<!-- DSC일자 -->
 		       , TRIM(#{ibDealNm})						<!-- IBDEAL명 -->
-		       , CAST(NVL(#{tlAmt}, 0) AS INT)			<!-- 총금액 -->
-		       , CAST(NVL(#{ptcpAmt}, 0) AS INT)		<!-- 참여금액 -->
-		       , CAST(NVL(#{tlErnAmt}, 0) AS INT)		<!-- 총수익금액 -->
-		       , CAST(NVL(#{wrtErnAmt}, 0) AS INT)		<!-- 기표수익금액 -->
-		       , CAST(NVL(#{rcvblErnAmt}, 0) AS INT)	<!-- 미수수익금액 -->
-		       , TRIM(#{entpCd})						<!-- 업체실명 -->
+		       , NVL(NULLIF(#{tlAmt},'') IS NULL, 0)	<!-- 총금액 -->
+		       , NVL(NULLIF(#{ptcpAmt},'') IS NULL, 0)	<!-- 참여금액 -->
+		       , NVL(NULLIF(#{tlErnAmt},'') IS NULL, 0)	<!-- 총수익금액 -->
+		       , NVL(NULLIF(#{wrtErnAmt},'') IS NULL, 0)<!-- 기표수익금액 -->
+		       , NVL(NULLIF(#{rcvblErnAmt},'') IS NULL, 0)	<!-- 미수수익금액 -->
+		       , TRIM(#{entpRnm})						<!-- 업체실명 -->
 		       , ''										<!-- 신용등급코드 -->
 		       , #{wrtDt}								<!-- 기표일자 -->
 		       , #{mtrtDt}								<!-- 만기일자 -->
 		       , #{invstNtnCd}							<!-- 투자국가코드 -->
 		       , #{invstCrncyCd}						<!-- 투자통화코드 -->
-		       , NVL(#{crncyAmt}, 0)					<!-- 통화금액 -->
+		       , NVL(NULLIF(#{crncyAmt},'') IS NULL, 0)	<!-- 통화금액 -->
 		       , #{invstGdsLdvdCd}						<!-- 투자상품대분류코드 -->
 		       , #{invstGdsMdvdCd}						<!-- 투자상품중분류코드 -->
 		       , #{invstGdsSdvdCd}						<!-- 투자상품소분류코드 -->

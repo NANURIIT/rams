@@ -196,9 +196,9 @@
 		       , NVL(#{invstPrdDyC}, 0)					<!-- 투자기간일수 -->
 		       , ''										<!-- 지급예정일자 -->
 		       , ''										<!-- 해지예정일자 -->
-		       , NVL(#{tlErnAmt}, 0)					<!-- 총수익금액 -->
-		       , NVL(#{wrtErnAmt}, 0)					<!-- 기표수익금액 -->
-		       , NVL(#{rcvblErnAmt}, 0)					<!-- 미수수익금액 -->
+		       , NVL(NULLIF(#{tlErnAmt},'') IS NULL, 0)	<!-- 총수익금액 -->
+		       , NVL(NULLIF(#{wrtErnAmt},'') IS NULL, 0)<!-- 기표수익금액 -->
+		       , NVL(NULLIF(#{rcvblErnAmt},'') IS NULL, 0)	<!-- 미수수익금액 -->
 		       , #{invstGdsLdvdCd}						<!-- 투자상품대분류코드 -->
 			   , #{invstGdsMdvdCd}						<!-- 투자상품중분류코드 -->
 			   , #{invstGdsSdvdCd}						<!-- 투자상품소분류코드 -->
@@ -271,7 +271,7 @@
 			   , #{bsnsSttsCcd}							<!-- 사업단계구분코드 -->
 			   , 'N'									<!-- 기초자산입력예정여부 -->
 			   , 'N'									<!-- 내부등급입력예정여부 -->
-			   , ''										<!-- 준거기업명 -->
+			   , #{cfmtEntpNm}							<!-- 준거기업명 -->
 			   , ''										<!-- 고난도상품여부 -->
 			   , ''										<!-- 가입자격 -->
 			   , 0										<!-- 최소가입금액 -->
