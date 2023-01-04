@@ -9,6 +9,6 @@ import com.nanuri.rams.business.common.dto.RAA02HDTO;
 public interface RAA02HMapper {
 
 	// deal 정보 insert
-	int insertDealInfo(RAA02HDTO paramData);
+	int insertDealInfo(RAA02BDTO paramData);
 
 }

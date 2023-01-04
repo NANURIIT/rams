@@ -31,6 +31,7 @@ public class RAA02BDTO {
 	private String invstCrncyCd;								// 투자통화코드
 	private String crncyAmt;									// 통화금액
 	private String invstPrdDyC;									// 투자기간일수
+	private String invstPrdMmC;									// 투자기간개월
 	private String wrtExptDt;									// 지급예정일자
 	private String mtrtExptDt;									// 해지예정일자
 	private String tlErnAmt;									// 총수익금액

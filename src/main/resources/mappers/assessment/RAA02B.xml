@@ -85,6 +85,7 @@
 		       , INVST_CRNCY_CD							<!-- 투자통화코드 -->
 		       , CRNCY_AMT								<!-- 통화금액 -->
 		       , INVST_PRD_DY_C							<!-- 투자기간일수 -->
+		       , INVST_PRD_MM_C							<!-- 투자기간개월수 -->
 		       , WRT_EXPT_DT							<!-- 지급예정일자 -->
 		       , MTRT_EXPT_DT							<!-- 해지예정일자 -->
 		       , TL_ERN_AMT								<!-- 총수익금액 -->
@@ -194,6 +195,7 @@
 		       , #{invstCrncyCd}						<!-- 투자통화코드 -->
 		       , NVL(#{crncyAmt}, 0)					<!-- 통화금액 -->
 		       , NVL(#{invstPrdDyC}, 0)					<!-- 투자기간일수 -->
+		       , NVL(#{invstPrdMmC}, 0)					<!-- 투자기간개월수 -->
 		       , ''										<!-- 지급예정일자 -->
 		       , ''										<!-- 해지예정일자 -->
 		       , NVL(NULLIF(#{tlErnAmt},'') IS NULL, 0)	<!-- 총수익금액 -->
@@ -286,7 +288,7 @@
 	</insert>
 	
 	<!-- 히스토리 데이터 취득 -->
-	<select id="copyDealInfO" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA02HDTO">
+	<select id="copyDealInfO" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA02BDTO">
 		SELECT IB_DEAL_NO								<!-- IBDEAL번호 -->
 		     , RISK_INSPCT_CCD							<!-- 리스크심사구분코드 -->
 		     , LST_C_CASE_CCD							<!-- 부수안건구분코드 -->
@@ -310,6 +312,7 @@
 		     , INVST_CRNCY_CD							<!-- 투자통화코드 -->
 		     , CRNCY_AMT								<!-- 통화금액 -->
 		     , INVST_PRD_DY_C							<!-- 투자기간일수 -->
+		     , INVST_PRD_MM_C							<!-- 투자기간개월수 -->
 		     , WRT_EXPT_DT								<!-- 지급예정일자 -->
 		     , MTRT_EXPT_DT								<!-- 해지예정일자 -->
 		     , TL_ERN_AMT								<!-- 총수익금액 -->

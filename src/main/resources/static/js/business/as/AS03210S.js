@@ -16,7 +16,7 @@ function setDatePicker() {
 	
 	// #tab1_datepicker1 btn apply function
 	$('#tab1_datepicker1').on('change', function() {
-		var month = $("#invstPrdMtC").val();
+		var month = $("#invstPrdMmC").val();
 		if (month != "") {
 			calcDate();
 		}
@@ -101,12 +101,60 @@ function setTabContents() {
 	var ibDealNo = td.eq(0).text();
 	$('#AS03210S_selectedDealNo').val(ibDealNo);
 	
-	console.log("ibDealNo: " + ibDealNo);
+	//console.log("ibDealNo: " + ibDealNo);
 
-	//setTab1();
+	setTab1(ibDealNo);
+	
 	//setTab2(ibDealNo);
 
 }
+
+function setTab1(ibDealNo) {
+	getDealDetailInfo(ibDealNo);
+}
+
+function getDealDetailInfo(ibDealNo) {
+	
+	var paramData = {
+		"ibDealNo": ibDealNo
+	}
+	
+	$.ajax({
+		type: "GET",
+		url: "/getDealDetailInfo",
+		data: paramData,
+		dataType: "json",
+		success: function(data) {
+			
+			console.log(data);
+			
+			
+			
+			
+			/*
+			var html = "";
+			$('#AS03210S_docInfo').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<tr>';
+					html += '<td>' + value.RA_DOC_NO + '</td>';
+					html += '<td>' + value.RA_FNL_DOC_F + '</td>';
+					html += '<td style="display:none;">' + value.ITEM_SQ + '</td>';
+					html += '</tr>';
+				});
+			} else {
+				html += '<tr>';
+				html += '<td colspan="2" style="text-align: center">데이터가 없습니다.</td>';
+				html += '</tr>';
+			}
+			$('#AS03210S_docInfo').html(html);
+			*/
+		}
+	});
+}
+
 
 function setTab2(ibDealNo) {
 	getDocInfo(ibDealNo);
@@ -372,7 +420,7 @@ function loadInvstGdsDtlsDvdCd() {
 // 투자기간 숫자입력 & 만기일 체크 function
 function checkNumber() {
 	
-	$('#invstPrdMtC').keyup(function(event){
+	$('#invstPrdMmC').keyup(function(event){
 		if (event.key >= 0 && event.key <= 9) {						// 1. 숫자입력 체크
 			var input = $("#tab1_datepicker1").val();
 			if (input != "") {										// 2. 기표일 값이 있을경우 만기일 계산
@@ -385,7 +433,7 @@ function checkNumber() {
 
 // 만기일 계산
 function calcDate() {
-	var inputInvstPrdMtC = $("#invstPrdMtC").val();
+	var inputinvstPrdMmC = $("#invstPrdMmC").val();
 	var inputDate = $("#tab1_datepicker1").val();
 
 	var year = inputDate.substring(0, 4);
@@ -395,7 +443,7 @@ function calcDate() {
 	var date = new Date(year, month - 1, day);
 
 	/*
-	date.setMonth(date.getMonth() + Number(inputInvstPrdMtC));
+	date.setMonth(date.getMonth() + Number(inputinvstPrdMmC));
 	
 	year = date.getFullYear();
 	month = date.getMonth()+1;
@@ -405,7 +453,7 @@ function calcDate() {
 	*/
 
 	var dt = inputDate;
-	var cycle = inputInvstPrdMtC;
+	var cycle = inputinvstPrdMmC;
 	var nxt = '';
 	if (dt != "" && cycle != '0') {
 		if (cycle == '99') {
@@ -708,9 +756,8 @@ function tab1save() {
 	var invstGdsMdvdCd = $('#AS03210S_invstGdsMdvdCd').val();						// 투자상품중분류
 	var invstGdsSdvdCd = $('#AS03210S_invstGdsSdvdCd').val();						// 투자상품소분류
 	var invstGdsDtlsDvdCd = $('#AS03210S_invstGdsDtlsDvdCd').val();					// 투자상품상세분류
-	
-	var invstPrdMtC = $('#invstPrdMtC').val();					 					// 투자기간(INVST_PRD_DY_C) : 만기일 - 기표일 (화면에서는 req 확인만)
-	
+																					// 투자기간(INVST_PRD_DY_C) : 만기일 - 기표일
+	var invstPrdMmC = $('#invstPrdMmC').val();					 					// 투자기간
 	var wrtDt = $('#tab1_datepicker1').val();										// 기표일
 	var mtrtDt = $('#mtrtDt').val();												// 만기일
 	var ibDealNm = $('#ibDealNm').val();											// 안건명
@@ -753,6 +800,7 @@ function tab1save() {
 		, "invstGdsMdvdCd": invstGdsMdvdCd
 		, "invstGdsSdvdCd": invstGdsSdvdCd
 		, "invstGdsDtlsDvdCd": invstGdsDtlsDvdCd
+		, "invstPrdMmC": invstPrdMmC
 		, "wrtDt": wrtDt
 		, "mtrtDt": mtrtDt
 		, "ibDealNm": ibDealNm
@@ -789,9 +837,10 @@ function tab1save() {
 	
 	//console.log(paramData);
 	
+	// 날짜체크 정규식
 	var pattern = /(^\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
 	
-	if( !isEmpty(ibDealNm) && !isEmpty(crncyAmt) && !isEmpty(invstPrdMtC) && !isEmpty(wrtDt) && pattern.test(wrtDt) ){
+	if( !isEmpty(ibDealNm) && !isEmpty(crncyAmt) && !isEmpty(invstPrdMmC) && !isEmpty(wrtDt) && pattern.test(wrtDt) ){
 		businessFunction();
 	}else{
 		swal("Error!", "필수 입력값을 확인해주세요.", "error", "confirm");

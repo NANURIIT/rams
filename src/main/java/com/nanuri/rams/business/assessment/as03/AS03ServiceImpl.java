@@ -46,11 +46,9 @@ public class AS03ServiceImpl implements AS03Service {
 	// ---------------search bar------------------
 
 	/**
-	 * 딜목록 조회
+	 * deal info 가져오기
 	 * 
 	 * @param DealInfo(VO)
-	 * @return
-	 * @throws ParseException
 	 */
 	@Override
 	public List<RAA01BVO> getDealInfo(DealInfo dealInfo) throws ParseException {
@@ -65,23 +63,31 @@ public class AS03ServiceImpl implements AS03Service {
 	};
 	
 	/**
-	 * 딜목록 조회
+	 * deal list 가져오기
 	 * 
 	 * @param DealInfo(VO)
-	 * @return
-	 * @throws ParseException
 	 */
 	@Override
 	public List<RAA02BDTO> getDealList(DealInfo DealInfo) {
 		return raa02bMapper.getDealList(DealInfo);
 	}
 	
+	/**
+	 * deal detail info 가져오기
+	 * 
+	 * @param ibDealNo(String)
+	 */
+	@Override
+	public RAA02BDTO getDealDetailInfo(String ibDealNo) {
+		
+		return raa02bMapper.copyDealInfO(ibDealNo);
+	}
 	
 	// RADEAL구분코드
 	@Override
 	public List<Map<String, Object>> getRaDealCcd() {
 		return raa91bMapper.getRaDealCcd();
-	}
+	}	
 
 	// ---------------tab1 start------------------
 
@@ -332,9 +338,9 @@ public class AS03ServiceImpl implements AS03Service {
 		String ibDealNo = dealInfoMap.get("ibDealNo").toString();
 
 		// 1. RAA02HDTO를 set 하여 insert 한다.
-		RAA02HDTO raa02hDTO = raa02bMapper.copyDealInfO(ibDealNo);
+		RAA02BDTO raa02bDTO = raa02bMapper.copyDealInfO(ibDealNo);
 
-		raa02hMapper.insertDealInfo(raa02hDTO);
+		raa02hMapper.insertDealInfo(raa02bDTO);
 
 	}
 
@@ -395,6 +401,7 @@ public class AS03ServiceImpl implements AS03Service {
 	public List<Map<String, Object>> getDbtNpFrmOblgCcd() {
 		return raa91bMapper.getDbtNpFrmOblgCcd();
 	}
+
 
 	
 

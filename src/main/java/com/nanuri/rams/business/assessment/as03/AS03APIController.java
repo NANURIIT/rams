@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,7 +46,15 @@ public class AS03APIController {
 		return as03Service.getDealList(dealDto);
 	}
 	
-	
+	/**
+	 * deal detail info 가져오기
+	 * 
+	 * @param ibDealNo(String)
+	 */
+	@GetMapping(value = "/getDealDetailInfo")
+	public RAA02BDTO getDealDetailInfo(String ibDealNo) {
+		return as03Service.getDealDetailInfo(ibDealNo);
+	}
 	
 	// RADEAL구분코드
 	@GetMapping(value = "/getRaDealCcd")
@@ -164,6 +173,7 @@ public class AS03APIController {
 	}
 
 	// 신규 deal 생성
+	@Transactional
 	@PostMapping(value = "/registDealInfo")
 	public int registDealInfo(RAA02BDTO paramData) throws ParseException {
 		
