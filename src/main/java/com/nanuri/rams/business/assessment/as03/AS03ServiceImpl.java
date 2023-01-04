@@ -212,7 +212,7 @@ public class AS03ServiceImpl implements AS03Service {
 
 		Date dt = new Date();
 		String yyyy = String.valueOf(dt.getYear() + 1900);
-		String yyyymm = yyyy.concat(String.valueOf(dt.getMonth() + 1));
+		String yyyymm = yyyy.concat(String.format("%02d", dt.getMonth() + 1));
 
 		String wrtDt = paramData.getWrtDt();
 		String mtrtDt = paramData.getMtrtDt();
@@ -243,8 +243,8 @@ public class AS03ServiceImpl implements AS03Service {
 		// WRT_DT (yyyy-mm-dd -> yyyymmdd)
 		// MTRT_DT
 		
-		paramData.setWrtDt(sf2.format(df1));
-		paramData.setMtrtDt(sf2.format(df2));
+		paramData.setWrtDt(Utils.changeDateFormat(wrtDt, "yyyyMMdd"));
+		paramData.setMtrtDt(Utils.changeDateFormat(mtrtDt, "yyyyMMdd"));
 		
 		// RA_DEAL_SQ
 		

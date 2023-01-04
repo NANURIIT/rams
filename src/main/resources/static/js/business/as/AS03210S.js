@@ -8,6 +8,7 @@ $(document).ready(function() {
 	loadTabContents();
 	
 	checkErmAmt();
+	checkNumber();
 
 });
 
@@ -369,17 +370,17 @@ function loadInvstGdsDtlsDvdCd() {
 }
 
 // 투자기간 숫자입력 & 만기일 체크 function
-function checkNumber(event) {
-	if (event.key >= 0 && event.key <= 9) {						// 1. 숫자입력 체크
-		var input = $("#tab1_datepicker1").val();
-		if (input == "") {										// 2. 기표일 값이 없을경우 만기일 체크 안함
-			return true;
-		} else {												// 2-1. 기표일 값이 있을경우 만기일 체크
-			calcDate();											// 개월수 계산하여 만기일 입력 fucntion
-			return true;
+function checkNumber() {
+	
+	$('#invstPrdMtC').keyup(function(event){
+		if (event.key >= 0 && event.key <= 9) {						// 1. 숫자입력 체크
+			var input = $("#tab1_datepicker1").val();
+			if (input != "") {										// 2. 기표일 값이 있을경우 만기일 계산
+				calcDate();											// 개월수 계산하여 만기일 입력 fucntion
+			}
 		}
-	}
-	return false;
+	})
+	
 }
 
 // 만기일 계산
@@ -707,7 +708,9 @@ function tab1save() {
 	var invstGdsMdvdCd = $('#AS03210S_invstGdsMdvdCd').val();						// 투자상품중분류
 	var invstGdsSdvdCd = $('#AS03210S_invstGdsSdvdCd').val();						// 투자상품소분류
 	var invstGdsDtlsDvdCd = $('#AS03210S_invstGdsDtlsDvdCd').val();					// 투자상품상세분류
-																					// 투자기간(INVST_PRD_DY_C) : 만기일 - 기표일
+	
+	var invstPrdMtC = $('#invstPrdMtC').val();					 					// 투자기간(INVST_PRD_DY_C) : 만기일 - 기표일 (화면에서는 req 확인만)
+	
 	var wrtDt = $('#tab1_datepicker1').val();										// 기표일
 	var mtrtDt = $('#mtrtDt').val();												// 만기일
 	var ibDealNm = $('#ibDealNm').val();											// 안건명
@@ -740,7 +743,7 @@ function tab1save() {
 	var cfmtEntpNm = $('#AS03210S_entpRnm').val();									// 업체명
 	var bsnsDprtCmmtRmrk1 = $('#AS03210S_bsnsDprtCmmtRmrk1').val();					// 사업부의견
 	var inspctDprtCmmtRmrk2 = $('#AS03210S_inspctDprtCmmtRmrk2').val();				// 심사부의견
-
+	
 	var paramData = {
 		"riskInspctCcd": riskInspctCcd
 		, "lstCCaseCcd": lstCCaseCcd
@@ -783,30 +786,38 @@ function tab1save() {
 		, "bsnsDprtCmmtRmrk1": bsnsDprtCmmtRmrk1
 		, "inspctDprtCmmtRmrk2": inspctDprtCmmtRmrk2
 	};
-
+	
 	//console.log(paramData);
+	
+	var pattern = /(^\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
+	
+	if( !isEmpty(ibDealNm) && !isEmpty(crncyAmt) && !isEmpty(invstPrdMtC) && !isEmpty(wrtDt) && pattern.test(wrtDt) ){
+		businessFunction();
+	}else{
+		swal("Error!", "필수 입력값을 확인해주세요.", "error", "confirm");
+	}
 
-	$.ajax({
-		type: "POST",
-		url: "/registDealInfo",
-		data: paramData,
-		dataType: "json",
-		success: function() {
-			swal({
-				title: "success!"
-				
-			},function(isConfirm){
-				if(isConfirm){
-					location.reload();
-				}	
-			});
-		},
-		error: function(errorCd) {
-			swal("deal정보를 생성하는데 실패하였습니다. sql 에러 코드를 확인해주세요.\n error code:" + errorCd);
-		}
-	});
+	function businessFunction(){
+		$.ajax({
+			type: "POST",
+			url: "/registDealInfo",
+			data: paramData,
+			dataType: "json",
+			success: function() {
+				swal({
+					title: "success!"
 
-
+				}, function(isConfirm) {
+					if (isConfirm) {
+						location.reload();
+					}
+				});
+			},
+			error: function(errorCd) {
+				swal("deal정보를 생성하는데 실패하였습니다. sql 에러 코드를 확인해주세요.\n error code:" + errorCd);
+			}
+		});
+	}
 
 };
 
