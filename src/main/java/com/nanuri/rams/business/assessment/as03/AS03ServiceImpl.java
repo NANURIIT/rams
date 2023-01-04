@@ -80,7 +80,11 @@ public class AS03ServiceImpl implements AS03Service {
 	@Override
 	public RAA02BDTO getDealDetailInfo(String ibDealNo) {
 		
-		return raa02bMapper.copyDealInfO(ibDealNo);
+		RAA02BDTO dealDeatail = raa02bMapper.copyDealInfO(ibDealNo);
+		dealDeatail.setWrtDt(Utils.changeDateFormat(dealDeatail.getWrtDt(), "yyyy-MM-dd"));
+		dealDeatail.setMtrtDt(Utils.changeDateFormat(dealDeatail.getMtrtDt(), "yyyy-MM-dd"));
+		
+		return dealDeatail;
 	}
 	
 	// RADEAL구분코드
@@ -236,7 +240,7 @@ public class AS03ServiceImpl implements AS03Service {
 		// 투자기간일수(INVST_PRD_DY_C)
 
 		SimpleDateFormat sf1 = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat sf2 = new SimpleDateFormat("yyyyMMdd");
+		//SimpleDateFormat sf2 = new SimpleDateFormat("yyyyMMdd");
 
 		Date df1 = sf1.parse(wrtDt);	// 기표일
 		Date df2 = sf1.parse(mtrtDt);	// 만기일
@@ -258,7 +262,7 @@ public class AS03ServiceImpl implements AS03Service {
 		paramData.setRaDealSq(raDealSq);
 		
 		// IB_DEAL_NO
-		// ibDealNo(12) = ibDealNo(1) + dprtCd(3) + yymm(4) + raDealSq(4)
+		// ibDealNo(12) = raDealCcd(1) + dprtCd(3) + yymm(4) + raDealSq(4)
 		
 		switch (raDealCcd) {
 		case "1": ibDealNo = "D";
@@ -295,8 +299,8 @@ public class AS03ServiceImpl implements AS03Service {
 		raa01bDTO.setEntpRnm(paramData.getCfmtEntpNm());								// 업체실명
 		// CORP_RGST_NO
 		// CRDT_GRD_CD
-		//raa01bDTO.setWrtDt(paramData.getWrtDt());										// 기표일자
-		//raa01bDTO.setMtrtDt(paramData.getMtrtDt());										// 만기일자
+		raa01bDTO.setWrtDt(paramData.getWrtDt());										// 기표일자
+		raa01bDTO.setMtrtDt(paramData.getMtrtDt());										// 만기일자
 		raa01bDTO.setInvstNtnCd(paramData.getInvstNtnCd());								// 투자국가코드
 		raa01bDTO.setInvstCrncyCd(paramData.getInvstCrncyCd());							// 투자통화코드
 		raa01bDTO.setCrncyAmt(paramData.getCrncyAmt());									// 통화금액

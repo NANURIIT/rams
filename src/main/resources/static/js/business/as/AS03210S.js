@@ -37,9 +37,10 @@ function setKeyFunction_AS03210S() {
 // deal List 가져오기
 function getDealList(){
 	
-	let AS03210S_ibDealNo = $('#AS03210S_ibDealNo').val();
+	let ibDealNo = $('#AS03210S_ibDealNo').val();
 	
-	if(!isEmpty(AS03210S_ibDealNo)){
+	if(!isEmpty(ibDealNo)){
+		$('#AS03210S_selectedDealNo').val();
 		businessFunction();
 	}else{
 		swal("Error!", "Deal번호를 입력해 주세요.", "error", "confirm");
@@ -47,7 +48,6 @@ function getDealList(){
 	
 	function businessFunction() {
 		var raDealCcd = $("#AS03210S_raDealCcd").val();
-		var ibDealNo = $("#AS03210S_ibDealNo").val();
 
 		var dtoParam = {
 			"raDealCcd": raDealCcd
@@ -109,6 +109,7 @@ function setTabContents() {
 
 }
 
+// 안건구조tab setting
 function setTab1(ibDealNo) {
 	getDealDetailInfo(ibDealNo);
 }
@@ -125,8 +126,54 @@ function getDealDetailInfo(ibDealNo) {
 		data: paramData,
 		dataType: "json",
 		success: function(data) {
+			var dealDetail = data;
 			
-			console.log(data);
+			console.log(dealDetail);
+			
+			$('#AS03210S_riskInspctCcd').val(dealDetail.riskInspctCcd).prop("selected", true);				// 리스크심사구분
+			$('#AS03210S_lstCCaseCcd').val(dealDetail.lstCCaseCcd).prop("selected", true);					// 부수안건
+			$('#ibDealNm').val(dealDetail.ibDealNm);														// 안건명
+			$('#ibDealSnmNm').val(dealDetail.ibDealSnmNm);													// 약어명
+			$('#AS03210S_raRsltnCcd').val(dealDetail.raRsltnCcd).prop("selected", true);					// 전결구분
+			$('#AS03210S_riskRcgNo').val(dealDetail.riskRcgNo);												// 리스크승인번호
+			
+			$('#AS03210S_inspctDprtCcd').val(dealDetail.inspctDprtCcd).prop("selected", true);				// 심사부서구분
+			$('#AS03210S_invstGdsLdvdCd').val(dealDetail.invstGdsLdvdCd).prop("selected", true);			// 투자상품대분류
+			$('#AS03210S_invstGdsMdvdCd').val(dealDetail.invstGdsMdvdCd).prop("selected", true);			// 투자상품중분류
+			$('#AS03210S_invstGdsSdvdCd').val(dealDetail.invstGdsSdvdCd).prop("selected", true);			// 투자상품소분류
+			$('#AS03210S_invstGdsDtlsDvdCd').val(dealDetail.invstGdsDtlsDvdCd).prop("selected", true);		// 투자상품상세분류
+			
+			$('#AS03210S_invstCrncyCd').val(dealDetail.invstCrncyCd).prop("selected", true);				// 부의기준통화
+			$('#crncyAmt').val(dealDetail.crncyAmt);														// 부의금액
+			$('#AS03210S_cntyCd').val(dealDetail.invstNtnCd).prop("selected", true);						// 투자국가
+			$('#aplcExchR').val(dealDetail.aplcExchR);														// 적용환율
+			$('#crncyAmtWn').val(dealDetail.ptcpAmt);														// 부의금액(원)
+			
+			$('#AS03210S_indTypDvdCd').val(dealDetail.indTypDvdCd).prop("selected", true);					// 고위험사업
+			$('#AS03210S_checkItemCd').val(dealDetail.checkItemCd).prop("selected", true);					// 업무구분
+			$('#AS03210S_bsnsAreaCd').val(dealDetail.raBsnsZoneCd).prop("selected", true);					// 사업지역
+			$('#AS03210S_invstThingCcd').val(dealDetail.invstThingCcd).prop("selected", true);				// 주요투자물건
+			$('#AS03210S_invstThingDtlsCcd').val(dealDetail.invstThingDtl).prop("selected", true);			// 투자물건상세
+			
+			$('#invstPrdMmC').val(dealDetail.invstPrdMmC);													// 투자기간(개월)
+			$('#tab1_datepicker1').val(dealDetail.wrtDt);													// 기표일(예정)
+			$('#mtrtDt').val(dealDetail.mtrtDt);															// 만기일(예정)
+			
+			$('#tlErnAmt').val(dealDetail.tlErnAmt);														// 전체수익
+			$('#rcvblErnAmt').val(dealDetail.rcvblErnAmt);													// 수수료수익
+			$('#wrtErnAmt').val(dealDetail.wrtErnAmt);														// 투자수익
+			
+			$('#AS03210S_mrtgOfrF').val(dealDetail.mrtgOfrF).prop("selected", true);						// 담보
+			$('#AS03210S_ensrF').val(dealDetail.ensrF).prop("selected", true);								// 보증
+			$('#AS03210S_rspsbCmplCcd').val(dealDetail.rspsbCmplCcd).prop("selected", true);				// 책임준공
+			
+			$('#AS03210S_entpRnm').val(dealDetail.cfmtEntpNm);												// 업체명
+			
+			var chrgPEno = dealDetail.chrgPEno;
+			
+			
+			
+			
 			
 			
 			
@@ -514,10 +561,12 @@ function checkErmAmt(){
 	$('#crncyAmt').keyup(function(event){
 		if (event.key >= 0 && event.key <= 9) {						// 1. 숫자입력 체크
 			var input1 = $("#aplcExchR").val();
-			if (input1 != "") {										// 2. 적용환율 값이 있으면 계산
+			if (input1 != "") {										// 2-1. 적용환율 값이 있을경우
 				var input2 = $("#crncyAmt").val();
-			
 				$("#crncyAmtWn").val(input1 * input2);
+			} else {												// 2-2. 적용환율 값이 없을경우
+				var input2 = $("#crncyAmt").val();
+				$("#crncyAmtWn").val(input2);	
 			}
 		}
 	})
