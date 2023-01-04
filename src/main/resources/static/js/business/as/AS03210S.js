@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 	setDatePicker();
 	
-	setKeyDownFunction_AS03210S();
+	setKeyFunction_AS03210S();
 
 	loadRaDealCcd();
 	loadTabContents();
@@ -12,20 +12,21 @@ $(document).ready(function() {
 });
 
 function setDatePicker() {
-
+	
 	// #tab1_datepicker1 btn apply function
-	$('#tab1_datepicker1').on('apply.daterangepicker', function(ev, picker) {
+	$('#tab1_datepicker1').on('change', function() {
 		var month = $("#invstPrdMtC").val();
 		if (month != "") {
 			calcDate();
 		}
 	});
+	
 }
 
 
-function setKeyDownFunction_AS03210S() {
-	
-	$("input[id=AS03210S_ibDealNo]").keydown(function(key) {
+function setKeyFunction_AS03210S() {
+
+	$("input[id=AS03210S_ibDealNo]").keyup(function(key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
 			getDealList();
 		}
@@ -34,48 +35,59 @@ function setKeyDownFunction_AS03210S() {
 
 // deal List 가져오기
 function getDealList(){
-	var raDealCcd = $("#AS03210S_raDealCcd").val();
-	var ibDealNo = $("#AS03210S_ibDealNo").val();
 	
-	var dtoParam = {
-		"raDealCcd": raDealCcd
-		, "ibDealNo": ibDealNo
-	};
+	let AS03210S_ibDealNo = $('#AS03210S_ibDealNo').val();
 	
-	$.ajax({
-		type: "GET",
-		url: "/getDealList",
-		data: dtoParam,
-		dataType: "json",
-		success: function(data) {
-			var html = '';
-			var dealList = data;
-			$('#AS03210S_ibDealList').html(html);
-			
-			//console.log(dealList);
+	if(!isEmpty(AS03210S_ibDealNo)){
+		businessFunction();
+	}else{
+		swal("Error!", "Deal번호를 입력해 주세요.", "error", "confirm");
+	}
+	
+	function businessFunction() {
+		var raDealCcd = $("#AS03210S_raDealCcd").val();
+		var ibDealNo = $("#AS03210S_ibDealNo").val();
 
-			if (dealList.length > 0) {
-				$.each(dealList, function(key, value) {
-					//console.log(value);
-					html += '<tr ondblclick="setTabContents();">';
-					//html += '<tr>';
-					html += '<td>' + value.ibDealNo + '</td>';
-					html += '<td>' + value.riskInspctCcd + '</td>';
-					html += '<td>' + value.lstCCaseCcd + '</td>';
-					html += '<td>' + value.chrgPEno + '</td>';
-					html += '<td>' + value.inspctPrgrsStCd + '</td>';
-					html += '<td>' + value.ibDealNm + '</td>';
+		var dtoParam = {
+			"raDealCcd": raDealCcd
+			, "ibDealNo": ibDealNo
+		};
+
+		$.ajax({
+			type: "GET",
+			url: "/getDealList",
+			data: dtoParam,
+			dataType: "json",
+			success: function(data) {
+				var html = '';
+				var dealList = data;
+				$('#AS03210S_ibDealList').html(html);
+
+				//console.log(dealList);
+
+				if (dealList.length > 0) {
+					$.each(dealList, function(key, value) {
+						//console.log(value);
+						html += '<tr ondblclick="setTabContents();">';
+						//html += '<tr>';
+						html += '<td>' + value.ibDealNo + '</td>';
+						html += '<td>' + value.riskInspctCcd + '</td>';
+						html += '<td>' + value.lstCCaseCcd + '</td>';
+						html += '<td>' + value.chrgPEno + '</td>';
+						html += '<td>' + value.inspctPrgrsStCd + '</td>';
+						html += '<td>' + value.ibDealNm + '</td>';
+						html += '</tr>';
+					})
+				} else {
+					html += '<tr>';
+					html += '<td colspan="6" style="text-align: center">데이터가 없습니다.</td>';
 					html += '</tr>';
-				})
-			} else {
-				html += '<tr>';
-				html += '<td colspan="6" style="text-align: center">데이터가 없습니다.</td>';
-				html += '</tr>';
+				}
+				//console.log(html);
+				$('#AS03210S_ibDealList').html(html);
 			}
-			//console.log(html);
-			$('#AS03210S_ibDealList').html(html);
-		}
-	});
+		});
+	}
 	
 };
 
