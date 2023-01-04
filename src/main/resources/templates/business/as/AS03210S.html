@@ -39,36 +39,34 @@
     			<div class="ibox ">
     				<!-- 조회조건영역 -->
     				<div class="ibox-title text-right">
-	    				<form method="get">
-	    					<div class="hiddenInfo">
-								<input type="hidden" id="AS03210S_selectedDealNo"/>
-							</div>
-	    					<div class="form-group row">
-	    						<label class="col-sm-1 col-form-label">구분</label>
-	                            <div class="col-sm-2">
-	                            	<select class="form-control m-b" id="AS03210S_raDealCcd">
-	                                </select>
-	                            </div>
-	    						<label class="col-sm-1 col-form-label">deal번호</label>
-	                            <div class="col-sm-2">
-	                            	<div class="input-group m-b">
-	                            		<input type="text" class="form-control" id="AS03210S_ibDealNo">
-	                            		<span class="input-group-append">
-                                            <button type="button" id="open_modal_AS02020P" class="btn btn-default" onclick="callAS02020P();"><i class="fa fa-search"></i></button>
-                                        </span>
-	                            	</div>
-	                            </div>
-	                            <div class="col-sm-3 text-left">
-	                            	<button class="btn btn-default" type="button">DSC안건가져오기</button>
-		                       		<button class="btn btn-primary" type="button" onclick="getDealList();">조회</button>
-		                       	</div>
-		                       	<div class="col-sm-3 text-right">
-									<button class="btn btn-success" type="button">심사요청</button>
-									<button class="btn btn-danger" type="button">심사요청취소</button>
-									<button class="btn btn-warning" type="button">심사보류</button>
-		                       	</div>
-	    					</div>
-	    				</form>
+    					<div class="hiddenInfo">
+							<input type="hidden" id="AS03210S_selectedDealNo"/>
+						</div>
+    					<div class="form-group row">
+    						<label class="col-sm-1 col-form-label">구분</label>
+                            <div class="col-sm-2">
+                            	<select class="form-control m-b" id="AS03210S_raDealCcd">
+                                </select>
+                            </div>
+    						<label class="col-sm-1 col-form-label"><span class="req">*</span>Deal번호</label>
+                            <div class="col-sm-2">
+                            	<div class="input-group m-b">
+                            		<input type="text" class="form-control" id="AS03210S_ibDealNo" readonly>
+                            		<span class="input-group-append">
+                                    	<button type="button" id="open_modal_AS02020P" class="btn btn-default" onclick="callAS02020P();"><i class="fa fa-search"></i></button>
+                                    </span>
+                            	</div>
+                            </div>
+                            <div class="col-sm-3 text-left">
+                            	<button class="btn btn-default" type="button">DSC안건가져오기</button>
+	                       		<button class="btn btn-primary" type="button" onclick="getDealList();">조회</button>
+	                       	</div>
+	                       	<div class="col-sm-3 text-right">
+								<button class="btn btn-success" type="button">심사요청</button>
+								<button class="btn btn-danger" type="button">심사요청취소</button>
+								<button class="btn btn-warning" type="button">심사보류</button>
+	                       	</div>
+    					</div>
 	    			</div>
 	    			<!-- 조회결과 -->
 	    			<div class="ibox-content">
@@ -115,20 +113,20 @@
                     			<div class="col-sm-12">
                     				<div class="form-group form-inline row text-right">
                     					<!-- 1row -->
-                    					<label class="col-sm-1 col-form-label">리스크심사구분</label>
+                    					<label class="col-sm-1 col-form-label"><span class="req">*</span>리스크심사구분</label>
 			                            <div class="col-sm-2">
 			                            	<select class="form-control m-b" style="width:100%;" id="AS03210S_riskInspctCcd">
 			                                </select>
 			                            </div>
-			                            <label class="col-sm-1 col-form-label">안건명</label>
+			                            <label class="col-sm-1 col-form-label"><span class="req">*</span>안건명</label>
 			                            <div class="col-sm-5"><input type="text" class="form-control" style="width:100%;" id="ibDealNm"></div>
-			                            <label class="col-sm-1 col-form-label">전결구분</label>
+			                            <label class="col-sm-1 col-form-label"><span class="req">*</span>전결구분</label>
 			                            <div class="col-sm-2">
 			                            	<select class="form-control m-b" style="width:100%;" id="AS03210S_raRsltnCcd">
 			                                </select>
 			                            </div>
 			                            <!-- 2row -->
-			                            <label class="col-sm-1 col-form-label">부수안건</label>
+			                            <label class="col-sm-1 col-form-label"><span class="req">*</span>부수안건</label>
 			                            <div class="col-sm-2">
 			                            	<select class="form-control m-b" style="width:100%;" id="AS03210S_lstCCaseCcd">
 			                                </select>
@@ -151,35 +149,35 @@
 						    				</div>
 						    				<div class="ibox-content text-right">
 						    					<div class="form-group row">
-						    						<label class="col-sm-4 col-form-label">심사부서구분</label>
+						    						<label class="col-sm-4 col-form-label"><span class="req">*</span>심사부서구분</label>
 						                            <div class="col-sm-8">
 						                            	<select class="form-control m-b" id="AS03210S_inspctDprtCcd">
 					                                	</select>
 					                                </div>
 					                            </div>
 						    					<div class="form-group row">
-						                            <label class="col-sm-4 col-form-label">투자상품대분류</label>
+						                            <label class="col-sm-4 col-form-label"><span class="req">*</span>투자상품대분류</label>
 						                            <div class="col-sm-8">
 						                            	<select class="form-control m-b" id="AS03210S_invstGdsLdvdCd">
 						                                </select>
 						                            </div>
 					                            </div>
 						    					<div class="form-group row">
-						                            <label class="col-sm-4 col-form-label">중분류</label>
+						                            <label class="col-sm-4 col-form-label"><span class="req">*</span>중분류</label>
 						                            <div class="col-sm-8">
 						                            	<select class="form-control m-b" id="AS03210S_invstGdsMdvdCd">
 						                                </select>
 						                            </div>
 					                            </div>
 						    					<div class="form-group row">
-						                            <label class="col-sm-4 col-form-label">소분류</label>
+						                            <label class="col-sm-4 col-form-label"><span class="req">*</span>소분류</label>
 						                            <div class="col-sm-8">
 						                            	<select class="form-control m-b" id="AS03210S_invstGdsSdvdCd">
 						                                </select>
 						                            </div>
 					                            </div>
 						    					<div class="form-group row">
-						                            <label class="col-sm-4 col-form-label">상세분류</label>
+						                            <label class="col-sm-4 col-form-label"><span class="req">*</span>상세분류</label>
 						                            <div class="col-sm-8">
 						                            	<select class="form-control m-b" id="AS03210S_invstGdsDtlsDvdCd">
 						                                </select>
@@ -196,20 +194,20 @@
 						    				</div>
 						    				<div class="ibox-content text-right">
 						    					<div class="form-group row">
-							    					<label class="col-sm-4 col-form-label">부의기준통화</label>
+							    					<label class="col-sm-4 col-form-label"><span class="req">*</span>부의기준통화</label>
 						                            <div class="col-sm-8">
 						                            	<select class="form-control m-b" id="AS03210S_invstCrncyCd">
 						                                </select>
 						                            </div>
 					                            </div>
 						    					<div class="form-group row">
-						                            <label class="col-sm-4 col-form-label">부의금액</label>
+						                            <label class="col-sm-4 col-form-label"><span class="req">*</span>부의금액</label>
 						                            <div class="col-sm-8">
 						                            	<input type="text" class="form-control" id="crncyAmt" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 						                            </div>
 					                            </div>
 						    					<div class="form-group row">
-						                            <label class="col-sm-4 col-form-label">투자국가</label>
+						                            <label class="col-sm-4 col-form-label"><span class="req">*</span>투자국가</label>
 						                            <div class="col-sm-8">
 						                            	<select class="form-control m-b" id="AS03210S_cntyCd">
 						                                </select>
@@ -245,28 +243,28 @@
 						                            </div>
 					                            </div>
 						    					<div class="form-group row">
-						                            <label class="col-sm-4 col-form-label">업무구분</label>
+						                            <label class="col-sm-4 col-form-label"><span class="req">*</span>업무구분</label>
 						                            <div class="col-sm-8">
 						                            	<select class="form-control m-b" id="AS03210S_checkItemCd">
 						                                </select>
 						                            </div>
 					                            </div>
 						    					<div class="form-group row">
-						                            <label class="col-sm-4 col-form-label">사업지역</label>
+						                            <label class="col-sm-4 col-form-label"><span class="req">*</span>사업지역</label>
 						                            <div class="col-sm-8">
 						                            	<select class="form-control m-b" id="AS03210S_bsnsAreaCd">
 						                                </select>
 						                            </div>
 					                            </div>
 						    					<div class="form-group row">
-						                            <label class="col-sm-4 col-form-label">주요투자물건</label>
+						                            <label class="col-sm-4 col-form-label"><span class="req">*</span>주요투자물건</label>
 						                            <div class="col-sm-8">
 						                            	<select class="form-control m-b" id="AS03210S_invstThingCcd">
 						                                </select>
 						                            </div>
 					                            </div>
 						    					<div class="form-group row">
-						                            <label class="col-sm-4 col-form-label">투자물건상세</label>
+						                            <label class="col-sm-4 col-form-label"><span class="req">*</span>투자물건상세</label>
 						                            <div class="col-sm-8">
 						                            	<select class="form-control m-b" id="AS03210S_invstThingDtlsCcd">
 						                                </select>
@@ -328,13 +326,13 @@
 						    				</div>
 						    				<div class="ibox-content text-right">
 						    					<div class="form-group row">
-							    					<label class="col-sm-4 col-form-label">투자기간(개월)</label>
+							    					<label class="col-sm-4 col-form-label"><span class="req">*</span>투자기간(개월)</label>
 						                            <div class="col-sm-8">
 						                            	<input type="text" class="form-control" onkeyup="return checkNumber(event);" id="invstPrdMtC">
 						                            </div>
 					                            </div>
 						    					<div class="form-group row">
-						                            <label class="col-sm-4 col-form-label">기표일(예정)</label>
+						                            <label class="col-sm-4 col-form-label"><span class="req">*</span>기표일(예정)</label>
 						                            <div class="col-sm-8">
 						                            	<div class="input-group date">
 						                                    <input type="text" class="form-control" id="tab1_datepicker1" value=""><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -342,7 +340,7 @@
 						                            </div>
 					                            </div>
 						    					<div class="form-group row">
-						                            <label class="col-sm-4 col-form-label">만기일(예정)</label>
+						                            <label class="col-sm-4 col-form-label"><span class="req">*</span>만기일(예정)</label>
 						                            <div class="col-sm-8">
 						                            	<input type="text" class="form-control" id="mtrtDt" readonly>
 						                            </div>
@@ -386,7 +384,7 @@
 						    				</div>
 						    				<div class="ibox-content text-right">
 						    					<div class="form-group row">
-							    					<label class="col-sm-4 col-form-label">담보</label>
+							    					<label class="col-sm-4 col-form-label"><span class="req">*</span>담보</label>
 						                            <div class="col-sm-8">
 						                            	<select class="form-control m-b" id="AS03210S_mrtgOfrF">
 						                            		<option value="Y">Y</option>
@@ -395,7 +393,7 @@
 						                            </div>
 					                            </div>
 						    					<div class="form-group row">
-						                            <label class="col-sm-4 col-form-label">보증</label>
+						                            <label class="col-sm-4 col-form-label"><span class="req">*</span>보증</label>
 						                            <div class="col-sm-8">
 						                            	<select class="form-control m-b" id="AS03210S_ensrF">
 						                            		<option value="Y">Y</option>
@@ -404,7 +402,7 @@
 						                            </div>
 					                            </div>
 						    					<div class="form-group row">
-					                            	<label class="col-sm-4 col-form-label">책임준공</label>
+					                            	<label class="col-sm-4 col-form-label"><span class="req">*</span>책임준공</label>
 						                            <div class="col-sm-8">
 						                            	<select class="form-control m-b" id="AS03210S_rspsbCmplCcd">
 						                                </select>

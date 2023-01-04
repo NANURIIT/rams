@@ -14,13 +14,13 @@
 		 WHERE 1=1
 		   AND r01b.CHRG_P_ENO = r99a.ENO
 		 <if test="ibDealNo != ''">
-		   AND r01b.IB_DEAL_NO LIKE #{ibDealNo}
+		   AND r01b.IB_DEAL_NO LIKE CONCAT('%', #{ibDealNo}, '%')
 		 </if>
 		 <if test="ibDealNm != ''">
-		   AND r01b.IB_DEAL_NM LIKE #{ibDealNm}
+		   AND r01b.IB_DEAL_NM LIKE CONCAT('%', #{ibDealNm}, '%')
 		 </if>
 		 <if test="dscDate != ''">
-		   AND r01b.DSC_DT LIKE #{dscDate}
+		   AND r01b.DSC_DT LIKE CONCAT('%', #{dscDate}, '%')
 		 </if>
 	</select>
 

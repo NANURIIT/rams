@@ -16,13 +16,13 @@ function callAS02020P(){
  */
 function keyDownEnter_AS02020P() {
 
-	$("input[id=AS02020P_dealNo]").keydown(function(key) {
+	$("input[id=AS02020P_ibDealNo]").keydown(function(key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
 			getDealInfo();
 		}
 	});
 
-	$("input[id=AS02020P_dealNm]").keydown(function(key) {
+	$("input[id=AS02020P_ibDealNm]").keydown(function(key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
 			getDealInfo();
 		}

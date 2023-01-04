@@ -44,65 +44,76 @@ function openModalAC01120P() {
  * 권한 저장 ajax
  */
 var saveUserData = function () {
-	let eno = $('#AC01130P_eno').val();
-	let empNm = $('#AC01130P_empNm').val();
-	let rghtCd = $('#AC01130P_rghtCd option:selected').val();
-	let aplcStrtDt = $('#AC01130P_datepicker1').val();
-	let aplcEndDt = $('#AC01130P_datepicker2').val();
-	let rgstRsn = $('#AC01130P_rgstRsn').val();
-	let rgstPEno = $('#AC01130P_rgstPEno').val();		/* 등록자는 로그인 한 사원의 세션 */
-	let rgstDt = year + month + day;					/* 8자리의 날짜 */
-	let hndlPEno = $('#AC01130P_hndlPEno').val();		/* 수정자의 세션 */
-	let hndlDyTm = today; 								/* 수정한 시간(Date타입) */
-	let sq = $('#AC01130P_sq').val();
-	let dltF = 'N';
-
-	let dtoParam = {
-		"eno": eno
-		, "empNm": empNm
-		, "rghtCd": rghtCd
-		, "rgstRsn": rgstRsn
-		, "aplcStrtDt": aplcStrtDt
-		, "aplcEndDt": aplcEndDt
-		, "rgstPEno": rgstPEno
-		, "rgstDt": rgstDt
-		, "hndlPEno": hndlPEno
-		, "hndlDyTm": hndlDyTm
-		, "dltF": dltF
-		, "sq": sq
+	
+	
+	let AC01130P_datepicker1 = $('#AC01130P_datepicker1').val();
+	let AC01130P_datepicker2 = $('#AC01130P_datepicker2').val();
+	
+	if(!isEmpty(AC01130P_datepicker1) && !isEmpty(AC01130P_datepicker2)){
+		businessFunction();
 	}
+	
+	function businessFunction() {
+		let eno = $('#AC01130P_eno').val();
+		let empNm = $('#AC01130P_empNm').val();
+		let rghtCd = $('#AC01130P_rghtCd option:selected').val();
+		let aplcStrtDt = $('#AC01130P_datepicker1').val();
+		let aplcEndDt = $('#AC01130P_datepicker2').val();
+		let rgstRsn = $('#AC01130P_rgstRsn').val();
+		let rgstPEno = $('#AC01130P_rgstPEno').val();		/* 등록자는 로그인 한 사원의 세션 */
+		let rgstDt = year + month + day;					/* 8자리의 날짜 */
+		let hndlPEno = $('#AC01130P_hndlPEno').val();		/* 수정자의 세션 */
+		let hndlDyTm = today; 								/* 수정한 시간(Date타입) */
+		let sq = $('#AC01130P_sq').val();
+		let dltF = 'N';
 
-	if (dtoParam.rghtCd != "") {
-		$.ajax({
-			method: 'POST',
-			url: '/insertUser',
-			data: JSON.stringify(dtoParam),
-			contentType: "application/json; charset=UTF-8",
-			// dataType: 'json',
-			success: function () {
-				openPopup({
-					title: '성공',
-					text: '저장이 완료되었습니다.',
-					type: 'success',
-					callback: function () {
-						$(document).on('click', '.confirm', function () {
-							resetTable();
-							modalClose_AC01130P();
-							reload(empNm);
-						})
-					}
-				})
-			},
-			error: function (request) {
-				console.log("code:" + request.status);
-			}
-		});
-	} else if (dtoParam.rghtCd == "") {			// 권한구분을 '전체(value == null)'로 선택했을 때
-		openPopup({
-			title: '실패',
-			text: '권한구분을 선택해주세요.',
-			type: 'error',
-		})
+		let dtoParam = {
+			"eno": eno
+			, "empNm": empNm
+			, "rghtCd": rghtCd
+			, "rgstRsn": rgstRsn
+			, "aplcStrtDt": aplcStrtDt
+			, "aplcEndDt": aplcEndDt
+			, "rgstPEno": rgstPEno
+			, "rgstDt": rgstDt
+			, "hndlPEno": hndlPEno
+			, "hndlDyTm": hndlDyTm
+			, "dltF": dltF
+			, "sq": sq
+		}
+
+		if (dtoParam.rghtCd != "") {
+			$.ajax({
+				method: 'POST',
+				url: '/insertUser',
+				data: JSON.stringify(dtoParam),
+				contentType: "application/json; charset=UTF-8",
+				// dataType: 'json',
+				success: function() {
+					openPopup({
+						title: '성공',
+						text: '저장이 완료되었습니다.',
+						type: 'success',
+						callback: function() {
+							$(document).on('click', '.confirm', function() {
+								resetTable();
+								modalClose_AC01130P();
+								reload(empNm);
+							})
+						}
+					})
+				},
+				error: function(request) {
+					console.log("code:" + request.status);
+				}
+			});
+		} else if (dtoParam.rghtCd == "") {			// 권한구분을 '전체(value == null)'로 선택했을 때
+			openPopup({
+				title: '실패',
+				text: '권한구분을 선택해주세요.',
+				type: 'error',
+			})
+		}
 	}
 }
 
