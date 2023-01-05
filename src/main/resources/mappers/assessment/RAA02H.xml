@@ -3,7 +3,7 @@
 <mapper namespace="com.nanuri.rams.business.common.mapper.RAA02HMapper">
 
 	<!-- deal 정보 insert -->
-	<insert id="insertDealInfo" parameterType="com.nanuri.rams.business.common.dto.RAA02HDTO" >
+	<insert id="insertDealInfo" parameterType="com.nanuri.rams.business.common.dto.RAA02BDTO" >
 		INSERT INTO RAA02H
 		       ( 
 		         IB_DEAL_NO								<!-- IBDEAL번호 -->
@@ -30,6 +30,7 @@
 		       , INVST_CRNCY_CD							<!-- 투자통화코드 -->
 		       , CRNCY_AMT								<!-- 통화금액 -->
 		       , INVST_PRD_DY_C							<!-- 투자기간일수 -->
+		       , INVST_PRD_MM_C							<!-- 투자기간개월수 -->
 		       , WRT_EXPT_DT							<!-- 지급예정일자 -->
 		       , MTRT_EXPT_DT							<!-- 해지예정일자 -->
 		       , TL_ERN_AMT								<!-- 총수익금액 -->
@@ -135,6 +136,7 @@
 	           , #{invstCrncyCd}                    	<!-- 투자통화코드 -->
 	           , #{crncyAmt}                        	<!-- 통화금액 -->
 	           , #{invstPrdDyC}                     	<!-- 투자기간일수 -->
+	           , #{invstPrdMmC}                     	<!-- 투자기간개월수 -->
 	           , #{wrtExptDt}                       	<!-- 지급예정일자 -->
 	           , #{mtrtExptDt}                      	<!-- 해지예정일자 -->
 	           , #{tlErnAmt}                        	<!-- 총수익금액 -->

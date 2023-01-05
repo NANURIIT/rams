@@ -46,11 +46,9 @@ public class AS03ServiceImpl implements AS03Service {
 	// ---------------search bar------------------
 
 	/**
-	 * 딜목록 조회
+	 * deal info 가져오기
 	 * 
 	 * @param DealInfo(VO)
-	 * @return
-	 * @throws ParseException
 	 */
 	@Override
 	public List<RAA01BVO> getDealInfo(DealInfo dealInfo) throws ParseException {
@@ -65,23 +63,35 @@ public class AS03ServiceImpl implements AS03Service {
 	};
 	
 	/**
-	 * 딜목록 조회
+	 * deal list 가져오기
 	 * 
 	 * @param DealInfo(VO)
-	 * @return
-	 * @throws ParseException
 	 */
 	@Override
 	public List<RAA02BDTO> getDealList(DealInfo DealInfo) {
 		return raa02bMapper.getDealList(DealInfo);
 	}
 	
+	/**
+	 * deal detail info 가져오기
+	 * 
+	 * @param ibDealNo(String)
+	 */
+	@Override
+	public RAA02BDTO getDealDetailInfo(String ibDealNo) {
+		
+		RAA02BDTO dealDeatail = raa02bMapper.copyDealInfO(ibDealNo);
+		dealDeatail.setWrtDt(Utils.changeDateFormat(dealDeatail.getWrtDt(), "yyyy-MM-dd"));
+		dealDeatail.setMtrtDt(Utils.changeDateFormat(dealDeatail.getMtrtDt(), "yyyy-MM-dd"));
+		
+		return dealDeatail;
+	}
 	
 	// RADEAL구분코드
 	@Override
 	public List<Map<String, Object>> getRaDealCcd() {
 		return raa91bMapper.getRaDealCcd();
-	}
+	}	
 
 	// ---------------tab1 start------------------
 
@@ -222,15 +232,20 @@ public class AS03ServiceImpl implements AS03Service {
 
 		// 최초등록자부점코드(FST_RGST_P_DPRT_CD)
 		paramData.setFstRgstPDprtCd(facade.getDetails().getDprtCd());
+		
+		// 처리부점코드
+		paramData.setHndlDprtCd(facade.getDetails().getDprtCd());
+		
+		// 처리자번호
+		paramData.setHndlPEno(facade.getDetails().getEno());
 
 		// RA기준년월(RA_STD_YR_MM)
-
 		paramData.setRaStdYrMm(yyyymm.substring(2));
 
 		// 투자기간일수(INVST_PRD_DY_C)
-
+		
 		SimpleDateFormat sf1 = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat sf2 = new SimpleDateFormat("yyyyMMdd");
+		//SimpleDateFormat sf2 = new SimpleDateFormat("yyyyMMdd");
 
 		Date df1 = sf1.parse(wrtDt);	// 기표일
 		Date df2 = sf1.parse(mtrtDt);	// 만기일
@@ -252,7 +267,7 @@ public class AS03ServiceImpl implements AS03Service {
 		paramData.setRaDealSq(raDealSq);
 		
 		// IB_DEAL_NO
-		// ibDealNo(12) = ibDealNo(1) + dprtCd(3) + yymm(4) + raDealSq(4)
+		// ibDealNo(12) = raDealCcd(1) + dprtCd(3) + yymm(4) + raDealSq(4)
 		
 		switch (raDealCcd) {
 		case "1": ibDealNo = "D";
@@ -270,8 +285,25 @@ public class AS03ServiceImpl implements AS03Service {
 		 * 2. RAA01BDTO를 setting 한다.
 		 */
 		
-		RAA01BDTO raa01bDTO = new RAA01BDTO();
+		RAA01BDTO raa01bDTO = makeRAA01BDTO(paramData);
 
+		/*
+		 * 3. RAA02BDTO, RAA01BDTO를 insert 한다.
+		 */
+
+		raa02bMapper.insertDealInfo(paramData);
+		raa01bMapper.insertDealInfo(raa01bDTO);
+
+		Map<String, Object> dealInfoMap = new HashMap<String, Object>();
+		dealInfoMap.put("ibDealNo", ibDealNo);
+
+		return dealInfoMap;
+	}
+	
+	private RAA01BDTO makeRAA01BDTO(RAA02BDTO paramData) {
+		
+		RAA01BDTO raa01bDTO = new RAA01BDTO();
+		
 		raa01bDTO.setIbDealNo(paramData.getIbDealNo());									// IBDEAL번호
 		// IB_DEAL_SQ
 		// DSC_DT
@@ -289,8 +321,8 @@ public class AS03ServiceImpl implements AS03Service {
 		raa01bDTO.setEntpRnm(paramData.getCfmtEntpNm());								// 업체실명
 		// CORP_RGST_NO
 		// CRDT_GRD_CD
-		//raa01bDTO.setWrtDt(paramData.getWrtDt());										// 기표일자
-		//raa01bDTO.setMtrtDt(paramData.getMtrtDt());										// 만기일자
+		raa01bDTO.setWrtDt(paramData.getWrtDt());										// 기표일자
+		raa01bDTO.setMtrtDt(paramData.getMtrtDt());										// 만기일자
 		raa01bDTO.setInvstNtnCd(paramData.getInvstNtnCd());								// 투자국가코드
 		raa01bDTO.setInvstCrncyCd(paramData.getInvstCrncyCd());							// 투자통화코드
 		raa01bDTO.setCrncyAmt(paramData.getCrncyAmt());									// 통화금액
@@ -311,19 +343,10 @@ public class AS03ServiceImpl implements AS03Service {
 		// HNDL_DY_TM
 		raa01bDTO.setDprtCd(facade.getDetails().getDprtCd());							// 처리부점코드
 		raa01bDTO.setHndlPEno(facade.getDetails().getEno());							// 처리자사번
-
-		/*
-		 * 3. RAA02BDTO, RAA01BDTO를 insert 한다.
-		 */
-
-		raa02bMapper.insertDealInfo(paramData);
-		raa01bMapper.insertDealInfo(raa01bDTO);
-
-		Map<String, Object> dealInfoMap = new HashMap<String, Object>();
-		dealInfoMap.put("ibDealNo", ibDealNo);
-
-		return dealInfoMap;
+		
+		return raa01bDTO;
 	}
+	
 
 	// 히스토리 데이터 취득
 	@Override
@@ -332,11 +355,62 @@ public class AS03ServiceImpl implements AS03Service {
 		String ibDealNo = dealInfoMap.get("ibDealNo").toString();
 
 		// 1. RAA02HDTO를 set 하여 insert 한다.
-		RAA02HDTO raa02hDTO = raa02bMapper.copyDealInfO(ibDealNo);
+		RAA02BDTO raa02bDTO = raa02bMapper.copyDealInfO(ibDealNo);
 
-		raa02hMapper.insertDealInfo(raa02hDTO);
+		raa02hMapper.insertDealInfo(raa02bDTO);
 
 	}
+	
+	// deal 정보 갱신
+	@Override
+	public Map<String, Object> updateDealInfo(RAA02BDTO paramData) throws ParseException {
+		
+		String wrtDt = paramData.getWrtDt();
+		String mtrtDt = paramData.getMtrtDt();
+		
+		// 처리부점코드
+		paramData.setHndlDprtCd(facade.getDetails().getDprtCd());
+
+		// 처리자번호
+		paramData.setHndlPEno(facade.getDetails().getEno());
+
+		// 투자기간일수(INVST_PRD_DY_C)
+
+		SimpleDateFormat sf1 = new SimpleDateFormat("yyyy-MM-dd");
+		// SimpleDateFormat sf2 = new SimpleDateFormat("yyyyMMdd");
+
+		Date df1 = sf1.parse(wrtDt); // 기표일
+		Date df2 = sf1.parse(mtrtDt); // 만기일
+
+		long diffSec = (df2.getTime() - df1.getTime()) / 1000; // 초 차이
+		long diffDays = diffSec / (24 * 60 * 60); // 일자수 차이
+
+		paramData.setInvstPrdDyC(String.valueOf(diffDays)); // 투자기간일수(INVST_PRD_DY_C)
+		
+		// WRT_DT (yyyy-mm-dd -> yyyymmdd)
+		// MTRT_DT
+		paramData.setWrtDt(Utils.changeDateFormat(wrtDt, "yyyyMMdd"));
+		paramData.setMtrtDt(Utils.changeDateFormat(mtrtDt, "yyyyMMdd"));
+		
+		/*
+		 * 2. RAA01BDTO를 setting 한다.
+		 */
+		
+		RAA01BDTO raa01bDTO = makeRAA01BDTO(paramData);
+
+		/*
+		 * 3. RAA02BDTO, RAA01BDTO를 insert 한다.
+		 */
+
+		raa02bMapper.updateDealInfo(paramData);
+		raa01bMapper.updateDealInfo(raa01bDTO);
+		
+		Map<String, Object> dealInfoMap = new HashMap<String, Object>();
+		dealInfoMap.put("ibDealNo", paramData.getIbDealNo());
+
+		return dealInfoMap;
+	}
+	
 
 	// ---------------tab2 start------------------
 
@@ -395,6 +469,8 @@ public class AS03ServiceImpl implements AS03Service {
 	public List<Map<String, Object>> getDbtNpFrmOblgCcd() {
 		return raa91bMapper.getDbtNpFrmOblgCcd();
 	}
+
+
 
 	
 

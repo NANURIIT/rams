@@ -30,6 +30,13 @@ public interface AS03Service {
 	 */
 	public List<RAA02BDTO> getDealList(DealInfo dealDto);
 	
+	/**
+	 * deal detail info 가져오기
+	 * 
+	 * @param ibDealNo(String)
+	 */
+	public RAA02BDTO getDealDetailInfo(String ibDealNo);
+	
 	// RADEAL구분코드
 	public List<Map<String, Object>> getRaDealCcd();
 
@@ -94,6 +101,9 @@ public interface AS03Service {
 	
 	// 히스토리 데이터 취득
 	public void registHistoy(Map<String, Object> dealInfoMap);
+	
+	// deal 정보 갱신
+	public Map<String, Object> updateDealInfo(RAA02BDTO paramData) throws ParseException;
 
 	// ---------------tab2 start------------------
 
@@ -128,6 +138,8 @@ public interface AS03Service {
 
 	// 미이행시의무
 	public List<Map<String, Object>> getDbtNpFrmOblgCcd();
+
+	
 
 	
 
