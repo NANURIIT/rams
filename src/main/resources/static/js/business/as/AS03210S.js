@@ -816,8 +816,8 @@ function tab1save() {
 		var invstCrncyCd = $('#AS03210S_invstCrncyCd').val();							// 부의기준통화
 		var crncyAmt = $('#crncyAmt').val();											// 부의금액
 		var invstNtnCd = $('#AS03210S_cntyCd').val();									// 투자국가
-		var aplcExchR = $('aplcExchR').val();											// 적용환율
-		var crncyAmtWn = $('crncyAmtWn').val();											// 부의금액(원)
+		var aplcExchR = $('#aplcExchR').val();											// 적용환율
+		var crncyAmtWn = $('#crncyAmtWn').val();											// 부의금액(원)
 		var tlErnAmt = $('#tlErnAmt').val();											// 투자수익
 		var rcvblErnAmt = $('#rcvblErnAmt').val();										// 수수료수익
 		var wrtErnAmt = $('#wrtErnAmt').val();											// 투자수익 
@@ -942,8 +942,8 @@ function tab1save() {
 		var invstCrncyCd = $('#AS03210S_invstCrncyCd').val();							// 부의기준통화
 		var crncyAmt = $('#crncyAmt').val();											// 부의금액
 		var invstNtnCd = $('#AS03210S_cntyCd').val();									// 투자국가
-		var aplcExchR = $('aplcExchR').val();											// 적용환율
-		var crncyAmtWn = $('crncyAmtWn').val();											// 부의금액(원)
+		var aplcExchR = $('#aplcExchR').val();											// 적용환율
+		var crncyAmtWn = $('#crncyAmtWn').val();											// 부의금액(원)
 		var tlErnAmt = $('#tlErnAmt').val();											// 전체수익
 		var rcvblErnAmt = $('#rcvblErnAmt').val();										// 수수료수익
 		var wrtErnAmt = $('#wrtErnAmt').val();											// 투자수익 
