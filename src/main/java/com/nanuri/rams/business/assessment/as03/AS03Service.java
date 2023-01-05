@@ -101,6 +101,9 @@ public interface AS03Service {
 	
 	// 히스토리 데이터 취득
 	public void registHistoy(Map<String, Object> dealInfoMap);
+	
+	// deal 정보 갱신
+	public Map<String, Object> updateDealInfo(RAA02BDTO paramData);
 
 	// ---------------tab2 start------------------
 

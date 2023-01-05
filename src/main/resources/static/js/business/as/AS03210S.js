@@ -69,7 +69,7 @@ function getDealList(){
 
 				if (dealList.length > 0) {
 					$.each(dealList, function(key, value) {
-						html += '<tr ondblclick="setTabContents();">';
+						html += '<tr ondblclick="setTabContents(this);">';
 						html += '<td>' + value.ibDealNo + '</td>';
 						html += '<td>' + value.riskInspctCcd + '</td>';
 						html += '<td>' + value.lstCCaseCcd + '</td>';
@@ -92,15 +92,13 @@ function getDealList(){
 };
 
 // 화면에서 deal Info 검색 후 더블클릭 set
-function setTabContents() {
-	//tr(selected) = event.currentTarget;
-	//td(selected) = event.target;
-	var tr = event.currentTarget;
+function setTabContents(e) {
+	var tr = $(e);						// function을 호출한 곳의 값을 가져온다. (this)
+	// console.log(tr.html());
+	// var tr = event.currentTarget;	// event가 deprecated된 같은 기능
 	var td = $(tr).children();
-	var ibDealNo = td.eq(0).text();
+	var ibDealNo = td.eq(0).text();		// ibDeal번호
 	$('#AS03210S_selectedDealNo').val(ibDealNo);
-	
-	//console.log("ibDealNo: " + ibDealNo);
 
 	setTab1(ibDealNo);
 	
@@ -128,7 +126,7 @@ function getDealDetailInfo(ibDealNo) {
 		success: function(data) {
 			var dealDetail = data;
 			
-			console.log(dealDetail);
+			//console.log(dealDetail);
 			
 			$('#AS03210S_riskInspctCcd').val(dealDetail.riskInspctCcd).prop("selected", true);				// 리스크심사구분
 			$('#AS03210S_lstCCaseCcd').val(dealDetail.lstCCaseCcd).prop("selected", true);					// 부수안건
@@ -170,6 +168,7 @@ function getDealDetailInfo(ibDealNo) {
 			$('#AS03210S_bsnsDprtCmmtRmrk1').val(dealDetail.bsnsDprtCmmtRmrk1);								// 사업부의견
 			$('#AS03210S_inspctDprtCmmtRmrk2').val(dealDetail.inspctDprtCmmtRmrk2);							// 심사부의견
 			
+			$('#AS03210S_coprtnTypCd').val(dealDetail.coprtnTypCd);											// 협업유형
 			$('#AS03210S_entpRnm').val(dealDetail.cfmtEntpNm);												// 업체명
 			
 			var chrgPEno = dealDetail.chrgPEno;
@@ -784,128 +783,285 @@ function loadCoprtnTypCd() {
 
 function tab1save() {
 
-	var riskInspctCcd = $('#AS03210S_riskInspctCcd').val();							// 리스크심사구분
-	var lstCCaseCcd = $('#AS03210S_lstCCaseCcd').val();								// 부수안건
-	var inspctDprtCcd = $('#AS03210S_inspctDprtCcd').val();							// 심사부서구분 
-	var raDealCcd = $('#AS03210S_raDealCcd').val();									// RADEAL구분코드
-	var invstGdsLdvdCd = $('#AS03210S_invstGdsLdvdCd').val();						// 투자상품대분류
-	var invstGdsMdvdCd = $('#AS03210S_invstGdsMdvdCd').val();						// 투자상품중분류
-	var invstGdsSdvdCd = $('#AS03210S_invstGdsSdvdCd').val();						// 투자상품소분류
-	var invstGdsDtlsDvdCd = $('#AS03210S_invstGdsDtlsDvdCd').val();					// 투자상품상세분류
-																					// 투자기간(INVST_PRD_DY_C) : 만기일 - 기표일
-	var invstPrdMmC = $('#invstPrdMmC').val();					 					// 투자기간
-	var wrtDt = $('#tab1_datepicker1').val();										// 기표일
-	var mtrtDt = $('#mtrtDt').val();												// 만기일
-	var ibDealNm = $('#ibDealNm').val();											// 안건명
-	var ibDealSnmNm = $('#ibDealSnmNm').val();										// 안건약어명
-	var invstCrncyCd = $('#AS03210S_invstCrncyCd').val();							// 부의기준통화
-	var crncyAmt = $('#crncyAmt').val();											// 부의금액
-	var invstNtnCd = $('#AS03210S_cntyCd').val();									// 투자국가
-	var aplcExchR = $('aplcExchR').val();											// 적용환율
-	var crncyAmtWn = $('crncyAmtWn').val();											// 부의금액(원)
-	var tlErnAmt = $('#tlErnAmt').val();											// 투자수익
-	var rcvblErnAmt = $('#rcvblErnAmt').val();										// 수수료수익
-	var wrtErnAmt = $('#wrtErnAmt').val();											// 투자수익 
-	var indTypDvdCd = $('#AS03210S_indTypDvdCd').val();								// 고위험산업
-	var checkItemCd = $('#AS03210S_checkItemCd').val();								// 업무구분
-	var bsnsAreaCd = $('#AS03210S_bsnsAreaCd').val();								// 사업지역
-	var invstThingCcd = $('#AS03210S_invstThingCcd').val();							// 주요투자물건
-	var invstThingDtlsCcd = $('#AS03210S_invstThingDtlsCcd').val();					// 투자물건상세
-	var mrtgOfrF = $('#AS03210S_mrtgOfrF').val();									// 담보
-	var ensrF = $('#AS03210S_ensrF').val();											// 보증
-	var rspsbCmplCcd = $('#AS03210S_rspsbCmplCcd').val();							// 책임준공
-	var raRsltnCcd = $('#AS03210S_raRsltnCcd').val();								// 전결구분
-	var riskRcgNo = $('#AS03210S_riskRcgNo').val();									// 리스크승인번호
-	var hdqtCd = $('#AS03210S_hdqtCd').val();										// 본부코드
-//	var hdqtNm = $('#AS03210S_hdqtNm').val();										// 본부명
-	var dprtCd = $('#AS03210S_dprtCd').val();										// 부서코드
-//	var dprtNm = $('#AS03210S_dprtNm').val();										// 부서명
-	var chrgPEno = $('#AS03210S_eno').val();										// 직원코드
-//	var empNm = $('#AS03210S_empNm').val();											// 직원명
-	var coprtnTypCd = $('#AS03210S_coprtnTypCd').val();								// 협업유형
-	var cfmtEntpNm = $('#AS03210S_entpRnm').val();									// 업체명
-	var bsnsDprtCmmtRmrk1 = $('#AS03210S_bsnsDprtCmmtRmrk1').val();					// 사업부의견
-	var inspctDprtCmmtRmrk2 = $('#AS03210S_inspctDprtCmmtRmrk2').val();				// 심사부의견
-	
-	var paramData = {
-		"riskInspctCcd": riskInspctCcd
-		, "lstCCaseCcd": lstCCaseCcd
-		, "inspctDprtCcd": inspctDprtCcd
-		, "raDealCcd": raDealCcd
-		, "invstGdsLdvdCd": invstGdsLdvdCd
-		, "invstGdsMdvdCd": invstGdsMdvdCd
-		, "invstGdsSdvdCd": invstGdsSdvdCd
-		, "invstGdsDtlsDvdCd": invstGdsDtlsDvdCd
-		, "invstPrdMmC": invstPrdMmC
-		, "wrtDt": wrtDt
-		, "mtrtDt": mtrtDt
-		, "ibDealNm": ibDealNm
-		, "ibDealSnmNm": ibDealSnmNm
-		, "invstCrncyCd": invstCrncyCd
-		, "crncyAmt": crncyAmt
-		, "invstNtnCd": invstNtnCd
-		, "aplcExchR": aplcExchR
-		, "ptcpAmt" : crncyAmtWn
-		, "tlErnAmt": tlErnAmt
-		, "rcvblErnAmt": rcvblErnAmt
-		, "wrtErnAmt": wrtErnAmt
-		, "indTypDvdCd": indTypDvdCd
-		, "checkItemCd": checkItemCd
-		, "raBsnsZoneCd": bsnsAreaCd
-		, "invstThingCcd": invstThingCcd
-		, "invstThingDtlsCcd": invstThingDtlsCcd
-		, "mrtgOfrF": mrtgOfrF
-		, "ensrF": ensrF
-		, "rspsbCmplCcd": rspsbCmplCcd
-		, "raRsltnCcd": raRsltnCcd
-		, "riskRcgNo": riskRcgNo
-		, "hdqtCd": hdqtCd
-//		, "hdqtNm": hdqtNm
-		, "dprtCd": dprtCd
-//		, "dprtNm": dprtNm
-		, "chrgPEno": chrgPEno
-//		, "empNm": empNm
-		, "coprtnTypCd": coprtnTypCd
-		, "cfmtEntpNm": cfmtEntpNm
-		, "bsnsDprtCmmtRmrk1": bsnsDprtCmmtRmrk1
-		, "inspctDprtCmmtRmrk2": inspctDprtCmmtRmrk2
-	};
-	
-	//console.log(paramData);
-	
 	// 날짜체크 정규식
 	var pattern = /(^\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-	
-	// 유효성검사
-	if( !isEmpty(ibDealNm) && !isEmpty(crncyAmt) && !isEmpty(invstPrdMmC) && !isEmpty(wrtDt) && pattern.test(wrtDt) ){
-		businessFunction();
-	}else{
-		swal("Error!", "필수 입력값을 확인해주세요.", "error", "confirm");
+	var selectedIbDealNo = $('#AS03210S_selectedDealNo');
+
+	// deal 선택중인지 확인
+	if (isEmpty(selectedIbDealNo)) {
+		registDealInfo();
+	} else {
+		updateDealInfo();
 	}
 
-	function businessFunction(){
-		$.ajax({
-			type: "POST",
-			url: "/registDealInfo",
-			data: paramData,
-			dataType: "json",
-			success: function() {
-				swal({
-					title: "success!"
+	// Deal 정보 생성
+	function registDealInfo() {
+		var riskInspctCcd = $('#AS03210S_riskInspctCcd').val();							// 리스크심사구분
+		var lstCCaseCcd = $('#AS03210S_lstCCaseCcd').val();								// 부수안건
+		var inspctDprtCcd = $('#AS03210S_inspctDprtCcd').val();							// 심사부서구분 
+		var raDealCcd = $('#AS03210S_raDealCcd').val();									// RADEAL구분코드
+		var invstGdsLdvdCd = $('#AS03210S_invstGdsLdvdCd').val();						// 투자상품대분류
+		var invstGdsMdvdCd = $('#AS03210S_invstGdsMdvdCd').val();						// 투자상품중분류
+		var invstGdsSdvdCd = $('#AS03210S_invstGdsSdvdCd').val();						// 투자상품소분류
+		var invstGdsDtlsDvdCd = $('#AS03210S_invstGdsDtlsDvdCd').val();					// 투자상품상세분류
+																						// 투자기간(INVST_PRD_DY_C) : 만기일 - 기표일
+		var invstPrdMmC = $('#invstPrdMmC').val();					 					// 투자기간
+		var wrtDt = $('#tab1_datepicker1').val();										// 기표일
+		var mtrtDt = $('#mtrtDt').val();												// 만기일
+		var ibDealNm = $('#ibDealNm').val();											// 안건명
+		var ibDealSnmNm = $('#ibDealSnmNm').val();										// 안건약어명
+		var invstCrncyCd = $('#AS03210S_invstCrncyCd').val();							// 부의기준통화
+		var crncyAmt = $('#crncyAmt').val();											// 부의금액
+		var invstNtnCd = $('#AS03210S_cntyCd').val();									// 투자국가
+		var aplcExchR = $('aplcExchR').val();											// 적용환율
+		var crncyAmtWn = $('crncyAmtWn').val();											// 부의금액(원)
+		var tlErnAmt = $('#tlErnAmt').val();											// 투자수익
+		var rcvblErnAmt = $('#rcvblErnAmt').val();										// 수수료수익
+		var wrtErnAmt = $('#wrtErnAmt').val();											// 투자수익 
+		var indTypDvdCd = $('#AS03210S_indTypDvdCd').val();								// 고위험산업
+		var checkItemCd = $('#AS03210S_checkItemCd').val();								// 업무구분
+		var bsnsAreaCd = $('#AS03210S_bsnsAreaCd').val();								// 사업지역
+		var invstThingCcd = $('#AS03210S_invstThingCcd').val();							// 주요투자물건
+		var invstThingDtlsCcd = $('#AS03210S_invstThingDtlsCcd').val();					// 투자물건상세
+		var mrtgOfrF = $('#AS03210S_mrtgOfrF').val();									// 담보
+		var ensrF = $('#AS03210S_ensrF').val();											// 보증
+		var rspsbCmplCcd = $('#AS03210S_rspsbCmplCcd').val();							// 책임준공
+		var raRsltnCcd = $('#AS03210S_raRsltnCcd').val();								// 전결구분
+		var riskRcgNo = $('#AS03210S_riskRcgNo').val();									// 리스크승인번호
+		var hdqtCd = $('#AS03210S_hdqtCd').val();										// 본부코드
+//		var hdqtNm = $('#AS03210S_hdqtNm').val();										// 본부명
+		var dprtCd = $('#AS03210S_dprtCd').val();										// 부서코드
+//		var dprtNm = $('#AS03210S_dprtNm').val();										// 부서명
+		var chrgPEno = $('#AS03210S_eno').val();										// 직원코드
+//		var empNm = $('#AS03210S_empNm').val();											// 직원명
+		var coprtnTypCd = $('#AS03210S_coprtnTypCd').val();								// 협업유형
+		var cfmtEntpNm = $('#AS03210S_entpRnm').val();									// 업체명
+		var bsnsDprtCmmtRmrk1 = $('#AS03210S_bsnsDprtCmmtRmrk1').val();					// 사업부의견
+		var inspctDprtCmmtRmrk2 = $('#AS03210S_inspctDprtCmmtRmrk2').val();				// 심사부의견
 
-				}, function(isConfirm) {
-					if (isConfirm) {
-						location.reload();
-					}
-				});
-			},
-			error: function(errorCd) {
-				swal("deal정보를 생성하는데 실패하였습니다. sql 에러 코드를 확인해주세요.\n error code:" + errorCd);
-			}
-		});
-	}
+		var paramData = {
+			"riskInspctCcd": riskInspctCcd
+			, "lstCCaseCcd": lstCCaseCcd
+			, "inspctDprtCcd": inspctDprtCcd
+			, "raDealCcd": raDealCcd
+			, "invstGdsLdvdCd": invstGdsLdvdCd
+			, "invstGdsMdvdCd": invstGdsMdvdCd
+			, "invstGdsSdvdCd": invstGdsSdvdCd
+			, "invstGdsDtlsDvdCd": invstGdsDtlsDvdCd
+			, "invstPrdMmC": invstPrdMmC
+			, "wrtDt": wrtDt
+			, "mtrtDt": mtrtDt
+			, "ibDealNm": ibDealNm
+			, "ibDealSnmNm": ibDealSnmNm
+			, "invstCrncyCd": invstCrncyCd
+			, "crncyAmt": crncyAmt
+			, "invstNtnCd": invstNtnCd
+			, "aplcExchR": aplcExchR
+			, "ptcpAmt": crncyAmtWn
+			, "tlErnAmt": tlErnAmt
+			, "rcvblErnAmt": rcvblErnAmt
+			, "wrtErnAmt": wrtErnAmt
+			, "indTypDvdCd": indTypDvdCd
+			, "checkItemCd": checkItemCd
+			, "raBsnsZoneCd": bsnsAreaCd
+			, "invstThingCcd": invstThingCcd
+			, "invstThingDtlsCcd": invstThingDtlsCcd
+			, "mrtgOfrF": mrtgOfrF
+			, "ensrF": ensrF
+			, "rspsbCmplCcd": rspsbCmplCcd
+			, "raRsltnCcd": raRsltnCcd
+			, "riskRcgNo": riskRcgNo
+			, "hdqtCd": hdqtCd
+//			, "hdqtNm": hdqtNm
+			, "dprtCd": dprtCd
+//			, "dprtNm": dprtNm
+			, "chrgPEno": chrgPEno
+//			, "empNm": empNm
+			, "coprtnTypCd": coprtnTypCd
+			, "cfmtEntpNm": cfmtEntpNm
+			, "bsnsDprtCmmtRmrk1": bsnsDprtCmmtRmrk1
+			, "inspctDprtCmmtRmrk2": inspctDprtCmmtRmrk2
+		};
+
+		//console.log(paramData);
+
+		// 유효성검사
+		if (!isEmpty(ibDealNm) && !isEmpty(crncyAmt) && !isEmpty(invstPrdMmC) && !isEmpty(wrtDt) && pattern.test(wrtDt)) {
+			businessInsert();
+		} else {
+			swal("Error!", "필수 입력값을 확인해주세요.", "error", "confirm");
+		}
+
+		function businessInsert() {
+			$.ajax({
+				type: "POST",
+				url: "/registDealInfo",
+				data: paramData,
+				dataType: "json",
+				success: function() {
+					swal({
+						title: "deal정보를 생성하였습니다."
+
+					}, function(isConfirm) {
+						if (isConfirm) {
+							location.reload();
+						}
+					});
+				},
+				error: function() {
+					swal("deal정보를 생성하는데 실패하였습니다.");
+				}
+			});
+		}
+	} // end of insertDealInfo()
+
+	// Deal 정보 갱신
+	function updateDealInfo() {
+		var ibDealNo = selectedIbDealNo;
+		var riskInspctCcd = $('#AS03210S_riskInspctCcd').val();							// 리스크심사구분
+		var lstCCaseCcd = $('#AS03210S_lstCCaseCcd').val();								// 부수안건
+		var inspctDprtCcd = $('#AS03210S_inspctDprtCcd').val();							// 심사부서구분 
+		var raDealCcd = $('#AS03210S_raDealCcd').val();									// RADEAL구분코드
+		var invstGdsLdvdCd = $('#AS03210S_invstGdsLdvdCd').val();						// 투자상품대분류
+		var invstGdsMdvdCd = $('#AS03210S_invstGdsMdvdCd').val();						// 투자상품중분류
+		var invstGdsSdvdCd = $('#AS03210S_invstGdsSdvdCd').val();						// 투자상품소분류
+		var invstGdsDtlsDvdCd = $('#AS03210S_invstGdsDtlsDvdCd').val();					// 투자상품상세분류
+																						// 투자기간(INVST_PRD_DY_C) : 만기일 - 기표일
+		var invstPrdMmC = $('#invstPrdMmC').val();					 					// 투자기간
+		var wrtDt = $('#tab1_datepicker1').val();										// 기표일
+		var mtrtDt = $('#mtrtDt').val();												// 만기일
+		var ibDealNm = $('#ibDealNm').val();											// 안건명
+		var ibDealSnmNm = $('#ibDealSnmNm').val();										// 안건약어명
+		var invstCrncyCd = $('#AS03210S_invstCrncyCd').val();							// 부의기준통화
+		var crncyAmt = $('#crncyAmt').val();											// 부의금액
+		var invstNtnCd = $('#AS03210S_cntyCd').val();									// 투자국가
+		var aplcExchR = $('aplcExchR').val();											// 적용환율
+		var crncyAmtWn = $('crncyAmtWn').val();											// 부의금액(원)
+		var tlErnAmt = $('#tlErnAmt').val();											// 투자수익
+		var rcvblErnAmt = $('#rcvblErnAmt').val();										// 수수료수익
+		var wrtErnAmt = $('#wrtErnAmt').val();											// 투자수익 
+		var indTypDvdCd = $('#AS03210S_indTypDvdCd').val();								// 고위험산업
+		var checkItemCd = $('#AS03210S_checkItemCd').val();								// 업무구분
+		var bsnsAreaCd = $('#AS03210S_bsnsAreaCd').val();								// 사업지역
+		var invstThingCcd = $('#AS03210S_invstThingCcd').val();							// 주요투자물건
+		var invstThingDtlsCcd = $('#AS03210S_invstThingDtlsCcd').val();					// 투자물건상세
+		var mrtgOfrF = $('#AS03210S_mrtgOfrF').val();									// 담보
+		var ensrF = $('#AS03210S_ensrF').val();											// 보증
+		var rspsbCmplCcd = $('#AS03210S_rspsbCmplCcd').val();							// 책임준공
+		var raRsltnCcd = $('#AS03210S_raRsltnCcd').val();								// 전결구분
+		var riskRcgNo = $('#AS03210S_riskRcgNo').val();									// 리스크승인번호
+		var hdqtCd = $('#AS03210S_hdqtCd').val();										// 본부코드
+//		var hdqtNm = $('#AS03210S_hdqtNm').val();										// 본부명
+		var dprtCd = $('#AS03210S_dprtCd').val();										// 부서코드
+//		var dprtNm = $('#AS03210S_dprtNm').val();										// 부서명
+		var chrgPEno = $('#AS03210S_eno').val();										// 직원코드
+//		var empNm = $('#AS03210S_empNm').val();											// 직원명
+		var coprtnTypCd = $('#AS03210S_coprtnTypCd').val();								// 협업유형
+		var cfmtEntpNm = $('#AS03210S_entpRnm').val();									// 업체명
+		var bsnsDprtCmmtRmrk1 = $('#AS03210S_bsnsDprtCmmtRmrk1').val();					// 사업부의견
+		var inspctDprtCmmtRmrk2 = $('#AS03210S_inspctDprtCmmtRmrk2').val();				// 심사부의견
+
+		var paramData = {
+			"ibDealNo": ibDealNo
+			, "riskInspctCcd": riskInspctCcd
+			, "lstCCaseCcd": lstCCaseCcd
+			, "inspctDprtCcd": inspctDprtCcd
+			, "raDealCcd": raDealCcd
+			, "invstGdsLdvdCd": invstGdsLdvdCd
+			, "invstGdsMdvdCd": invstGdsMdvdCd
+			, "invstGdsSdvdCd": invstGdsSdvdCd
+			, "invstGdsDtlsDvdCd": invstGdsDtlsDvdCd
+			, "invstPrdMmC": invstPrdMmC
+			, "wrtDt": wrtDt
+			, "mtrtDt": mtrtDt
+			, "ibDealNm": ibDealNm
+			, "ibDealSnmNm": ibDealSnmNm
+			, "invstCrncyCd": invstCrncyCd
+			, "crncyAmt": crncyAmt
+			, "invstNtnCd": invstNtnCd
+			, "aplcExchR": aplcExchR
+			, "ptcpAmt": crncyAmtWn
+			, "tlErnAmt": tlErnAmt
+			, "rcvblErnAmt": rcvblErnAmt
+			, "wrtErnAmt": wrtErnAmt
+			, "indTypDvdCd": indTypDvdCd
+			, "checkItemCd": checkItemCd
+			, "raBsnsZoneCd": bsnsAreaCd
+			, "invstThingCcd": invstThingCcd
+			, "invstThingDtlsCcd": invstThingDtlsCcd
+			, "mrtgOfrF": mrtgOfrF
+			, "ensrF": ensrF
+			, "rspsbCmplCcd": rspsbCmplCcd
+			, "raRsltnCcd": raRsltnCcd
+			, "riskRcgNo": riskRcgNo
+			, "hdqtCd": hdqtCd
+//			, "hdqtNm": hdqtNm
+			, "dprtCd": dprtCd
+//			, "dprtNm": dprtNm
+			, "chrgPEno": chrgPEno
+//			, "empNm": empNm
+			, "coprtnTypCd": coprtnTypCd
+			, "cfmtEntpNm": cfmtEntpNm
+			, "bsnsDprtCmmtRmrk1": bsnsDprtCmmtRmrk1
+			, "inspctDprtCmmtRmrk2": inspctDprtCmmtRmrk2
+		};
+		
+		// 유효성검사
+		if (!isEmpty(ibDealNm) && !isEmpty(crncyAmt) && !isEmpty(invstPrdMmC) && !isEmpty(wrtDt) && pattern.test(wrtDt)) {
+			businessUpdate();
+		} else {
+			swal("Error!", "필수 입력값을 확인해주세요.", "error", "confirm");
+		}
+		
+		function businessUpdate() {
+			$.ajax({
+				type: "POST",
+				url: "/updateDealInfo",
+				data: paramData,
+				dataType: "json",
+				success: function() {
+					swal({
+						title: "deal정보를 갱신하였습니다."
+
+					}, function(isConfirm) {
+						if (isConfirm) {
+							location.reload();
+						}
+					});
+				},
+				error: function() {
+					swal("deal정보를 갱신하는데 실패하였습니다.");
+				}
+			});
+		}
+		
+	} // end of updateDealInfo()
 
 };
+
+// tab1 초기화
+function tab1reset() {
+	$('#AS03210S_selectedDealNo').val("");
+	
+	$('#ibDealNm').val("");
+	$('#ibDealSnmNm').val("");
+	$('#AS03210S_riskRcgNo').val("");
+	$('#crncyAmt').val("");
+	$('#aplcExchR').val("");
+	$('#crncyAmtWn').val("");
+	$('#invstPrdMmC').val("");
+	$('#tab1_datepicker1').val("");
+	$('#tlErnAmt').val("");
+	$('#rcvblErnAmt').val("");
+	$('#wrtErnAmt').val("");
+	$('#AS03210S_entpRnm').val("");
+	$('#AS03210S_bsnsDprtCmmtRmrk1').val("");
+	$('#AS03210S_inspctDprtCmmtRmrk2').val("");
+	$('#AS03210S_mrtgOfrF').val("Y").prop("selected", true);
+	$('#AS03210S_ensrF').val("Y").prop("selected", true);
+	
+	loadTab1();
+}
 
 
 /*tab2****************************************************/

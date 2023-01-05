@@ -4,35 +4,35 @@
 
 	<!-- deal list 정보 검색 -->
 	<select id="getDealList" parameterType="com.nanuri.rams.business.common.vo.RAA01BVO$DealInfo" resultType="com.nanuri.rams.business.common.dto.RAA02BDTO">
-		SELECT rb1.IB_DEAL_NO AS IB_DEAL_NO
-		     , rb2.CD_VL_NM   AS RISK_INSPCT_CCD
-		     , rb3.CD_VL_NM   AS LST_C_CASE_CCD
-		     , rb5.EMP_NM     AS CHRG_P_ENO
-		     , rb4.CD_VL_NM   AS INSPCT_PRGRS_ST_CD
-		     , rb1.IB_DEAL_NM AS IB_DEAL_NM 
+		SELECT rb1.IB_DEAL_NO AS IB_DEAL_NO						<!-- IBDEAL번호 -->
+		     , rb2.CD_VL_NM   AS RISK_INSPCT_CCD				<!-- 리스크심사구분코드 -->
+		     , rb3.CD_VL_NM   AS LST_C_CASE_CCD					<!-- 부수안건구분코드 -->
+		     , rb5.EMP_NM     AS CHRG_P_ENO						<!-- 담당자사번 -->
+		     , rb4.CD_VL_NM   AS INSPCT_PRGRS_ST_CD				<!-- 심사진행상태코드 -->
+		     , rb1.IB_DEAL_NM AS IB_DEAL_NM 					<!-- IBDEAL명 -->
 		  FROM RAA02B rb1
-		  LEFT JOIN RAA99A rb5
+		  LEFT JOIN RAA99A rb5									<!-- 담당자사번 -->
 		    ON rb1.CHRG_P_ENO = rb5.ENO
 		     , (
 		     	SELECT rb2.CD_VL_ID 
 				     , rb2.CD_VL_NM 
 				  from RAA90B rb1 , RAA91B rb2
 				 WHERE rb1.CMNS_CD_GRP = rb2.CMNS_CD_GRP 
-		  		   and rb1.CMNS_CD_NM = 'RISK_INSPCT_CCD'
+		  		   and rb1.CMNS_CD_NM = 'RISK_INSPCT_CCD'		<!-- 리스크심사구분코드 -->
 		       ) rb2
 		     , (
 		     	SELECT rb2.CD_VL_ID 
 				     , rb2.CD_VL_NM 
 				  from RAA90B rb1 , RAA91B rb2
 				 WHERE rb1.CMNS_CD_GRP = rb2.CMNS_CD_GRP 
-		  		   and rb1.CMNS_CD_NM = 'LST_C_CASE_CCD'
+		  		   and rb1.CMNS_CD_NM = 'LST_C_CASE_CCD'		<!-- 부수안건구분코드 -->
 		       ) rb3
 		     , (
 		     	SELECT rb2.CD_VL_ID 
 				     , rb2.CD_VL_NM 
 				  from RAA90B rb1 , RAA91B rb2
 				 WHERE rb1.CMNS_CD_GRP = rb2.CMNS_CD_GRP 
-		  		   and rb1.CMNS_CD_NM = 'INSPCT_PRGRS_ST_CD'
+		  		   and rb1.CMNS_CD_NM = 'INSPCT_PRGRS_ST_CD'	<!-- 심사진행상태코드 -->
 		       ) rb4
 		 WHERE 1=1
 		   AND rb1.RISK_INSPCT_CCD    = rb2.CD_VL_ID
@@ -51,7 +51,7 @@
 		SELECT LPAD (
 		             NVL( MAX(RA_DEAL_SQ), 0 ) + 1
 		             , 4, 0
-		            ) AS RA_DEAL_SQ
+		            ) AS RA_DEAL_SQ						<!-- RADEAL구분코드 -->
 		  FROM RAA02B
 		 WHERE 1=1
 		   AND RA_DEAL_CCD = #{raDealCcd}

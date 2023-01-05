@@ -347,6 +347,14 @@ public class AS03ServiceImpl implements AS03Service {
 		raa02hMapper.insertDealInfo(raa02bDTO);
 
 	}
+	
+	// deal 정보 갱신
+	@Override
+	public Map<String, Object> updateDealInfo(RAA02BDTO paramData) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 
 	// ---------------tab2 start------------------
 
@@ -405,6 +413,7 @@ public class AS03ServiceImpl implements AS03Service {
 	public List<Map<String, Object>> getDbtNpFrmOblgCcd() {
 		return raa91bMapper.getDbtNpFrmOblgCcd();
 	}
+
 
 
 	

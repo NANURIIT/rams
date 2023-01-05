@@ -183,6 +183,18 @@ public class AS03APIController {
 		
 		return 0;
 	}
+	
+	// deal 정보 갱신
+	@Transactional
+	@PostMapping(value = "/updateDealInfo")
+	public int updateDealInfo(RAA02BDTO paramData) throws ParseException {
+
+		Map<String, Object> dealInfoMap = as03Service.updateDealInfo(paramData);
+
+		as03Service.registHistoy(dealInfoMap);
+
+		return 0;
+	}
 
 	// ---------------tab2 start------------------
 
