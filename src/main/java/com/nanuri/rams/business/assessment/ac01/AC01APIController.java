@@ -164,6 +164,11 @@ public class AC01APIController {
 	public List<RAA93BDTO> selectHighMenuList(@RequestParam String menuNm){ 
 		return ac01Service.selectHighMenuList(menuNm);
 	}
+	
+	@GetMapping(value = "/highMenuInfo")
+	public List<RAA93BDTO> selectSubMenuList(@RequestParam String menuId){ 
+		return ac01Service.selectSubMenuList(menuId);
+	}
 
 	// ============ End AC01410S( 메뉴관리 ) ============//
 	

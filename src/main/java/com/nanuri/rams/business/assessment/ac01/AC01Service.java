@@ -74,6 +74,8 @@ public interface AC01Service {
 
 	public List<RAA93BDTO> selectHighMenuList(String menuNm);
 
+	public List<RAA93BDTO> selectSubMenuList(String menuId);
+
 	// ============ End AC01410S( 메뉴관리 ) ============//
 }
 

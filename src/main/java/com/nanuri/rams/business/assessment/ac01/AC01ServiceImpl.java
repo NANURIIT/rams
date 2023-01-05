@@ -435,6 +435,12 @@ public class AC01ServiceImpl implements AC01Service {
 		List<RAA93BDTO> dtoList = raa93BMapper.selectHighMenuList(menuNm);
 		return dtoList;
 	}
+
+	@Override
+	public List<RAA93BDTO> selectSubMenuList(String menuId) {
+		List<RAA93BDTO> dtoList = raa93BMapper.selectSubMenuList(menuId);
+		return dtoList;
+	}
 	
  	// ============ End AC01410S( 메뉴관리 ) ============//
     

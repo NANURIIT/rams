@@ -58,11 +58,30 @@
     		 , URL_DVD_CD
     		 , HNDL_DY_TM
     		 , HNDL_P_ENO
+    		 , DLT_F
  		  FROM RAA93B
  		 WHERE  SCRN_APLC_TYPE_CD = 'M' 
  		 <if test='menuNm != null and menuNm != ""'>
  		 	MENU_NM = #{menuNm}
  		 </if>
     </select>
+    
+    <!-- 하위메뉴 조회 -->
+    <select id="selectSubMenuList" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA93BDTO">
+    	SELECT MENU_ID
+    		 , SRT_NO
+    		 , URL_PRMTR_CNTNT
+    		 , MENU_NM
+    		 , SHRT_NM
+    		 , URL_NM
+    		 , URL_DVD_CD
+    		 , HNDL_DY_TM
+    		 , HNDL_P_ENO
+    		 , DLT_F
+ 		  FROM RAA93B
+ 		 WHERE SCRN_APLC_TYPE_CD = 'S' 
+		   AND HG_RNK_MENU_ID = #{menuId}
+    </select>
+    
 
 </mapper>

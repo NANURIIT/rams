@@ -19,7 +19,7 @@ public class RAA93BDTO {
     private int menuLv;									/* 메뉴레벨 */
     private String urlDvdCd;							/* URL분류코드 */
     private String urlNm;								/* URL명 */
-    private String urlRrmtrCntnt;						/* URL매개변수내용 */
+    private String urlPrmtrCntnt;						/* URL매개변수내용 */
     private String usrRghtClsfCd;						/* 사용자권한구분코드 */
     private String aplcF;								/* 적용여부 */
     private String aplcDt;								/* 적용일자 */

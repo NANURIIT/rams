@@ -14,4 +14,6 @@ public interface RAA93BMapper {
     public List<RAA93BVO> selectAuthCodeMenu(String rghtCd);
     
     public List<RAA93BDTO> selectHighMenuList(String menuNm);  // 메뉴관리 메뉴명 조회 
+
+	public List<RAA93BDTO> selectSubMenuList(String menuId);	//메뉴관리 하위메뉴 조회
 }
