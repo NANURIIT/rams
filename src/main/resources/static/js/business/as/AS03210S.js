@@ -2,8 +2,8 @@ $(document).ready(function() {
 
 	setDatePicker();
 	
-	setKeyFunction_AS03210S();
-
+	//setKeyFunction_AS03210S();
+	
 	loadRaDealCcd();
 	loadTabContents();
 	
@@ -24,7 +24,7 @@ function setDatePicker() {
 	
 }
 
-
+// 인풋창 엔터키 검색시 페이지 스크롤이 사라지는 이슈로 미사용
 function setKeyFunction_AS03210S() {
 
 	$("input[id=AS03210S_ibDealNo]").keyup(function(key) {
@@ -39,6 +39,7 @@ function getDealList(){
 	
 	let ibDealNo = $('#AS03210S_ibDealNo').val();
 	
+	// 유효성검사
 	if(!isEmpty(ibDealNo)){
 		$('#AS03210S_selectedDealNo').val();
 		businessFunction();
@@ -68,9 +69,7 @@ function getDealList(){
 
 				if (dealList.length > 0) {
 					$.each(dealList, function(key, value) {
-						//console.log(value);
 						html += '<tr ondblclick="setTabContents();">';
-						//html += '<tr>';
 						html += '<td>' + value.ibDealNo + '</td>';
 						html += '<td>' + value.riskInspctCcd + '</td>';
 						html += '<td>' + value.lstCCaseCcd + '</td>';
@@ -114,6 +113,7 @@ function setTab1(ibDealNo) {
 	getDealDetailInfo(ibDealNo);
 }
 
+// 안건구조정보
 function getDealDetailInfo(ibDealNo) {
 	
 	var paramData = {
@@ -153,7 +153,7 @@ function getDealDetailInfo(ibDealNo) {
 			$('#AS03210S_checkItemCd').val(dealDetail.checkItemCd).prop("selected", true);					// 업무구분
 			$('#AS03210S_bsnsAreaCd').val(dealDetail.raBsnsZoneCd).prop("selected", true);					// 사업지역
 			$('#AS03210S_invstThingCcd').val(dealDetail.invstThingCcd).prop("selected", true);				// 주요투자물건
-			$('#AS03210S_invstThingDtlsCcd').val(dealDetail.invstThingDtl).prop("selected", true);			// 투자물건상세
+			$('#AS03210S_invstThingDtlsCcd').val(dealDetail.invstThingDtlsCcd).prop("selected", true);		// 투자물건상세
 			
 			$('#invstPrdMmC').val(dealDetail.invstPrdMmC);													// 투자기간(개월)
 			$('#tab1_datepicker1').val(dealDetail.wrtDt);													// 기표일(예정)
@@ -167,47 +167,47 @@ function getDealDetailInfo(ibDealNo) {
 			$('#AS03210S_ensrF').val(dealDetail.ensrF).prop("selected", true);								// 보증
 			$('#AS03210S_rspsbCmplCcd').val(dealDetail.rspsbCmplCcd).prop("selected", true);				// 책임준공
 			
+			$('#AS03210S_bsnsDprtCmmtRmrk1').val(dealDetail.bsnsDprtCmmtRmrk1);								// 사업부의견
+			$('#AS03210S_inspctDprtCmmtRmrk2').val(dealDetail.inspctDprtCmmtRmrk2);							// 심사부의견
+			
 			$('#AS03210S_entpRnm').val(dealDetail.cfmtEntpNm);												// 업체명
 			
 			var chrgPEno = dealDetail.chrgPEno;
 			
-			
-			
-			
-			
-			
-			
-			
-			/*
-			var html = "";
-			$('#AS03210S_docInfo').html(html);
-
-			var codeList = data;
-			if (codeList.length > 0) {
-				$.each(codeList, function(key, value) {
-					html += '<tr>';
-					html += '<td>' + value.RA_DOC_NO + '</td>';
-					html += '<td>' + value.RA_FNL_DOC_F + '</td>';
-					html += '<td style="display:none;">' + value.ITEM_SQ + '</td>';
-					html += '</tr>';
-				});
-			} else {
-				html += '<tr>';
-				html += '<td colspan="2" style="text-align: center">데이터가 없습니다.</td>';
-				html += '</tr>';
+			var dtoParam = {
+				"empNm": ""
+				, "eno": chrgPEno
+				, "dprtCd": ""
+				, "dprtNm": ""
+				, "hdqtCd": ""
+				, "hdqtNm": ""
 			}
-			$('#AS03210S_docInfo').html(html);
-			*/
+
+			$.ajax({
+				type: "GET",
+				url: "/findEmpList",
+				data: dtoParam,
+				dataType: "json",
+				success: function(data) {
+					$('#AS03210S_hdqtCd').val(data[0].HDQT_CD);												// 본부코드
+					$('#AS03210S_hdqtNm').val(data[0].HDQT_NM);												// 본부코드명
+					$('#AS03210S_dprtCd').val(data[0].DPRT_CD);												// 부서코드
+					$('#AS03210S_dprtNm').val(data[0].DPRT_NM);												// 부서코드명
+					$('#AS03210S_empNm').val(data[0].EMP_NM);												// 직원명
+				}
+			});/* end of ajax*/
+			
 		}
-	});
+	});/* end of ajax*/
+	
 }
 
-
+// 관련문서tab setting
 function setTab2(ibDealNo) {
 	getDocInfo(ibDealNo);
 }
 
-// 관련문서
+// 관련문서 정보
 function getDocInfo(ibDealNo) {
 
 	var paramData = {
@@ -489,16 +489,7 @@ function calcDate() {
 
 	var date = new Date(year, month - 1, day);
 
-	/*
-	date.setMonth(date.getMonth() + Number(inputinvstPrdMmC));
-	
-	year = date.getFullYear();
-	month = date.getMonth()+1;
-	day = date.getDate();
-	
-	var resultDate = year + "-" + month + "-" + day;
-	*/
-
+	// 2월달 날짜까지 계산됨	
 	var dt = inputDate;
 	var cycle = inputinvstPrdMmC;
 	var nxt = '';
@@ -577,7 +568,6 @@ function checkErmAmt(){
 			var input1 = $("#crncyAmt").val();
 			if (input1 != "") {										// 2. 부의금액 값이 있으면 계산
 				var input2 = $("#aplcExchR").val();
-			
 				$("#crncyAmtWn").val(input1 * input2);
 			}
 		}
@@ -759,9 +749,6 @@ function loadUserAuth() {
 		url: "/getUserAuth",
 		dataType: "json",
 		success: function(data) {
-
-			//console.log(data);
-
 			$('#AS03210S_hdqtCd').val(data.HdqtCd);
 			$('#AS03210S_hdqtNm').val(data.HdqtNm);
 			$('#AS03210S_dprtCd').val(data.dprtCd);
@@ -889,6 +876,7 @@ function tab1save() {
 	// 날짜체크 정규식
 	var pattern = /(^\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
 	
+	// 유효성검사
 	if( !isEmpty(ibDealNm) && !isEmpty(crncyAmt) && !isEmpty(invstPrdMmC) && !isEmpty(wrtDt) && pattern.test(wrtDt) ){
 		businessFunction();
 	}else{
@@ -920,8 +908,8 @@ function tab1save() {
 };
 
 
-
 /*tab2****************************************************/
+
 // 관련문서 초기화버튼 function
 function tab2BtnReset() {
 	$('#AS03210S_docNo').val('');
