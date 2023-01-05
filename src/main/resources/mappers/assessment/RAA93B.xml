@@ -57,13 +57,14 @@
     		 , SHRT_NM
     		 , URL_DVD_CD
     		 , HNDL_DY_TM
-    		 , HNDL_P_ENO
+    		 , HNDL_P_ENO	
     		 , DLT_F
  		  FROM RAA93B
  		 WHERE  SCRN_APLC_TYPE_CD = 'M' 
  		 <if test='menuNm != null and menuNm != ""'>
  		 	MENU_NM = #{menuNm}
  		 </if>
+ 		 
     </select>
     
     <!-- 하위메뉴 조회 -->
@@ -115,9 +116,9 @@
          WHERE MENU_ID = #{menuId}
     </select>
 	
-	<insert id="inserMainMenuInfo" parameterType="com.nanuri.rams.business.common.dto.RAA93BDTO">
+	<insert id="insertMainMenuInfo" parameterType="com.nanuri.rams.business.common.dto.RAA93BDTO">
         INSERT INTO RAA93B (
-               MENU_ID
+               MENU_ID	
              , SRT_NO
              , URL_PRMTR_CNTNT
              , MENU_NM
@@ -125,7 +126,10 @@
              , URL_DVD_CD
              , HNDL_DY_TM
              , SCRN_APLC_TYPE_CD 
+             , HG_RNK_MENU_ID
+             , APLC_F
              , DLT_F
+             , HNDL_P_ENO
         ) VALUES (
 			   #{menuId}
 			 , #{srtNo}    
@@ -134,8 +138,11 @@
 			 , #{shrtNm} 
 			 , #{urlDvdCd}  
 			 , DATE_FORMAT(now(), '%Y%m%d')
-			 , 'M' 
-			 , 'N'     
+			 , 'M'
+			 , null
+			 , 'Y'
+			 , 'N'  
+			 , #{hndlPEno}   
         )
     </insert>
 

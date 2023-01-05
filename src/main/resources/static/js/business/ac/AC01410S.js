@@ -1,19 +1,21 @@
 $(document).ready(function() {
-//상위메뉴 조회
-menuSearch();
-//상위메뉴 상세버튼 클릭
-clickDetailButton(); 
-
+	//상위메뉴 조회
+	menuSearch();
+	//상위메뉴 상세버튼 클릭
+	clickDetailButton(); 
+	
 
 });
 
-/**
- * 메뉴관리
- */
+function menuLoad(){
+	let menuNm = $('#menuNm').val()
+	getMenuSearchList(menuNm);
+}
+
+/*메뉴관리 조회버튼*/
 function menuSearch() {
 	$(document).on('click', '#menuSearch', function() {
-		let menuNm = $('#menuNm').val()
-		getMenuSearchList(menuNm);
+		menuLoad();
 	});
 }
 
@@ -64,7 +66,7 @@ function rebuildMenuListTable(data){
 		})
 	} else {
 		html += '<tr>';
-		html += '	<td colspan="10" style="text-align: center">데이터가 없습니다.</td>';	
+		html += '	<td colspan="11" style="text-align: center">데이터가 없습니다.</td>';	
 		html +='</tr>';
 	}
 	$('#menuListTable').html(html);
@@ -117,7 +119,7 @@ var getMeunIdInfo = function(menuId){
 			
 		} else {
 			html += '<tr>';
-			html += '	<td colspan="10" style="text-align: center">데이터가 없습니다.</td>';
+			html += '	<td colspan="11" style="text-align: center">데이터가 없습니다.</td>';
 			html += '</tr>';
 		}
 		
@@ -174,7 +176,7 @@ var deleteMainMenu = function (mainList) {
 		contentType: 'application/json; charset=UTF-8',
 		dataType: 'json',
 		success: function () {
-			menuSearch();
+			menuLoad();
 		},
 		error: function (response) {
 
@@ -222,7 +224,16 @@ function clickSaveMainMenu() {
 		}
 
 		if (srtNoInput.length == 1) {
-			if (!srtNoInput.val()) {
+			if (srtNoInput.val().length > 5) {
+				openPopup({title: '실패',text: '정렬번호는 5자리 이하여야 합니다.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							srtNoInput.focus();
+						});
+					}
+				});
+				return;
+			} else if (!srtNoInput.val()) {
 				openPopup({title: '실패',text: '정렬번호를 입력해주세요.',type: 'error',
 					callback: function () {
 						$(document).on('click', '.confirm', function () {
@@ -236,7 +247,16 @@ function clickSaveMainMenu() {
 		}
 
 		if (urlPrmtrCntntInput.length == 1) {
-			if (!urlPrmtrCntntInput.val()) {
+			if (urlPrmtrCntntInput.val().length > 200) {
+				openPopup({title: '실패',text: '화면번호는 200자리 이하여야 합니다.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							urlPrmtrCntntInput.focus();
+						});
+					}
+				});
+				return;
+			} else if (!urlPrmtrCntntInput.val()) {
 				openPopup({title: '실패',text: '화면번호를 입력해주세요.',type: 'error',
 					callback: function () {
 						$(document).on('click', '.confirm', function () {
@@ -251,7 +271,16 @@ function clickSaveMainMenu() {
 		}
 
 		if (menuNmInput.length == 1) {
-			if (!menuNmInput.val()) {
+			if (menuNmInput.val().length > 50) {
+				openPopup({title: '실패',text: '메뉴명은 50자리 이하여야 합니다.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							menuNmInput.focus();
+						});
+					}
+				});
+				return;
+			} else if (!menuNmInput.val()) {
 				openPopup({title: '실패',text: '메뉴명을 입력해주세요.',type: 'error',
 					callback: function () {
 						$(document).on('click', '.confirm', function () {
@@ -265,7 +294,16 @@ function clickSaveMainMenu() {
 		}
 		
 		if (shrtNmInput.length == 1) {
-			if (!shrtNmInput.val()) {
+			if (shrtNmInput.val().length > 100) {
+				openPopup({title: '실패',text: '메뉴설명은 100자리 이하여야 합니다.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							shrtNmInput.focus();
+						});
+					}
+				});
+				return;
+			} else if (!shrtNmInput.val()) {
 				openPopup({title: '실패',text: '메뉴설명을 입력해주세요.',type: 'error',
 					callback: function () {
 						$(document).on('click', '.confirm', function () {
@@ -279,7 +317,16 @@ function clickSaveMainMenu() {
 		}
 		
 		if (urlDvdCdInput.length == 1) {
-			if (!urlDvdCdInput.val()) {
+			if (urlDvdCdInput.val().length > 2) {
+				openPopup({title: '실패',text: 'URL분류코드는 2자리 이하여야 합니다.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							urlDvdCdInput.focus();
+						});
+					}
+				});
+				return;
+			} else if (!urlDvdCdInput.val()) {
 				openPopup({title: '실패',text: 'URL분류코드를 입력해주세요.',type: 'error',
 					callback: function () {
 						$(document).on('click', '.confirm', function () {
@@ -312,7 +359,7 @@ var saveMainMenu = function (groupCodeList) {
 		contentType: "application/json; charset=UTF-8",
 		dataType: 'json',
 		success: function () {
-			menuSearch();
+			menuLoad();
 		},
 		error: function (response) {
 			let message = response.responseJSON.message;

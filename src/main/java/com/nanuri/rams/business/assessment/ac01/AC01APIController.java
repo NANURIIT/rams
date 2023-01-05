@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.nanuri.rams.business.common.dto.*;
-import com.nanuri.rams.business.common.vo.RAA90BVO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +12,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nanuri.rams.business.common.dto.RAA90BDTO;
+import com.nanuri.rams.business.common.dto.RAA91BDTO;
+import com.nanuri.rams.business.common.dto.RAA92BDTO;
+import com.nanuri.rams.business.common.dto.RAA93BDTO;
+import com.nanuri.rams.business.common.dto.RAA94BDTO;
+import com.nanuri.rams.business.common.dto.RAA95BDTO;
+import com.nanuri.rams.business.common.vo.RAA90BVO;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
+import com.nanuri.rams.business.common.vo.RAA93BVO.MainMenuVo;
 import com.nanuri.rams.business.common.vo.RAA95BVO;
 
 import lombok.RequiredArgsConstructor;
@@ -182,7 +188,7 @@ public class AC01APIController {
 	
 	// 상위메뉴 정보 등록하기
 	@PostMapping(value = "/registMainMenuInfo")
-	public boolean registMainMenuInfo(@RequestBody List<RAA93BDTO> requestDtos) {
+	public boolean registMainMenuInfo(@RequestBody List<MainMenuVo> requestDtos) {
 		return ac01Service.registMainMenuInfo(requestDtos);
 	}
 	

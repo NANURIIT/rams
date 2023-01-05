@@ -29,6 +29,7 @@ import com.nanuri.rams.business.common.mapper.RAA95BMapper;
 import com.nanuri.rams.business.common.vo.RAA90BVO;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
+import com.nanuri.rams.business.common.vo.RAA93BVO.MainMenuVo;
 import com.nanuri.rams.business.common.vo.RAA95BVO;
 import com.nanuri.rams.com.security.AuthenticationFacade;
 
@@ -432,6 +433,7 @@ public class AC01ServiceImpl implements AC01Service {
     // =========== Start AC01410S( 메뉴관리) ============//
 	@Override
 	public List<RAA93BDTO> selectMainMenuList(String menuNm) {
+		
 		List<RAA93BDTO> dtoList = raa93BMapper.selectMainMenuList(menuNm);
 		return dtoList;
 	}
@@ -455,15 +457,17 @@ public class AC01ServiceImpl implements AC01Service {
 	}
 
 	@Override
-	public boolean registMainMenuInfo(List<RAA93BDTO> requestDtos) {
+	public boolean registMainMenuInfo(List<MainMenuVo> requestDtos) {
 		int count = 0;
-        for (RAA93BDTO requestDto : requestDtos) {
+        for (MainMenuVo requestDto : requestDtos) {
             if (raa93BMapper.getMainMenuInfo(requestDto.getMenuId()).isPresent()) {
                 throw new IllegalArgumentException("해당 그룹코드가 존재합니다. " + requestDto.getMenuId());
             }
 
             if (raa93BMapper.getMainMenuInfo(requestDto.getOldMenuId()).isEmpty()) {
-                count += raa93BMapper.inserMainMenuInfo(requestDto);
+            	String hndlPEno = facade.getDetails().getEno();
+            	requestDto.setHndlPEno(hndlPEno);
+                count += raa93BMapper.insertMainMenuInfo(requestDto);
             } else {
                 count += raa93BMapper.updateMainMenuInfo(requestDto);
             }

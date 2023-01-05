@@ -16,6 +16,7 @@ import com.nanuri.rams.business.common.dto.RAA95BDTO;
 import com.nanuri.rams.business.common.vo.RAA90BVO;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
+import com.nanuri.rams.business.common.vo.RAA93BVO.MainMenuVo;
 import com.nanuri.rams.business.common.vo.RAA95BVO;
 
 @Service
@@ -80,7 +81,7 @@ public interface AC01Service {
 
 	public boolean deleteSubMenuInfo(List<String> menuId);
 
-	public boolean registMainMenuInfo(List<RAA93BDTO> requestDtos);
+	public boolean registMainMenuInfo(List<MainMenuVo> requestDtos);
 
 	
 

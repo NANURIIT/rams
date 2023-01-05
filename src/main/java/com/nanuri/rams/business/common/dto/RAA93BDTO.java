@@ -31,5 +31,4 @@ public class RAA93BDTO {
     private String hndlDprtCd;							/* 처리부점코드 */
     private String hndlPEno;							/* 처리자사번 */
     
-    private String OldMenuId;						/* 변경전 메누ID*/
 }

@@ -25,7 +25,7 @@ public interface RAA93BMapper {
 
 	public Optional<RAA90BDTO> getMainMenuInfo(String menuId);
 
-	public int inserMainMenuInfo(RAA93BDTO requestDto);		
+	public int insertMainMenuInfo(RAA93BDTO requestDto);		
 
 	public int updateMainMenuInfo(RAA93BDTO requestDto); 
 
