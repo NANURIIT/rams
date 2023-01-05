@@ -788,8 +788,8 @@ function tab1save() {
 
 	// 날짜체크 정규식
 	var pattern = /(^\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/
-	var selectedIbDealNo = $('#AS03210S_selectedDealNo');
-
+	var selectedIbDealNo = $('#AS03210S_selectedDealNo').val();
+	
 	// deal 선택중인지 확인
 	if (isEmpty(selectedIbDealNo)) {
 		registDealInfo();

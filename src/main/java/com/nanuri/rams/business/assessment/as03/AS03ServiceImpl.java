@@ -403,7 +403,7 @@ public class AS03ServiceImpl implements AS03Service {
 		 */
 
 		raa02bMapper.updateDealInfo(paramData);
-		//raa01bMapper.updateDealInfo(raa01bDTO);
+		raa01bMapper.updateDealInfo(raa01bDTO);
 		
 		Map<String, Object> dealInfoMap = new HashMap<String, Object>();
 		dealInfoMap.put("ibDealNo", paramData.getIbDealNo());

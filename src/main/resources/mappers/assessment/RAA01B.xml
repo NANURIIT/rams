@@ -90,8 +90,30 @@
 	<!-- deal 정보 갱신 -->
 	<update id="updateDealInfo" parameterType="com.nanuri.rams.business.common.dto.RAA01BDTO">
 		UPDATE RAA01B
-		   SET 
-	
+		   SET IB_DEAL_NM							= TRIM(#{ibDealNm})								<!-- IBDEAL명 -->
+		     , TL_AMT								= NVL(NULLIF(#{tlAmt},'') IS NULL, 0)			<!-- 총금액 -->
+		     , PTCP_AMT								= NVL(NULLIF(#{ptcpAmt},'') IS NULL, 0)			<!-- 참여금액 -->
+		     , TL_ERN_AMT							= NVL(NULLIF(#{tlErnAmt},'') IS NULL, 0)		<!-- 총수익금액 -->
+		     , WRT_ERN_AMT							= NVL(NULLIF(#{wrtErnAmt},'') IS NULL, 0)		<!-- 기표수익금액 -->
+		     , RCVBL_ERN_AMT						= NVL(NULLIF(#{rcvblErnAmt},'') IS NULL, 0)		<!-- 미수수익금액 -->
+			 , ENTP_RNM								= TRIM(#{entpRnm})								<!-- 업체실명 -->
+			 , WRT_DT								= #{wrtDt}										<!-- 기표일자 -->
+		     , MTRT_DT								= #{mtrtDt}										<!-- 만기일자 -->
+		     , INVST_NTN_CD							= #{invstNtnCd}									<!-- 투자국가코드 -->
+		     , INVST_CRNCY_CD						= #{invstCrncyCd}								<!-- 투자통화코드 -->
+		     , CRNCY_AMT							= NVL(NULLIF(#{crncyAmt},'') IS NULL, 0)		<!-- 통화금액 -->
+		     , INVST_GDS_LDVD_CD					= #{invstGdsLdvdCd}								<!-- 투자상품대분류코드 -->
+		     , INVST_GDS_MDVD_CD					= #{invstGdsMdvdCd}								<!-- 투자상품중분류코드 -->
+		     , INVST_GDS_SDVD_CD					= #{invstGdsSdvdCd}								<!-- 투자상품소분류코드 -->
+		     , INVST_GDS_DTLS_DVD_CD				= #{invstGdsDtlsDvdCd}							<!-- 투자상품상세분류코드 -->
+		     , COPRTN_TYP_CD						= #{coprtnTypCd}								<!-- 협업유형코드 -->
+		     , HDQT_CD								= #{hdqtCd}										<!-- 본부코드 -->
+		     , DPRT_CD								= #{dprtCd}										<!-- 부점코드 -->
+		     , CHRG_P_ENO							= TRIM(#{chrgPEno})								<!-- 담당자사번 -->
+		     , HNDL_DPRT_CD							= #{hndlDprtCd}									<!-- 처리부점코드 -->
+		     , HNDL_P_ENO							= #{hndlPEno}									<!-- 처리자사번 -->
+		 WHERE 1=1
+		   AND IB_DEAL_NO = #{ibDealNo}																<!-- IBDEAL번호 -->
 	</update>
 
 </mapper>

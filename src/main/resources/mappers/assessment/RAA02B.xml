@@ -298,13 +298,13 @@
 			 , INVST_PRD_DY_C				= NVL(#{invstPrdDyC}, 0)				<!-- 투자기간일수 -->
 			 , INVST_PRD_MM_C				= NVL(#{invstPrdMmC}, 0)				<!-- 투자기간개월수 -->
 			 , WRT_DT						= #{wrtDt}								<!-- 기표일자 -->
-			 , MTRT_DT						= #{mttDt}								<!-- 만기일자 --> 
+			 , MTRT_DT						= #{mtrtDt}								<!-- 만기일자 --> 
 			 , IB_DEAL_NM 					= #{ibDealNm}							<!-- IBDEAL명 -->
 			 , IB_DEAL_SNM_NM				= #{ibDealSnmNm}						<!-- IBDEAL약어명 -->
 			 , INVST_CRNCY_CD				= #{invstCrncyCd}						<!-- 투자통화코드 -->
 			 , CRNCY_AMT					= NVL(#{crncyAmt}, 0)					<!-- 통화금액 -->
 			 , INVST_NTN_CD					= #{invstNtnCd}							<!-- 투자국가코드 -->
-			 , APCL_EXCH_R					= NVL(#{aplcExchR}, 0)					<!-- 적용환율 -->
+			 , APLC_EXCH_R					= NVL(#{aplcExchR}, 0)					<!-- 적용환율 -->
 			 , PTCP_AMT						= NVL(#{ptcpAmt}, 0)					<!-- 참여금액 -->
 			 , TL_ERN_AMT					= NVL(#{tlErnAmt}, 0)					<!-- 총수익금액 -->
 			 , WRT_ERN_AMT					= NVL(#{wrtErnAmt}, 0)					<!-- 기표수익금액 -->
