@@ -48,6 +48,7 @@
       ORDER BY srt_no
     </select>
     
+    <!-- 상위메뉴 조회 -->
     <select id="selectHighMenuList" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA93BDTO">
     	SELECT MENU_ID
     		 , MENU_NM
@@ -58,7 +59,10 @@
     		 , HNDL_DY_TM
     		 , HNDL_P_ENO
  		  FROM RAA93B
- 		 WHERE MENU_NM = #{menuNm}
+ 		 WHERE  SCRN_APLC_TYPE_CD = 'M' 
+ 		 <if test='menuNm != null and menuNm != ""'>
+ 		 	MENU_NM = #{menuNm}
+ 		 </if>
     </select>
 
 </mapper>

@@ -41,20 +41,20 @@ function rebuildMenuListTable(data){
 	var html ='';
 	var menuList = data;
 	
-	if (menuList.lenth > 0) {
+	if (menuList.length > 0) {
 		$.each(menuList, function (key, value){
-			html += '<tr class="high_menu" ondbclick="selectHighMenu(this)">';
-			html += '	<td>';		//삭제
+			html += '<tr>';
+			html += '	<td><input type="checkbox"></td>';		//삭제
 			html += '	<td>'+ value.menuId + '</td>';	//메뉴ID
+			html += '	<td>'+ value.srtNo+ '</td>'; 	//정렬번호
+			html += '	<td>'+ value.urlRrmtrCntnt+ '</td>';	//화면번호
 			html += '	<td>'+ value.menuNm + '</td>';	//메뉴명
-			html += '	<td>'+ valus.srtNo+ '</td>'; 	//정렬번호
-			html += '	<td>'+ value.urlPrmtrCntnt+ '</td>';	//화면번호
 			html += '	<td>'+ value.shrtNm + '</td>';	//메뉴설명
 			html += '	<td>'+ value.urlDvdCd + '</td>';	//URL문류코드
-			hrml += '	<td> <button>조회<button/> </td>';	//하위메뉴
+			html += '	<td><button class=" btn btn-warning btn-xs"><i class="fa fa-arrow-down"></i>&nbsp;상세</button></td>';	 //하위메뉴
 			html += '	<td>'+ value.hndlDyTm + '</td>'; 	//처리일시
 			html += '	<td>'+ value.hhdlPEno+ '</td>';		//처리자
-			html += '</tr>';
+			html += '</tr>';	
 		})
 	} else {
 		hrml += '<tr>';
