@@ -21,13 +21,13 @@
 	<!-- 상단 타이틀 -->
 	<div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>[04210]협의체 결과</h2>
+            <h2>[04210]협의체 현황 및 결과조회</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="index.html">심사협의체</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <strong>협의체 결과</strong>
+                    <strong>협의체 현황 및 결과조회</strong>
                 </li>
             </ol>
         </div>
@@ -41,7 +41,7 @@
     			<div class="white-bg border-bottom dashboard-header">
     				<form method="get">
 	   					<div class="form-group row form-inline">
-	   						<div class="col-sm-2 input-group">
+	   						<div class="col-sm-3 input-group">
 	                            <label class="control-label px-2">결의협의체</label>
 	                           	<select class="form-control m-b" name="account">
 	                                   <option>option 1</option>
@@ -62,24 +62,28 @@
                                    	<input type="text" class="form-control" name="start" value="" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                	</span>
                             </div>
-                            <div class="col-sm-3 form-group">
+                            
+                            <div class="col-sm-3 input-group">
+                            	<input type="checkbox" class="" id="">
+	                       		<label class="control-label px-2">전체(종료건포함)</label>
+								<button class="btn btn-primary" type="submit">조회</button>
+	                       	</div>
+							<div class="col-sm-1 text-right">
+								<button class="btn btn-warning" type="submit">쪽지발송</button>	
+	                       	</div>
+	                       	<div class="col-sm-3 input-group text-right">
                             	<label class="col-sm-2 control-label">위원</label>
 	                            <div class="col-sm-10">
 	                            	<div class="input-group">
-	                            		<input type="hidden" id="acdnt_eno" name="acdnt_eno">
-	                            		<input type="text" class="form-control" id="acdnt_empNm" name="acdnt_empNm">
+	                            		<input type="text" class="form-control" style="width:20px;" id="acdnt_eno" name="acdnt_eno">
+	                            		&nbsp;
+	                            		<input type="text" class="form-control" style="width:80px;" id="acdnt_empNm" name="acdnt_empNm" readonly>
 	                            		<span class="input-group-append">
 	                                        <button type="button" class="btn btn-default" onclick="callAC01120P('acdnt')"><i class="fa fa-search"></i></button>
 	                                    </span>
 	                            	</div>
 	                            </div>
                             </div>
-                            <div class="col-sm-1">
-								<button class="btn btn-primary" type="submit">조회</button>
-	                       	</div>
-							<div class="col-sm-1 text-right">
-								<button class="btn btn-warning" type="submit">쪽지발송</button>	
-	                       	</div>
 	   					</div>
 	   				</form>
     			</div>
@@ -96,23 +100,41 @@
 		   					</div>
 		    				<div class="ibox-content">
 			    				<table class="table table-bordered">
+			    					<colgroup>
+					                    <col style="width: 3%;">
+					                    <col style="width: 12%;">
+					                    <col style="width: 5%;">
+					                    <col style="width: 5%;">
+					                    <col style="width: 20%;">
+					                    <col style="width: 4%;">
+					                    <col style="width: 10%;">
+					                    <col style="width: 6%;">
+					                    <col style="width: 5%;">
+					                    <col style="width: 8%;">
+					                    <col style="width: 7%;">
+					                    <col style="width: 7%;">
+					                    <col style="width: 8%;">
+					                </colgroup>
 									<thead>
 										<tr>
+											<th></th>
 											<th>결의협의체</th>
 											<th>회차</th>
 											<th>안건번호</th>
 											<th>안건명</th>
-											<th>참여금액(원)</th>
+											<th>통화</th>
+											<th>참여금액</th>
 											<th>결의일자</th>
 											<th>결의시간</th>
 											<th>부서</th>
 											<th>직원</th>
 											<th>심사역</th>
+											<th>진행상태</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<td>1</td>
+											<td><input type="checkbox"></td>
 											<td>2</td>
 											<td>3</td>
 											<td>4</td>
@@ -122,6 +144,9 @@
 											<td>8</td>
 											<td>9</td>
 											<td>10</td>
+											<td>11</td>
+											<td>12</td>
+											<td>13</td>
 										</tr>
 									</tbody>
 								</table>
@@ -139,25 +164,42 @@
 		   					</div>
 		    				<div class="ibox-content">
 			    				<table class="table table-bordered">
+			    					<colgroup>
+					                    <col style="width: 3%;">
+					                    <col style="width: 6%;">
+					                    <col style="width: 6%;">
+					                    <col style="width: 6%;">
+					                    <col style="width: 6%;">
+					                    <col style="width: 5%;">
+					                    <col style="width: 8%;">
+					                    <col style="width: 40%;">
+					                    <col style="width: 7%;">
+					                    <col style="width: 6%;">
+					                    <col style="width: 7%;">
+					                </colgroup>
 									<thead>
 										<tr>
+											<th rowspan="2"><input type="checkbox"></th>
 											<th colspan="2">참석위원</th>
 											<th colspan="2">대리참석자</th>
 											<th rowspan="2">참석여부</th>
-											<th rowspan="2">찬반</th>
+											<th rowspan="2">의결</th>
 											<th rowspan="2">심의의견</th>
-											<th rowspan="2">등록연월</th>
+											<th rowspan="2">등록년월일</th>
+											<th colspan="2">회의록확인</th>
 										</tr>
 										<tr>
 											<th>직원번호</th>
 											<th>성명</th>
 											<th>직원번호</th>
 											<th>성명</th>
+											<th>확인자</th>
+											<th>확인일시</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
-											<td>1</td>
+											<td><input type="checkbox"></td>
 											<td>2</td>
 											<td>3</td>
 											<td>4</td>
@@ -165,6 +207,9 @@
 											<td>6</td>
 											<td>7</td>
 											<td>8</td>
+											<td>9</td>
+											<td>10</td>
+											<td>11</td>
 										</tr>
 									</tbody>
 								</table>
@@ -178,14 +223,25 @@
 		   					</div>
 		    				<div class="ibox-content">
 			    				<table class="table table-bordered">
+			    					<colgroup>
+					                    <col style="width: 35%;">
+					                    <col style="width: 7%;">
+					                    <col style="width: 5%;">
+					                    <col style="width: 13%;">
+					                    <col style="width: 7%;">
+					                    <col style="width: 13%;">
+					                    <col style="width: 5%;">
+					                    <col style="width: 5%;">
+					                    <col style="width: 10%;">
+					                </colgroup>
 									<thead>
 										<tr>
 											<th rowspan="2">안건명</th>
-											<th rowspan="2">신규/재부의정보</th>
-											<th rowspan="2">부수안건정보</th>
-											<th rowspan="2">참여금액(원)</th>
+											<th rowspan="2">신규/재부의</th>
+											<th rowspan="2">통화</th>
+											<th rowspan="2">참여금액</th>
 											<th rowspan="2">결의결과</th>
-											<th rowspan="2">승인금액(원)</th>
+											<th rowspan="2">승인금액</th>
 											<th colspan="2">승인조건</th>
 											<th rowspan="2">리스트승인번호</th>
 										</tr>
@@ -208,32 +264,67 @@
 										</tr>
 									</tbody>
 								</table>
-								<div class="col-sm-12">
-									<div class="form-group form-inline row">
-										<div class="col-sm-3 input-group">
-											<label class="control-label px-2">결의결과</label>
-			                            	<input type="text" class="form-control">
-										</div>
-										<div class="col-sm-3 input-group">
-											<label class="control-label px-2">승인금액(원)</label>
-			                            	<input type="text" class="form-control" onkeyup="inputNumberFormat(this);">
-										</div>
-										<div class="col-sm-3 input-group">
-											<label class="control-label px-2">승인조건<br>(셀다운)</label>
-			                            	<input type="text" class="form-control">
-										</div>
-										<div class="col-sm-3 input-group">
-											<label class="control-label px-2">승인조건<br>(기타)</label>
-			                            	<input type="text" class="form-control">
-										</div>
-									</div>
-								</div>
 								<div class="col-sm-12 pb-2 text-right">
 									<button class="btn btn-success btn-xs" type="submit">확정</button>
 		                       		<button class="btn btn-danger btn-xs" type="submit">확정취소</button>
 								</div>
+								<div class="col-sm-12">
+									<div class="row">
+										<div class="col-sm-6">
+											<div class="form-group row">
+												<div class="col-sm-6 input-group">
+													<label class="control-label px-2">결의결과</label>
+					                            	<input type="text" class="form-control">
+												</div>
+												<div class="col-sm-6 input-group form-inline">
+													<label class="control-label px-2">승인금액</label>
+													<input type="text" class="form-control" >
+													&nbsp;
+					                            	<input type="text" class="form-control" style="width:120px;" onkeyup="inputNumberFormat(this);">
+												</div>
+												<div class="col-sm-6 input-group py-2">
+													<label class="control-label px-2">승인조건<br>(셀다운)</label>
+					                            	<input type="text" class="form-control">
+												</div>
+												<div class="col-sm-6 input-group py-2">
+													<label class="control-label px-2">승인조건<br>(기타)</label>
+					                            	<input type="text" class="form-control">
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-3 input-group">
+											<label class="control-label px-2">부의조건</label>
+				                            <textarea class="form-control" style="height:80px;" id=""></textarea>
+										</div>
+										<div class="col-sm-3 input-group">
+											<label class="control-label px-2">결의의견</label>
+				                            <textarea class="form-control" style="height:80px;" id=""></textarea>
+										</div>
+									</div>
+								</div>
 			    			</div>
 		   				</div>
+    				</div>
+    				<div class="col-sm-12">
+    					<div class="ibox ">
+    						<div class="ibox-title">
+		   						<h5>협의결과자료</h5>
+		   					</div>
+		   					<div class="ibox-content form-inline py-2">
+		   						 <div class="col-sm-4 input-group">
+		   						 	<label class="control-label px-2">회의록</label>
+			   						<div class="custom-file">
+								         <input id="inputGroupFile01" type="file" class="custom-file-input">
+								         <label class="custom-file-label" for="inputGroupFile01">회의록 추가</label>
+								     </div>
+								 </div>
+								 <div class="col-sm-2">
+								 	<button class="btn btn-info btn-xs" type="button">열기</button>
+		                       		<button class="btn btn-danger btn-xs" type="button">삭제</button>
+		                       		<button class="btn btn-warning btn-xs" type="button">확정쪽지</button>
+								 </div>
+		   					</div>
+    					</div>
     				</div>
     			</div>
     		</div>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/ramsLayout}">
+	
+<th:block layout:fragment="script">
+	<script th:src="@{js/common.js}"></script>
+</th:block>
+
+<th:block layout:fragment="customContent">
+	<!-- 상단 타이틀 -->
+	<div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>[04220]협의체 의견등록</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="index.html">심사협의체</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <strong>협의체 의견등록</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+    
+    <!-- 내용 -->
+    <div class="wrapper wrapper-content animated fadeIn">
+    	<div class="row">
+    		<div class="col-lg-12">
+    			<div class="white-bg dashboard-header">
+    				<div class="row">
+	    				<div class="col-sm-12">
+	    					<div class="ibox ">
+			   					<div class="ibox-title">
+			   						<h5>안건목록</h5>
+			   						<div class="ibox-tools">		                       		
+			                       		<input type="checkbox" class="" id="">
+		                       			<label class="control-label px-2">전체(종료건포함)</label>
+			                       	</div>
+			   					</div>
+			    				<div class="ibox-content">
+			    					<div class="tableFixHead">
+					    				<table class="table table-bordered">
+					    					<colgroup>
+							                    <col style="width: 18%;">
+							                    <col style="width: 5%;">
+							                    <col style="width: 28%;">
+							                    <col style="width: 8%;">
+							                    <col style="width: 5%;">
+							                    <col style="width: 10%;">
+							                    <col style="width: 10%;">
+							                    <col style="width: 5%;">
+							                    <col style="width: 5%;">
+							                    <col style="width: 6%;">
+							                </colgroup>
+											<thead>
+												<tr>
+													<th>결의협의체</th>
+													<th>안건번호</th>
+													<th>안건명</th>
+													<th>결의일자</th>
+													<th>통화</th>
+													<th>참여금액</th>
+													<th>승인금액</th>
+													<th>의결</th>
+													<th>결과</th>
+													<th>회의록확인</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td></td>
+													<td>2</td>
+													<td>3</td>
+													<td>4</td>
+													<td>5</td>
+													<td>6</td>
+													<td>7</td>
+													<td>8</td>
+													<td>9</td>
+													<td>10</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+				    			</div>
+			   				</div>
+	    				</div>
+	    				<div class="col-sm-8">
+			    			<div class="ibox">
+			    				<div class="ibox-title">
+			    					<h5>관련보고서</h5>
+			    				</div>
+			    				<div class="ibox-content">
+			    					<div class="tableFixHead">
+				    					<table class="table table-bordered">
+				    						<colgroup>
+							                    <col style="width: 85%;">
+							                    <col style="width: 15%;">
+							                </colgroup>
+											<thead>
+												<tr>
+													<th>보고서명</th>
+													<th>등록일자</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>1</td>
+													<td>2</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+			    				</div>
+			    			</div>
+			    		</div>
+			    		<div class="col-sm-4">
+			    			<div class="ibox">
+			    				<div class="ibox-title">
+			    					<h5>회의록</h5>
+			    				</div>
+			    				<div class="ibox-content text-right">
+			    					<div class="form-group row">
+										<label class="col-sm-2 control-label py-2">회의록</label>
+		                            	<input type="text" class="col-sm-8 form-control" readonly>
+		                            	<div class="col-sm-2 text-left"><button class="btn btn-info" type="button">열기</button></div>
+										<label class="col-sm-2 control-label py-2">확인자명</label>
+		                            	<input type="text" class="col-sm-7 form-control" readonly>&nbsp;
+		                            	<input type="text" class="col-sm-2 form-control" readonly>
+										<label class="col-sm-2 control-label py-2">확인일시</label>
+		                            	<input type="text" class="col-sm-7 form-control"readonly>
+		                            	<div class="col-sm-3 text-left"><button class="btn btn-success" type="button">회의록 확인</button></div>
+			    					</div>
+			    				</div>
+			    			</div>
+			    		</div>
+			    		<div class="col-sm-12">
+			    			<div class="ibox">
+			    				<div class="ibox-title">
+			    					<h5>의견등록</h5>
+			    				</div>
+			    				<div class="ibox-content text-right">
+			    					<div class="row">
+				    					<div class="col-sm-1">
+				    						심의의견
+				    					</div>
+				    					<div class="col-sm-11">
+				    						<textarea class="form-control" style="height:85px;" id=""></textarea>
+				    					</div>
+				    					<div class="col-sm-12 text-right py-2">
+				    						<button class="btn btn-w-m btn-success btn-lg" type="button">가결</button>
+				    						<button class="btn btn-w-m btn-info btn-lg" type="button">조건부가결</button>
+				    						<button class="btn btn-w-m btn-default btn-lg" type="button">보류</button>
+				    						<button class="btn btn-w-m btn-warning btn-lg" type="button">부결</button>
+				    						<button class="btn btn-w-m btn-danger btn-lg" type="button">취소</button>
+				    					</div>
+			    					</div>
+			    				</div>
+			    			</div>
+	    				</div>
+	    			</div>
+    			</div>
+    		</div>
+    	</div><!-- row -->
+    </div>
+</th:block>
+
+</html>

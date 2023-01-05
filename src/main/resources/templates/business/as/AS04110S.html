@@ -16,13 +16,13 @@
 	<!-- 상단 타이틀 -->
 	<div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-            <h2>[04110]협의체 사전준비</h2>
+            <h2>[04110]협의체 준비</h2>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <a href="index.html">심사협의체</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <strong>협의체 사전준비</strong>
+                    <strong>협의체 준비</strong>
                 </li>
             </ol>
         </div>
@@ -54,7 +54,7 @@
                             <div class="col-sm-2 input-group">
                             	<label class="control-label">결의일</label>
                             	<span class="col-sm-9 input-group date">
-                                   	<input type="text" class="form-control" name="start" value="" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                   	<input type="text" class="form-control" value="" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                	</span>
                             </div>
                             <div class="col-sm-3">		                       		
@@ -92,47 +92,97 @@
 		                            </div>
 		                            <div class="col-sm-2 input-group">
 		                            	<label class="col-form-label px-2">결의일</label>
-		                                <input type="text" class="form-control" value="" >
+		                                <span class="col-sm-9 input-group date">
+		                                   	<input type="text" class="form-control" value="" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		                               	</span>
 		                            </div>
 		                            <div class="col-sm-1 input-group">
 		                            	<label class="col-form-label px-2">시간</label>
 		                                <input type="text" class="form-control" value="" >
 		                            </div>
+		                            <div class="col-sm-2 input-group">
+		                            	<label class="col-form-label px-2">회의구분</label>
+		                                <select class="form-control m-b" name="account">
+		                                   <option>option 1</option>
+		                                   <option>option 2</option>
+			                            </select>
+		                            </div>
+		                            <div class="col-sm-2 input-group">
+		                            	<label class="col-form-label px-2">진행상태</label>
+		                                <input type="text" class="form-control" value="" readonly>
+		                            </div>
 			    				</div>
 			    			</div>
 		   				</div>
 		   			</div>
-		   			<div class="col-sm-6">
-		   				<div class="ibox ">
-		   					<div class="ibox-title">
-		   						<h5>위원정보</h5>
-		   						<div class="ibox-tools">		                       		
-		                       		<button class="btn btn-default btn-xs" type="submit">행추가</button>
-		                       		<button class="btn btn-default btn-xs" type="submit">행삭제</button>
-		                       	</div>
-		   					</div>
-		    				<div class="ibox-content">
-			    				<table class="table table-bordered">
-									<thead>
-										<tr>
-											<th></th>
-											<th>위원구분</th>
-											<th>위원명</th>
-											<th>대리참석위원</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>1</td>
-											<td>2</td>
-											<td>3</td>
-											<td>4</td>
-										</tr>
-									</tbody>
-								</table>
-			    			</div>
-		   				</div>
-		   			</div>
+		   			<div class="col-sm-12">
+		   				<div class="row">
+				   			<div class="col-sm-6">
+				   				<div class="ibox ">
+				   					<div class="ibox-title">
+				   						<h5>위원정보</h5>
+				   						<div class="ibox-tools">		                       		
+				                       		<button class="btn btn-default btn-xs" type="submit">행추가</button>
+				                       		<button class="btn btn-default btn-xs" type="submit">행삭제</button>
+				                       	</div>
+				   					</div>
+				    				<div class="ibox-content">
+					    				<table class="table table-bordered">
+					    					<colgroup>
+							                    <col style="width: 5%;">
+							                    <col style="width: 35%;">
+							                    <col style="width: 30%;">
+							                    <col style="width: 30%;">
+							                </colgroup>
+											<thead>
+												<tr>
+													<th><input type="checkbox"></th>
+													<th>위원구분</th>
+													<th>위원명</th>
+													<th>대리참석위원</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>1</td>
+													<td>2</td>
+													<td>3</td>
+													<td>4</td>
+												</tr>
+											</tbody>
+										</table>
+					    			</div>
+				   				</div>
+				   			</div>
+				   			<div class="col-sm-6">
+				   				<div class="ibox">
+				    				<div class="ibox-title">
+				    					<h5>관련보고서</h5>
+				    				</div>
+				    				<div class="ibox-content">
+				    					<table class="table table-bordered">
+				    						<colgroup>
+							                    <col style="width: 80%;">
+							                    <col style="width: 20%;">
+							                </colgroup>
+											<thead>
+												<tr>
+													<th>보고서명</th>
+													<th>등록일자</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>1</td>
+													<td>2</td>
+												</tr>
+											</tbody>
+										</table>
+				    				</div>
+				    			</div>
+				   			</div>
+			   			</div>
+			   		</div>
 		   			<div class="col-sm-12">
 		   				<div class="ibox ">
 		   					<div class="ibox-title">
@@ -147,15 +197,27 @@
 		    				<div class="ibox-content">
 			    				<table class="table table-bordered">
 									<thead>
+										<colgroup>
+						                    <col style="width: 2%;">
+						                    <col style="width: 5%;">
+						                    <col style="width: 43%;">
+						                    <col style="width: 10%;">
+						                    <col style="width: 5%;">
+						                    <col style="width: 10%;">
+						                    <col style="width: 10%;">
+						                    <col style="width: 10%;">
+						                    <col style="width: 6%;">
+						                </colgroup>
 										<tr>
-											<th></th>
+											<th><input type="checkbox"></th>
 											<th>순서정보</th>
 											<th>안건명</th>
 											<th>신규/재부의정보</th>
-											<th>부수안건정보</th>
+											<th>안건순번</th>
 											<th>부서</th>
 											<th>직원</th>
 											<th>심사역</th>
+											<th>이동</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -168,6 +230,10 @@
 											<td>6</td>
 											<td>7</td>
 											<td>8</td>
+											<td>
+												<button type="button" id="" class="btn btn-default btn-xs"><i class="fa fa-caret-up"></i></button>
+												<button type="button" id="" class="btn btn-default btn-xs"><i class="fa fa-caret-down"></i></button>
+											</td>
 										</tr>
 									</tbody>
 								</table>
