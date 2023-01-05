@@ -16,5 +16,8 @@ public interface RAA01BMapper {
 
 	// 신규 deal 생성
 	public void insertDealInfo(RAA01BDTO paramData);
+
+	// deal 정보 갱신
+	public void updateDealInfo(RAA01BDTO raa01bDTO);
 	
 }

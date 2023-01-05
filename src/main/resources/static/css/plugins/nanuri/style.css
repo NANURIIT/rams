@@ -9851,3 +9851,10 @@ body.md-skin {
 table  { border-collapse: collapse; width: 100%; }
 th, td { padding: 8px 16px; }
 th     { background:#eee; }
+
+/* customed css */
+.req{
+	color: red !important;
+	padding-right: 5px;
+	vertical-align: middle;
+}

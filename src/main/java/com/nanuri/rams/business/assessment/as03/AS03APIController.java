@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,15 +27,33 @@ public class AS03APIController {
 	// ---------------search bar------------------
 
 	/**
-	 * deal list 가져오기
+	 * deal info 가져오기
 	 * 
-	 * @param dealDto
-	 * @return
-	 * @throws ParseException
+	 * @param DealInfo(VO)
 	 */
 	@GetMapping(value = "/getDealInfo")
 	public List<RAA01BVO> getDealInfo(DealInfo dealDto) throws ParseException {
 		return as03Service.getDealInfo(dealDto);
+	}
+	
+	/**
+	 * deal list 가져오기
+	 * 
+	 * @param DealInfo(VO)
+	 */
+	@GetMapping(value = "/getDealList")
+	public List<RAA02BDTO> getDealList(DealInfo dealDto) throws ParseException {
+		return as03Service.getDealList(dealDto);
+	}
+	
+	/**
+	 * deal detail info 가져오기
+	 * 
+	 * @param ibDealNo(String)
+	 */
+	@GetMapping(value = "/getDealDetailInfo")
+	public RAA02BDTO getDealDetailInfo(String ibDealNo) {
+		return as03Service.getDealDetailInfo(ibDealNo);
 	}
 	
 	// RADEAL구분코드
@@ -154,6 +173,7 @@ public class AS03APIController {
 	}
 
 	// 신규 deal 생성
+	@Transactional
 	@PostMapping(value = "/registDealInfo")
 	public int registDealInfo(RAA02BDTO paramData) throws ParseException {
 		
@@ -161,6 +181,18 @@ public class AS03APIController {
 		
 		as03Service.registHistoy(dealInfoMap);
 		
+		return 0;
+	}
+	
+	// deal 정보 갱신
+	@Transactional
+	@PostMapping(value = "/updateDealInfo")
+	public int updateDealInfo(RAA02BDTO paramData) throws ParseException {
+
+		Map<String, Object> dealInfoMap = as03Service.updateDealInfo(paramData);
+
+		as03Service.registHistoy(dealInfoMap);
+
 		return 0;
 	}
 

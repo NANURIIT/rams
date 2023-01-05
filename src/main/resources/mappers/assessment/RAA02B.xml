@@ -2,32 +2,56 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.RAA02BMapper">
 
-	<!-- deal 정보 검색
-	<sql parameterType="com.nanuri.rams.business.common.vo.RAA02BVo$DealInfo" resultType="java.util.HashMap">
-		SELECT IB_DEAL_NO								
-		     , IB_DEAL_NM							
-		     , LST_C_CASE_CCD							
-		     , RA_DEAL_CCD								
-		     , RA_RSLTN_CCD								
-		  FROM RAA02B
+	<!-- deal list 정보 검색 -->
+	<select id="getDealList" parameterType="com.nanuri.rams.business.common.vo.RAA01BVO$DealInfo" resultType="com.nanuri.rams.business.common.dto.RAA02BDTO">
+		SELECT rb1.IB_DEAL_NO AS IB_DEAL_NO						<!-- IBDEAL번호 -->
+		     , rb2.CD_VL_NM   AS RISK_INSPCT_CCD				<!-- 리스크심사구분코드 -->
+		     , rb3.CD_VL_NM   AS LST_C_CASE_CCD					<!-- 부수안건구분코드 -->
+		     , rb5.EMP_NM     AS CHRG_P_ENO						<!-- 담당자사번 -->
+		     , rb4.CD_VL_NM   AS INSPCT_PRGRS_ST_CD				<!-- 심사진행상태코드 -->
+		     , rb1.IB_DEAL_NM AS IB_DEAL_NM 					<!-- IBDEAL명 -->
+		  FROM RAA02B rb1
+		  LEFT JOIN RAA99A rb5									<!-- 담당자사번 -->
+		    ON rb1.CHRG_P_ENO = rb5.ENO
+		     , (
+		     	SELECT rb2.CD_VL_ID 
+				     , rb2.CD_VL_NM 
+				  from RAA90B rb1 , RAA91B rb2
+				 WHERE rb1.CMNS_CD_GRP = rb2.CMNS_CD_GRP 
+		  		   and rb1.CMNS_CD_NM = 'RISK_INSPCT_CCD'		<!-- 리스크심사구분코드 -->
+		       ) rb2
+		     , (
+		     	SELECT rb2.CD_VL_ID 
+				     , rb2.CD_VL_NM 
+				  from RAA90B rb1 , RAA91B rb2
+				 WHERE rb1.CMNS_CD_GRP = rb2.CMNS_CD_GRP 
+		  		   and rb1.CMNS_CD_NM = 'LST_C_CASE_CCD'		<!-- 부수안건구분코드 -->
+		       ) rb3
+		     , (
+		     	SELECT rb2.CD_VL_ID 
+				     , rb2.CD_VL_NM 
+				  from RAA90B rb1 , RAA91B rb2
+				 WHERE rb1.CMNS_CD_GRP = rb2.CMNS_CD_GRP 
+		  		   and rb1.CMNS_CD_NM = 'INSPCT_PRGRS_ST_CD'	<!-- 심사진행상태코드 -->
+		       ) rb4
 		 WHERE 1=1
-		 <if test="dealNo != ''">
-		   AND IB_DEAL_NO LIKE #{dealNo}
+		   AND rb1.RISK_INSPCT_CCD    = rb2.CD_VL_ID
+		   AND rb1.LST_C_CASE_CCD     = rb3.CD_VL_ID
+		   AND rb1.INSPCT_PRGRS_ST_CD = rb4.CD_VL_ID
+		 <if test="ibDealNo != ''">
+		   AND IB_DEAL_NO LIKE #{ibDealNo}
 		 </if>
-		 <if test="dealNo != ''">
-		   AND IB_DEAL_NO LIKE #{dealNm}
+		 <if test="raDealCcd != ''">
+		   AND RA_DEAL_CCD LIKE #{raDealCcd}
 		 </if>
-		 <if test="dealNo != ''">
-		   AND IB_DEAL_NO LIKE #{dscDate}
-		 </if>
-	</sql> -->
+	</select>
 	
 	<!-- RADEAL구분코드 -->
 	<select id="getRaDealSq" parameterType="String" resultType="String">
 		SELECT LPAD (
 		             NVL( MAX(RA_DEAL_SQ), 0 ) + 1
 		             , 4, 0
-		            ) AS RA_DEAL_SQ
+		            ) AS RA_DEAL_SQ						<!-- RADEAL구분코드 -->
 		  FROM RAA02B
 		 WHERE 1=1
 		   AND RA_DEAL_CCD = #{raDealCcd}
@@ -35,7 +59,7 @@
 	</select>
 	
 	<!-- 신규 deal 생성 -->
-	<insert id="insertDealInfo" parameterType="com.nanuri.rams.business.common.dto.RAA02BDTO" >
+	<insert id="insertDealInfo" parameterType="com.nanuri.rams.business.common.dto.RAA02BDTO">
 		INSERT INTO RAA02B
 		       ( 
 		         IB_DEAL_NO								<!-- IBDEAL번호 -->
@@ -61,6 +85,7 @@
 		       , INVST_CRNCY_CD							<!-- 투자통화코드 -->
 		       , CRNCY_AMT								<!-- 통화금액 -->
 		       , INVST_PRD_DY_C							<!-- 투자기간일수 -->
+		       , INVST_PRD_MM_C							<!-- 투자기간개월수 -->
 		       , WRT_EXPT_DT							<!-- 지급예정일자 -->
 		       , MTRT_EXPT_DT							<!-- 해지예정일자 -->
 		       , TL_ERN_AMT								<!-- 총수익금액 -->
@@ -170,11 +195,12 @@
 		       , #{invstCrncyCd}						<!-- 투자통화코드 -->
 		       , NVL(#{crncyAmt}, 0)					<!-- 통화금액 -->
 		       , NVL(#{invstPrdDyC}, 0)					<!-- 투자기간일수 -->
+		       , NVL(#{invstPrdMmC}, 0)					<!-- 투자기간개월수 -->
 		       , ''										<!-- 지급예정일자 -->
 		       , ''										<!-- 해지예정일자 -->
-		       , NVL(#{tlErnAmt}, 0)					<!-- 총수익금액 -->
-		       , NVL(#{wrtErnAmt}, 0)					<!-- 기표수익금액 -->
-		       , NVL(#{rcvblErnAmt}, 0)					<!-- 미수수익금액 -->
+		       , NVL(NULLIF(#{tlErnAmt},'') IS NULL, 0)	<!-- 총수익금액 -->
+		       , NVL(NULLIF(#{wrtErnAmt},'') IS NULL, 0)<!-- 기표수익금액 -->
+		       , NVL(NULLIF(#{rcvblErnAmt},'') IS NULL, 0)	<!-- 미수수익금액 -->
 		       , #{invstGdsLdvdCd}						<!-- 투자상품대분류코드 -->
 			   , #{invstGdsMdvdCd}						<!-- 투자상품중분류코드 -->
 			   , #{invstGdsSdvdCd}						<!-- 투자상품소분류코드 -->
@@ -247,7 +273,7 @@
 			   , #{bsnsSttsCcd}							<!-- 사업단계구분코드 -->
 			   , 'N'									<!-- 기초자산입력예정여부 -->
 			   , 'N'									<!-- 내부등급입력예정여부 -->
-			   , ''										<!-- 준거기업명 -->
+			   , #{cfmtEntpNm}							<!-- 준거기업명 -->
 			   , ''										<!-- 고난도상품여부 -->
 			   , ''										<!-- 가입자격 -->
 			   , 0										<!-- 최소가입금액 -->
@@ -261,8 +287,56 @@
 			   )
 	</insert>
 	
+	<!-- deal 정보 갱신 -->
+	<update id="updateDealInfo" parameterType="com.nanuri.rams.business.common.dto.RAA02BDTO">
+		UPDATE RAA02B
+		   SET INSPCT_DPRT_CCD				= #{inspctDprtCcd}						<!-- 심사부서구분코드 -->
+			 , INVST_GDS_LDVD_CD			= #{invstGdsLdvdCd}						<!-- 투자상품대분류코드 -->
+		   	 , INVST_GDS_MDVD_CD			= #{invstGdsMdvdCd}						<!-- 투자상품중분류코드 -->
+		   	 , INVST_GDS_SDVD_CD			= #{invstGdsSdvdCd}						<!-- 투자상품소분류코드 -->
+			 , INVST_GDS_DTLS_DVD_CD 		= #{invstGdsDtlsDvdCd}					<!-- 투자상품상세분류코드 -->
+			 , INVST_PRD_DY_C				= NVL(#{invstPrdDyC}, 0)				<!-- 투자기간일수 -->
+			 , INVST_PRD_MM_C				= NVL(#{invstPrdMmC}, 0)				<!-- 투자기간개월수 -->
+			 , WRT_DT						= #{wrtDt}								<!-- 기표일자 -->
+			 , MTRT_DT						= #{mtrtDt}								<!-- 만기일자 --> 
+			 , IB_DEAL_NM 					= #{ibDealNm}							<!-- IBDEAL명 -->
+			 , IB_DEAL_SNM_NM				= #{ibDealSnmNm}						<!-- IBDEAL약어명 -->
+			 , INVST_CRNCY_CD				= #{invstCrncyCd}						<!-- 투자통화코드 -->
+			 , CRNCY_AMT					= NVL(#{crncyAmt}, 0)					<!-- 통화금액 -->
+			 , INVST_NTN_CD					= #{invstNtnCd}							<!-- 투자국가코드 -->
+			 , APLC_EXCH_R					= NVL(#{aplcExchR}, 0)					<!-- 적용환율 -->
+			 , PTCP_AMT						= NVL(#{ptcpAmt}, 0)					<!-- 참여금액 -->
+			 , TL_ERN_AMT					= NVL(#{tlErnAmt}, 0)					<!-- 총수익금액 -->
+			 , WRT_ERN_AMT					= NVL(#{wrtErnAmt}, 0)					<!-- 기표수익금액 -->
+			 , RCVBL_ERN_AMT				= NVL(#{rcvblErnAmt}, 0)				<!-- 미수수익금액 -->
+			 , IND_TYP_DVD_CD				= #{indTypDvdCd}						<!-- 업종분류코드 -->
+			 , CHECK_ITEM_CD				= #{checkItemCd}						<!-- 점검항목코드 -->
+			 , RA_BSNS_ZONE_CD				= #{raBsnsZoneCd}						<!-- RA사업지역코드 -->
+			 , INVST_THING_CCD				= #{invstThingCcd}						<!-- 투자물건구분코드 -->
+			 , INVST_THING_DTLS_CCD			= #{invstThingDtlsCcd}					<!-- 투자물건상세구분코드 -->
+			 , MRTG_OFR_F					= #{mrtgOfrF}							<!-- 담보제공여부 -->
+			 , ENSR_F						= #{ensrF}								<!-- 보증여부 -->
+			 , RSPSB_CMPL_CCD				= #{rspsbCmplCcd}						<!-- 책임준공구분코드 -->
+			 , RA_RSLTN_CCD					= #{raRsltnCcd}							<!-- RA결의구분코드 -->
+			 , RISK_RCG_NO					= #{riskRcgNo}							<!-- 리스크승인번호 -->
+			 , HDQT_CD						= #{hdqtCd}								<!-- 본부코드 -->
+			 , DPRT_CD						= #{dprtCd}								<!-- 부점코드 -->
+			 , CHRG_P_ENO					= #{chrgPEno}							<!-- 담당자사번 -->
+			 , COPRTN_TYP_CD				= #{coprtnTypCd}						<!-- 협업유형코드 -->
+			 , CFMT_ENTP_NM					= #{cfmtEntpNm}							<!-- 준거기업명 -->
+			 , BSNS_DPRT_CMMT_RMRK1			= TRIM(#{bsnsDprtCmmtRmrk1})			<!-- 사업부서의견비고1 -->
+			 , INSPCT_DPRT_CMMT_RMRK2		= TRIM(#{inspctDprtCmmtRmrk2})			<!-- 심사부서의견비고2 -->
+			 , HNDL_DY_TM					= CURRENT_TIMESTAMP()					<!-- 처리일시 -->
+			 , HNDL_DPRT_CD					= #{hndlDprtCd}							<!-- 처리부점코드 -->
+			 , HNDL_P_ENO					= #{hndlPEno}							<!-- 처리자번 -->
+		 WHERE 1=1
+		   AND IB_DEAL_NO = #{ibDealNo}												<!-- IBDEAL번호 -->
+		   AND RISK_INSPCT_CCD = #{riskInspctCcd}									<!-- 리스크심사구분코드 -->
+		   AND LST_C_CASE_CCD = #{lstCCaseCcd}										<!-- 부수안건구분코드 -->
+	</update>
+	
 	<!-- 히스토리 데이터 취득 -->
-	<select id="copyDealInfO" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA02HDTO">
+	<select id="copyDealInfO" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA02BDTO">
 		SELECT IB_DEAL_NO								<!-- IBDEAL번호 -->
 		     , RISK_INSPCT_CCD							<!-- 리스크심사구분코드 -->
 		     , LST_C_CASE_CCD							<!-- 부수안건구분코드 -->
@@ -286,6 +360,7 @@
 		     , INVST_CRNCY_CD							<!-- 투자통화코드 -->
 		     , CRNCY_AMT								<!-- 통화금액 -->
 		     , INVST_PRD_DY_C							<!-- 투자기간일수 -->
+		     , INVST_PRD_MM_C							<!-- 투자기간개월수 -->
 		     , WRT_EXPT_DT								<!-- 지급예정일자 -->
 		     , MTRT_EXPT_DT								<!-- 해지예정일자 -->
 		     , TL_ERN_AMT								<!-- 총수익금액 -->

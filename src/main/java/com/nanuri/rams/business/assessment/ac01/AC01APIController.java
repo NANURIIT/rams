@@ -155,11 +155,6 @@ public class AC01APIController {
 	public boolean registUseMenu(@RequestBody ArrayList<RAA95BVO.selectUseMenuVO> dtoList) {
 		return ac01Service.registUseMenu(dtoList);
 	}
-	
-	
-	
 
 	//============ End AC01310S( 메뉴별권한관리 관리 ) ============//
-
-	// ============ End AC01310S( 메뉴별권한관리 관리 ) ============//
 }

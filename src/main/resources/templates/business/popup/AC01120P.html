@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <th:block th:fragment="AC01120P">
 	<!-- modal -->
-	<div id="modal-AC01120P" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div id="modal-AC01120P" class="modal fade" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 1060;">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header metis-modal-header">
 					<h4 class="modal-title">직원검색</h4>
+					<div class="col-sm-1 text-right">
+                   		<button type="button" class="btn btn-default" onclick="modalClose_AC01120P();"><i class="fa fa-times"></i></button>
+                   	</div>
 				</div>
 				<div class="modal-body">
 					<input type="hidden" name="prefix" id="prefix" value=""/>
@@ -43,22 +46,24 @@
 				    			
 				    			<!-- 조회결과 -->
 				    			<div class="ibox-content">
-				    				<table class="table table-bordered">
-										<thead>
-											<tr>
-												<th>직원번호</th>
-												<th>직원한글성명</th>
-												<th>부점명</th>
-												<th>부점코드</th>
-												<th>본부코드</th>
-												<th>본부명</th>
-											</tr>
-										</thead>
-										<tbody id="AC01120P_tbodyEmpList">
-											<tr>
-											</tr>
-										</tbody>
-									</table>
+				    				<div class="tableFixHead">
+					    				<table class="table table-bordered">
+											<thead>
+												<tr>
+													<th>직원번호</th>
+													<th>직원한글성명</th>
+													<th>부점명</th>
+													<th>부점코드</th>
+													<th>본부코드</th>
+													<th>본부명</th>
+												</tr>
+											</thead>
+											<tbody id="AC01120P_tbodyEmpList">
+												<tr>
+												</tr>
+											</tbody>
+										</table>
+									</div>
 				    			</div>
 				    		</div><!-- ibox -->
 						</div>

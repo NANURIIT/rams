@@ -1,4 +1,5 @@
 $(function () {
+	//
     getAuthCode();
 
     clickDetailButton();
@@ -21,6 +22,34 @@ $(function () {
     });
 });
 
+/*******************************************************************
+ *** 공통 event
+ *******************************************************************/
+/**
+ * 권한명으로 검색
+ */
+function searchButtonClick() {
+    let searchKeyword = $('#authCodeSearchInput').val();
+    getAuthCode(searchKeyword);
+}
+
+/**
+ * 변경 가능한 컬럼 더블클릭 했을시 input박스 생성
+ */
+function doubleClickColumn() {
+    $(document).on('dblclick', '.update_column', function () {
+        let trClass = $(this).attr('class').split(' ')[1]
+        tdInputHTML = '<input class="' + trClass + '_input" style="width: 100%;" type="text" value="' + $(this).text() + '">'
+        $(this).html(tdInputHTML);
+    });
+}
+
+/*******************************************************************
+ *** 상단 그리드 event
+ *******************************************************************/
+/**
+ * 권한목록 조회 ajax
+ */
 function getAuthCode(rghtCdNm) {
     let _url = '/getAuthCode';
     if (!isEmpty(rghtCdNm)) {
@@ -34,39 +63,31 @@ function getAuthCode(rghtCdNm) {
             if (authCode.length > 0) {
                 $.each(authCode, function (key, value) {
                     html += '<tr>';
-                    html += '   <td><input id="' + value.rghtCd + '" style="width: 15px;" type="checkbox"></td>';
+                    html += '   <td><input id="' + value.rghtCd + '" style="width: 100%;" type="checkbox"></td>';
                     html += '   <td class="update_column auth_code">' + value.rghtCd + '</td>';
                     html += '   <td class="update_column auth_code_name">' + value.rghtCdNm + '</td>';
                     html += '   <td class="update_column auth_explain">' + value.rghtCdExpl + '</td>';
-                    html += '   <td>';
-                    html += '       <select style="width: 170px;">';
-                    html += '           <option value="">해당부서</option>'
-                    html += '           <option value="">1</option>'
-                    html += '           <option value="">2</option>'
-                    html += '           <option value="">3</option>'
-                    html += '       </select>';
-                    html += '   </td>';
-                    html += '   <td><button class="detail_button" id="' + value.rghtCd + '">⬇︎ 상세</button></td>';
-                    html += '   <td>' + value.rgstDt + '</td>';
-                    html += '   <td>' + value.rgstPEno + '</td>';
+                    html += '   <td style="text-align:center;"><button class="detail_button btn btn-warning btn-xs" id="' + value.rghtCd + '"><i class="fa fa-arrow-down"></i>&nbsp;상세</button></td>';
+                    html += '   <td style="text-align:center;">' + value.rgstDt + '</td>';
+                    html += '   <td style="text-align:center;">' + value.rgstPEno + '</td>';
                     if (value.aplcF === 'Y') {
-                        html += '   <td><input style="width: 15px;" class="auth_code_use_yn" type="checkbox" checked><input class="hidden_yn" type="hidden" value="y"></td>';
+                        html += '   <td><input style="width:100%;" class="auth_code_use_yn" type="checkbox" checked><input class="hidden_yn" type="hidden" value="y"></td>';
                     } else {
-                        html += '   <td><input style="width: 15px;" class="auth_code_use_yn" type="checkbox"><input class="hidden_yn" type="hidden" value="n"></td>';
+                        html += '   <td><input style="width:100%;" class="auth_code_use_yn" type="checkbox"><input class="hidden_yn" type="hidden" value="n"></td>';
                     }
 
                     if (isEmpty(value.hndlDyTm)) {
-                        html += '   <td> - </td>';
+                        html += '   <td style="text-align:center;"> - </td>';
                     } else {
-                        html += '   <td>' + value.hndlDyTm.substring(0, 10) + '</td>';
+                        html += '   <td style="text-align:center;">' + value.hndlDyTm.substring(0, 10) + '</td>';
                     }
 
                     if (isEmpty(value.hndlDyTm)) {
-                        html += '   <td> - </td>';
+                        html += '   <td style="text-align:center;"> - </td>';
                     } else {
-                        html += '   <td>' + value.hndlDyTm.substring(11, 19) + '</td>';
+                        html += '   <td style="text-align:center;">' + value.hndlDyTm.substring(11, 19) + '</td>';
                     }
-                    html += '   <td>' + value.hndlPEno + '</td>';
+                    html += '   <td style="text-align:center;">' + value.hndlPEno + '</td>';
                     html += '</tr>';
                 });
             } else {
@@ -80,13 +101,7 @@ function getAuthCode(rghtCdNm) {
     });
 }
 
-/**
- * 권한명으로 검색
- */
-function searchButtonClick() {
-    let searchKeyword = $('#authCodeSearchInput').val();
-    getAuthCode(searchKeyword);
-}
+
 
 /**
  * 행추가 버튼 클릭
@@ -101,8 +116,7 @@ function addAuthCodeRow() {
     html += '   <td></td>';
     html += '   <td></td>';
     html += '   <td></td>';
-    html += '   <td></td>';
-    html += '   <td><input style="width: 15px;" class="auth_code_use_yn" type="checkbox"></td>';
+    html += '   <td><input style="width:100%;" class="auth_code_use_yn" type="checkbox"></td>';
     html += '   <td></td>';
     html += '   <td></td>';
     html += '   <td></td>';
@@ -134,30 +148,31 @@ function getAuthCodeMenu(rghtCd) {
             let html = '';
             if (authCodeMenu.length > 0) {
                 $.each(authCodeMenu, function (key, value) {
+                    //console.log(key);
                     html += '<tr>';
-                    html += '   <td>' + value.srtNo + '</td>';
+                    html += '   <td>' + (key + 1) + '</td>';
                     html += '   <td>' + value.menuId + '</td>';
                     html += '   <td>'+ rghtCd +'</td>';
                     html += '   <td>' + value.menuLv + '</td>';
                     if (isEmpty(value.mdfyRghtCcd)) {
-                        html += '   <td><input style="width: 15px;" class="can_use_yn" type="checkbox"><input type="hidden" class="use_hidden_yn" value="n"></td>';
-                        html += '   <td><input style="width: 15px;" class="can_modify_yn" type="checkbox"><input type="hidden" class="modify_hidden_yn" value="n"></td>';
+                        html += '   <td><input style="width:100%;" class="can_use_yn" type="checkbox"><input type="hidden" class="use_hidden_yn" value="n"></td>';
+                        html += '   <td><input style="width:100%;" class="can_modify_yn" type="checkbox"><input type="hidden" class="modify_hidden_yn" value="n"></td>';
                     } else if(value.mdfyRghtCcd === '1') {
-                        html += '   <td><input style="width: 15px;" class="can_use_yn" type="checkbox" checked><input type="hidden" class="use_hidden_yn" value="y"></td>';
-                        html += '   <td><input style="width: 15px;" class="can_modify_yn" type="checkbox"><input type="hidden" class="modify_hidden_yn" value="n"></td>';
+                        html += '   <td><input style="width:100%;" class="can_use_yn" type="checkbox" checked><input type="hidden" class="use_hidden_yn" value="y"></td>';
+                        html += '   <td><input style="width:100%;" class="can_modify_yn" type="checkbox"><input type="hidden" class="modify_hidden_yn" value="n"></td>';
                     } else {
-                        html += '   <td><input style="width: 15px;" class="can_use_yn" type="checkbox" checked><input type="hidden" class="use_hidden_yn" value="y"></td>';
-                        html += '   <td><input style="width: 15px;" class="can_modify_yn" type="checkbox" checked><input type="hidden" class="modify_hidden_yn" value="y"></td>';
+                        html += '   <td><input style="width:100%;" class="can_use_yn" type="checkbox" checked><input type="hidden" class="use_hidden_yn" value="y"></td>';
+                        html += '   <td><input style="width:100%;" class="can_modify_yn" type="checkbox" checked><input type="hidden" class="modify_hidden_yn" value="y"></td>';
                     }
 
-                    html += '   <td>' + value.hndlDyTm.substring(0, 10) + '</td>';
+                    html += '   <td style="text-align:center;">' + value.hndlDyTm.substring(0, 10) + '</td>';
                     if (value.hndlDyTm === '-') {
-                        html += '   <td> - </td>';
+                        html += '   <td style="text-align:center;"> - </td>';
                     } else {
-                        html += '   <td>' + value.hndlDyTm.substring(10, value.hndlDyTm.length) + '</td>';
+                        html += '   <td style="text-align:center;">' + value.hndlDyTm.substring(10, value.hndlDyTm.length) + '</td>';
                     }
 
-                    html += '   <td>' + value.hndlPEno + '</td>';
+                    html += '   <td style="text-align:center;">' + value.hndlPEno + '</td>';
                     html += '</tr>';
                 });
             } else {
@@ -187,7 +202,7 @@ function clickDeleteButton() {
 }
 
 /**
- * 행삭제 호출
+ * 행삭제 ajax
  * @param {권한코드 리스트} authCodeList 
  */
 function deleteRow(authCodeList) {
@@ -202,7 +217,7 @@ function deleteRow(authCodeList) {
 }
 
 /**
- * 권한코드 저장버튼 클릭
+ * 권한코드 저장버튼 클릭 event
  */
 function clickAuthSaveButton() {
 
@@ -298,7 +313,7 @@ function clickAuthSaveButton() {
 }
 
 /**
- * 권한코드 저장 요청
+ * 권한코드 저장 ajax
  * @param {권한코드 리스트} authCodeList 
  */
 function saveAuthCode(authCodeList) {
@@ -320,6 +335,10 @@ function saveAuthCode(authCodeList) {
     })
 }
 
+
+/*******************************************************************
+ *** 하단 그리드 event
+ *******************************************************************/
 /**
  * 메뉴 저장버튼 클릭
  */
@@ -353,13 +372,13 @@ function clickSaveMenuButton() {
     }
 
     if (authCodeMenuList.length > 0) {
-        console.log(authCodeMenuList);
+        //console.log(authCodeMenuList);
         saveMenu(authCodeMenuList, authCode);
     }
 }
 
 /**
- * 메뉴 저장요청
+ * 메뉴 저장 ajax
  */
 function saveMenu(authCodeMenuList, authCode) {
     ajaxCall({
@@ -386,16 +405,5 @@ function saveMenu(authCodeMenuList, authCode) {
                 text: message
             });
         }
-    });
-}
-
-/**
- * 변경 가능한 컬럼 더블클릭 했을시 input박스 생성
- */
-function doubleClickColumn() {
-    $(document).on('dblclick', '.update_column', function () {
-        let trClass = $(this).attr('class').split(' ')[1]
-        tdInputHTML = '<input class="' + trClass + '_input" style="width: 100%;" type="text" value="' + $(this).text() + '">'
-        $(this).html(tdInputHTML);
     });
 }

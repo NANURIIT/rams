@@ -1,60 +1,28 @@
 $(document).ready(function() {
 
-	setOpenModal_AS02020P();
-
-	setKeyDownFunction_AS02020P();
+	keyDownEnter_AS02020P();
 
 });
 
-// modal controll function
-function setOpenModal_AS02020P() {
-	let Modal = document.getElementById('AS02020P');
-	let OpenModal = document.getElementById("open_modal_AS02020P");
-	let CloseModal = document.getElementsByClassName("modal_close_AS02020P")[0];
+/**
+ * 모달 팝업 show
+ */
+function callAS02020P(){
+	$('#modal-AS02020P').modal('show');
+}
 
-	// open modal
-	OpenModal.onclick = function() {
-		Modal.style.display = "block";
-	}
-
-	// close modal
-	CloseModal.onclick = function() {
-		Modal.style.display = "none";
-		reset_AS02020P();
-	}
-
-	// close modal
-	window.onclick = function(event) {
-		if (event.target === Modal) {
-			Modal.style.display = "none";
-			reset_AS02020P();
-		}
-	}
-
-	// close modal
-	$(document).keydown(function(e) {
-		//keyCode 구 브라우저, which 현재 브라우저
-		var code = e.keyCode || e.which;
-		if (code == 27) { // 27은 ESC 키번호
-			Modal.style.display = "none";
-			reset_AS02020P();
-		}
-	});
-};
-
-function setKeyDownFunction_AS02020P() {
-	keyDownEnter_AS02020P();
-};
-
+/**
+ * Enter key event
+ */
 function keyDownEnter_AS02020P() {
 
-	$("input[id=AS02020P_dealNo]").keydown(function(key) {
+	$("input[id=AS02020P_ibDealNo]").keydown(function(key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
 			getDealInfo();
 		}
 	});
 
-	$("input[id=AS02020P_dealNm]").keydown(function(key) {
+	$("input[id=AS02020P_ibDealNm]").keydown(function(key) {
 		if (key.keyCode == 13) {//키가 13이면 실행 (엔터는 13)
 			getDealInfo();
 		}
@@ -68,15 +36,18 @@ function keyDownEnter_AS02020P() {
 
 };
 
+/**
+ * deal 번호 조회 ajax
+ */
 function getDealInfo() {
 
-	var dealNo = $("#AS02020P_dealNo").val();
-	var dealNm = $("#AS02020P_dealNm").val();
+	var ibDealNo = $("#AS02020P_ibDealNo").val();
+	var ibDealNm = $("#AS02020P_ibDealNm").val();
 	var dscDate = $("#AS02020P_datepicker1").val();
 
 	var dtoParam = {
-		"dealNo": dealNo
-		, "dealNm": dealNm
+		"ibDealNo": ibDealNo
+		, "ibDealNm": ibDealNm
 		, "dscDate": dscDate
 	};
 
@@ -115,7 +86,9 @@ function getDealInfo() {
 	});
 };
 
-// reset AC01120P
+/**
+ * reset
+ */
 function reset_AS02020P() {
 	$('#AS02020P_dealInfoList').html("");
 	$('#AS02020P_dealNo').val("");
@@ -123,13 +96,17 @@ function reset_AS02020P() {
 	$('#AS02020P_datepicker1').val("");
 };
 
-// close modal
+/**
+ * close AS02020P modal
+ */
 function modalClose_AS02020P() {
-	let Modal = document.getElementById('AS02020P');
-	Modal.style.display = "none";
+	reset_AS02020P();
+	$('#modal-AS02020P').modal('hide');
 };
 
-// 팝업에서 deal 번호 조회후 더블클릭
+/**
+ * 팝업에서 deal 번호 조회후 더블클릭
+ */
 function setDealInfo() {
 	//tr(selected) = event.currentTarget;
 	//td(selected) = event.target;
