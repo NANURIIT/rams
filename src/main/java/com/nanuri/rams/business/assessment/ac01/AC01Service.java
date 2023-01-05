@@ -72,9 +72,17 @@ public interface AC01Service {
 	
 	// =========== Start AC01410S( 메뉴관리) ============//
 
-	public List<RAA93BDTO> selectHighMenuList(String menuNm);
+	public List<RAA93BDTO> selectMainMenuList(String menuNm);
 
 	public List<RAA93BDTO> selectSubMenuList(String menuId);
+
+	public boolean deleteMainMenuInfo(List<String> menuId);
+
+	public boolean deleteSubMenuInfo(List<String> menuId);
+
+	public boolean registMainMenuInfo(List<RAA93BDTO> requestDtos);
+
+	
 
 	// ============ End AC01410S( 메뉴관리 ) ============//
 }

@@ -49,7 +49,7 @@
     </select>
     
     <!-- 상위메뉴 조회 -->
-    <select id="selectHighMenuList" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA93BDTO">
+    <select id="selectMainMenuList" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA93BDTO">
     	SELECT MENU_ID
     		 , MENU_NM
     		 , SRT_NO
@@ -83,5 +83,60 @@
 		   AND HG_RNK_MENU_ID = #{menuId}
     </select>
     
+	<update id="deleteMainMenuInfo" parameterType="java.util.List">
+		UPDATE RAA93B
+		   SET DLT_F = 'Y'
+		WHERE MENU_ID IN
+		<foreach collection="list" item="menuId" index="index" open="(" separator="," close=")">
+			#{menuId}
+		</foreach>
+	</update>
+	
+	<update id="deleteSubMenuInfo" parameterType="java.util.List">
+		UPDATE RAA93B
+		   SET DLT_F = 'Y'
+		WHERE MENU_ID IN
+		<foreach collection="list" item="menuId" index="index" open="(" separator="," close=")">
+			#{menuId}
+		</foreach>
+	</update>
+	
+	<select id="getMainMenuInfo" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA93BDTO">
+        SELECT MENU_ID
+    		 , SRT_NO
+    		 , URL_PRMTR_CNTNT
+    		 , MENU_NM
+    		 , SHRT_NM
+    		 , URL_NM
+    		 , URL_DVD_CD
+    		 , HNDL_DY_TM
+    		 , HNDL_P_ENO
+          FROM RAA93B
+         WHERE MENU_ID = #{menuId}
+    </select>
+	
+	<insert id="inserMainMenuInfo" parameterType="com.nanuri.rams.business.common.dto.RAA93BDTO">
+        INSERT INTO RAA93B (
+               MENU_ID
+             , SRT_NO
+             , URL_PRMTR_CNTNT
+             , MENU_NM
+             , SHRT_NM
+             , URL_DVD_CD
+             , HNDL_DY_TM
+             , SCRN_APLC_TYPE_CD 
+             , DLT_F
+        ) VALUES (
+			   #{menuId}
+			 , #{srtNo}    
+			 , #{urlPrmtrCntnt} 
+			 , #{menuNm} 
+			 , #{shrtNm} 
+			 , #{urlDvdCd}  
+			 , DATE_FORMAT(now(), '%Y%m%d')
+			 , 'M' 
+			 , 'N'     
+        )
+    </insert>
 
 </mapper>

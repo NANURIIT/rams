@@ -160,16 +160,33 @@ public class AC01APIController {
 
 	// =========== Start AC01410S( 메뉴관리) ============//
 	// 그룹코드정보 리스트 가져오기
-	@GetMapping(value = "/highMenuList")
-	public List<RAA93BDTO> selectHighMenuList(@RequestParam String menuNm){ 
-		return ac01Service.selectHighMenuList(menuNm);
+	@GetMapping(value = "/mainMenuList")
+	public List<RAA93BDTO> selectMainMenuList(@RequestParam String menuNm){ 
+		return ac01Service.selectMainMenuList(menuNm);
 	}
 	
-	@GetMapping(value = "/highMenuInfo")
+	@GetMapping(value = "/mainMenuInfo")
 	public List<RAA93BDTO> selectSubMenuList(@RequestParam String menuId){ 
 		return ac01Service.selectSubMenuList(menuId);
 	}
-
+	
+	@PatchMapping(value = "/deleteMainMenuInfo")
+	public boolean deleteMainMenuInfo(@RequestBody List<String> menuId) {
+		return ac01Service.deleteMainMenuInfo(menuId);
+	}
+	
+	@PatchMapping(value = "/deleteSubMenuInfo")
+	public boolean deleteSubMenuInfo(@RequestBody List<String> menuId) {
+		return ac01Service.deleteSubMenuInfo(menuId);
+	}
+	
+	// 상위메뉴 정보 등록하기
+	@PostMapping(value = "/registMainMenuInfo")
+	public boolean registMainMenuInfo(@RequestBody List<RAA93BDTO> requestDtos) {
+		return ac01Service.registMainMenuInfo(requestDtos);
+	}
+	
+	
 	// ============ End AC01410S( 메뉴관리 ) ============//
 	
 	

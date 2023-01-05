@@ -431,8 +431,8 @@ public class AC01ServiceImpl implements AC01Service {
     
     // =========== Start AC01410S( 메뉴관리) ============//
 	@Override
-	public List<RAA93BDTO> selectHighMenuList(String menuNm) {
-		List<RAA93BDTO> dtoList = raa93BMapper.selectHighMenuList(menuNm);
+	public List<RAA93BDTO> selectMainMenuList(String menuNm) {
+		List<RAA93BDTO> dtoList = raa93BMapper.selectMainMenuList(menuNm);
 		return dtoList;
 	}
 
@@ -441,6 +441,37 @@ public class AC01ServiceImpl implements AC01Service {
 		List<RAA93BDTO> dtoList = raa93BMapper.selectSubMenuList(menuId);
 		return dtoList;
 	}
+
+	@Override
+	public boolean deleteMainMenuInfo(List<String> menuId) {
+		int count = raa93BMapper.deleteMainMenuInfo(menuId);
+		return count > 0;
+	}
+
+	@Override
+	public boolean deleteSubMenuInfo(List<String> menuId) {
+		int count = raa93BMapper.deleteSubMenuInfo(menuId);
+		return count > 0;
+	}
+
+	@Override
+	public boolean registMainMenuInfo(List<RAA93BDTO> requestDtos) {
+		int count = 0;
+        for (RAA93BDTO requestDto : requestDtos) {
+            if (raa93BMapper.getMainMenuInfo(requestDto.getMenuId()).isPresent()) {
+                throw new IllegalArgumentException("해당 그룹코드가 존재합니다. " + requestDto.getMenuId());
+            }
+
+            if (raa93BMapper.getMainMenuInfo(requestDto.getOldMenuId()).isEmpty()) {
+                count += raa93BMapper.inserMainMenuInfo(requestDto);
+            } else {
+                count += raa93BMapper.updateMainMenuInfo(requestDto);
+            }
+        }
+        return count > 0;
+	}
+	
+
 	
  	// ============ End AC01410S( 메뉴관리 ) ============//
     
