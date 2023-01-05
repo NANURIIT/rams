@@ -103,7 +103,7 @@ public interface AS03Service {
 	public void registHistoy(Map<String, Object> dealInfoMap);
 	
 	// deal 정보 갱신
-	public Map<String, Object> updateDealInfo(RAA02BDTO paramData);
+	public Map<String, Object> updateDealInfo(RAA02BDTO paramData) throws ParseException;
 
 	// ---------------tab2 start------------------
 

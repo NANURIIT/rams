@@ -128,6 +128,9 @@ function getDealDetailInfo(ibDealNo) {
 			
 			//console.log(dealDetail);
 			
+			$('#AS03210S_riskInspctCcd').prop("disabled", true);
+			$('#AS03210S_lstCCaseCcd').prop("disabled", true);
+			
 			$('#AS03210S_riskInspctCcd').val(dealDetail.riskInspctCcd).prop("selected", true);				// 리스크심사구분
 			$('#AS03210S_lstCCaseCcd').val(dealDetail.lstCCaseCcd).prop("selected", true);					// 부수안건
 			$('#ibDealNm').val(dealDetail.ibDealNm);														// 안건명
@@ -796,10 +799,10 @@ function tab1save() {
 
 	// Deal 정보 생성
 	function registDealInfo() {
+		var raDealCcd = $('#AS03210S_raDealCcd').val();									// RADEAL구분코드
 		var riskInspctCcd = $('#AS03210S_riskInspctCcd').val();							// 리스크심사구분
 		var lstCCaseCcd = $('#AS03210S_lstCCaseCcd').val();								// 부수안건
-		var inspctDprtCcd = $('#AS03210S_inspctDprtCcd').val();							// 심사부서구분 
-		var raDealCcd = $('#AS03210S_raDealCcd').val();									// RADEAL구분코드
+		var inspctDprtCcd = $('#AS03210S_inspctDprtCcd').val();							// 심사부서구분
 		var invstGdsLdvdCd = $('#AS03210S_invstGdsLdvdCd').val();						// 투자상품대분류
 		var invstGdsMdvdCd = $('#AS03210S_invstGdsMdvdCd').val();						// 투자상품중분류
 		var invstGdsSdvdCd = $('#AS03210S_invstGdsSdvdCd').val();						// 투자상품소분류
@@ -840,10 +843,10 @@ function tab1save() {
 		var inspctDprtCmmtRmrk2 = $('#AS03210S_inspctDprtCmmtRmrk2').val();				// 심사부의견
 
 		var paramData = {
-			"riskInspctCcd": riskInspctCcd
+			"raDealCcd": raDealCcd
+			, "riskInspctCcd": riskInspctCcd
 			, "lstCCaseCcd": lstCCaseCcd
 			, "inspctDprtCcd": inspctDprtCcd
-			, "raDealCcd": raDealCcd
 			, "invstGdsLdvdCd": invstGdsLdvdCd
 			, "invstGdsMdvdCd": invstGdsMdvdCd
 			, "invstGdsSdvdCd": invstGdsSdvdCd
@@ -917,11 +920,15 @@ function tab1save() {
 
 	// Deal 정보 갱신
 	function updateDealInfo() {
+		
+		$('#AS03210S_riskInspctCcd').prop("disabled", false);
+		$('#AS03210S_lstCCaseCcd').prop("disabled", false);
+		
 		var ibDealNo = selectedIbDealNo;
+		var raDealCcd = $('#AS03210S_raDealCcd').val();									// RADEAL구분코드
 		var riskInspctCcd = $('#AS03210S_riskInspctCcd').val();							// 리스크심사구분
 		var lstCCaseCcd = $('#AS03210S_lstCCaseCcd').val();								// 부수안건
-		var inspctDprtCcd = $('#AS03210S_inspctDprtCcd').val();							// 심사부서구분 
-		var raDealCcd = $('#AS03210S_raDealCcd').val();									// RADEAL구분코드
+		var inspctDprtCcd = $('#AS03210S_inspctDprtCcd').val();							// 심사부서구분
 		var invstGdsLdvdCd = $('#AS03210S_invstGdsLdvdCd').val();						// 투자상품대분류
 		var invstGdsMdvdCd = $('#AS03210S_invstGdsMdvdCd').val();						// 투자상품중분류
 		var invstGdsSdvdCd = $('#AS03210S_invstGdsSdvdCd').val();						// 투자상품소분류
@@ -937,7 +944,7 @@ function tab1save() {
 		var invstNtnCd = $('#AS03210S_cntyCd').val();									// 투자국가
 		var aplcExchR = $('aplcExchR').val();											// 적용환율
 		var crncyAmtWn = $('crncyAmtWn').val();											// 부의금액(원)
-		var tlErnAmt = $('#tlErnAmt').val();											// 투자수익
+		var tlErnAmt = $('#tlErnAmt').val();											// 전체수익
 		var rcvblErnAmt = $('#rcvblErnAmt').val();										// 수수료수익
 		var wrtErnAmt = $('#wrtErnAmt').val();											// 투자수익 
 		var indTypDvdCd = $('#AS03210S_indTypDvdCd').val();								// 고위험산업
@@ -963,10 +970,10 @@ function tab1save() {
 
 		var paramData = {
 			"ibDealNo": ibDealNo
+			, "raDealCcd": raDealCcd
 			, "riskInspctCcd": riskInspctCcd
 			, "lstCCaseCcd": lstCCaseCcd
 			, "inspctDprtCcd": inspctDprtCcd
-			, "raDealCcd": raDealCcd
 			, "invstGdsLdvdCd": invstGdsLdvdCd
 			, "invstGdsMdvdCd": invstGdsMdvdCd
 			, "invstGdsSdvdCd": invstGdsSdvdCd
@@ -1051,6 +1058,7 @@ function tab1reset() {
 	$('#crncyAmtWn').val("");
 	$('#invstPrdMmC').val("");
 	$('#tab1_datepicker1').val("");
+	$('#mtrtDt').val("");
 	$('#tlErnAmt').val("");
 	$('#rcvblErnAmt').val("");
 	$('#wrtErnAmt').val("");
@@ -1059,6 +1067,9 @@ function tab1reset() {
 	$('#AS03210S_inspctDprtCmmtRmrk2').val("");
 	$('#AS03210S_mrtgOfrF').val("Y").prop("selected", true);
 	$('#AS03210S_ensrF').val("Y").prop("selected", true);
+	
+	$('#AS03210S_riskInspctCcd').prop("disabled", false);
+	$('#AS03210S_lstCCaseCcd').prop("disabled", false);
 	
 	loadTab1();
 }
