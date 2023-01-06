@@ -68,8 +68,8 @@ public class AS03ServiceImpl implements AS03Service {
 	 * @param DealInfo(VO)
 	 */
 	@Override
-	public List<RAA02BDTO> getDealList(DealInfo DealInfo) {
-		return raa02bMapper.getDealList(DealInfo);
+	public List<RAA02BDTO> getDealList(DealInfo dealInfo) {
+		return raa02bMapper.getDealList(dealInfo);
 	}
 	
 	/**
