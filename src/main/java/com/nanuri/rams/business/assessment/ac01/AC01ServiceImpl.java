@@ -459,16 +459,19 @@ public class AC01ServiceImpl implements AC01Service {
 	@Override
 	public boolean registMainMenuInfo(List<MainMenuVo> requestDtos) {
 		int count = 0;
+		
+		String hndlPEno = facade.getDetails().getEno();
+		
         for (MainMenuVo requestDto : requestDtos) {
             if (raa93BMapper.getMainMenuInfo(requestDto.getMenuId()).isPresent()) {
                 throw new IllegalArgumentException("해당 그룹코드가 존재합니다. " + requestDto.getMenuId());
             }
 
             if (raa93BMapper.getMainMenuInfo(requestDto.getOldMenuId()).isEmpty()) {
-            	String hndlPEno = facade.getDetails().getEno();
             	requestDto.setHndlPEno(hndlPEno);
                 count += raa93BMapper.insertMainMenuInfo(requestDto);
             } else {
+            	requestDto.setHndlPEno(hndlPEno);
                 count += raa93BMapper.updateMainMenuInfo(requestDto);
             }
         }

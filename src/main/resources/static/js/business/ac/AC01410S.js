@@ -3,9 +3,20 @@ $(document).ready(function() {
 	menuSearch();
 	//상위메뉴 상세버튼 클릭
 	clickDetailButton(); 
-	
+	//변경 가능한 컬럼 더블클릭 했을시 input박스 생성
+	doubleClick();
 
 });
+
+/*변경 가능한 컬럼 더블클릭 했을시 input박스 생성*/
+function doubleClick() {
+	$(document).on('dblclick', '.update_column', function () {
+		let trClass = $(this).attr('class').split(' ')[1]
+		tdInputHTML = '<input class="' + trClass + '_input" style="width: 100%;" type="text" value="' + $(this).text() + '">'
+		$(this).html(tdInputHTML);
+	});
+}
+
 
 function menuLoad(){
 	let menuNm = $('#menuNm').val()
@@ -48,12 +59,12 @@ function rebuildMenuListTable(data){
 		$.each(menuList, function (key, value){
 			html += '<tr>';
 			html += '	<td><input type="checkbox" id="'+ value.menuId +'"></td>';		//삭제
-			html += '	<td>'+ value.menuId + '</td>';	//메뉴ID
-			html += '	<td>'+ value.srtNo+ '</td>'; 	//정렬번호
-			html += '	<td>'+ value.urlPrmtrCntnt+ '</td>';	//화면번호
-			html += '	<td>'+ value.menuNm + '</td>';	//메뉴명
-			html += '	<td>'+ value.shrtNm + '</td>';	//메뉴설명
-			html += '	<td>'+ value.urlDvdCd + '</td>';	//URL문류코드
+			html += '	<td class="update_column menuId">'+ value.menuId + '</td>';	//메뉴ID
+			html += '	<td class="update_column">'+ value.srtNo+ '</td>'; 	//정렬번호
+			html += '	<td class="update_column">'+ value.urlPrmtrCntnt+ '</td>';	//화면번호
+			html += '	<td class="update_column">'+ value.menuNm + '</td>';	//메뉴명
+			html += '	<td class="update_column">'+ value.shrtNm + '</td>';	//메뉴설명
+			html += '	<td class="update_column">'+ value.urlDvdCd + '</td>';	//URL문류코드
 			html += '	<td><button class="mainMenuDetail btn btn-warning btn-xs" id="'+value.menuId +'"><i class="fa fa-arrow-down"></i>&nbsp;상세</button></td>';	 //하위메뉴
 			html += '	<td>'+ value.hndlDyTm + '</td>'; 	//처리일시
 			html += '	<td>'+ value.empNm+ '</td>';		//처리자
@@ -107,7 +118,7 @@ var getMeunIdInfo = function(menuId){
 				html += '   <td class="update_column">' + menuInfo.urlNm + '</td>';		//화면ID
 				html += '   <td class="update_column">' + menuInfo.urlDvdCd + '</td>';		//URL분류코드
 				html += '   <td class="update_column">' + menuInfo.hndlDyTm + '</td>';		//처리일
-				html += '   <td class="update_column">' + menuInfo.hndlPEno + '</td>';		//처리자
+				html += '   <td>' + menuInfo.hndlPEno + '</td>';		//처리자
 				if(menuInfo.dltF === 'N'){
 					html += '  <td><input style="width:100%"  type="checkbox" checked></td>';
 				} else {
@@ -340,7 +351,7 @@ function clickSaveMainMenu() {
 		}
 
 		if (!(Object.keys(mainMenu).length === 0)) {
-			mainMenu.oldmenuId = $(tr[i]).find("td:eq(0)").find("input").attr("id");
+			mainMenu.oldMenuId = $(tr[i]).find("td:eq(0)").find("input").attr("id");
 			mainMenuList.push(mainMenu);
 		}
 	}
@@ -352,6 +363,7 @@ function clickSaveMainMenu() {
 
 /*상위메뉴 저장 처리*/
 var saveMainMenu = function (groupCodeList) {
+	
 	$.ajax({
 		method: 'POST',
 		url: '/registMainMenuInfo',

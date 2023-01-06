@@ -149,5 +149,31 @@
 			 , #{hndlPEno}   
         )
     </insert>
-
+	
+	<update id="updateMainMenuInfo" parameterType="com.nanuri.rams.business.common.vo.RAA93BVO$MainMenuVo">
+        UPDATE RAA93B
+        <set>
+            <if test="menuId != null and menuId !=''">
+                  MENU_ID = #{menuId}
+            </if>
+            <if test="srtNo != null and srtNo !=''">
+                , SRT_NO = #{srtNo}
+            </if>
+            <if test="urlPrmtrCntnt != null and urlPrmtrCntnt !=''">
+                , URL_PRMTR_CNTNT = #{useF}
+            </if>
+            <if test="menuNm != null and menuNm !=''">
+                , MENU_NM = #{menuNm}
+            </if>
+            <if test="shrtNm != null and shrtNm !=''">
+                , SHRT_NM = #{shrtNm}
+            </if>
+            <if test="urlDvdCd != null and urlDvdCd !=''">
+                , URL_DVD_CD = #{urlDvdCd}
+            </if>
+            , HNDL_DY_TM = DATE_FORMAT(now(), '%Y%m%d')
+            , hndl_p_eno = #{hndlPEno}
+        </set>
+        WHERE MENU_ID = #{oldMenuId}
+    </update>
 </mapper>

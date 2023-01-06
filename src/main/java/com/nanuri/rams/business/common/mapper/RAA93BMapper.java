@@ -28,6 +28,6 @@ public interface RAA93BMapper {
 
 	public int insertMainMenuInfo(RAA93BDTO requestDto);		
 
-	public int updateMainMenuInfo(RAA93BDTO requestDto); 
+	public int updateMainMenuInfo(MainMenuVo requestDto); 
 
 }
