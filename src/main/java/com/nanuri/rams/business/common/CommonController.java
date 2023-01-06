@@ -20,7 +20,7 @@ public class CommonController {
 	// RADEAL구분코드
 	@GetMapping(value = "/getRaDealCcd")
 	public List<Map<String, Object>> getRaDealCcd() {
-		return commonService.getRaDealCcd();
+		return commonService.getSelectBox("R001");
 	}
 
 	// ---------------tab1 start------------------
@@ -34,103 +34,103 @@ public class CommonController {
 	// 리스크심사구분코드
 	@GetMapping(value = "/getRiskInspctCcd")
 	public List<Map<String, Object>> getRiskInspctCcd() {
-		return commonService.getRiskInspctCcd();
+		return commonService.getSelectBox("R013");
 	}
 
 	// 부수안건구분코드
 	@GetMapping(value = "/getlstCCaseCcd")
 	public List<Map<String, Object>> getlstCCaseCcd() {
-		return commonService.getlstCCaseCcd();
+		return commonService.getSelectBox("L001");
 	}
 
 	// 심사부서구분코드
 	@GetMapping(value = "/getInspctDprtCcd")
 	public List<Map<String, Object>> getInspctDprtCcd() {
-		return commonService.getInspctDprtCcd();
+		return commonService.getSelectBox("I003");
 	}
 
 	// 투자상품대분류코드
 	@GetMapping(value = "/getInvstGdsLdvdCd")
 	public List<Map<String, Object>> getInvstGdsLdvdCd() {
-		return commonService.getInvstGdsLdvdCd();
+		return commonService.getSelectBox("I012");
 	}
 
 	// 투자상품중분류코드
 	@GetMapping(value = "/getInvstGdsMdvdCd")
 	public List<Map<String, Object>> getInvstGdsMdvdCd() {
-		return commonService.getInvstGdsMdvdCd();
+		return commonService.getSelectBox("I015");
 	}
 
 	// 투자상품소분류코드
 	@GetMapping(value = "/getInvstGdsSdvdCd")
 	public List<Map<String, Object>> getInvstGdsSdvdCd() {
-		return commonService.getInvstGdsSdvdCd();
+		return commonService.getSelectBox("I014");
 	}
 
 	// 투자상품상세분류코드
 	@GetMapping(value = "/getInvstGdsDtlsDvdCd")
 	public List<Map<String, Object>> getInvstGdsDtlsDvdCd() {
-		return commonService.getInvstGdsDtlsDvdCd();
+		return commonService.getSelectBox("I013");
 	}
 
 	// 부의기준통화
 	@GetMapping(value = "/getInvstCrncyCd")
 	public List<Map<String, Object>> getInvstCrncyCd() {
-		return commonService.getInvstCrncyCd();
+		return commonService.getSelectBox("I016");
 	}
 
 	// 투자국가
 	@GetMapping(value = "/getCntyCd")
 	public List<Map<String, Object>> getCntyCd() {
-		return commonService.getCntyCd();
+		return commonService.getSelectBox("U003");
 	}
 
 	// 고위험사업
 	@GetMapping(value = "/getIndTypDvdCd")
 	public List<Map<String, Object>> getIndTypDvdCd() {
-		return commonService.getIndTypDvdCd();
+		return commonService.getSelectBox("I008");
 	}
 
 	// 업무구분
 	@GetMapping(value = "/getCheckItemCd")
 	public List<Map<String, Object>> getCheckItemCd() {
-		return commonService.getCheckItemCd();
+		return commonService.getSelectBox("C004");
 	}
 
 	// 투자국가
 	@GetMapping(value = "/getBsnsAreaCd")
 	public List<Map<String, Object>> getBsnsAreaCd() {
-		return commonService.getBsnsAreaCd();
+		return commonService.getSelectBox("U004");
 	}
 
 	// 주요투자물건
 	@GetMapping(value = "/getInvstThingCcd")
 	public List<Map<String, Object>> getInvstThingCcd() {
-		return commonService.getInvstThingCcd();
+		return commonService.getSelectBox("I010");
 	}
 
 	// 주요투자물건상세
 	@GetMapping(value = "/getInvstThingDtlsCcd")
 	public List<Map<String, Object>> getInvstThingDtlsCcd() {
-		return commonService.getInvstThingDtlsCcd();
+		return commonService.getSelectBox("I011");
 	}
 
 	// 책임준공
 	@GetMapping(value = "/getRspsbCmplCcd")
 	public List<Map<String, Object>> getRspsbCmplCcd() {
-		return commonService.getRspsbCmplCcd();
+		return commonService.getSelectBox("R014");
 	}
 
 	// 전결구분
 	@GetMapping(value = "/getRaRsltnCcd")
 	public List<Map<String, Object>> getRaRsltnCcd() {
-		return commonService.getRaRsltnCcd();
+		return commonService.getSelectBox("R002");
 	}
 
 	// 협업유형코드
 	@GetMapping(value = "/getCoprtnTypCd")
 	public List<Map<String, Object>> getCoprtnTypCd() {
-		return commonService.getCoprtnTypCd();
+		return commonService.getSelectBox("C005");
 	}
 
 	// ---------------tab3 start------------------
@@ -138,7 +138,7 @@ public class CommonController {
 	// 기초자산종류
 	@GetMapping(value = "/getBscAstsKndCd")
 	public List<Map<String, Object>> getBscAstsKndCd() {
-		return commonService.getBscAstsKndCd();
+		return commonService.getSelectBox("B002");
 	}
 
 	// ---------------tab4 start------------------
@@ -146,7 +146,7 @@ public class CommonController {
 	// 법인형태
 	@GetMapping(value = "/getCncCmpnyClsfCd")
 	public List<Map<String, Object>> getCncCmpnyClsfCd() {
-		return commonService.getCncCmpnyClsfCd();
+		return commonService.getSelectBox("C002");
 	}
 
 	// ---------------tab6 start------------------
@@ -154,19 +154,19 @@ public class CommonController {
 	// 담보유형
 	@GetMapping(value = "/getMrtgKndCcd")
 	public List<Map<String, Object>> getMrtgKndCcd() {
-		return commonService.getMrtgKndCcd();
+		return commonService.getSelectBox("M002");
 	}
 
 	// 담보상세
 	@GetMapping(value = "/getMrtgDtlsCcd")
 	public List<Map<String, Object>> getMrtgDtlsCcd() {
-		return commonService.getMrtgDtlsCcd();
+		return commonService.getSelectBox("M001");
 	}
 
 	// 권리순위
 	@GetMapping(value = "/getRgtRnkCcd")
 	public List<Map<String, Object>> getRgtRnkCcd() {
-		return commonService.getRgtRnkCcd();
+		return commonService.getSelectBox("R008");
 	}
 
 	// ---------------tab8 start------------------
@@ -174,6 +174,6 @@ public class CommonController {
 	// 미이행시의무
 	@GetMapping(value = "/getDbtNpFrmOblgCcd")
 	public List<Map<String, Object>> getDbtNpFrmOblgCcd() {
-		return commonService.getDbtNpFrmOblgCcd();
+		return commonService.getSelectBox("D001");
 	}
 }

@@ -17,7 +17,6 @@ import com.nanuri.rams.business.common.mapper.RAA01BMapper;
 import com.nanuri.rams.business.common.mapper.RAA02BMapper;
 import com.nanuri.rams.business.common.mapper.RAA02HMapper;
 import com.nanuri.rams.business.common.mapper.RAA18BMapper;
-import com.nanuri.rams.business.common.mapper.RAA91BMapper;
 import com.nanuri.rams.business.common.vo.RAA01BVO;
 import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
 import com.nanuri.rams.business.common.vo.RAA18BVO.DocInfo;
@@ -36,7 +35,6 @@ public class AS03210ServiceImpl implements AS03210Service {
 	private final RAA01BMapper raa01bMapper;
 	private final RAA02BMapper raa02bMapper;
 	private final RAA02HMapper raa02hMapper;
-	private final RAA91BMapper raa91bMapper;
 	private final RAA18BMapper raa18bMapper;
 
 	@Autowired
@@ -123,13 +121,13 @@ public class AS03210ServiceImpl implements AS03210Service {
 		SimpleDateFormat sf1 = new SimpleDateFormat("yyyy-MM-dd");
 		// SimpleDateFormat sf2 = new SimpleDateFormat("yyyyMMdd");
 
-		Date df1 = sf1.parse(wrtDt); // 기표일
-		Date df2 = sf1.parse(mtrtDt); // 만기일
+		Date df1 = sf1.parse(wrtDt);							// 기표일
+		Date df2 = sf1.parse(mtrtDt);							// 만기일
 
-		long diffSec = (df2.getTime() - df1.getTime()) / 1000; // 초 차이
-		long diffDays = diffSec / (24 * 60 * 60); // 일자수 차이
+		long diffSec = (df2.getTime() - df1.getTime()) / 1000;	// 초 차이
+		long diffDays = diffSec / (24 * 60 * 60);				// 일자수 차이
 
-		paramData.setInvstPrdDyC(String.valueOf(diffDays)); // 투자기간일수(INVST_PRD_DY_C)
+		paramData.setInvstPrdDyC(String.valueOf(diffDays));		// 투자기간일수(INVST_PRD_DY_C)
 
 		// WRT_DT (yyyy-mm-dd -> yyyymmdd)
 		// MTRT_DT
@@ -183,45 +181,45 @@ public class AS03210ServiceImpl implements AS03210Service {
 
 		RAA01BDTO raa01bDTO = new RAA01BDTO();
 
-		raa01bDTO.setIbDealNo(paramData.getIbDealNo()); // IBDEAL번호
+		raa01bDTO.setIbDealNo(paramData.getIbDealNo());								// IBDEAL번호
 		// IB_DEAL_SQ
 		// DSC_DT
 		// DSC_SQ
 		// DSC_SQC
-		raa01bDTO.setIbDealNm(paramData.getIbDealNm()); // IBDEAL명
-		raa01bDTO.setIbDealPrgrsStCd(paramData.getInspctPrgrsStCd()); // IBDEAL상태코드
+		raa01bDTO.setIbDealNm(paramData.getIbDealNm());								// IBDEAL명
+		raa01bDTO.setIbDealPrgrsStCd(paramData.getInspctPrgrsStCd());				// IBDEAL상태코드
 		// DSC_RSLT_CD
-		raa01bDTO.setTlAmt(paramData.getCrncyAmt()); // 총금액
-		raa01bDTO.setPtcpAmt(paramData.getPtcpAmt()); // 참여금액
-		raa01bDTO.setTlErnAmt(paramData.getTlErnAmt()); // 총수익금액
-		raa01bDTO.setWrtErnAmt(paramData.getWrtErnAmt()); // 기표수익금액
-		raa01bDTO.setRcvblErnAmt(paramData.getRcvblErnAmt()); // 미수수익금액
+		raa01bDTO.setTlAmt(paramData.getCrncyAmt());								// 총금액
+		raa01bDTO.setPtcpAmt(paramData.getPtcpAmt());								// 참여금액
+		raa01bDTO.setTlErnAmt(paramData.getTlErnAmt());								// 총수익금액
+		raa01bDTO.setWrtErnAmt(paramData.getWrtErnAmt());							// 기표수익금액
+		raa01bDTO.setRcvblErnAmt(paramData.getRcvblErnAmt());						// 미수수익금액
 		// ENTP_CD
-		raa01bDTO.setEntpRnm(paramData.getCfmtEntpNm()); // 업체실명
+		raa01bDTO.setEntpRnm(paramData.getCfmtEntpNm());							// 업체실명
 		// CORP_RGST_NO
 		// CRDT_GRD_CD
-		raa01bDTO.setWrtDt(paramData.getWrtDt()); // 기표일자
-		raa01bDTO.setMtrtDt(paramData.getMtrtDt()); // 만기일자
-		raa01bDTO.setInvstNtnCd(paramData.getInvstNtnCd()); // 투자국가코드
-		raa01bDTO.setInvstCrncyCd(paramData.getInvstCrncyCd()); // 투자통화코드
-		raa01bDTO.setCrncyAmt(paramData.getCrncyAmt()); // 통화금액
-		raa01bDTO.setInvstGdsLdvdCd(paramData.getInvstGdsLdvdCd()); // 투자상품대분류코드
-		raa01bDTO.setInvstGdsMdvdCd(paramData.getInvstGdsMdvdCd()); // 투자상품중분류코드
-		raa01bDTO.setInvstGdsSdvdCd(paramData.getInvstGdsSdvdCd()); // 투자상품소분류코드
-		raa01bDTO.setInvstGdsDtlsDvdCd(paramData.getInvstGdsDtlsDvdCd()); // 투자상품상세분류코드
+		raa01bDTO.setWrtDt(paramData.getWrtDt());									// 기표일자
+		raa01bDTO.setMtrtDt(paramData.getMtrtDt());									// 만기일자
+		raa01bDTO.setInvstNtnCd(paramData.getInvstNtnCd());							// 투자국가코드
+		raa01bDTO.setInvstCrncyCd(paramData.getInvstCrncyCd());						// 투자통화코드
+		raa01bDTO.setCrncyAmt(paramData.getCrncyAmt());								// 통화금액
+		raa01bDTO.setInvstGdsLdvdCd(paramData.getInvstGdsLdvdCd());					// 투자상품대분류코드
+		raa01bDTO.setInvstGdsMdvdCd(paramData.getInvstGdsMdvdCd());					// 투자상품중분류코드
+		raa01bDTO.setInvstGdsSdvdCd(paramData.getInvstGdsSdvdCd());					// 투자상품소분류코드
+		raa01bDTO.setInvstGdsDtlsDvdCd(paramData.getInvstGdsDtlsDvdCd());			// 투자상품상세분류코드
 		// GDS_DVD_1_NM
 		// GDS_DVD_2_NM
 		// GDS_DVD_3_NM
 		// GDS_DVD_4_NM
-		raa01bDTO.setCoprtnTypCd(paramData.getCoprtnTypCd()); // 협업유형코드
-		raa01bDTO.setHdqtCd(paramData.getHdqtCd()); // 본부코드
-		raa01bDTO.setDprtCd(paramData.getDprtCd()); // 부점코드
-		raa01bDTO.setChrgPEno(paramData.getChrgPEno()); // 담당자사번
+		raa01bDTO.setCoprtnTypCd(paramData.getCoprtnTypCd());						// 협업유형코드
+		raa01bDTO.setHdqtCd(paramData.getHdqtCd());									// 본부코드
+		raa01bDTO.setDprtCd(paramData.getDprtCd());									// 부점코드
+		raa01bDTO.setChrgPEno(paramData.getChrgPEno());								// 담당자사번
 		// WTHLD_TBL_NM
 		// FNL_UPT_DY_TM
 		// HNDL_DY_TM
-		raa01bDTO.setDprtCd(facade.getDetails().getDprtCd()); // 처리부점코드
-		raa01bDTO.setHndlPEno(facade.getDetails().getEno()); // 처리자사번
+		raa01bDTO.setDprtCd(facade.getDetails().getDprtCd());						// 처리부점코드
+		raa01bDTO.setHndlPEno(facade.getDetails().getEno());						// 처리자사번
 
 		return raa01bDTO;
 	}
@@ -246,30 +244,30 @@ public class AS03210ServiceImpl implements AS03210Service {
 
 		RAA02BDTO raa02bDTO = raa02bMapper.copyDealInfO(ibDealNo);
 
-		raa02bDTO.setRiskInspctCcd(paramData.getRiskInspctCcd()); // 리스크심사구분코드
-		raa02bDTO.setLstCCaseCcd(paramData.getLstCCaseCcd()); // 부수안건
-		raa02bDTO.setIbDealNm(paramData.getIbDealNm()); // 안건명
-		raa02bDTO.setIbDealSnmNm(paramData.getIbDealSnmNm()); // 약어명
-		raa02bDTO.setRaRsltnCcd(paramData.getRaRsltnCcd()); // 전결구분
-		raa02bDTO.setRiskRcgNo(paramData.getRiskRcgNo()); // 리스크승인번호
+		raa02bDTO.setRiskInspctCcd(paramData.getRiskInspctCcd()); 					// 리스크심사구분코드
+		raa02bDTO.setLstCCaseCcd(paramData.getLstCCaseCcd()); 						// 부수안건
+		raa02bDTO.setIbDealNm(paramData.getIbDealNm());								// 안건명
+		raa02bDTO.setIbDealSnmNm(paramData.getIbDealSnmNm());						// 약어명
+		raa02bDTO.setRaRsltnCcd(paramData.getRaRsltnCcd());							// 전결구분
+		raa02bDTO.setRiskRcgNo(paramData.getRiskRcgNo());							// 리스크승인번호
 
-		raa02bDTO.setInspctDprtCcd(paramData.getInspctDprtCcd()); // 심사부서구분
-		raa02bDTO.setInvstGdsLdvdCd(paramData.getInvstGdsLdvdCd()); // 투자상품대분류
-		raa02bDTO.setInvstGdsMdvdCd(paramData.getInvstGdsMdvdCd()); // 투자상품중분류
-		raa02bDTO.setInvstGdsSdvdCd(paramData.getInvstGdsSdvdCd()); // 투자상품소분류
-		raa02bDTO.setInvstGdsDtlsDvdCd(paramData.getInvstGdsDtlsDvdCd()); // 투자상품상세분류
+		raa02bDTO.setInspctDprtCcd(paramData.getInspctDprtCcd());					// 심사부서구분
+		raa02bDTO.setInvstGdsLdvdCd(paramData.getInvstGdsLdvdCd());					// 투자상품대분류
+		raa02bDTO.setInvstGdsMdvdCd(paramData.getInvstGdsMdvdCd());					// 투자상품중분류
+		raa02bDTO.setInvstGdsSdvdCd(paramData.getInvstGdsSdvdCd());					// 투자상품소분류
+		raa02bDTO.setInvstGdsDtlsDvdCd(paramData.getInvstGdsDtlsDvdCd());			// 투자상품상세분류
 
-		raa02bDTO.setInvstCrncyCd(paramData.getInvstCrncyCd()); // 부의기준통화
-		raa02bDTO.setCrncyAmt(paramData.getCrncyAmt()); // 부의금액
-		raa02bDTO.setInvstNtnCd(paramData.getInvstNtnCd()); // 투자국가
-		raa02bDTO.setAplcExchR(paramData.getAplcExchR()); // 적용환율
-		raa02bDTO.setPtcpAmt(paramData.getPtcpAmt()); // 부의금액(원)
+		raa02bDTO.setInvstCrncyCd(paramData.getInvstCrncyCd());						// 부의기준통화
+		raa02bDTO.setCrncyAmt(paramData.getCrncyAmt());								// 부의금액
+		raa02bDTO.setInvstNtnCd(paramData.getInvstNtnCd());							// 투자국가
+		raa02bDTO.setAplcExchR(paramData.getAplcExchR());							// 적용환율
+		raa02bDTO.setPtcpAmt(paramData.getPtcpAmt());								// 부의금액(원)
 
-		raa02bDTO.setIndTypDvdCd(paramData.getIndTypDvdCd()); // 고위험사업
-		raa02bDTO.setCheckItemCd(paramData.getCheckItemCd()); // 업무구분
-		raa02bDTO.setRaBsnsZoneCd(paramData.getRaBsnsZoneCd()); // 사업지역
-		raa02bDTO.setInvstThingCcd(paramData.getInvstThingCcd()); // 주요투자물건
-		raa02bDTO.setInvstThingDtlsCcd(paramData.getInvstThingDtlsCcd()); // 투자물건상세
+		raa02bDTO.setIndTypDvdCd(paramData.getIndTypDvdCd());						// 고위험사업
+		raa02bDTO.setCheckItemCd(paramData.getCheckItemCd());						// 업무구분
+		raa02bDTO.setRaBsnsZoneCd(paramData.getRaBsnsZoneCd());						// 사업지역
+		raa02bDTO.setInvstThingCcd(paramData.getInvstThingCcd());					// 주요투자물건
+		raa02bDTO.setInvstThingDtlsCcd(paramData.getInvstThingDtlsCcd());			// 투자물건상세
 
 		String wrtDt = paramData.getWrtDt();
 		String mtrtDt = paramData.getMtrtDt();
@@ -277,37 +275,37 @@ public class AS03210ServiceImpl implements AS03210Service {
 		SimpleDateFormat sf1 = new SimpleDateFormat("yyyy-MM-dd");
 		// SimpleDateFormat sf2 = new SimpleDateFormat("yyyyMMdd");
 
-		Date df1 = sf1.parse(wrtDt); // 기표일
-		Date df2 = sf1.parse(mtrtDt); // 만기일
+		Date df1 = sf1.parse(wrtDt);												// 기표일
+		Date df2 = sf1.parse(mtrtDt);												// 만기일
 
-		long diffSec = (df2.getTime() - df1.getTime()) / 1000; // 초 차이
-		long diffDays = diffSec / (24 * 60 * 60); // 일자수 차이
+		long diffSec = (df2.getTime() - df1.getTime()) / 1000;	// 초 차이
+		long diffDays = diffSec / (24 * 60 * 60); 				// 일자수 차이
 
-		raa02bDTO.setInvstPrdDyC(String.valueOf(diffDays)); // 투자기간일수(INVST_PRD_DY_C)
-		raa02bDTO.setInvstPrdMmC(paramData.getInvstPrdMmC()); // 투자기간개월수(INVST_PRD_MM_C)
-		raa02bDTO.setWrtDt(Utils.changeDateFormat(wrtDt, "yyyyMMdd")); // WRT_DT (yyyy-mm-dd -> yyyymmdd)
-		raa02bDTO.setMtrtDt(Utils.changeDateFormat(mtrtDt, "yyyyMMdd")); // MTRT_DT
+		raa02bDTO.setInvstPrdDyC(String.valueOf(diffDays));							// 투자기간일수(INVST_PRD_DY_C)
+		raa02bDTO.setInvstPrdMmC(paramData.getInvstPrdMmC());						// 투자기간개월수(INVST_PRD_MM_C)
+		raa02bDTO.setWrtDt(Utils.changeDateFormat(wrtDt, "yyyyMMdd"));				// WRT_DT (yyyy-mm-dd -> yyyymmdd)
+		raa02bDTO.setMtrtDt(Utils.changeDateFormat(mtrtDt, "yyyyMMdd"));			// MTRT_DT
 
-		raa02bDTO.setTlErnAmt(paramData.getTlErnAmt()); // 전체수익
-		raa02bDTO.setRcvblErnAmt(paramData.getRcvblErnAmt()); // 수수료수익
-		raa02bDTO.setWrtErnAmt(paramData.getWrtErnAmt()); // 투자수익
+		raa02bDTO.setTlErnAmt(paramData.getTlErnAmt());								// 전체수익
+		raa02bDTO.setRcvblErnAmt(paramData.getRcvblErnAmt());						// 수수료수익
+		raa02bDTO.setWrtErnAmt(paramData.getWrtErnAmt());							// 투자수익
 
-		raa02bDTO.setMrtgOfrF(paramData.getMrtgOfrF()); // 담보
-		raa02bDTO.setEnsrF(paramData.getEnsrF()); // 보증
-		raa02bDTO.setRspsbCmplCcd(paramData.getRspsbCmplCcd()); // 책임준공
+		raa02bDTO.setMrtgOfrF(paramData.getMrtgOfrF());								// 담보
+		raa02bDTO.setEnsrF(paramData.getEnsrF());									// 보증
+		raa02bDTO.setRspsbCmplCcd(paramData.getRspsbCmplCcd());						// 책임준공
 
-		raa02bDTO.setBsnsDprtCmmtRmrk1(paramData.getBsnsDprtCmmtRmrk1()); // 사업부의견
-		raa02bDTO.setInspctDprtCmmtRmrk2(paramData.getInspctDprtCmmtRmrk2()); // 심사부의견
+		raa02bDTO.setBsnsDprtCmmtRmrk1(paramData.getBsnsDprtCmmtRmrk1());			// 사업부의견
+		raa02bDTO.setInspctDprtCmmtRmrk2(paramData.getInspctDprtCmmtRmrk2());		// 심사부의견
 
-		raa02bDTO.setCoprtnTypCd(paramData.getCoprtnTypCd()); // 협업유형
-		raa02bDTO.setCfmtEntpNm(paramData.getCfmtEntpNm()); // 업체명
+		raa02bDTO.setCoprtnTypCd(paramData.getCoprtnTypCd());						// 협업유형
+		raa02bDTO.setCfmtEntpNm(paramData.getCfmtEntpNm());							// 업체명
 
-		raa02bDTO.setHdqtCd(paramData.getHdqtCd()); // 담당본부코드
-		raa02bDTO.setDprtCd(paramData.getDprtCd()); // 담당부서코드
-		raa02bDTO.setChrgPEno(paramData.getChrgPEno()); // 담당직원번호
+		raa02bDTO.setHdqtCd(paramData.getHdqtCd());									// 담당본부코드
+		raa02bDTO.setDprtCd(paramData.getDprtCd());									// 담당부서코드
+		raa02bDTO.setChrgPEno(paramData.getChrgPEno());								// 담당직원번호
 
-		raa02bDTO.setHndlDprtCd(facade.getDetails().getDprtCd()); // 처리부점코드
-		raa02bDTO.setHndlPEno(facade.getDetails().getEno()); // 처리자번호
+		raa02bDTO.setHndlDprtCd(facade.getDetails().getDprtCd());					// 처리부점코드
+		raa02bDTO.setHndlPEno(facade.getDetails().getEno());						// 처리자번호
 
 		/*
 		 * 2. RAA01BDTO를 setting 한다.
@@ -334,9 +332,9 @@ public class AS03210ServiceImpl implements AS03210Service {
 
 		RAA02BDTO raa02bDTO = raa02bMapper.copyDealInfO(ibDealNo);
 
-		raa02bDTO.setInspctPrgrsStCd("110"); // 심사진행상태코드
-		raa02bDTO.setHndlDprtCd(facade.getDetails().getDprtCd()); // 처리부점코드
-		raa02bDTO.setHndlPEno(facade.getDetails().getEno()); // 처리자번
+		raa02bDTO.setInspctPrgrsStCd("110");										// 심사진행상태코드
+		raa02bDTO.setHndlDprtCd(facade.getDetails().getDprtCd());					// 처리부점코드
+		raa02bDTO.setHndlPEno(facade.getDetails().getEno());						// 처리자번
 
 		raa02bMapper.updateDealInfo(raa02bDTO);
 
