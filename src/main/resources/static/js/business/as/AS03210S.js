@@ -70,6 +70,42 @@ function assesmentRequest() {
 	
 }
 
+// 심사요청 버튼 function
+function assesmentRequestCancel() {
+	let ibDealNo = $('#AS03210S_selectedDealNo').val();
+
+	if (!isEmpty(ibDealNo)) {
+		businessFunction();
+	} else {
+		swal("Error!", "심사요청취소하는 Deal 정보를 확인해 주세요.", "error", "confirm");
+	}
+
+	function businessFunction() {
+		let dtoParam = {
+			"ibDealNo": ibDealNo
+		};
+		
+		$.ajax({
+			type: "POST",
+			url: "/assesmentRequestCancel",
+			data: dtoParam,
+			dataType: "json",
+			success: function() {
+				swal({
+					title: "Success!"
+					, text: "심사요청취소 상태로 변경하였습니다."
+					, icon: "success"
+				}, function(isConfirm) {
+					if (isConfirm) {
+						location.reload();
+					}
+				});
+			}
+		}); // end of ajax
+	}
+	
+}
+
 // deal List 가져오기
 function getDealList(){
 	
@@ -234,6 +270,34 @@ function getDealDetailInfo(ibDealNo) {
 					$('#AS03210S_empNm').val(data[0].EMP_NM);												// 직원명
 				}
 			});/* end of ajax*/
+			
+			// 심사진행상태코드에 따라서 심사요청버튼 활성화
+			let inspctPrgrsStCd = dealDetail.inspctPrgrsStCd;
+			
+			switch (inspctPrgrsStCd) {
+				case "100":
+					$('#assesmentRequest').prop("disabled", false);
+					$('#assesmentRequestCancel').prop("disabled", true);
+					$('#assesmentRequestHold').prop("disabled", true);
+					break;
+				case "110":
+					$('#assesmentRequest').prop("disabled", true);
+					$('#assesmentRequestCancel').prop("disabled", false);
+					$('#assesmentRequestHold').prop("disabled", true);
+					break;
+				case "120":
+					$('#assesmentRequest').prop("disabled", false);
+					$('#assesmentRequestCancel').prop("disabled", true);
+					$('#assesmentRequestHold').prop("disabled", true);
+					break;
+				case "200":
+					$('#assesmentRequest').prop("disabled", true);
+					$('#assesmentRequestCancel').prop("disabled", true);
+					$('#assesmentRequestHold').prop("disabled", false);
+					break;
+			}
+			
+			
 			
 		}
 	});/* end of ajax*/
@@ -1108,6 +1172,10 @@ function tab1reset() {
 	
 	$('#AS03210S_riskInspctCcd').prop("disabled", false);
 	$('#AS03210S_lstCCaseCcd').prop("disabled", false);
+	
+	$('#assesmentRequest').prop("disabled", true);
+	$('#assesmentRequestCancel').prop("disabled", true);
+	$('#assesmentRequestHold').prop("disabled", true);
 	
 	loadTab1();
 }

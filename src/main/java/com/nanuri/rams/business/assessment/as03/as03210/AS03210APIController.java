@@ -65,6 +65,16 @@ public class AS03210APIController {
 
 		return as03210Service.registHistoy(dealInfoMap);
 	}
+	
+	// deal 심사요청취소
+	@Transactional
+	@PostMapping(value = "/assesmentRequestCancel")
+	public int assesmentRequestCancel(String ibDealNo) {
+
+		Map<String, Object> dealInfoMap = as03210Service.assesmentRequestCancel(ibDealNo);
+
+		return as03210Service.registHistoy(dealInfoMap);
+	}
 
 	// ---------------tab1 start------------------
 

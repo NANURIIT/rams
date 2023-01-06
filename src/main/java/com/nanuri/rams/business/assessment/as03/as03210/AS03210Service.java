@@ -37,6 +37,12 @@ public interface AS03210Service {
 	 */
 	public RAA02BDTO getDealDetailInfo(String ibDealNo);
 
+	// deal 심사요청
+	public Map<String, Object> assesmentRequest(String ibDealNo);
+
+	// deal 심사요청취소
+	public Map<String, Object> assesmentRequestCancel(String ibDealNo);
+
 	// ---------------tab1 start------------------
 
 	// 신규 deal 생성
@@ -47,9 +53,6 @@ public interface AS03210Service {
 
 	// deal 정보 갱신
 	public Map<String, Object> updateDealInfo(RAA02BDTO paramData) throws ParseException;
-
-	// deal 심사요청
-	public Map<String, Object> assesmentRequest(String ibDealNo);
 
 	// ---------------tab2 start------------------
 
