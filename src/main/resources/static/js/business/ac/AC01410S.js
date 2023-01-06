@@ -149,7 +149,7 @@ function addMenuRow(){
 		html += '	<td><input type="checkbox"></td>';		
 		html += '	<td><input type="text" style="width: 100%;"></td>';	//메뉴ID
 		html += '	<td><input type="text" style="width: 100%;"></td>'; 	//정렬번호
-		html += '	<td><input type="text" style="width: 100%;"></td>';	//화면번호
+		html += '	<td></td>';	//화면번호
 		html += '	<td><input type="text"></td>';	//메뉴명
 		html += '	<td><input type="text"></td>';	//메뉴설명
 		html += '	<td><input type="text"  style="width: 100%;"></td>';	//URL분류코드
@@ -386,6 +386,7 @@ var saveMainMenu = function (groupCodeList) {
 /*********************************************** */
 /* 하위메뉴 행추가 버튼 클릭*/
 function addSubMenuRow(){
+	let td = $('#subMenuListTable').children().find('td');
 	
 	var html ='';
 	
@@ -402,7 +403,13 @@ function addSubMenuRow(){
 		html += '	<td></td>';	
 		html += '	<td></td>';	
 		html += '</tr>';	
-	$('#subMenuListTable').append(html);
+		
+	if(td.length === 1){
+		$('#subMenuListTable').html(html);
+	} else if (td.length > 1) {
+		$('#subMenuListTable').append(html);
+	}	
+	
 	
 }
 

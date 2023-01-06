@@ -125,36 +125,34 @@
 	
 	<insert id="insertMainMenuInfo" parameterType="com.nanuri.rams.business.common.dto.RAA93BDTO">
         INSERT INTO RAA93B (
-               MENU_ID	
-             , SRT_NO
-             , MENU_LV
-             , URL_PRMTR_CNTNT
-             , MENU_NM
-             , SHRT_NM
-             , URL_DVD_CD
-             , HNDL_DY_TM
-             , SCRN_APLC_TYPE_CD 
-             , HG_RNK_MENU_ID
-             , APLC_F
-             , APLC_DT
-             , DLT_F
-             , HNDL_P_ENO
-        ) VALUES (
+		       MENU_ID
+			 , MENU_NM
+			 , SHRT_NM
+			 , SCRN_APLC_TYPE_CD 
+			 , SRT_NO
+			 , MENU_LV
+			 , URL_DVD_CD
+			 , URL_PRMTR_CNTNT
+			 , APLC_F
+			 , APLC_DT
+			 , DLT_F
+			 , HNDL_DY_TM
+			 , HNDL_P_ENO
+		) VALUES (
 			   #{menuId}
-			 , #{srtNo}
-			 , 1    
-			 , #{urlPrmtrCntnt} 
-			 , #{menuNm} 
-			 , #{shrtNm} 
-			 , #{urlDvdCd}  
-			 , DATE_FORMAT(now(), '%Y%m%d')
+			 , #{menuNm}
+			 , #{shrtNm}
 			 , 'M'
-			 , null
+			 , #{srtNo}
+			 , 1  
+			 , #{urlDvdCd} 
+			 , SUBSTRING(MENU_ID, 3,5) 
 			 , 'Y'
 			 , DATE_FORMAT(now(), '%Y%m%d')
-			 , 'N'  
+			 , 'N'
+			 , now()
 			 , #{hndlPEno}   
-        )
+		)
     </insert>
 	
 	<update id="updateMainMenuInfo" parameterType="com.nanuri.rams.business.common.vo.RAA93BVO$MainMenuVo">
@@ -201,36 +199,36 @@
     
     <insert id="insertSubMenuInfo" parameterType="com.nanuri.rams.business.common.dto.RAA93BDTO">
         INSERT INTO RAA93B (
-               MENU_ID	
-             , SRT_NO
-             , MENU_LV
-             , URL_PRMTR_CNTNT
+               MENU_ID
              , MENU_NM
              , SHRT_NM
-             , URL_NM
-             , URL_DVD_CD
-             , HNDL_DY_TM
-             , SCRN_APLC_TYPE_CD 
              , HG_RNK_MENU_ID
-             , APLC_F
+             , SCRN_APLC_TYPE_CD 
+             , SRT_NO
+             , MENU_LV
+             , URL_DVD_CD	
+             , URL_NM
+             , URL_PRMTR_CNTNT
+	         , APLC_F
              , APLC_DT
              , DLT_F
+             , HNDL_DY_TM
              , HNDL_P_ENO
         ) VALUES (
 			   #{menuId}
-			 , #{srtNo} 
-			 , 2   
-			 , #{urlPrmtrCntnt} 
-			 , #{menuNm} 
+			 , #{menuNm}
 			 , #{shrtNm} 
-			 , #{urlNm}
-			 , #{urlDvdCd}  
-			 , DATE_FORMAT(now(), '%Y%m%d')
-			 , 'S'
 			 , #{hgRnkMenuId} 
-			 , 'Y'
+			 , 'S'
+			 , #{srtNo} 
+			 , #{urlDvdCd}  
+			 , 2  
+			 , #{urlNm} 
+			 , SUBSTRING(MENU_ID,3,5) 
+ 			 , 'Y'
 			 , DATE_FORMAT(now(), '%Y%m%d')
 			 , 'N'  
+			 , now()
 			 , #{hndlPEno} 
         )
     </insert>
