@@ -1,6 +1,7 @@
 package com.nanuri.rams.business.common.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -25,6 +26,9 @@ public interface RAA02BMapper {
 
 	// Deal List 정보 취득
 	List<RAA02BDTO> getDealList(DealInfo dealInfo);
+
+	// deal 심사요청
+	Map<String, Object> assesmentRequest(RAA02BDTO raa02bDTO);
 
 	
 
