@@ -26,6 +26,15 @@ public class RAA93BVO {
     	private String empNm;
     }
     
+    @Getter
+    @Setter
+    public static class SubMenuVo extends RAA93BDTO {
+    	private String oldSubMenuId;	/* 변경전 하위메뉴ID*/
+    	private String empNm;
+    	
+    	
+    }
+    
     private int srtNo;
     private String menuId;
     private String rghtCd;

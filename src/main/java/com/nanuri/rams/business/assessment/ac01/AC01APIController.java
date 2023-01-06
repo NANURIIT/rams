@@ -22,6 +22,7 @@ import com.nanuri.rams.business.common.vo.RAA90BVO;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO.MainMenuVo;
+import com.nanuri.rams.business.common.vo.RAA93BVO.SubMenuVo;
 import com.nanuri.rams.business.common.vo.RAA95BVO;
 
 import lombok.RequiredArgsConstructor;
@@ -190,6 +191,11 @@ public class AC01APIController {
 	@PostMapping(value = "/registMainMenuInfo")
 	public boolean registMainMenuInfo(@RequestBody List<MainMenuVo> requestDtos) {
 		return ac01Service.registMainMenuInfo(requestDtos);
+	}
+	
+	@PostMapping(value = "/registSubMenuInfo")
+	public boolean registSubMenuInfo(@RequestBody List<SubMenuVo> requestDtos) {
+		return ac01Service.registSubMenuInfo(requestDtos);
 	}
 	
 	

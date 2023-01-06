@@ -9,6 +9,7 @@ import com.nanuri.rams.business.common.dto.RAA90BDTO;
 import com.nanuri.rams.business.common.dto.RAA93BDTO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO.MainMenuVo;
+import com.nanuri.rams.business.common.vo.RAA93BVO.SubMenuVo;
 
 @Mapper
 public interface RAA93BMapper {
@@ -28,6 +29,12 @@ public interface RAA93BMapper {
 
 	public int insertMainMenuInfo(RAA93BDTO requestDto);		
 
-	public int updateMainMenuInfo(MainMenuVo requestDto); 
+	public int updateMainMenuInfo(MainMenuVo requestDto);
+
+	public Optional<RAA90BDTO> getSubMenuInfo(String menuId);
+
+	public int insertSubMenuInfo(SubMenuVo requestDto);
+
+	public int updateSubMenuInfo(SubMenuVo requestDto); 
 
 }

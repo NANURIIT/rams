@@ -72,18 +72,21 @@
     </select>
     
     <!-- 하위메뉴 조회 -->
-    <select id="selectSubMenuList" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA93BDTO">
-    	SELECT MENU_ID
-    		 , SRT_NO
-    		 , URL_PRMTR_CNTNT
-    		 , MENU_NM
-    		 , SHRT_NM
-    		 , URL_NM
-    		 , URL_DVD_CD
-    		 , HNDL_DY_TM
-    		 , HNDL_P_ENO
-    		 , DLT_F
- 		  FROM RAA93B 
+    <select id="selectSubMenuList" parameterType="String" resultType="com.nanuri.rams.business.common.vo.RAA93BVO$SubMenuVo">
+    	SELECT 
+    		   rb.MENU_ID
+    		 , rb.SRT_NO
+    		 , rb.URL_PRMTR_CNTNT
+    		 , rb.MENU_NM
+    		 , rb.SHRT_NM
+    		 , rb.URL_NM
+    		 , rb.URL_DVD_CD
+    		 , rb.HNDL_DY_TM
+    		 , ra.EMP_NM
+    		 , rb.DLT_F
+ 		  FROM RAA93B rb
+ 		  LEFT JOIN RAA99A ra 
+ 		    ON rb.HNDL_P_ENO = ra.ENO 
  		 WHERE SCRN_APLC_TYPE_CD = 'S' 
 		   AND HG_RNK_MENU_ID = #{menuId}
     </select>
@@ -124,6 +127,7 @@
         INSERT INTO RAA93B (
                MENU_ID	
              , SRT_NO
+             , MENU_LV
              , URL_PRMTR_CNTNT
              , MENU_NM
              , SHRT_NM
@@ -132,11 +136,13 @@
              , SCRN_APLC_TYPE_CD 
              , HG_RNK_MENU_ID
              , APLC_F
+             , APLC_DT
              , DLT_F
              , HNDL_P_ENO
         ) VALUES (
 			   #{menuId}
-			 , #{srtNo}    
+			 , #{srtNo}
+			 , 1    
 			 , #{urlPrmtrCntnt} 
 			 , #{menuNm} 
 			 , #{shrtNm} 
@@ -145,6 +151,7 @@
 			 , 'M'
 			 , null
 			 , 'Y'
+			 , DATE_FORMAT(now(), '%Y%m%d')
 			 , 'N'  
 			 , #{hndlPEno}   
         )
@@ -176,4 +183,87 @@
         </set>
         WHERE MENU_ID = #{oldMenuId}
     </update>
+    
+    
+    <select id="getSubMenuInfo" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA93BDTO">
+        SELECT MENU_ID
+    		 , SRT_NO
+    		 , URL_PRMTR_CNTNT
+    		 , MENU_NM
+    		 , SHRT_NM
+    		 , URL_NM
+    		 , URL_DVD_CD
+    		 , HNDL_DY_TM
+    		 , HNDL_P_ENO
+          FROM RAA93B
+         WHERE MENU_ID = #{menuId}
+    </select>
+    
+    <insert id="insertSubMenuInfo" parameterType="com.nanuri.rams.business.common.dto.RAA93BDTO">
+        INSERT INTO RAA93B (
+               MENU_ID	
+             , SRT_NO
+             , MENU_LV
+             , URL_PRMTR_CNTNT
+             , MENU_NM
+             , SHRT_NM
+             , URL_NM
+             , URL_DVD_CD
+             , HNDL_DY_TM
+             , SCRN_APLC_TYPE_CD 
+             , HG_RNK_MENU_ID
+             , APLC_F
+             , APLC_DT
+             , DLT_F
+             , HNDL_P_ENO
+        ) VALUES (
+			   #{menuId}
+			 , #{srtNo} 
+			 , 2   
+			 , #{urlPrmtrCntnt} 
+			 , #{menuNm} 
+			 , #{shrtNm} 
+			 , #{urlNm}
+			 , #{urlDvdCd}  
+			 , DATE_FORMAT(now(), '%Y%m%d')
+			 , 'S'
+			 , #{hgRnkMenuId} 
+			 , 'Y'
+			 , DATE_FORMAT(now(), '%Y%m%d')
+			 , 'N'  
+			 , #{hndlPEno} 
+        )
+    </insert>
+	
+	<update id="updateSubMenuInfo" parameterType="com.nanuri.rams.business.common.vo.RAA93BVO$SubMenuVo">
+        UPDATE RAA93B
+        <set>
+            <if test="menuId != null and menuId !=''">
+                  MENU_ID = #{menuId}
+            </if>
+            <if test="srtNo != null and srtNo !=''">
+                , SRT_NO = #{srtNo}
+            </if>
+            <if test="urlPrmtrCntnt != null and urlPrmtrCntnt !=''">
+                , URL_PRMTR_CNTNT = #{useF}
+            </if>
+            <if test="menuNm != null and menuNm !=''">
+                , MENU_NM = #{menuNm}
+            </if>
+            <if test="shrtNm != null and shrtNm !=''">
+                , SHRT_NM = #{shrtNm}
+            </if>
+            <if test="urlNm != null and urlNm !=''">
+                , URL_NM = #{urlNm}
+            </if>
+            <if test="urlDvdCd != null and urlDvdCd !=''">
+                , URL_DVD_CD = #{urlDvdCd}
+            </if>
+            , HNDL_DY_TM = DATE_FORMAT(now(), '%Y%m%d')
+            , hndl_p_eno = #{hndlPEno}
+        </set>
+        WHERE MENU_ID = #{oldSubMenuId}
+    </update>
+    
+    
 </mapper>

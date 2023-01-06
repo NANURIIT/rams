@@ -92,12 +92,12 @@ function clickDetailButton() {
 	$(document).on('click', '.mainMenuDetail', function(e) {
 		e.preventDefault();
 		menuId = $(this).attr('id');
-		getMeunIdInfo($(this).attr('id'));
+		getMenuIdInfo($(this).attr('id'));
 	});
 }
 
 /*상위메뉴 상세보기 데이터 호출  */
-var getMeunIdInfo = function(menuId){
+var getMenuIdInfo = function(menuId){
 	$.ajax({
 		url: 'mainMenuInfo?menuId=' + menuId,
 		method: 'GET',
@@ -117,8 +117,8 @@ var getMeunIdInfo = function(menuId){
 				html += '   <td class="update_column">' + menuInfo.shrtNm + '</td>';		//메뉴설명	
 				html += '   <td class="update_column">' + menuInfo.urlNm + '</td>';		//화면ID
 				html += '   <td class="update_column">' + menuInfo.urlDvdCd + '</td>';		//URL분류코드
-				html += '   <td class="update_column">' + menuInfo.hndlDyTm + '</td>';		//처리일
-				html += '   <td>' + menuInfo.hndlPEno + '</td>';		//처리자
+				html += '   <td>' + menuInfo.hndlDyTm + '</td>';		//처리일
+				html += '   <td>' + menuInfo.empNm + '</td>';		//처리자
 				if(menuInfo.dltF === 'N'){
 					html += '  <td><input style="width:100%"  type="checkbox" checked></td>';
 				} else {
@@ -386,6 +386,7 @@ var saveMainMenu = function (groupCodeList) {
 /*********************************************** */
 /* 하위메뉴 행추가 버튼 클릭*/
 function addSubMenuRow(){
+	
 	var html ='';
 	
 		html += '<tr>';
@@ -431,11 +432,228 @@ var deleteSubMenu = function (subMenuList) {
 		contentType: 'application/json; charset=UTF-8',
 		dataType: 'json',
 		success: function () {
-			menuSearch();
-			//
+			menuLoad();
+			getMenuIdInfo(menuId);
 		},
 		error: function (response) {
 
 		}
 	});
 }
+
+/*하위메뉴 저장 버튼 클릭*/
+function clickSaveSubMenu() {
+	let subMenuList = new Array();
+	let tr = $('#subMenuListTable').children();
+	for (let i = 0; i < tr.length; i++) {
+		let subMenu = new Object();
+
+		// TODO => 변수 할당 확인
+		let mainMenuId = menuId;
+		let oldSubMenuId 			= $(tr[i]).find("td:eq(0)").find("input").attr('id');
+		let subMenuIdInput 		= $(tr[i]).find("td:eq(1)").find("input");
+		let subSrtNoInput			= $(tr[i]).find("td:eq(2)").find("input");
+		let subUrlPrmtrCntntInput	= $(tr[i]).find("td:eq(3)").find("input");
+		let subMenuNmInput			= $(tr[i]).find("td:eq(4)").find("input");
+		let subShrtNmInput			= $(tr[i]).find("td:eq(5)").find("input");
+		let subUrlNmInput 			= $(tr[i]).find("td:eq(6)").find("input");
+		let subUrlDvdCdInput 		= $(tr[i]).find("td:eq(7)").find("input");
+
+
+		if (subMenuIdInput.length == 1) {
+			if (!subMenuIdInput.val()) {
+				openPopup({title: '실패',text: '메뉴ID를 입력해주세요.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							subMenuIdInput.focus();
+						});
+					}
+				});
+				return;
+			} else if (subMenuIdInput.val().length > 8) {
+				openPopup({title: '실패',text: '코드는 8자리 이하로 입력해주세요.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							subMenuIdInput.focus();
+						});
+					}
+				});
+				return;
+			}
+			subMenu.menuId = subMenuIdInput.val();
+		}
+
+		if (subSrtNoInput.length == 1) {
+			if (!subSrtNoInput.val()) {
+				openPopup({title: '실패',text: '정렬번호를 입력해주세요.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							subSrtNoInput.focus();
+						});
+					}
+				});
+				return;
+			}else if (subSrtNoInput.val().length > 5) {
+				openPopup({title: '실패',text: '정렬번호는 5자리 이하로 입력해주세요.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							subSrtNoInput.focus();
+						});
+					}
+				});
+				return;
+			}
+			subMenu.srtNo = subSrtNoInput.val();
+		}
+		
+		if (subUrlPrmtrCntntInput.length == 1) {
+			if (!subUrlPrmtrCntntInput.val()) {
+				openPopup({title: '실패',text: '화면번호를 입력해주세요.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							subUrlPrmtrCntntInput.focus();
+						});
+					}
+				});
+				return;
+			}else if (subUrlPrmtrCntntInput.val().length > 200) {
+				openPopup({title: '실패',text: '화면번호는 200자리 이하로 입력해주세요.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							subUrlPrmtrCntntInput.focus();
+						});
+					}
+				});
+				return;
+			}
+			subMenu.urlPrmtrCntnt = subUrlPrmtrCntntInput.val();
+		}
+		
+		if (subMenuNmInput.length == 1) {
+			if (!subMenuNmInput.val()) {
+				openPopup({title: '실패',text: '메뉴명을 입력해주세요.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							subMenuNmInput.focus();
+						});
+					}
+				});
+				return;
+			}else if (subMenuNmInput.val().length > 50) {
+				openPopup({title: '실패',text: '메뉴명은 50자리 이하로 입력해주세요.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							subMenuNmInput.focus();
+						});
+					}
+				});
+				return;
+			}
+			subMenu.menuNm = subMenuNmInput.val();
+		}
+		
+		if (subShrtNmInput.length == 1) {
+			if (!subShrtNmInput.val()) {
+				openPopup({title: '실패',text: '메뉴설명을 입력해주세요.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							subShrtNmInput.focus();
+						});
+					}
+				});
+				return;
+			}else if (subShrtNmInput.val().length > 100) {
+				openPopup({title: '실패',text: '메뉴설명은 100자리 이하로 입력해주세요.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							subShrtNmInput.focus();
+						});
+					}
+				});
+				return;
+			}
+			subMenu.shrtNm = subShrtNmInput.val();
+		}
+		
+		if (subUrlNmInput.length == 1) {
+			if (!subUrlNmInput.val()) {
+				openPopup({title: '실패',text: '화면ID를 입력해주세요.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							subUrlNmInput.focus();
+						});
+					}
+				});
+				return;
+			}else if (subUrlNmInput.val().length > 5) {
+				openPopup({title: '실패',text: '화면ID는 5자리 이하로 입력해주세요.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							subUrlNmInput.focus();
+						});
+					}
+				});
+				return;
+			}
+			subMenu.urlNm = subUrlNmInput.val();
+		}
+		
+		if (subUrlDvdCdInput.length == 1) {
+			if (!subUrlDvdCdInput.val()) {
+				openPopup({title: '실패',text: 'URL분류코드를 입력해주세요.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							subUrlDvdCdInput.focus();
+						});
+					}
+				});
+				return;
+			}else if (subUrlDvdCdInput.val().length > 2) {
+				openPopup({title: '실패',text: 'URL분류코드는 2자리 이하로 입력해주세요.',type: 'error',
+					callback: function () {
+						$(document).on('click', '.confirm', function () {
+							subUrlDvdCdInput.focus();
+						});
+					}
+				});
+				return;
+			}
+			subMenu.urlDvdCd = subUrlDvdCdInput.val();
+		}
+		
+
+		if (!(Object.keys(subMenu).length === 0)) {
+			subMenu.oldSubMenuId = oldSubMenuId;
+			subMenu.hgRnkMenuId = mainMenuId; //상위메뉴ID
+			subMenuList.push(subMenu);
+		}
+	}
+
+	if (subMenuList.length > 0) {
+		saveSubMenu(subMenuList);
+	}
+}
+/* 하위 메뉴 저장 처리*/
+var saveSubMenu = function (subMenuList) {
+
+	$.ajax({
+		method: 'POST',
+		url: '/registSubMenuInfo',
+		data: JSON.stringify(subMenuList),
+		contentType: 'application/json; charset=UTF-8',
+		dataType: 'json',
+		success: function () {
+			menuLoad();
+			getMenuIdInfo(menuId);
+		},
+		error: function (response) {
+			let message = response.responseJSON.message;
+			openPopup({
+				title: '실패',
+				text: message
+			});
+		}
+	});
+}
+
+

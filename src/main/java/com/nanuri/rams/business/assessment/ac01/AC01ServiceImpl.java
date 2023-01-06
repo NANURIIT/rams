@@ -30,6 +30,7 @@ import com.nanuri.rams.business.common.vo.RAA90BVO;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO.MainMenuVo;
+import com.nanuri.rams.business.common.vo.RAA93BVO.SubMenuVo;
 import com.nanuri.rams.business.common.vo.RAA95BVO;
 import com.nanuri.rams.com.security.AuthenticationFacade;
 
@@ -473,6 +474,28 @@ public class AC01ServiceImpl implements AC01Service {
             } else {
             	requestDto.setHndlPEno(hndlPEno);
                 count += raa93BMapper.updateMainMenuInfo(requestDto);
+            }
+        }
+        return count > 0;
+	}
+
+	@Override
+	public boolean registSubMenuInfo(List<SubMenuVo> requestDtos) {
+		int count = 0;
+		
+		String hndlPEno = facade.getDetails().getEno();
+		
+		for (SubMenuVo requestDto : requestDtos) {
+            if (raa93BMapper.getSubMenuInfo(requestDto.getMenuId()).isPresent()) {
+                throw new IllegalArgumentException("해당 그룹코드가 존재합니다. " + requestDto.getMenuId());
+            }
+
+            if (raa93BMapper.getMainMenuInfo(requestDto.getOldSubMenuId()).isEmpty()) {
+            	requestDto.setHndlPEno(hndlPEno);
+                count += raa93BMapper.insertSubMenuInfo(requestDto);
+            } else {
+            	requestDto.setHndlPEno(hndlPEno);
+                count += raa93BMapper.updateSubMenuInfo(requestDto);
             }
         }
         return count > 0;
