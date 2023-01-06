@@ -62,9 +62,9 @@
 	                       		<button class="btn btn-primary" type="button" onclick="getDealList();">조회</button>
 	                       	</div>
 	                       	<div class="col-sm-3 text-right">
-								<button class="btn btn-success" type="button" onclick="assesmentRequest();">심사요청</button>
-								<button class="btn btn-danger" type="button">심사요청취소</button>
-								<button class="btn btn-warning" type="button">심사보류</button>
+								<button class="btn btn-success btn-outline" type="button" id="assesmentRequest" onclick="assesmentRequest();" disabled>심사요청</button>
+								<button class="btn btn-danger btn-outline" type="button" id="assesmentRequestCancel" onclick="assesmentRequestCancel();" disabled>심사요청취소</button>
+								<button class="btn btn-warning btn-outline" type="button" id="assesmentRequestHold" disabled>심사보류</button>
 	                       	</div>
     					</div>
 	    			</div>

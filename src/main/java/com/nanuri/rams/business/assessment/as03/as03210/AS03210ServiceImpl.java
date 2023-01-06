@@ -84,6 +84,42 @@ public class AS03210ServiceImpl implements AS03210Service {
 		return dealDeatail;
 	}
 
+	// deal 심사요청
+	@Override
+	public Map<String, Object> assesmentRequest(String ibDealNo) {
+
+		RAA02BDTO raa02bDTO = raa02bMapper.copyDealInfO(ibDealNo);
+
+		raa02bDTO.setInspctPrgrsStCd("110");										// 심사진행상태코드
+		raa02bDTO.setHndlDprtCd(facade.getDetails().getDprtCd());					// 처리부점코드
+		raa02bDTO.setHndlPEno(facade.getDetails().getEno());						// 처리자번
+
+		raa02bMapper.updateDealInfo(raa02bDTO);
+
+		Map<String, Object> dealInfoMap = new HashMap<String, Object>();
+		dealInfoMap.put("ibDealNo", ibDealNo);
+
+		return dealInfoMap;
+	}
+	
+	// deal 심사요청취소
+	@Override
+	public Map<String, Object> assesmentRequestCancel(String ibDealNo) {
+
+		RAA02BDTO raa02bDTO = raa02bMapper.copyDealInfO(ibDealNo);
+
+		raa02bDTO.setInspctPrgrsStCd("120");										// 심사진행상태코드
+		raa02bDTO.setHndlDprtCd(facade.getDetails().getDprtCd());					// 처리부점코드
+		raa02bDTO.setHndlPEno(facade.getDetails().getEno());						// 처리자번
+
+		raa02bMapper.updateDealInfo(raa02bDTO);
+
+		Map<String, Object> dealInfoMap = new HashMap<String, Object>();
+		dealInfoMap.put("ibDealNo", ibDealNo);
+
+		return dealInfoMap;
+	}
+
 	// ---------------tab1 start------------------
 
 	// 신규 deal 생성
@@ -322,24 +358,6 @@ public class AS03210ServiceImpl implements AS03210Service {
 
 		Map<String, Object> dealInfoMap = new HashMap<String, Object>();
 		dealInfoMap.put("ibDealNo", paramData.getIbDealNo());
-
-		return dealInfoMap;
-	}
-
-	// deal 심사요청
-	@Override
-	public Map<String, Object> assesmentRequest(String ibDealNo) {
-
-		RAA02BDTO raa02bDTO = raa02bMapper.copyDealInfO(ibDealNo);
-
-		raa02bDTO.setInspctPrgrsStCd("110");										// 심사진행상태코드
-		raa02bDTO.setHndlDprtCd(facade.getDetails().getDprtCd());					// 처리부점코드
-		raa02bDTO.setHndlPEno(facade.getDetails().getEno());						// 처리자번
-
-		raa02bMapper.updateDealInfo(raa02bDTO);
-
-		Map<String, Object> dealInfoMap = new HashMap<String, Object>();
-		dealInfoMap.put("ibDealNo", ibDealNo);
 
 		return dealInfoMap;
 	}
