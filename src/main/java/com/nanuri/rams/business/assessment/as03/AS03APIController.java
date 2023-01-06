@@ -61,6 +61,19 @@ public class AS03APIController {
 	public List<Map<String, Object>> getRaDealCcd() {
 		return as03Service.getRaDealCcd();
 	}
+	
+	// deal 심사요청
+	@Transactional
+	@PostMapping(value = "/assesmentRequest")
+	public int assesmentRequest(String ibDealNo){
+
+		Map<String, Object> dealInfoMap = as03Service.assesmentRequest(ibDealNo);
+
+		as03Service.registHistoy(dealInfoMap);
+
+		return 0;
+	}
+	
 
 	// ---------------tab1 start------------------
 

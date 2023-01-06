@@ -34,6 +34,42 @@ function setKeyFunction_AS03210S() {
 	});
 };
 
+// 심사요청 버튼 function
+function assesmentRequest() {
+	let ibDealNo = $('#AS03210S_selectedDealNo').val();
+
+	if (!isEmpty(ibDealNo)) {
+		businessFunction();
+	} else {
+		swal("Error!", "심사요청하는 Deal 정보를 확인해 주세요.", "error", "confirm");
+	}
+
+	function businessFunction() {
+		let dtoParam = {
+			"ibDealNo": ibDealNo
+		};
+		
+		$.ajax({
+			type: "POST",
+			url: "/assesmentRequest",
+			data: dtoParam,
+			dataType: "json",
+			success: function() {
+				swal({
+					title: "Success!"
+					, text: "심사요청 상태로 변경하였습니다."
+					, icon: "success"
+				}, function(isConfirm) {
+					if (isConfirm) {
+						location.reload();
+					}
+				});
+			}
+		}); // end of ajax
+	}
+	
+}
+
 // deal List 가져오기
 function getDealList(){
 	
@@ -903,8 +939,9 @@ function tab1save() {
 				dataType: "json",
 				success: function() {
 					swal({
-						title: "deal정보를 생성하였습니다."
-
+						title: "Success!"
+						, text: "deal정보를 생성하였습니다."
+						, icon: "success"
 					}, function(isConfirm) {
 						if (isConfirm) {
 							location.reload();
@@ -912,7 +949,7 @@ function tab1save() {
 					});
 				},
 				error: function() {
-					swal("deal정보를 생성하는데 실패하였습니다.");
+					swal("Error!", "Deal정보를 생성하는데 실패하였습니다.", "error", "confirm");
 				}
 			});
 		}
@@ -1028,8 +1065,9 @@ function tab1save() {
 				dataType: "json",
 				success: function() {
 					swal({
-						title: "deal정보를 갱신하였습니다."
-
+						title: "Success!"
+						, text: "deal정보를 갱신하였습니다."
+						, icon: "success"
 					}, function(isConfirm) {
 						if (isConfirm) {
 							location.reload();
@@ -1037,7 +1075,7 @@ function tab1save() {
 					});
 				},
 				error: function() {
-					swal("deal정보를 갱신하는데 실패하였습니다.");
+					swal("Error!", "Deal정보를 갱신하는데 실패하였습니다.", "error", "confirm");
 				}
 			});
 		}

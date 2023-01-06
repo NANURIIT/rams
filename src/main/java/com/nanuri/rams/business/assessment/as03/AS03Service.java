@@ -39,6 +39,9 @@ public interface AS03Service {
 	
 	// RADEAL구분코드
 	public List<Map<String, Object>> getRaDealCcd();
+	
+	// deal 심사요청
+	public Map<String, Object> assesmentRequest(String ibDealNo);
 
 	// ---------------tab1 start------------------
 
@@ -138,6 +141,10 @@ public interface AS03Service {
 
 	// 미이행시의무
 	public List<Map<String, Object>> getDbtNpFrmOblgCcd();
+
+	
+
+	
 
 	
 
