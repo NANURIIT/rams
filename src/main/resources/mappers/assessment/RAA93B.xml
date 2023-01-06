@@ -49,18 +49,22 @@
     </select>
     
     <!-- 상위메뉴 조회 -->
-    <select id="selectMainMenuList" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA93BDTO">
-    	SELECT MENU_ID
-    		 , MENU_NM
-    		 , SRT_NO
-    		 , URL_PRMTR_CNTNT
-    		 , SHRT_NM
-    		 , URL_DVD_CD
-    		 , HNDL_DY_TM
-    		 , HNDL_P_ENO	
-    		 , DLT_F
- 		  FROM RAA93B
- 		 WHERE  SCRN_APLC_TYPE_CD = 'M' 
+    <select id="selectMainMenuList" parameterType="String" resultType="com.nanuri.rams.business.common.vo.RAA93BVO$MainMenuVo">
+    	SELECT rb.MENU_ID
+    		 , rb.MENU_NM
+    		 , rb.SRT_NO
+    		 , rb.URL_PRMTR_CNTNT
+    		 , rb.SHRT_NM
+    		 , rb.URL_DVD_CD
+    		 , rb.HNDL_DY_TM
+    		 , rb.HNDL_P_ENO	
+    		 , rb.DLT_F
+    		 , ra.EMP_NM
+ 		  FROM RAA93B rb
+ 		  LEFT JOIN RAA99A ra 
+ 		    ON rb.HNDL_P_ENO = ra.ENO 
+ 		 WHERE 1=1 
+ 		   AND SCRN_APLC_TYPE_CD = 'M' 
  		 <if test='menuNm != null and menuNm != ""'>
  		 	MENU_NM = #{menuNm}
  		 </if>
@@ -79,7 +83,7 @@
     		 , HNDL_DY_TM
     		 , HNDL_P_ENO
     		 , DLT_F
- 		  FROM RAA93B
+ 		  FROM RAA93B 
  		 WHERE SCRN_APLC_TYPE_CD = 'S' 
 		   AND HG_RNK_MENU_ID = #{menuId}
     </select>

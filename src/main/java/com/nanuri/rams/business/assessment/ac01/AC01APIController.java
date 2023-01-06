@@ -167,7 +167,7 @@ public class AC01APIController {
 	// =========== Start AC01410S( 메뉴관리) ============//
 	// 그룹코드정보 리스트 가져오기
 	@GetMapping(value = "/mainMenuList")
-	public List<RAA93BDTO> selectMainMenuList(@RequestParam String menuNm){ 
+	public List<MainMenuVo> selectMainMenuList(@RequestParam String menuNm){ 
 		return ac01Service.selectMainMenuList(menuNm);
 	}
 	

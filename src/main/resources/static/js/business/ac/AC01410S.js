@@ -56,7 +56,7 @@ function rebuildMenuListTable(data){
 			html += '	<td>'+ value.urlDvdCd + '</td>';	//URL문류코드
 			html += '	<td><button class="mainMenuDetail btn btn-warning btn-xs" id="'+value.menuId +'"><i class="fa fa-arrow-down"></i>&nbsp;상세</button></td>';	 //하위메뉴
 			html += '	<td>'+ value.hndlDyTm + '</td>'; 	//처리일시
-			html += '	<td>'+ value.hndlPEno+ '</td>';		//처리자
+			html += '	<td>'+ value.empNm+ '</td>';		//처리자
 			if(value.dltF === 'N'){
 				html += '  <td><input style="width:100%"  type="checkbox" checked></td>';
 			} else {

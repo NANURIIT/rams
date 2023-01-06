@@ -73,7 +73,7 @@ public interface AC01Service {
 	
 	// =========== Start AC01410S( 메뉴관리) ============//
 
-	public List<RAA93BDTO> selectMainMenuList(String menuNm);
+	public List<MainMenuVo> selectMainMenuList(String menuNm);
 
 	public List<RAA93BDTO> selectSubMenuList(String menuId);
 

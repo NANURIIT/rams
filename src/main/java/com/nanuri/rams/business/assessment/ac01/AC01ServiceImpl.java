@@ -432,9 +432,9 @@ public class AC01ServiceImpl implements AC01Service {
     
     // =========== Start AC01410S( 메뉴관리) ============//
 	@Override
-	public List<RAA93BDTO> selectMainMenuList(String menuNm) {
+	public List<MainMenuVo> selectMainMenuList(String menuNm) {
 		
-		List<RAA93BDTO> dtoList = raa93BMapper.selectMainMenuList(menuNm);
+		List<MainMenuVo> dtoList = raa93BMapper.selectMainMenuList(menuNm);
 		return dtoList;
 	}
 
