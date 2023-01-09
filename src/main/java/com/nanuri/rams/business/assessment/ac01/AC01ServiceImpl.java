@@ -1,5 +1,6 @@
 package com.nanuri.rams.business.assessment.ac01;
 
+import java.io.Console;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -487,7 +488,6 @@ public class AC01ServiceImpl implements AC01Service {
 		String hndlPEno = facade.getDetails().getEno();
 		
 		for (SubMenuVo requestDto : requestDtos) {
-
 			if (!com.nanuri.rams.com.utils.StringUtil.isAllWhitespace(requestDto.getMenuId())) {
 				
 				if (raa93BMapper.getSubMenuInfo(requestDto.getMenuId()).isPresent()) {
@@ -501,6 +501,10 @@ public class AC01ServiceImpl implements AC01Service {
 					requestDto.setHndlPEno(hndlPEno);
 					count += raa93BMapper.updateSubMenuInfo(requestDto);
 				}
+				
+			} else {
+				requestDto.setHndlPEno(hndlPEno);
+				count += raa93BMapper.updateSubMenuInfo(requestDto);
 			}
 		}
         return count > 0;
