@@ -50,10 +50,7 @@ function assignmentSearch() {
 
 				if (dealList.length > 0) {
 					$.each(dealList, function(key, value) {
-						//console.log(key)
-						//console.log( 'key:' + key + ' / ' + 'value:' + value ); 
-						//console.log(value.fstRgstDt)
-						//console.log((value.fstRgstDt).replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3'));
+						
 						html += '<tr>';
 						html += '<td>' + (value.fstRgstDt).replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3') + '</td>'; // 접수배정일
 						html += '<td>' + value.ibDealNo + '</td>'; // deal번호
