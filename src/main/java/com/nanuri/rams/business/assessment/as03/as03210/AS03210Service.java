@@ -60,6 +60,9 @@ public interface AS03210Service {
 	public List<DocInfo> getDocInfo(DocInfo docInfo);
 
 	// 관련문서정보 제거
-	public void deleteDocInfo(DocInfo docInfo);
+	public int deleteDocInfo(DocInfo docInfo);
+
+	// 관련문서정보 생성
+	public int registDocInfo(DocInfo docInfo);
 
 }
