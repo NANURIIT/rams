@@ -310,6 +310,7 @@ function setTab2(ibDealNo) {
 
 // 관련문서 정보
 function getDocInfo(ibDealNo) {
+	tab2BtnReset();
 
 	var paramData = {
 		"ibDealNo": ibDealNo
@@ -349,10 +350,12 @@ function docInfoDetails(e){
 	// var tr = event.currentTarget;	// event가 deprecated된 같은 기능
 	var td = $(tr).children();
 	var raDocNo = td.eq(0).text();		// 문서번호
+	var itemSq = td.eq(2).text();		// 항목일련번호
 	var raFnlDocF = td.eq(1).text();	// 최종문서여부
 	
-	$('#AS03210S_docNo').val(raDocNo);
-	$('#AS03210S_docNo').val(raFnlDocF).prop('selected', true);
+	$('#AS03210S_raDocNo').val(raDocNo);
+	$('#AS03210S_itemSq').val(itemSq);
+	$('#AS03210S_raFnlDocF').val(raFnlDocF).prop('selected', true);
 }
 
 // RADEAL 구분코드 
@@ -1196,22 +1199,33 @@ function tab1reset() {
 
 // 관련문서 초기화버튼 function
 function tab2BtnReset() {
-	$('#AS03210S_docNo').val('');
-	$('#AS03210S_fnlDocF').val('Y').prop('selected, true');
+	$('#AS03210S_raDocNo').val('');
+	$('#AS03210S_raFnlDocF').val('Y').prop('selected, true');
+	$('#AS03210S_itemSq').val('');
 }
+
 // 관련문서 삭제버튼 function
 function tab2BtnDelete() {
 	var ibDealNo = $('#AS03210S_selectedDealNo').val();
+	var raDocNo = $('#AS03210S_raDocNo').val();
+	var itemSq = $('#AS03210S_itemSq').val();
 
 	if (!isEmpty(ibDealNo)) {
-		var docNo = $('#AS03210S_docNo').val();
-		
+		if(!isEmpty(raDocNo) && !isEmpty(itemSq)){
+			businessFunction();
+		}else{
+			swal('관련문서정보를 선택해주세요');
+		}
+	} else {
+		swal('Deal 정보를 조회해주세요');
+	}
 
-		//console.log(dealNo);
+	function businessFunction() {
 
 		var paramData = {
 			"ibDealNo": ibDealNo
-			, "docNo": docNo
+			, "raDocNo": raDocNo
+			, "itemSq": itemSq
 		}
 
 		$.ajax({
@@ -1220,21 +1234,71 @@ function tab2BtnDelete() {
 			data: paramData,
 			dataType: "json",
 			success: function() {
-				getDocInfo(ibDealNo);
+				swal({
+					title: "Success!"
+					, text: "문서정보를 삭제하였습니다."
+					, icon: "success"
+				}, function(isConfirm) {
+					if (isConfirm) {
+						getDocInfo(ibDealNo);
+					}
+				});
 			},
-			error: function(errorCd) {
-				swal("삭제 실패하였습니다. sql 에러 코드를 확인해주세요.\n error code:" + errorCd);
+			error: function() {
+				swal("Error!", "문서정보를 삭제하는데 실패하였습니다.", "error", "confirm");
 			}
 		});
-
-	} else {
-		swal('Deal 정보를 조회해주세요');
 	}
 
 }
+
 // 관련문서 저장버튼 function
 function tab2BtnSave() {
+	var ibDealNo = $('#AS03210S_selectedDealNo').val();
+	var raDocNo = $('#AS03210S_raDocNo').val();
+	var raFnlDocF = $('#AS03210S_raFnlDocF').val();
+	var itemSq = $('#AS03210S_itemSq').val();
+	
+	if (!isEmpty(ibDealNo)) {
+		if(!isEmpty(raDocNo)){
+			businessFunction();
+		}else{
+			swal('문서번호를 입력해주세요');
+		}
+	} else {
+		swal('Deal 정보를 조회해주세요');
+	}
+	
+	function businessFunction() {
 
+		var paramData = {
+			"ibDealNo": ibDealNo
+			, "raDocNo": raDocNo
+			, "raFnlDocF": raFnlDocF
+			, "itemSq": itemSq
+		}
+
+		$.ajax({
+			type: "POST",
+			url: "/registDocInfo",
+			data: paramData,
+			dataType: "json",
+			success: function() {
+				swal({
+					title: "Success!"
+					, text: "문서정보를 저장하였습니다."
+					, icon: "success"
+				}, function(isConfirm) {
+					if (isConfirm) {
+						getDocInfo(ibDealNo);
+					}
+				});
+			},
+			error: function() {
+				swal("Error!", "문서정보를 저장하는데 실패하였습니다.", "error", "confirm");
+			}
+		});
+	}
 }
 
 // 기초자산종류
