@@ -4,6 +4,7 @@
 
 <th:block layout:fragment="script">
 	<script th:src="@{js/common.js}"></script>
+	<script th:src="@{js/business/as/AS03110S.js}"></script>
 </th:block>
 
 <th:block layout:fragment="customContent">
@@ -35,17 +36,17 @@
 								<label class="col-sm-1 col-form-label">접수배정일</label>
 								<div class="col-sm-4 input-group">
 									<span class="col-sm-5 input-group date">
-										<input type="text" class="form-control" name="start" value=""><span
+										<input type="text" class="form-control" id="AS03110S_FromDate" name="FromDate" value=""><span
 											class="input-group-addon"><i class="fa fa-calendar"></i></span>
 									</span>
 									<span class="input-group-addon" style="border:0;"> ~ </span>
 									<span class="col-sm-5 input-group date">
-										<input type="text" class="form-control" name="end" value=""><span
+										<input type="text" class="form-control" id="AS03110S_ToDate" name="ToDate" value=""><span
 											class="input-group-addon"><i class="fa fa-calendar"></i></span>
 									</span>
 								</div>
 								<div class="col-sm-7 text-left">
-									<button class="btn btn-primary" type="submit">조회</button>
+									<button class="btn btn-primary" type="button" onclick="assignmentSearch();">조회</button>
 								</div>
 							</div>
 						</form>
@@ -66,22 +67,10 @@
 										<th>본부</th>
 										<th>부서</th>
 										<th>직원</th>
-										<th>현업유형</th>
+										<th>협업유형</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr>
-										<td>1</td>
-										<td>2</td>
-										<td>3</td>
-										<td>4</td>
-										<td>5</td>
-										<td>6</td>
-										<td>7</td>
-										<td>8</td>
-										<td>9</td>
-										<td>10</td>
-									</tr>
+								<tbody id="AS03110S_ibDealList">
 								</tbody>
 							</table>
 						</div>
