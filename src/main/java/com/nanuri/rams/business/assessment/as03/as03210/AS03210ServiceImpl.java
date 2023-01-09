@@ -366,7 +366,7 @@ public class AS03210ServiceImpl implements AS03210Service {
 
 	// 관련문서
 	@Override
-	public List<Map<String, Object>> getDocInfo(DocInfo docInfo) {
+	public List<DocInfo> getDocInfo(DocInfo docInfo) {
 		return raa18bMapper.getDocInfo(docInfo);
 	};
 

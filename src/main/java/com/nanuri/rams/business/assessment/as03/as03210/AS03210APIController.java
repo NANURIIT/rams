@@ -102,7 +102,7 @@ public class AS03210APIController {
 
 	// 관련문서
 	@GetMapping(value = "/getDocInfo")
-	public List<Map<String, Object>> getDocInfo(DocInfo docInfo) {
+	public List<DocInfo> getDocInfo(DocInfo docInfo) {
 		return as03210Service.getDocInfo(docInfo);
 	}
 
