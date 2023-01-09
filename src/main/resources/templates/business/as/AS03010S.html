@@ -5,6 +5,7 @@
 
 <th:block layout:fragment="script">
 	<script th:src="@{js/common.js}"></script>
+	<script th:src="@{js/business/as/AS03010S.js}"></script>
 	<script th:src="@{js/business/popup/AC01120P.js}"></script>
 </th:block>
 
@@ -41,24 +42,27 @@
 	    				<form method="get">
 	    					<div class="form-group row">
 	    						<label class="col-sm-1 col-form-label">DSC일자</label>
-	                            <div class="col-sm-2">
-	                            	<div class="input-group date">
-                                    	<input type="text" class="form-control" value="" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                    </div>
+	                            <div class="col-sm-4 input-group">
+	                            	<span class="col-sm-5 input-group date">
+                                    	<input type="text" class="form-control" id="AS03010S_FromDate" name="FromDate" value="">
+                                    	<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </span>
+                                    <span class="input-group-addon" style="border:0;"> ~ </span>
+                                    <span class="col-sm-5 input-group date">
+                                    	<input type="text" class="form-control" id="AS03010S_ToDate" name="ToDate" value=""><span class="input-group-addon"><i class="fa fa-calendar"></i>
+                                    	</span>
+                                    </span>
                                 </div>
 	                        	<label class="col-sm-1 col-form-label">부서</label>
 	                            <div class="col-sm-2">
-	                            	<select class="form-control m-b" name="account">
-	                                        <option>option 1</option>
-	                                        <option>option 2</option>
+	                            	<select class="form-control m-b" id="AS03010S_부서명">	                                        
 	                                </select>
 	                            </div>
 	                        
 	                        	<label class="col-sm-1 col-form-label">통화</label>
 	                            <div class="col-sm-2">
-	                            	<select class="form-control m-b" name="account">
-	                                        <option>option 1</option>
-	                                        <option>option 2</option>
+	                            	<select class="form-control m-b" id="AS03010S_통화명">	
+	                                     
 	                                </select>
 	                            </div>
 	                        
@@ -66,23 +70,22 @@
 	                       
 	                        	<label class="col-sm-1 col-form-label">단위</label>
 	                            <div class="col-sm-2">
-	                            	<select class="form-control m-b" name="account">
-	                                        <option>option 1</option>
-	                                        <option>option 2</option>
+	                            	<select class="form-control m-b" id="AS03010S_단위명">
 	                                </select>
 	                            </div>
 	                        	
 	                        	<label class="col-sm-1 col-form-label">딜명</label>
-	                            <div class="col-sm-5 input-group m-b">
+	                            <div class="col-sm-2">
+	                            <!-- <div class="col-sm-5 input-group m-b"> -->
                             		<input type="hidden" id="dealNo" name="dealNo">
-                            		<input type="text" class="form-control" id="dealNm" name="dealNm">
+                            		<input type="text" class="form-control" id="AS03010S_dealNm" name="dealNm">
                             		<span class="input-group-append">
-                                        <button type="button" class="btn btn-default btn-AC01120P"><i class="fa fa-search"></i></button>
+                                        
                                     </span>
                             	</div>
 						                            	
 	                        	<div class="col-sm-3 text-left">
-	                        		<button class="btn btn-primary" type="submit">조회</button>
+	                        		<button class="btn btn-primary" type="button" onclick="checkDealSearch();">조회</button>
 	                        	</div>
 	                        </div>
 	    				</form>
@@ -91,139 +94,137 @@
 	    			<!-- 조회결과 -->
 	    			<div class="ibox-content">
 	    				<table class="table table-bordered">
-							<thead>
-								<tr>
-									<th>deal번호</th>
-									<th>DSC일자</th>
-									<th>deal명</th>
-									<th>참여금액</th>
-									<th>기표일(예정)</th>
-									<th>만기일(예정)</th>
-									<th>본부</th>
-									<th>부서</th>
-									<th>직원</th>
-									<th>협업유형</th>
-									<th>전체수익</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>1</td>
-									<td>2</td>
-									<td>3</td>
-									<td>4</td>
-									<td>5</td>
-									<td>6</td>
-									<td>7</td>
-									<td>8</td>
-									<td>9</td>
-									<td>10</td>
-									<td>11</td>
-								</tr>
-							</tbody>
-						</table>
+								<thead>
+									<tr>
+										<th>deal번호</th>
+										<th>DSC일자</th>
+										<th>deal명</th>
+										<th>참여금액</th>
+										<th>기표일(예정)</th>
+										<th>만기일(예정)</th>
+										<th>본부</th>
+										<th>부서</th>
+										<th>직원</th>
+										<th>협업유형</th>
+										<th>전체수익</th>
+										<th>수수료수익</th>
+										<th>투자수익</th>
+										<th>업체명</th>
+										<th>신용등급</th>
+										<th>상품1</th>
+										<th>상품2</th>
+										<th>상품3</th>
+										<th>상품4</th>
+										<th>투자국가</th>
+										<th>투자통화</th>
+										<th>부의통화금액</th>
+									</tr>
+								</thead>
+								<tbody id="AS03010S_checkDealList">
+								</tbody>
+							</table>
+	    				
 	    			</div>
 	    		</div>
-	    	</div>
 	    	
 	    	<!-- 상세보기 -->
-			<div class="col-lg-12">
-				<div class="white-bg dashboard-header">
-							<div class="row">
-								<div class="col-lg-4">
-					    			<div class="ibox">
-					    				<div class="ibox-title">
-					    					<h5>Key정보</h5>
-					    				</div>
-					    				<div class="ibox-content text-right">
-					    					<div class="form-group row">
-					    						<label class="col-sm-4 col-form-label">Deal번호</label>
-					                            <div class="col-sm-8"><input type="text" class="form-control"></div>
-					    					</div>
-					    					<div class="form-group row">
-					    						<label class="col-sm-4 col-form-label">신규/재부의정보</label>
-					                            <div class="col-sm-8"><input type="text" class="form-control"></div>
-					    					</div>
-					    					<div class="form-group row">
-					    						<label class="col-sm-4 col-form-label">부수안건정보</label>
-					                            <div class="col-sm-8"><input type="text" class="form-control"></div>
-					    					</div>
-					    					<div class="form-group row">
-					    						<label class="col-sm-4 col-form-label">Deal명</label>
-					                            <div class="col-sm-8"><input type="text" class="form-control"></div>
-					    					</div>
-					    				</div>
+				<div class="col-lg-12">
+					<div class="white-bg dashboard-header">
+						<div class="row">
+							<div class="col-lg-4">
+					    		<div class="ibox">
+					    			<div class="ibox-title">
+					    				<h5>Key정보</h5>
 					    			</div>
-					    		</div>
-					    		
-					    		<div class="col-lg-4">
-					    			<div class="ibox">
-					    				<div class="ibox-title">
-					    					<h5>거래담당</h5>
-					    				</div>
-					    				<div class="ibox-content text-right">
-					    					<div class="form-group row">
-					    						<label class="col-sm-4 col-form-label">본부</label>
-					                            <div class="col-sm-8"><input type="text" class="form-control"></div>
+					    			<div class="ibox-content text-right">
+					    				<div class="form-group row">
+					    					<label class="col-sm-4 col-form-label">Deal번호</label>
+					                        <div class="col-sm-8"><input type="text" class="form-control"></div>
 					    					</div>
-					    					<div class="form-group row">
-					    						<label class="col-sm-4 col-form-label">부서</label>
-					                            <div class="col-sm-8"><input type="text" class="form-control"></div>
-					    					</div>
-					    					<div class="form-group row">
-					    						<label class="col-sm-4 col-form-label">직원</label>
-					                            <div class="col-sm-8"><input type="text" class="form-control"></div>
-					    					</div>
-					    					<div class="form-group row">
-					    						<label class="col-sm-4 col-form-label">협업유형</label>
-					                            <div class="col-sm-8"><input type="text" class="form-control"></div>
-					    					</div>
-					    				</div>
-					    			</div>
-					    		</div>
-					    		
-					    		<div class="col-lg-8">
-					    			<div class="ibox">
-					    				<div class="ibox-title">
-					    					<h5>심사역</h5>
-					    				</div>
-					    				<div class="ibox-content text-right">
-					    					<div class="form-group row">
-					    						<label class="col-sm-2 col-form-label">심사역</label>
-					                            <div class="col-sm-4">
-					                            	<div class="input-group m-b">
-					                            		<input type="hidden" id="asmt_eno" name="asmt_eno">
-					                            		<input type="text" class="form-control" id="asmt_empNm" name="asmt_empNm">
-					                            		<span class="input-group-append">
-			                                                <button type="button" class="btn btn-default" onclick="callAC01120P('asmt')"><i class="fa fa-search"></i></button>
-			                                            </span>
-					                            	</div>
-					                            </div>
-					                            
-					    						<label class="col-sm-2 col-form-label">전결협의체</label>
-					                            <div class="col-sm-4">
-					                            	<select class="form-control m-b" name="account">
-				                                        <option>option 1</option>
-				                                        <option>option 2</option>
-					                                </select>
-					                            </div>
-					    					
-					    						<label class="col-sm-2 col-form-label">접수배정일</label>
-					                            <div class="col-sm-4 input-group date">
-				                                    <input type="text" class="form-control" value="" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-				                                </div>
-					    					</div>
-					    				</div>
-					    			</div>
-					    		</div>
+					    				<div class="form-group row">
+					    					<label class="col-sm-4 col-form-label">신규/재부의정보</label>
+					                        <div class="col-sm-8"><input type="text" class="form-control"></div>
+				    					</div>
+				    					<div class="form-group row">
+				    						<label class="col-sm-4 col-form-label">부수안건정보</label>
+				                            <div class="col-sm-8"><input type="text" class="form-control"></div>
+				    					</div>
+				    					<div class="form-group row">
+				    						<label class="col-sm-4 col-form-label">Deal명</label>
+				                            <div class="col-sm-8"><input type="text" class="form-control"></div>
+				    					</div>
+				    				</div>
+				    			</div>
 				    		</div>
-				    		<div class="col-sm-12 text-right">
-				           		<button class="btn btn-success" type="submit">접수</button>
-				           		<button class="btn btn-danger" type="submit">반송</button>
-				           	</div>
-						</div>
-			</div>		
-	    </div>
+					    		
+				    		<div class="col-lg-4">
+				    			<div class="ibox">
+				    				<div class="ibox-title">
+				    					<h5>거래담당</h5>
+				    				</div>
+				    				<div class="ibox-content text-right">
+				    					<div class="form-group row">
+				    						<label class="col-sm-4 col-form-label">본부</label>
+				                            <div class="col-sm-8"><input type="text" class="form-control"></div>
+				    					</div>
+				    					<div class="form-group row">
+				    						<label class="col-sm-4 col-form-label">부서</label>
+				                            <div class="col-sm-8"><input type="text" class="form-control"></div>
+				    					</div>
+				    					<div class="form-group row">
+				    						<label class="col-sm-4 col-form-label">직원</label>
+				                            <div class="col-sm-8"><input type="text" class="form-control"></div>
+				    					</div>
+				    					<div class="form-group row">
+				    						<label class="col-sm-4 col-form-label">협업유형</label>
+				                            <div class="col-sm-8"><input type="text" class="form-control"></div>
+				    					</div>
+				    				</div>
+				    			</div>
+				    		</div>   		
+				    		<div class="col-lg-8">
+				    			<div class="ibox">
+				    				<div class="ibox-title">
+				    					<h5>심사역</h5>
+				    				</div>
+				    				<div class="ibox-content text-right">
+				    					<div class="form-group row">
+				    						<label class="col-sm-2 col-form-label">심사역</label>
+				                            <div class="col-sm-4">
+				                            	<div class="input-group m-b">
+				                            		<input type="hidden" id="asmt_eno" name="asmt_eno">
+				                            		<input type="text" class="form-control" id="asmt_empNm" name="asmt_empNm">
+				                            		<span class="input-group-append">
+		                                                <button type="button" class="btn btn-default" onclick="callAC01120P('asmt')"><i class="fa fa-search"></i></button>
+		                                            </span>
+				                            	</div>
+				                            </div>
+				                            
+				    						<label class="col-sm-2 col-form-label">전결협의체</label>
+				                            <div class="col-sm-4">
+				                            	<select class="form-control m-b" name="account">
+			                                        <option>option 1</option>
+			                                        <option>option 2</option>
+				                                </select>
+				                            </div>
+				    					
+				    						<label class="col-sm-2 col-form-label">접수배정일</label>
+				                            <div class="col-sm-4 input-group date">
+			                                    <input type="text" class="form-control" value="" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+			                                </div>
+				    					</div>
+				    				</div>
+				    			</div>
+				    		</div>
+			    		</div>
+			    		<div class="col-sm-12 text-right">
+			           		<button class="btn btn-success" type="submit">접수</button>
+			           		<button class="btn btn-danger" type="submit">반송</button>
+			           	</div>
+					</div>
+				</div>		
+    		</div>
+		</div>
 	</div>
 </th:block>
 </html>

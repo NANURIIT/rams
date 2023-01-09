@@ -5,9 +5,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.nanuri.rams.business.common.dto.RAA01BDTO;
-import com.nanuri.rams.business.common.dto.RAA02BDTO;
 import com.nanuri.rams.business.common.vo.RAA01BVO;
 import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
+import com.nanuri.rams.business.common.vo.RAA01BVO.checkDealInfo;
 
 @Mapper
 public interface RAA01BMapper {
@@ -20,4 +20,6 @@ public interface RAA01BMapper {
 	// deal 정보 갱신
 	public void updateDealInfo(RAA01BDTO raa01bDTO);
 	
+	// 심사안건조회
+	List<checkDealInfo> assignmentSearch(checkDealInfo dealInfo);
 }
