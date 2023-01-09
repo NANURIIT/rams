@@ -33,7 +33,7 @@ public interface RAA93BMapper {
 
 	public Optional<RAA90BDTO> getSubMenuInfo(String menuId);
 
-	public int insertSubMenuInfo(SubMenuVo requestDto);
+	public int insertSubMenuInfo(RAA93BDTO requestDto);
 
 	public int updateSubMenuInfo(SubMenuVo requestDto); 
 

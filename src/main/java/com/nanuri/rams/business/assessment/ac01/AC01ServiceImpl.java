@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.aspectj.weaver.Utils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -486,22 +487,25 @@ public class AC01ServiceImpl implements AC01Service {
 		String hndlPEno = facade.getDetails().getEno();
 		
 		for (SubMenuVo requestDto : requestDtos) {
-            if (raa93BMapper.getSubMenuInfo(requestDto.getMenuId()).isPresent()) {
-                throw new IllegalArgumentException("해당 그룹코드가 존재합니다. " + requestDto.getMenuId());
-            }
 
-            if (raa93BMapper.getMainMenuInfo(requestDto.getOldSubMenuId()).isEmpty()) {
-            	requestDto.setHndlPEno(hndlPEno);
-                count += raa93BMapper.insertSubMenuInfo(requestDto);
-            } else {
-            	requestDto.setHndlPEno(hndlPEno);
-                count += raa93BMapper.updateSubMenuInfo(requestDto);
-            }
-        }
+			if (!com.nanuri.rams.com.utils.StringUtil.isAllWhitespace(requestDto.getMenuId())) {
+				
+				if (raa93BMapper.getSubMenuInfo(requestDto.getMenuId()).isPresent()) {
+					throw new IllegalArgumentException("해당 그룹코드가 존재합니다. " + requestDto.getMenuId());
+				}
+				
+				if (raa93BMapper.getSubMenuInfo(requestDto.getOldSubMenuId()).isEmpty()) {
+					requestDto.setHndlPEno(hndlPEno);
+					count += raa93BMapper.insertSubMenuInfo(requestDto);
+				} else {
+					requestDto.setHndlPEno(hndlPEno);
+					count += raa93BMapper.updateSubMenuInfo(requestDto);
+				}
+			}
+		}
         return count > 0;
 	}
 	
-
 	
  	// ============ End AC01410S( 메뉴관리 ) ============//
     

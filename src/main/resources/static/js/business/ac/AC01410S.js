@@ -69,9 +69,9 @@ function rebuildMenuListTable(data){
 			html += '	<td>'+ value.hndlDyTm + '</td>'; 	//처리일시
 			html += '	<td>'+ value.empNm+ '</td>';		//처리자
 			if(value.dltF === 'N'){
-				html += '  <td><input style="width:100%"  type="checkbox" checked></td>';
+				html += '  <td><input class="del_yn" style="width:100%"  type="checkbox" checked><input class="hidden_yn" type="hidden" value="n"></td>';
 			} else {
-				html += '  <td><input style="width:100%"  type="checkbox" ></td>';
+				html += '  <td><input class="del_yn" style="width:100%"  type="checkbox" ><input class="hidden_yn" type="hidden" value="y"></td>';
 			}
 			html += '</tr>';	
 		})
@@ -110,7 +110,7 @@ var getMenuIdInfo = function(menuId){
 			
 				html += '<tr id="' + menuId + '">';
 				html += '   <td><input id="' + menuInfo.menuId + '" style="width:100%" type="checkbox"><input type="hidden" value="' + menuId + '"></td>';
-				html += '   <td class="update_column">' + menuInfo.menuId + '</td>';	//메뉴ID
+				html += '   <td class="update_column menuId">' + menuInfo.menuId + '</td>';	//메뉴ID
 				html += '   <td class="update_column">' + menuInfo.srtNo + '</td>';		//정령번호
 				html += '   <td class="update_column">' + menuInfo.urlPrmtrCntnt + '</td>';		//화면번호
 				html += '   <td class="update_column">' + menuInfo.menuNm + '</td>';		//메뉴명
@@ -120,9 +120,9 @@ var getMenuIdInfo = function(menuId){
 				html += '   <td>' + menuInfo.hndlDyTm + '</td>';		//처리일
 				html += '   <td>' + menuInfo.empNm + '</td>';		//처리자
 				if(menuInfo.dltF === 'N'){
-					html += '  <td><input style="width:100%"  type="checkbox" checked></td>';
+					html += '  <td><input class="del_yn" style="width:100%"  type="checkbox" checked><input class="hidden_yn" type="hidden" value="n"></td>';
 				} else {
-					html += '  <td><input style="width:100%"  type="checkbox" ></td>';
+					html += '  <td><input class="del_yn" style="width:100%"  type="checkbox" ><input class="hidden_yn" type="hidden" value="y"></td>';
 				}
 				html += '<tr></tr>';
 				
@@ -210,6 +210,9 @@ function clickSaveMainMenu() {
 		let menuNmInput   	   = $(tr[i]).find("td:eq(4)").find("input");
 		let shrtNmInput   	   = $(tr[i]).find("td:eq(5)").find("input");
 		let urlDvdCdInput  	   = $(tr[i]).find("td:eq(6)").find("input");
+		let dltFYn 			   = $(tr[i]).find("td:eq(10)").find(".del_yn").prop("checked");
+		let dltFYnCheck 	   = $(tr[i]).find("td:eq(10)").find(".hidden_yn").val();
+		
 		
 		if (menuIdInput.length == 1) {
 			if (menuIdInput.val().length > 8) {
@@ -349,6 +352,10 @@ function clickSaveMainMenu() {
 			}
 			mainMenu.urlDvdCd = urlDvdCdInput.val();
 		}
+		
+		if ( !dltFYnCheck || (!dltFYn && dltFYnCheck === 'n') || (dltFYn && dltFYnCheck === 'y')) {
+			mainMenu.dltF = dltFYn ? 'N' : 'Y';
+		}
 
 		if (!(Object.keys(mainMenu).length === 0)) {
 			mainMenu.oldMenuId = $(tr[i]).find("td:eq(0)").find("input").attr("id");
@@ -443,7 +450,7 @@ var deleteSubMenu = function (subMenuList) {
 			getMenuIdInfo(menuId);
 		},
 		error: function (response) {
-
+			console.log(response);
 		}
 	});
 }
@@ -456,15 +463,17 @@ function clickSaveSubMenu() {
 		let subMenu = new Object();
 
 		// TODO => 변수 할당 확인
-		let mainMenuId = menuId;
+		let mainMenuId              = menuId;
 		let oldSubMenuId 			= $(tr[i]).find("td:eq(0)").find("input").attr('id');
-		let subMenuIdInput 		= $(tr[i]).find("td:eq(1)").find("input");
+		let subMenuIdInput 		    = $(tr[i]).find("td:eq(1)").find("input");
 		let subSrtNoInput			= $(tr[i]).find("td:eq(2)").find("input");
 		let subUrlPrmtrCntntInput	= $(tr[i]).find("td:eq(3)").find("input");
 		let subMenuNmInput			= $(tr[i]).find("td:eq(4)").find("input");
 		let subShrtNmInput			= $(tr[i]).find("td:eq(5)").find("input");
 		let subUrlNmInput 			= $(tr[i]).find("td:eq(6)").find("input");
 		let subUrlDvdCdInput 		= $(tr[i]).find("td:eq(7)").find("input");
+		let dltFYn 			        = $(tr[i]).find("td:eq(10)").find(".del_yn").prop("checked");
+		let dltFYnCheck 	        = $(tr[i]).find("td:eq(10)").find(".hidden_yn").val();
 
 
 		if (subMenuIdInput.length == 1) {
@@ -628,12 +637,14 @@ function clickSaveSubMenu() {
 			subMenu.urlDvdCd = subUrlDvdCdInput.val();
 		}
 		
-
-		if (!(Object.keys(subMenu).length === 0)) {
-			subMenu.oldSubMenuId = oldSubMenuId;
-			subMenu.hgRnkMenuId = mainMenuId; //상위메뉴ID
-			subMenuList.push(subMenu);
+		if ( !dltFYnCheck || (!dltFYn && dltFYnCheck === 'n') || (dltFYn && dltFYnCheck === 'y')) {
+			subMenu.dltF = dltFYn ? 'N' : 'Y';
 		}
+		
+
+		subMenu.oldSubMenuId = oldSubMenuId;
+		subMenu.hgRnkMenuId = mainMenuId;  //상위메뉴ID
+		subMenuList.push(subMenu);
 	}
 
 	if (subMenuList.length > 0) {
@@ -642,7 +653,7 @@ function clickSaveSubMenu() {
 }
 /* 하위 메뉴 저장 처리*/
 var saveSubMenu = function (subMenuList) {
-
+	//let menuId = subMenuList[0].menuId;
 	$.ajax({
 		method: 'POST',
 		url: '/registSubMenuInfo',
@@ -662,5 +673,6 @@ var saveSubMenu = function (subMenuList) {
 		}
 	});
 }
+
 
 

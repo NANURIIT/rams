@@ -165,7 +165,7 @@
                 , SRT_NO = #{srtNo}
             </if>
             <if test="urlPrmtrCntnt != null and urlPrmtrCntnt !=''">
-                , URL_PRMTR_CNTNT = #{useF}
+                , URL_PRMTR_CNTNT = #{urlPrmtrCntnt}
             </if>
             <if test="menuNm != null and menuNm !=''">
                 , MENU_NM = #{menuNm}
@@ -176,8 +176,11 @@
             <if test="urlDvdCd != null and urlDvdCd !=''">
                 , URL_DVD_CD = #{urlDvdCd}
             </if>
+            <if test="dltF != null and dltF !=''">
+                , DLT_F = #{dltF}
+            </if>
             , HNDL_DY_TM = now()
-            , hndl_p_eno = #{hndlPEno}
+            , HNDL_P_ENO = #{hndlPEno}
         </set>
         WHERE MENU_ID = #{oldMenuId}
     </update>
@@ -243,7 +246,7 @@
                 , SRT_NO = #{srtNo}
             </if>
             <if test="urlPrmtrCntnt != null and urlPrmtrCntnt !=''">
-                , URL_PRMTR_CNTNT = #{useF}
+                , URL_PRMTR_CNTNT = #{urlPrmtrCntnt}
             </if>
             <if test="menuNm != null and menuNm !=''">
                 , MENU_NM = #{menuNm}
@@ -257,8 +260,11 @@
             <if test="urlDvdCd != null and urlDvdCd !=''">
                 , URL_DVD_CD = #{urlDvdCd}
             </if>
+            <if test="dltF != null and dltF !=''">
+                , DLT_F = #{dltF}
+            </if>
             , HNDL_DY_TM = now()
-            , hndl_p_eno = #{hndlPEno}
+            , HNDL_P_ENO = #{hndlPEno}
         </set>
         WHERE MENU_ID = #{oldSubMenuId}
     </update>

@@ -22,7 +22,7 @@ public class RAA93BVO {
     @Getter
     @Setter
     public static class MainMenuVo extends RAA93BDTO {
-    	private String oldMenuId;						/* 변경전 메뉴ID*/
+    	private String oldMenuId;						/* 변경전 상위메뉴ID*/
     	private String empNm;
     }
     
