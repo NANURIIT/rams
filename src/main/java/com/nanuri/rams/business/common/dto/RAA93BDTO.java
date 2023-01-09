@@ -19,9 +19,10 @@ public class RAA93BDTO {
     private int menuLv;									/* 메뉴레벨 */
     private String urlDvdCd;							/* URL분류코드 */
     private String urlNm;								/* URL명 */
-    private String usrRghtClsfCd;						/* URL매개변수내용 */
-    private String aplcF;								/* 사용자권한구분코드 */
-    private String aplcDt;								/* 적용여부 */
+    private String urlPrmtrCntnt;						/* URL매개변수내용 */
+    private String usrRghtClsfCd;						/* 사용자권한구분코드 */
+    private String aplcF;								/* 적용여부 */
+    private String aplcDt;								/* 적용일자 */
     private String dltF;								/* 삭제여부 */
     private String dltDt;								/* 삭제일자 */
     private String dltTm;								/* 삭제시간 */
@@ -29,4 +30,5 @@ public class RAA93BDTO {
     private Date hndlDyTm;								/* 처리일시 */
     private String hndlDprtCd;							/* 처리부점코드 */
     private String hndlPEno;							/* 처리자사번 */
+    
 }

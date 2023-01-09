@@ -5,12 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.nanuri.rams.business.common.dto.*;
-import com.nanuri.rams.business.common.vo.RAA90BVO;
 import org.springframework.stereotype.Service;
 
+import com.nanuri.rams.business.common.dto.RAA90BDTO;
+import com.nanuri.rams.business.common.dto.RAA91BDTO;
+import com.nanuri.rams.business.common.dto.RAA92BDTO;
+import com.nanuri.rams.business.common.dto.RAA93BDTO;
+import com.nanuri.rams.business.common.dto.RAA94BDTO;
+import com.nanuri.rams.business.common.dto.RAA95BDTO;
+import com.nanuri.rams.business.common.vo.RAA90BVO;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
+import com.nanuri.rams.business.common.vo.RAA93BVO.MainMenuVo;
+import com.nanuri.rams.business.common.vo.RAA93BVO.SubMenuVo;
 import com.nanuri.rams.business.common.vo.RAA95BVO;
 
 @Service
@@ -65,7 +72,23 @@ public interface AC01Service {
 	
 	//============ end AC01210S(권한별 메뉴관리) ============//
 	
+	// =========== Start AC01410S( 메뉴관리) ============//
+
+	public List<MainMenuVo> selectMainMenuList(String menuNm);
+
+	public List<RAA93BDTO> selectSubMenuList(String menuId);
+
+	public boolean deleteMainMenuInfo(List<String> menuId);
+
+	public boolean deleteSubMenuInfo(List<String> menuId);
+
+	public boolean registMainMenuInfo(List<MainMenuVo> requestDtos);
+
+	public boolean registSubMenuInfo(List<SubMenuVo> requestDtos);
+
 	
+
+	// ============ End AC01410S( 메뉴관리 ) ============//
 }
 
 

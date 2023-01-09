@@ -19,6 +19,22 @@ public class RAA93BVO {
         private String lv3Id;
     }
     
+    @Getter
+    @Setter
+    public static class MainMenuVo extends RAA93BDTO {
+    	private String oldMenuId;						/* 변경전 상위메뉴ID*/
+    	private String empNm;
+    }
+    
+    @Getter
+    @Setter
+    public static class SubMenuVo extends RAA93BDTO {
+    	private String oldSubMenuId;	/* 변경전 하위메뉴ID*/
+    	private String empNm;
+    	
+    	
+    }
+    
     private int srtNo;
     private String menuId;
     private String rghtCd;
