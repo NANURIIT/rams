@@ -68,6 +68,7 @@
  		 <if test='menuNm != null and menuNm != ""'>
  		   AND MENU_NM = #{menuNm}
  		 </if>
+ 		 ORDER BY rb.MENU_ID 
  		 
     </select>
     
@@ -89,6 +90,7 @@
  		    ON rb.HNDL_P_ENO = ra.ENO 
  		 WHERE SCRN_APLC_TYPE_CD = 'S' 
 		   AND HG_RNK_MENU_ID = #{menuId}
+		 ORDER BY rb.MENU_ID
     </select>
     
 	<update id="deleteMainMenuInfo" parameterType="java.util.List">
@@ -183,6 +185,7 @@
             , HNDL_P_ENO = #{hndlPEno}
         </set>
         WHERE MENU_ID = #{oldMenuId}
+        
     </update>
     
     
