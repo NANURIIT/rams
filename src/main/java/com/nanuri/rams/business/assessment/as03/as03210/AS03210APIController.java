@@ -102,14 +102,20 @@ public class AS03210APIController {
 
 	// 관련문서
 	@GetMapping(value = "/getDocInfo")
-	public List<Map<String, Object>> getDocInfo(DocInfo docInfo) {
+	public List<DocInfo> getDocInfo(DocInfo docInfo) {
 		return as03210Service.getDocInfo(docInfo);
 	}
 
 	// 관련문서정보 제거
 	@PostMapping(value = "/deleteDocInfo")
-	public void deleteDocInfo(DocInfo docInfo) {
-		as03210Service.deleteDocInfo(docInfo);
+	public int deleteDocInfo(DocInfo docInfo) {
+		return as03210Service.deleteDocInfo(docInfo);
+	}
+
+	// 관련문서정보 생성
+	@PostMapping(value = "/registDocInfo")
+	public int registDocInfo(DocInfo docInfo) {
+		return as03210Service.registDocInfo(docInfo);
 	}
 
 }

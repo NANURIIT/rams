@@ -47,5 +47,230 @@
          WHERE 93b.scrn_aplc_type_cd = 'S'
       ORDER BY srt_no
     </select>
-
+    
+    <!-- 상위메뉴 조회 -->
+    <select id="selectMainMenuList" parameterType="String" resultType="com.nanuri.rams.business.common.vo.RAA93BVO$MainMenuVo">
+    	SELECT rb.MENU_ID
+    		 , rb.MENU_NM
+    		 , rb.SRT_NO
+    		 , rb.URL_PRMTR_CNTNT
+    		 , rb.SHRT_NM
+    		 , rb.URL_DVD_CD
+    		 , rb.HNDL_DY_TM
+    		 , rb.HNDL_P_ENO	
+    		 , rb.DLT_F
+    		 , ra.EMP_NM
+ 		  FROM RAA93B rb
+ 		  LEFT JOIN RAA99A ra 
+ 		    ON rb.HNDL_P_ENO = ra.ENO 
+ 		 WHERE 1=1 
+ 		   AND SCRN_APLC_TYPE_CD = 'M' 
+ 		 <if test='menuNm != null and menuNm != ""'>
+ 		   AND MENU_NM = #{menuNm}
+ 		 </if>
+ 		 ORDER BY rb.MENU_ID 
+ 		 
+    </select>
+    
+    <!-- 하위메뉴 조회 -->
+    <select id="selectSubMenuList" parameterType="String" resultType="com.nanuri.rams.business.common.vo.RAA93BVO$SubMenuVo">
+    	SELECT 
+    		   rb.MENU_ID
+    		 , rb.SRT_NO
+    		 , rb.URL_PRMTR_CNTNT
+    		 , rb.MENU_NM
+    		 , rb.SHRT_NM
+    		 , rb.URL_NM
+    		 , rb.URL_DVD_CD
+    		 , rb.HNDL_DY_TM
+    		 , ra.EMP_NM
+    		 , rb.DLT_F
+ 		  FROM RAA93B rb
+ 		  LEFT JOIN RAA99A ra 
+ 		    ON rb.HNDL_P_ENO = ra.ENO 
+ 		 WHERE SCRN_APLC_TYPE_CD = 'S' 
+		   AND HG_RNK_MENU_ID = #{menuId}
+		 ORDER BY rb.MENU_ID
+    </select>
+    
+	<update id="deleteMainMenuInfo" parameterType="java.util.List">
+		UPDATE RAA93B
+		   SET DLT_F = 'Y'
+		WHERE MENU_ID IN
+		<foreach collection="list" item="menuId" index="index" open="(" separator="," close=")">
+			#{menuId}
+		</foreach>
+	</update>
+	
+	<update id="deleteSubMenuInfo" parameterType="java.util.List">
+		UPDATE RAA93B
+		   SET DLT_F = 'Y'
+		WHERE MENU_ID IN
+		<foreach collection="list" item="menuId" index="index" open="(" separator="," close=")">
+			#{menuId}
+		</foreach>
+	</update>
+	
+	<select id="getMainMenuInfo" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA93BDTO">
+        SELECT MENU_ID
+    		 , SRT_NO
+    		 , URL_PRMTR_CNTNT
+    		 , MENU_NM
+    		 , SHRT_NM
+    		 , URL_NM
+    		 , URL_DVD_CD
+    		 , HNDL_DY_TM
+    		 , HNDL_P_ENO
+          FROM RAA93B
+         WHERE MENU_ID = #{menuId}
+    </select>
+	
+	<insert id="insertMainMenuInfo" parameterType="com.nanuri.rams.business.common.dto.RAA93BDTO">
+        INSERT INTO RAA93B (
+		       MENU_ID
+			 , MENU_NM
+			 , SHRT_NM
+			 , SCRN_APLC_TYPE_CD 
+			 , SRT_NO
+			 , MENU_LV
+			 , URL_DVD_CD
+			 , URL_PRMTR_CNTNT
+			 , APLC_F
+			 , APLC_DT
+			 , DLT_F
+			 , HNDL_DY_TM
+			 , HNDL_P_ENO
+		) VALUES (
+			   #{menuId}
+			 , #{menuNm}
+			 , #{shrtNm}
+			 , 'M'
+			 , #{srtNo}
+			 , 1  
+			 , #{urlDvdCd} 
+			 , SUBSTRING(MENU_ID, 3,5) 
+			 , 'Y'
+			 , DATE_FORMAT(now(), '%Y%m%d')
+			 , 'N'
+			 , now()
+			 , #{hndlPEno}   
+		)
+    </insert>
+	
+	<update id="updateMainMenuInfo" parameterType="com.nanuri.rams.business.common.vo.RAA93BVO$MainMenuVo">
+        UPDATE RAA93B
+        <set>
+            <if test="menuId != null and menuId !=''">
+                  MENU_ID = #{menuId}
+            </if>
+            <if test="srtNo != null and srtNo !=''">
+                , SRT_NO = #{srtNo}
+            </if>
+            <if test="urlPrmtrCntnt != null and urlPrmtrCntnt !=''">
+                , URL_PRMTR_CNTNT = #{urlPrmtrCntnt}
+            </if>
+            <if test="menuNm != null and menuNm !=''">
+                , MENU_NM = #{menuNm}
+            </if>
+            <if test="shrtNm != null and shrtNm !=''">
+                , SHRT_NM = #{shrtNm}
+            </if>
+            <if test="urlDvdCd != null and urlDvdCd !=''">
+                , URL_DVD_CD = #{urlDvdCd}
+            </if>
+            <if test="dltF != null and dltF !=''">
+                , DLT_F = #{dltF}
+            </if>
+            , HNDL_DY_TM = now()
+            , HNDL_P_ENO = #{hndlPEno}
+        </set>
+        WHERE MENU_ID = #{oldMenuId}
+        
+    </update>
+    
+    
+    <select id="getSubMenuInfo" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA93BDTO">
+        SELECT MENU_ID
+    		 , SRT_NO
+    		 , URL_PRMTR_CNTNT
+    		 , MENU_NM
+    		 , SHRT_NM
+    		 , URL_NM
+    		 , URL_DVD_CD
+    		 , HNDL_DY_TM
+    		 , HNDL_P_ENO
+          FROM RAA93B
+         WHERE MENU_ID = #{menuId}
+    </select>
+    
+    <insert id="insertSubMenuInfo" parameterType="com.nanuri.rams.business.common.dto.RAA93BDTO">
+        INSERT INTO RAA93B (
+               MENU_ID
+             , MENU_NM
+             , SHRT_NM
+             , HG_RNK_MENU_ID
+             , SCRN_APLC_TYPE_CD 
+             , SRT_NO
+             , MENU_LV
+             , URL_DVD_CD	
+             , URL_NM
+             , URL_PRMTR_CNTNT
+	         , APLC_F
+             , APLC_DT
+             , DLT_F
+             , HNDL_DY_TM
+             , HNDL_P_ENO
+        ) VALUES (
+			   #{menuId}
+			 , #{menuNm}
+			 , #{shrtNm} 
+			 , #{hgRnkMenuId} 
+			 , 'S'
+			 , #{srtNo} 
+			 , #{urlDvdCd}  
+			 , 2  
+			 , #{urlNm} 
+			 , SUBSTRING(MENU_ID,3,5) 
+ 			 , 'Y'
+			 , DATE_FORMAT(now(), '%Y%m%d')
+			 , 'N'  
+			 , now()
+			 , #{hndlPEno} 
+        )
+    </insert>
+	
+	<update id="updateSubMenuInfo" parameterType="com.nanuri.rams.business.common.vo.RAA93BVO$SubMenuVo">
+        UPDATE RAA93B
+        <set>
+            <if test="menuId != null and menuId !=''">
+                  MENU_ID = #{menuId}
+            </if>
+            <if test="srtNo != null and srtNo !=''">
+                , SRT_NO = #{srtNo}
+            </if>
+            <if test="urlPrmtrCntnt != null and urlPrmtrCntnt !=''">
+                , URL_PRMTR_CNTNT = #{urlPrmtrCntnt}
+            </if>
+            <if test="menuNm != null and menuNm !=''">
+                , MENU_NM = #{menuNm}
+            </if>
+            <if test="shrtNm != null and shrtNm !=''">
+                , SHRT_NM = #{shrtNm}
+            </if>
+            <if test="urlNm != null and urlNm !=''">
+                , URL_NM = #{urlNm}
+            </if>
+            <if test="urlDvdCd != null and urlDvdCd !=''">
+                , URL_DVD_CD = #{urlDvdCd}
+            </if>
+            <if test="dltF != null and dltF !=''">
+                , DLT_F = #{dltF}
+            </if>
+            , HNDL_DY_TM = now()
+            , HNDL_P_ENO = #{hndlPEno}
+        </set>
+        WHERE MENU_ID = #{oldSubMenuId}
+    </update>
+    
+    
 </mapper>

@@ -10,9 +10,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.nanuri.rams.business.common.dto.RAA01BDTO;
 import com.nanuri.rams.business.common.dto.RAA02BDTO;
+import com.nanuri.rams.business.common.dto.RAA18BDTO;
 import com.nanuri.rams.business.common.mapper.RAA01BMapper;
 import com.nanuri.rams.business.common.mapper.RAA02BMapper;
 import com.nanuri.rams.business.common.mapper.RAA02HMapper;
@@ -21,6 +23,7 @@ import com.nanuri.rams.business.common.vo.RAA01BVO;
 import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
 import com.nanuri.rams.business.common.vo.RAA18BVO.DocInfo;
 import com.nanuri.rams.com.security.AuthenticationFacade;
+import com.nanuri.rams.com.utils.StringUtil;
 import com.nanuri.rams.com.utils.Utils;
 
 import lombok.RequiredArgsConstructor;
@@ -366,14 +369,43 @@ public class AS03210ServiceImpl implements AS03210Service {
 
 	// 관련문서
 	@Override
-	public List<Map<String, Object>> getDocInfo(DocInfo docInfo) {
+	public List<DocInfo> getDocInfo(DocInfo docInfo) {
 		return raa18bMapper.getDocInfo(docInfo);
 	};
 
 	// 관련문서정보 제거
 	@Override
-	public void deleteDocInfo(DocInfo docInfo) {
-		raa18bMapper.deleteDocInfo(docInfo);
+	public int deleteDocInfo(DocInfo docInfo) {
+		return raa18bMapper.deleteDocInfo(docInfo);
+	};
+	
+	// 관련문서정보 생성
+	@Override
+	public int registDocInfo(DocInfo docInfo) {
+		
+		String ibDealNo = docInfo.getIbDealNo();
+		String itemSq = docInfo.getItemSq();
+		
+		RAA02BDTO raa02bDTO = raa02bMapper.copyDealInfO(ibDealNo);
+		RAA18BDTO raa18bDTO = new RAA18BDTO();
+		
+		raa18bDTO.setIbDealNo(ibDealNo);											// IBDEAL번호
+		raa18bDTO.setRiskInspctCcd(raa02bDTO.getRiskInspctCcd());					// 리스크심사구분코드
+		raa18bDTO.setLstCCaseCcd(raa02bDTO.getLstCCaseCcd());						// 부수안건구분코드
+		raa18bDTO.setRaDocCcd("");
+		if (!StringUtil.isAllWhitespace(itemSq)) {
+			raa18bDTO.setItemSq(Integer.valueOf(itemSq));							// 항목일련번호
+		}
+		raa18bDTO.setRaDocNo(docInfo.getRaDocNo());									// RA문서번호
+		raa18bDTO.setRaFnlDocF(docInfo.getRaFnlDocF());								// RA최종문서여부
+		raa18bDTO.setHndlDprtCd(facade.getDetails().getDprtCd());					// 처리부점코드
+		raa18bDTO.setHndlPEno(facade.getDetails().getEno());						// 처리자사번
+
+		if (!StringUtil.isAllWhitespace(itemSq)) {
+			return raa18bMapper.updateDocInfo(raa18bDTO);							// 문서정보 갱신
+		} else {
+			return raa18bMapper.registDocInfo(raa18bDTO);							// 문서정보 생성
+		}
 	};
 
 }

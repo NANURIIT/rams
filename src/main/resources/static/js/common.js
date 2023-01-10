@@ -38,7 +38,7 @@ $(function() {
 		todayBtn: "linked",
 	    keyboardNavigation: false,
 	    forceParse: false,
-	    calendarWeeks: true,
+	    calendarWeeks: false,
 	    autoclose: true
 	});
 });

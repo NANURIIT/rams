@@ -57,9 +57,12 @@ public interface AS03210Service {
 	// ---------------tab2 start------------------
 
 	// 관련문서
-	public List<Map<String, Object>> getDocInfo(DocInfo docInfo);
+	public List<DocInfo> getDocInfo(DocInfo docInfo);
 
 	// 관련문서정보 제거
-	public void deleteDocInfo(DocInfo docInfo);
+	public int deleteDocInfo(DocInfo docInfo);
+
+	// 관련문서정보 생성
+	public int registDocInfo(DocInfo docInfo);
 
 }

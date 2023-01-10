@@ -41,7 +41,7 @@ function assesmentRequest() {
 	if (!isEmpty(ibDealNo)) {
 		businessFunction();
 	} else {
-		swal("Error!", "심사요청하는 Deal 정보를 확인해 주세요.", "error", "confirm");
+		openPopup({type:'error', title:"Error!", text:"심사요청하는 Deal 정보를 확인해 주세요."});
 	}
 
 	function businessFunction() {
@@ -55,14 +55,13 @@ function assesmentRequest() {
 			data: dtoParam,
 			dataType: "json",
 			success: function() {
-				swal({
-					title: "Success!"
+				Swal.fire({
+					icon: 'success'
+					, title: "Success!"
 					, text: "심사요청 상태로 변경하였습니다."
-					, icon: "success"
-				}, function(isConfirm) {
-					if (isConfirm) {
-						location.reload();
-					}
+					, confirmButtonText: "확인"
+				}).then((result) => {
+					location.reload();
 				});
 			}
 		}); // end of ajax
@@ -77,7 +76,12 @@ function assesmentRequestCancel() {
 	if (!isEmpty(ibDealNo)) {
 		businessFunction();
 	} else {
-		swal("Error!", "심사요청취소하는 Deal 정보를 확인해 주세요.", "error", "confirm");
+		Swal.fire({
+			icon: 'error'
+			, title: "Error!"
+			, text: "심사요청취소하는 Deal 정보를 확인해 주세요."
+			, confirmButtonText: "확인"
+		});
 	}
 
 	function businessFunction() {
@@ -91,14 +95,13 @@ function assesmentRequestCancel() {
 			data: dtoParam,
 			dataType: "json",
 			success: function() {
-				swal({
-					title: "Success!"
+				Swal.fire({
+					icon: 'success'
+					, title: "Success!"
 					, text: "심사요청취소 상태로 변경하였습니다."
-					, icon: "success"
-				}, function(isConfirm) {
-					if (isConfirm) {
-						location.reload();
-					}
+					, confirmButtonText: "확인"
+				}).then((result) => {
+					location.reload();
 				});
 			}
 		}); // end of ajax
@@ -116,7 +119,12 @@ function getDealList(){
 		$('#AS03210S_selectedDealNo').val();
 		businessFunction();
 	}else{
-		swal("Error!", "Deal번호를 입력해 주세요.", "error", "confirm");
+		Swal.fire({
+			icon: 'error'
+			, title: "Error!"
+			, text: "심사요청취소 상태로 변경하였습니다."
+			, confirmButtonText: "확인"
+		});
 	}
 	
 	function businessFunction() {
@@ -173,8 +181,7 @@ function setTabContents(e) {
 	$('#AS03210S_selectedDealNo').val(ibDealNo);
 
 	setTab1(ibDealNo);
-	
-	//setTab2(ibDealNo);
+	setTab2(ibDealNo);
 
 }
 
@@ -311,6 +318,7 @@ function setTab2(ibDealNo) {
 
 // 관련문서 정보
 function getDocInfo(ibDealNo) {
+	tab2BtnReset();
 
 	var paramData = {
 		"ibDealNo": ibDealNo
@@ -328,10 +336,10 @@ function getDocInfo(ibDealNo) {
 			var codeList = data;
 			if (codeList.length > 0) {
 				$.each(codeList, function(key, value) {
-					html += '<tr>';
-					html += '<td>' + value.RA_DOC_NO + '</td>';
-					html += '<td>' + value.RA_FNL_DOC_F + '</td>';
-					html += '<td style="display:none;">' + value.ITEM_SQ + '</td>';
+					html += '<tr onclick="docInfoDetails(this);">';
+					html += '<td>' + value.raDocNo + '</td>';
+					html += '<td>' + value.raFnlDocF + '</td>';
+					html += '<td style="display:none;">' + value.itemSq + '</td>';
 					html += '</tr>';
 				});
 			} else {
@@ -344,11 +352,25 @@ function getDocInfo(ibDealNo) {
 	});
 }
 
+function docInfoDetails(e){
+	var tr = $(e);						// function을 호출한 곳의 값을 가져온다. (this)
+	// console.log(tr.html());
+	// var tr = event.currentTarget;	// event가 deprecated된 같은 기능
+	var td = $(tr).children();
+	var raDocNo = td.eq(0).text();		// 문서번호
+	var itemSq = td.eq(2).text();		// 항목일련번호
+	var raFnlDocF = td.eq(1).text();	// 최종문서여부
+	
+	$('#AS03210S_raDocNo').val(raDocNo);
+	$('#AS03210S_itemSq').val(itemSq);
+	$('#AS03210S_raFnlDocF').val(raFnlDocF).prop('selected', true);
+}
+
 // RADEAL 구분코드 
 function loadRaDealCcd() {
 	$.ajax({
 		type: "GET",
-		url: "/getRaDealCcd",
+		url: "/getSelectBoxCode/R001",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -423,7 +445,7 @@ function loadTab8() {
 function loadRiskInspctCcd() {
 	$.ajax({
 		type: "GET",
-		url: "/getRiskInspctCcd",
+		url: "/getSelectBoxCode/R013",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -444,7 +466,7 @@ function loadRiskInspctCcd() {
 function loadLstCCaseCcd() {
 	$.ajax({
 		type: "GET",
-		url: "/getlstCCaseCcd",
+		url: "/getSelectBoxCode/L001",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -465,7 +487,7 @@ function loadLstCCaseCcd() {
 function loadInspctDprtCcd() {
 	$.ajax({
 		type: "GET",
-		url: "/getInspctDprtCcd",
+		url: "/getSelectBoxCode/I003",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -486,7 +508,7 @@ function loadInspctDprtCcd() {
 function loadInvstGdsLdvdCd() {
 	$.ajax({
 		type: "GET",
-		url: "/getInvstGdsLdvdCd",
+		url: "/getSelectBoxCode/I012",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -507,7 +529,7 @@ function loadInvstGdsLdvdCd() {
 function loadInvstGdsMdvdCd() {
 	$.ajax({
 		type: "GET",
-		url: "/getInvstGdsMdvdCd",
+		url: "/getSelectBoxCode/I015",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -528,7 +550,7 @@ function loadInvstGdsMdvdCd() {
 function loadInvstGdsSdvdCd() {
 	$.ajax({
 		type: "GET",
-		url: "/getInvstGdsSdvdCd",
+		url: "/getSelectBoxCode/I014",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -549,7 +571,7 @@ function loadInvstGdsSdvdCd() {
 function loadInvstGdsDtlsDvdCd() {
 	$.ajax({
 		type: "GET",
-		url: "/getInvstGdsDtlsDvdCd",
+		url: "/getSelectBoxCode/I013",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -631,7 +653,7 @@ function calcDate() {
 function loadInvstCrncyCd() {
 	$.ajax({
 		type: "GET",
-		url: "/getInvstCrncyCd",
+		url: "/getSelectBoxCode/I016",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -680,7 +702,7 @@ function checkErmAmt(){
 function loadCntyCd() {
 	$.ajax({
 		type: "GET",
-		url: "/getCntyCd",
+		url: "/getSelectBoxCode/U003",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -701,7 +723,7 @@ function loadCntyCd() {
 function loadIndTypDvdCd() {
 	$.ajax({
 		type: "GET",
-		url: "/getIndTypDvdCd",
+		url: "/getSelectBoxCode/I008",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -722,7 +744,7 @@ function loadIndTypDvdCd() {
 function loadCheckItemCd() {
 	$.ajax({
 		type: "GET",
-		url: "/getCheckItemCd",
+		url: "/getSelectBoxCode/C004",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -743,7 +765,7 @@ function loadCheckItemCd() {
 function loadBsnsAreaCd() {
 	$.ajax({
 		type: "GET",
-		url: "/getBsnsAreaCd",
+		url: "/getSelectBoxCode/U004",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -764,7 +786,7 @@ function loadBsnsAreaCd() {
 function loadInvstThingCcd() {
 	$.ajax({
 		type: "GET",
-		url: "/getInvstThingCcd",
+		url: "/getSelectBoxCode/I010",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -785,7 +807,7 @@ function loadInvstThingCcd() {
 function loadInvstThingDtlsCcd() {
 	$.ajax({
 		type: "GET",
-		url: "/getInvstThingDtlsCcd",
+		url: "/getSelectBoxCode/I011",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -806,7 +828,7 @@ function loadInvstThingDtlsCcd() {
 function loadRspsbCmplCcd() {
 	$.ajax({
 		type: "GET",
-		url: "/getRspsbCmplCcd",
+		url: "/getSelectBoxCode/R014",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -827,7 +849,7 @@ function loadRspsbCmplCcd() {
 function loadRaRsltnCcd() {
 	$.ajax({
 		type: "GET",
-		url: "/getRaRsltnCcd",
+		url: "/getSelectBoxCode/R002",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -865,7 +887,7 @@ function loadUserAuth() {
 function loadCoprtnTypCd() {
 	$.ajax({
 		type: "GET",
-		url: "/getCoprtnTypCd",
+		url: "/getSelectBoxCode/C005",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -992,7 +1014,12 @@ function tab1save() {
 		if (!isEmpty(ibDealNm) && !isEmpty(crncyAmt) && !isEmpty(invstPrdMmC) && !isEmpty(wrtDt) && pattern.test(wrtDt)) {
 			businessInsert();
 		} else {
-			swal("Error!", "필수 입력값을 확인해주세요.", "error", "confirm");
+			Swal.fire({
+				icon: 'error'
+				, title: "Error!"
+				, text: "필수 입력값을 확인해주세요."
+				, confirmButtonText: "확인"
+			});
 		}
 
 		function businessInsert() {
@@ -1002,18 +1029,22 @@ function tab1save() {
 				data: paramData,
 				dataType: "json",
 				success: function() {
-					swal({
-						title: "Success!"
-						, text: "deal정보를 생성하였습니다."
-						, icon: "success"
-					}, function(isConfirm) {
-						if (isConfirm) {
-							location.reload();
-						}
+					Swal.fire({
+						icon: 'success'
+						, title: "Success!"
+						, text: "Deal정보를 생성하였습니다."
+						, confirmButtonText: "확인"
+					}).then((result) => {
+						location.reload();
 					});
 				},
 				error: function() {
-					swal("Error!", "Deal정보를 생성하는데 실패하였습니다.", "error", "confirm");
+					Swal.fire({
+						icon: 'error'
+						, title: "Error!"
+						, text: "Deal정보를 생성하는데 실패하였습니다."
+						, confirmButtonText: "확인"
+					});
 				}
 			});
 		}
@@ -1118,7 +1149,12 @@ function tab1save() {
 		if (!isEmpty(ibDealNm) && !isEmpty(crncyAmt) && !isEmpty(invstPrdMmC) && !isEmpty(wrtDt) && pattern.test(wrtDt)) {
 			businessUpdate();
 		} else {
-			swal("Error!", "필수 입력값을 확인해주세요.", "error", "confirm");
+			Swal.fire({
+				icon: 'error'
+				, title: "Error!"
+				, text: "필수 입력값을 확인해주세요."
+				, confirmButtonText: "확인"
+			});
 		}
 		
 		function businessUpdate() {
@@ -1128,18 +1164,22 @@ function tab1save() {
 				data: paramData,
 				dataType: "json",
 				success: function() {
-					swal({
-						title: "Success!"
-						, text: "deal정보를 갱신하였습니다."
-						, icon: "success"
-					}, function(isConfirm) {
-						if (isConfirm) {
-							location.reload();
-						}
+					Swal.fire({
+						icon: 'success'
+						, title: "Success!"
+						, text: "Deal정보를 갱신하였습니다."
+						, confirmButtonText: "확인"
+					}).then((result) => {
+						location.reload();
 					});
 				},
 				error: function() {
-					swal("Error!", "Deal정보를 갱신하는데 실패하였습니다.", "error", "confirm");
+					Swal.fire({
+						icon: 'error'
+						, title: "Error!"
+						, text: "Deal정보를 갱신하는데 실패하였습니다."
+						, confirmButtonText: "확인"
+					});
 				}
 			});
 		}
@@ -1185,21 +1225,43 @@ function tab1reset() {
 
 // 관련문서 초기화버튼 function
 function tab2BtnReset() {
-	$('#AS03210S_docNo').val('');
-	$('#AS03210S_fnlDocF').val('N').prop('selected, true');
+	$('#AS03210S_raDocNo').val('');
+	$('#AS03210S_raFnlDocF').val('Y').prop('selected, true');
+	$('#AS03210S_itemSq').val('');
 }
+
 // 관련문서 삭제버튼 function
 function tab2BtnDelete() {
 	var ibDealNo = $('#AS03210S_selectedDealNo').val();
+	var raDocNo = $('#AS03210S_raDocNo').val();
+	var itemSq = $('#AS03210S_itemSq').val();
 
-	if (ibDealNo != "") {
-		var docNo = $('#AS03210S_docNo').val();
+	if (!isEmpty(ibDealNo)) {
+		if(!isEmpty(raDocNo) && !isEmpty(itemSq)){
+			businessFunction();
+		}else{
+			Swal.fire({
+				icon: 'error'
+				, title: "Error!"
+				, text: "관련문서정보를 선택해주세요."
+				, confirmButtonText: "확인"
+			});
+		}
+	} else {
+		Swal.fire({
+			icon: 'error'
+			, title: "Error!"
+			, text: "Deal 정보를 조회해주세요."
+			, confirmButtonText: "확인"
+		});
+	}
 
-		//console.log(dealNo);
+	function businessFunction() {
 
 		var paramData = {
-			"ibDealNo": dealNo
-			, "docNo": docNo
+			"ibDealNo": ibDealNo
+			, "raDocNo": raDocNo
+			, "itemSq": itemSq
 		}
 
 		$.ajax({
@@ -1208,28 +1270,96 @@ function tab2BtnDelete() {
 			data: paramData,
 			dataType: "json",
 			success: function() {
-				getDocInfo(ibDealNo);
+				Swal.fire({
+					icon: 'success'
+					, title: "Success!"
+					, text: "문서정보를 삭제하였습니다."
+					, confirmButtonText: "확인"
+				}).then((result) => {
+					getDocInfo(ibDealNo);
+				});
 			},
-			error: function(errorCd) {
-				swal("삭제 실패하였습니다. sql 에러 코드를 확인해주세요.\n error code:" + errorCd);
+			error: function() {
+				Swal.fire({
+					icon: 'error'
+					, title: "Error!"
+					, text: "문서정보를 삭제하는데 실패하였습니다."
+					, confirmButtonText: "확인"
+				});
 			}
 		});
-
-	} else {
-		swal('Deal 정보를 조회해주세요');
 	}
 
 }
+
 // 관련문서 저장버튼 function
 function tab2BtnSave() {
+	var ibDealNo = $('#AS03210S_selectedDealNo').val();
+	var raDocNo = $('#AS03210S_raDocNo').val();
+	var raFnlDocF = $('#AS03210S_raFnlDocF').val();
+	var itemSq = $('#AS03210S_itemSq').val();
+	
+	if (!isEmpty(ibDealNo)) {
+		if(!isEmpty(raDocNo)){
+			businessFunction();
+		}else{
+			Swal.fire({
+				icon: 'error'
+				, title: "Error!"
+				, text: "문서번호를 입력해주세요."
+				, confirmButtonText: "확인"
+			});
+		}
+	} else {
+		Swal.fire({
+			icon: 'error'
+			, title: "Error!"
+			, text: "Deal 정보를 조회해주세요."
+			, confirmButtonText: "확인"
+		});
+	}
+	
+	function businessFunction() {
 
+		var paramData = {
+			"ibDealNo": ibDealNo
+			, "raDocNo": raDocNo
+			, "raFnlDocF": raFnlDocF
+			, "itemSq": itemSq
+		}
+
+		$.ajax({
+			type: "POST",
+			url: "/registDocInfo",
+			data: paramData,
+			dataType: "json",
+			success: function() {
+				Swal.fire({
+					icon: 'success'
+					, title: "Success!"
+					, text: "문서정보를 저장하였습니다."
+					, confirmButtonText: "확인"
+				}).then((result) => {
+					getDocInfo(ibDealNo);
+				});
+			},
+			error: function() {
+				Swal.fire({
+					icon: 'error'
+					, title: "Error!"
+					, text: "문서정보를 저장하는데 실패하였습니다."
+					, confirmButtonText: "확인"
+				});
+			}
+		});
+	}
 }
 
 // 기초자산종류
 function loadBscAstsKndCd() {
 	$.ajax({
 		type: "GET",
-		url: "/getBscAstsKndCd",
+		url: "/getSelectBoxCode/B002",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -1250,7 +1380,7 @@ function loadBscAstsKndCd() {
 function loadCncCmpnyClsfCd() {
 	$.ajax({
 		type: "GET",
-		url: "/getCncCmpnyClsfCd",
+		url: "/getSelectBoxCode/C002",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -1271,7 +1401,7 @@ function loadCncCmpnyClsfCd() {
 function loadMrtgKndCcd() {
 	$.ajax({
 		type: "GET",
-		url: "/getMrtgKndCcd",
+		url: "/getSelectBoxCode/M002",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -1292,7 +1422,7 @@ function loadMrtgKndCcd() {
 function loadMrtgDtlsCcd() {
 	$.ajax({
 		type: "GET",
-		url: "/getMrtgDtlsCcd",
+		url: "/getSelectBoxCode/M001",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -1313,7 +1443,7 @@ function loadMrtgDtlsCcd() {
 function loadRgtRnkCcd() {
 	$.ajax({
 		type: "GET",
-		url: "/getRgtRnkCcd",
+		url: "/getSelectBoxCode/R008",
 		dataType: "json",
 		success: function(data) {
 			var html = "";
@@ -1334,7 +1464,7 @@ function loadRgtRnkCcd() {
 function loadDbtNpFrmOblgCcd() {
 	$.ajax({
 		type: "GET",
-		url: "/getDbtNpFrmOblgCcd",
+		url: "/getSelectBoxCode/D001",
 		dataType: "json",
 		success: function(data) {
 			var html = "";

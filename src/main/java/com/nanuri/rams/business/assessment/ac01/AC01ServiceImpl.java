@@ -1,5 +1,6 @@
 package com.nanuri.rams.business.assessment.ac01;
 
+import java.io.Console;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -12,18 +13,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.nanuri.rams.business.common.dto.*;
-import com.nanuri.rams.business.common.vo.RAA90BVO;
+import org.aspectj.weaver.Utils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nanuri.rams.business.common.dto.RAA90BDTO;
+import com.nanuri.rams.business.common.dto.RAA91BDTO;
+import com.nanuri.rams.business.common.dto.RAA92BDTO;
+import com.nanuri.rams.business.common.dto.RAA93BDTO;
+import com.nanuri.rams.business.common.dto.RAA94BDTO;
+import com.nanuri.rams.business.common.dto.RAA95BDTO;
 import com.nanuri.rams.business.common.mapper.RAA90BMapper;
 import com.nanuri.rams.business.common.mapper.RAA92BMapper;
 import com.nanuri.rams.business.common.mapper.RAA93BMapper;
 import com.nanuri.rams.business.common.mapper.RAA94BMapper;
 import com.nanuri.rams.business.common.mapper.RAA95BMapper;
+import com.nanuri.rams.business.common.vo.RAA90BVO;
 import com.nanuri.rams.business.common.vo.RAA92BVO;
 import com.nanuri.rams.business.common.vo.RAA93BVO;
+import com.nanuri.rams.business.common.vo.RAA93BVO.MainMenuVo;
+import com.nanuri.rams.business.common.vo.RAA93BVO.SubMenuVo;
 import com.nanuri.rams.business.common.vo.RAA95BVO;
 import com.nanuri.rams.com.security.AuthenticationFacade;
 
@@ -435,5 +444,89 @@ public class AC01ServiceImpl implements AC01Service {
         }
         return count > 0;
     }
+
+
+	
     //============ End AC01310S( 메뉴별권한 관리 ) ============//
+    
+    // =========== Start AC01410S( 메뉴관리) ============//
+	@Override
+	public List<MainMenuVo> selectMainMenuList(String menuNm) {
+		
+		List<MainMenuVo> dtoList = raa93BMapper.selectMainMenuList(menuNm);
+		return dtoList;
+	}
+
+	@Override
+	public List<RAA93BDTO> selectSubMenuList(String menuId) {
+		List<RAA93BDTO> dtoList = raa93BMapper.selectSubMenuList(menuId);
+		return dtoList;
+	}
+
+	@Override
+	public boolean deleteMainMenuInfo(List<String> menuId) {
+		int count = raa93BMapper.deleteMainMenuInfo(menuId);
+		return count > 0;
+	}
+
+	@Override
+	public boolean deleteSubMenuInfo(List<String> menuId) {
+		int count = raa93BMapper.deleteSubMenuInfo(menuId);
+		return count > 0;
+	}
+
+	@Override
+	public boolean registMainMenuInfo(List<MainMenuVo> requestDtos) {
+		int count = 0;
+		
+		String hndlPEno = facade.getDetails().getEno();
+		
+        for (MainMenuVo requestDto : requestDtos) {
+            if (raa93BMapper.getMainMenuInfo(requestDto.getMenuId()).isPresent()) {
+                throw new IllegalArgumentException("해당 그룹코드가 존재합니다. " + requestDto.getMenuId());
+            }
+
+            if (raa93BMapper.getMainMenuInfo(requestDto.getOldMenuId()).isEmpty()) {
+            	requestDto.setHndlPEno(hndlPEno);
+                count += raa93BMapper.insertMainMenuInfo(requestDto);
+            } else {
+            	requestDto.setHndlPEno(hndlPEno);
+                count += raa93BMapper.updateMainMenuInfo(requestDto);
+            }
+        }
+        return count > 0;
+	}
+
+	@Override
+	public boolean registSubMenuInfo(List<SubMenuVo> requestDtos) {
+		int count = 0;
+		
+		String hndlPEno = facade.getDetails().getEno();
+		
+		for (SubMenuVo requestDto : requestDtos) {
+			if (!com.nanuri.rams.com.utils.StringUtil.isAllWhitespace(requestDto.getMenuId())) {
+				
+				if (raa93BMapper.getSubMenuInfo(requestDto.getMenuId()).isPresent()) {
+					throw new IllegalArgumentException("해당 그룹코드가 존재합니다. " + requestDto.getMenuId());
+				}
+				
+				if (raa93BMapper.getSubMenuInfo(requestDto.getOldSubMenuId()).isEmpty()) {
+					requestDto.setHndlPEno(hndlPEno);
+					count += raa93BMapper.insertSubMenuInfo(requestDto);
+				} else {
+					requestDto.setHndlPEno(hndlPEno);
+					count += raa93BMapper.updateSubMenuInfo(requestDto);
+				}
+				
+			} else {
+				requestDto.setHndlPEno(hndlPEno);
+				count += raa93BMapper.updateSubMenuInfo(requestDto);
+			}
+		}
+        return count > 0;
+	}
+	
+	
+ 	// ============ End AC01410S( 메뉴관리 ) ============//
+    
 }

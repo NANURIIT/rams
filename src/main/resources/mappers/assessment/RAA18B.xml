@@ -2,21 +2,81 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.RAA18BMapper">
 
-    <select id="getDocInfo" parameterType="com.nanuri.rams.business.common.vo.RAA18BVO$DocInfo" resultType="java.util.HashMap">
+    <select id="getDocInfo" parameterType="com.nanuri.rams.business.common.vo.RAA18BVO$DocInfo" resultType="com.nanuri.rams.business.common.vo.RAA18BVO$DocInfo">
     	SELECT RA_DOC_NO
     	     , RA_FNL_DOC_F
     	     , ITEM_SQ
     	  FROM RAA18B
-    	 WEHRE 1=1
+    	 WHERE 1=1
     	   AND IB_DEAL_NO = #{ibDealNo}
+    	 ORDER BY ITEM_SQ
     </select>
     
+    <!-- 관련문서정보 제거 -->
     <delete id="deleteDocInfo" parameterType="com.nanuri.rams.business.common.vo.RAA18BVO$DocInfo">
     	DELETE FROM RAA18B 
     	 WHERE 1=1
     	   AND IB_DEAL_NO = #{ibDealNo}
     	   AND RA_DOC_NO = #{raDocNo}
+    	   AND ITEM_SQ = #{itemSq}
     </delete>
+    
+    <!-- 관련문서정보 생성 -->
+    <insert id="registDocInfo" parameterType="com.nanuri.rams.business.common.dto.RAA18BDTO">
+    	<if test='raFnlDocF.equals("Y")'>
+    	UPDATE RAA18B
+    	   SET RA_FNL_DOC_F = "N"
+    	 WHERE 1=1
+    	   AND IB_DEAL_NO = #{ibDealNo};
+    	</if>
+    	INSERT INTO RAA18B
+    	       ( 
+    	        IB_DEAL_NO									<!-- IBDEAL번호 -->
+    	        , RISK_INSPCT_CCD							<!-- 리스크심사구분코드 -->
+    	        , LST_C_CASE_CCD							<!-- 부수안건구분코드 -->
+    	        , RA_DOC_CCD								<!-- RA문서구분코드 -->
+    	        , ITEM_SQ									<!-- 항목일련번호 -->
+    	        , RA_DOC_NO									<!-- RA문서번호 -->
+    	        , RA_RMRK									<!-- RA비고 -->
+    	        , RA_FNL_DOC_F								<!-- RA최종문서여부 -->
+    	        , HNDL_DY_TM								<!-- 처리일시 -->
+    	        , HNDL_DPRT_CD								<!-- 처리부점코드 -->
+    	        , HNDL_P_ENO								<!-- 처리자사번 -->
+    	       )
+    	VALUES (
+    			#{ibDealNo}									<!-- IBDEAL번호 -->
+    			, #{riskInspctCcd}							<!-- 리스크심사구분코드 -->
+    			, #{lstCCaseCcd}							<!-- 부수안건구분코드 -->
+    			, #{raDocCcd}								<!-- RA문서구분코드 -->
+    			, NEXT VALUE FOR RAA18B_SQ					<!-- 항목일련번호 -->
+    			, #{raDocNo}								<!-- RA문서번호 -->
+    			, #{raRmrk}									<!-- RA비고 -->
+    			, #{raFnlDocF}								<!-- RA최종문서여부 -->
+    			, CURRENT_TIMESTAMP()						<!-- 처리일시 -->
+    			, #{hndlDprtCd}								<!-- 처리부점코드 -->
+    			, #{hndlPEno}								<!-- 처리자사번 -->
+    	       )
+    </insert>
+    
+    <!-- 관련문서정보 갱신 -->
+	<update id="updateDocInfo" parameterType="com.nanuri.rams.business.common.dto.RAA18BDTO" >
+		<if test='raFnlDocF.equals("Y")'>
+    	UPDATE RAA18B
+    	   SET RA_FNL_DOC_F = "N"
+    	 WHERE IB_DEAL_NO = #{ibDealNo};
+    	</if>
+		UPDATE RAA18B
+		   SET RA_DOC_CCD				= #{raDocCcd}
+		     , RA_DOC_NO				= #{raDocNo}
+		     , RA_RMRK					= #{raRmrk}
+			 , RA_FNL_DOC_F				= #{raFnlDocF}
+			 , HNDL_DY_TM				= CURRENT_TIMESTAMP()
+			 , HNDL_DPRT_CD				= #{hndlDprtCd}
+			 , HNDL_P_ENO				= #{hndlPEno}
+		 WHERE 1=1
+		   AND IB_DEAL_NO = #{ibDealNo}
+		   AND ITEM_SQ = #{itemSq}
+	</update>
     
     <!-- 안건별 요청문서 조회 -->
     <select id="selectRqsDocInfo" parameterType="com.nanuri.rams.business.common.vo.RAA18BVO$DocInfo" resultType="java.util.HashMap">
