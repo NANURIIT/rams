@@ -522,6 +522,7 @@
 			 , rb5.DPRT_NM								<!-- 부점코드 -->
 			 , rb5.EMP_NM		AS CHRG_P_ENO			<!-- 담당자사번 -->
 			 , rb4.CD_VL_NM		AS COPRTN_TYP_CD 		<!-- 협업유형코드 -->
+			 , rb6.CD_VL_NM		AS INSPCT_PRGRS_ST_CD 	<!-- 심사진행상태코드 -->
 		  FROM RAA02B rb1
 		  LEFT JOIN RAA99A rb5
 		  	ON rb1.CHRG_P_ENO = rb5.ENO
@@ -549,6 +550,14 @@
 				   AND rb1.CMNS_CD_GRP = rb2.CMNS_CD_GRP 
 		  		   AND rb1.CMNS_CD_NM  = 'COPRTN_TYP_CD'		<!-- 협업유형코드 -->
 		       ) rb4
+		     , (
+		     	SELECT rb2.CD_VL_ID 
+				     , rb2.CD_VL_NM
+				  FROM RAA90B rb1 , RAA91B rb2
+				 WHERE 1=1
+				   AND rb1.CMNS_CD_GRP = rb2.CMNS_CD_GRP 
+		  		   AND rb1.CMNS_CD_NM  = 'INSPCT_PRGRS_ST_CD'	<!-- 심사진행상태코드 -->
+		       ) rb6
 		 WHERE 1=1
 		   AND rb1.RISK_INSPCT_CCD    = rb2.CD_VL_ID
 		   AND rb1.LST_C_CASE_CCD     = rb3.CD_VL_ID

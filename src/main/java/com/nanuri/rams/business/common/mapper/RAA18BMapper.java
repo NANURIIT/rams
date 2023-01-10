@@ -11,7 +11,7 @@ import com.nanuri.rams.business.common.vo.RAA18BVO.DocInfo;
 @Mapper
 public interface RAA18BMapper {
 	
-	public List<DocInfo> getDocInfo(DocInfo docInfo);							// 관련문서
+	public List<DocInfo> getDocInfo(DocInfo docInfo);							// 관련문서정보 취득
 
 	public int deleteDocInfo(DocInfo docInfo);									// 관련문서정보 제거
 
