@@ -185,7 +185,12 @@
             , HNDL_P_ENO = #{hndlPEno}
         </set>
         WHERE MENU_ID = #{oldMenuId}
-        
+    </update>
+    
+  	<update id="updateSubHgRnkMenuId" parameterType="com.nanuri.rams.business.common.vo.RAA93BVO$MainMenuVo">
+        	UPDATE RAA93B
+        	   SET HG_RNK_MENU_ID = #{menuId}
+        	 WHERE HG_RNK_MENU_ID = #{oldMenuId}
     </update>
     
     
