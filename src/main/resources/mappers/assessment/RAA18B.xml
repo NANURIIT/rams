@@ -23,6 +23,12 @@
     
     <!-- 관련문서정보 생성 -->
     <insert id="registDocInfo" parameterType="com.nanuri.rams.business.common.dto.RAA18BDTO">
+    	<if test='raFnlDocF.equals("Y")'>
+    	UPDATE RAA18B
+    	   SET RA_FNL_DOC_F = "N"
+    	 WHERE 1=1
+    	   AND IB_DEAL_NO = #{ibDealNo};
+    	</if>
     	INSERT INTO RAA18B
     	       ( 
     	        IB_DEAL_NO									<!-- IBDEAL번호 -->
@@ -54,6 +60,11 @@
     
     <!-- 관련문서정보 갱신 -->
 	<update id="updateDocInfo" parameterType="com.nanuri.rams.business.common.dto.RAA18BDTO" >
+		<if test='raFnlDocF.equals("Y")'>
+    	UPDATE RAA18B
+    	   SET RA_FNL_DOC_F = "N"
+    	 WHERE IB_DEAL_NO = #{ibDealNo};
+    	</if>
 		UPDATE RAA18B
 		   SET RA_DOC_CCD				= #{raDocCcd}
 		     , RA_DOC_NO				= #{raDocNo}

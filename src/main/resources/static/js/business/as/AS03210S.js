@@ -41,7 +41,7 @@ function assesmentRequest() {
 	if (!isEmpty(ibDealNo)) {
 		businessFunction();
 	} else {
-		swal("Error!", "심사요청하는 Deal 정보를 확인해 주세요.", "error", "confirm");
+		openPopup({type:'error', title:"Error!", text:"심사요청하는 Deal 정보를 확인해 주세요."});
 	}
 
 	function businessFunction() {
@@ -55,14 +55,13 @@ function assesmentRequest() {
 			data: dtoParam,
 			dataType: "json",
 			success: function() {
-				swal({
-					title: "Success!"
+				Swal.fire({
+					icon: 'success'
+					, title: "Success!"
 					, text: "심사요청 상태로 변경하였습니다."
-					, icon: "success"
-				}, function(isConfirm) {
-					if (isConfirm) {
-						location.reload();
-					}
+					, confirmButtonText: "확인"
+				}).then((result) => {
+					location.reload();
 				});
 			}
 		}); // end of ajax
@@ -77,7 +76,12 @@ function assesmentRequestCancel() {
 	if (!isEmpty(ibDealNo)) {
 		businessFunction();
 	} else {
-		swal("Error!", "심사요청취소하는 Deal 정보를 확인해 주세요.", "error", "confirm");
+		Swal.fire({
+			icon: 'error'
+			, title: "Error!"
+			, text: "심사요청취소하는 Deal 정보를 확인해 주세요."
+			, confirmButtonText: "확인"
+		});
 	}
 
 	function businessFunction() {
@@ -91,14 +95,13 @@ function assesmentRequestCancel() {
 			data: dtoParam,
 			dataType: "json",
 			success: function() {
-				swal({
-					title: "Success!"
+				Swal.fire({
+					icon: 'success'
+					, title: "Success!"
 					, text: "심사요청취소 상태로 변경하였습니다."
-					, icon: "success"
-				}, function(isConfirm) {
-					if (isConfirm) {
-						location.reload();
-					}
+					, confirmButtonText: "확인"
+				}).then((result) => {
+					location.reload();
 				});
 			}
 		}); // end of ajax
@@ -116,7 +119,12 @@ function getDealList(){
 		$('#AS03210S_selectedDealNo').val();
 		businessFunction();
 	}else{
-		swal("Error!", "Deal번호를 입력해 주세요.", "error", "confirm");
+		Swal.fire({
+			icon: 'error'
+			, title: "Error!"
+			, text: "심사요청취소 상태로 변경하였습니다."
+			, confirmButtonText: "확인"
+		});
 	}
 	
 	function businessFunction() {
@@ -1006,7 +1014,12 @@ function tab1save() {
 		if (!isEmpty(ibDealNm) && !isEmpty(crncyAmt) && !isEmpty(invstPrdMmC) && !isEmpty(wrtDt) && pattern.test(wrtDt)) {
 			businessInsert();
 		} else {
-			swal("Error!", "필수 입력값을 확인해주세요.", "error", "confirm");
+			Swal.fire({
+				icon: 'error'
+				, title: "Error!"
+				, text: "필수 입력값을 확인해주세요."
+				, confirmButtonText: "확인"
+			});
 		}
 
 		function businessInsert() {
@@ -1016,18 +1029,22 @@ function tab1save() {
 				data: paramData,
 				dataType: "json",
 				success: function() {
-					swal({
-						title: "Success!"
-						, text: "deal정보를 생성하였습니다."
-						, icon: "success"
-					}, function(isConfirm) {
-						if (isConfirm) {
-							location.reload();
-						}
+					Swal.fire({
+						icon: 'success'
+						, title: "Success!"
+						, text: "Deal정보를 생성하였습니다."
+						, confirmButtonText: "확인"
+					}).then((result) => {
+						location.reload();
 					});
 				},
 				error: function() {
-					swal("Error!", "Deal정보를 생성하는데 실패하였습니다.", "error", "confirm");
+					Swal.fire({
+						icon: 'error'
+						, title: "Error!"
+						, text: "Deal정보를 생성하는데 실패하였습니다."
+						, confirmButtonText: "확인"
+					});
 				}
 			});
 		}
@@ -1132,7 +1149,12 @@ function tab1save() {
 		if (!isEmpty(ibDealNm) && !isEmpty(crncyAmt) && !isEmpty(invstPrdMmC) && !isEmpty(wrtDt) && pattern.test(wrtDt)) {
 			businessUpdate();
 		} else {
-			swal("Error!", "필수 입력값을 확인해주세요.", "error", "confirm");
+			Swal.fire({
+				icon: 'error'
+				, title: "Error!"
+				, text: "필수 입력값을 확인해주세요."
+				, confirmButtonText: "확인"
+			});
 		}
 		
 		function businessUpdate() {
@@ -1142,18 +1164,22 @@ function tab1save() {
 				data: paramData,
 				dataType: "json",
 				success: function() {
-					swal({
-						title: "Success!"
-						, text: "deal정보를 갱신하였습니다."
-						, icon: "success"
-					}, function(isConfirm) {
-						if (isConfirm) {
-							location.reload();
-						}
+					Swal.fire({
+						icon: 'success'
+						, title: "Success!"
+						, text: "Deal정보를 갱신하였습니다."
+						, confirmButtonText: "확인"
+					}).then((result) => {
+						location.reload();
 					});
 				},
 				error: function() {
-					swal("Error!", "Deal정보를 갱신하는데 실패하였습니다.", "error", "confirm");
+					Swal.fire({
+						icon: 'error'
+						, title: "Error!"
+						, text: "Deal정보를 갱신하는데 실패하였습니다."
+						, confirmButtonText: "확인"
+					});
 				}
 			});
 		}
@@ -1214,10 +1240,20 @@ function tab2BtnDelete() {
 		if(!isEmpty(raDocNo) && !isEmpty(itemSq)){
 			businessFunction();
 		}else{
-			swal('관련문서정보를 선택해주세요');
+			Swal.fire({
+				icon: 'error'
+				, title: "Error!"
+				, text: "관련문서정보를 선택해주세요."
+				, confirmButtonText: "확인"
+			});
 		}
 	} else {
-		swal('Deal 정보를 조회해주세요');
+		Swal.fire({
+			icon: 'error'
+			, title: "Error!"
+			, text: "Deal 정보를 조회해주세요."
+			, confirmButtonText: "확인"
+		});
 	}
 
 	function businessFunction() {
@@ -1234,18 +1270,22 @@ function tab2BtnDelete() {
 			data: paramData,
 			dataType: "json",
 			success: function() {
-				swal({
-					title: "Success!"
+				Swal.fire({
+					icon: 'success'
+					, title: "Success!"
 					, text: "문서정보를 삭제하였습니다."
-					, icon: "success"
-				}, function(isConfirm) {
-					if (isConfirm) {
-						getDocInfo(ibDealNo);
-					}
+					, confirmButtonText: "확인"
+				}).then((result) => {
+					getDocInfo(ibDealNo);
 				});
 			},
 			error: function() {
-				swal("Error!", "문서정보를 삭제하는데 실패하였습니다.", "error", "confirm");
+				Swal.fire({
+					icon: 'error'
+					, title: "Error!"
+					, text: "문서정보를 삭제하는데 실패하였습니다."
+					, confirmButtonText: "확인"
+				});
 			}
 		});
 	}
@@ -1263,10 +1303,20 @@ function tab2BtnSave() {
 		if(!isEmpty(raDocNo)){
 			businessFunction();
 		}else{
-			swal('문서번호를 입력해주세요');
+			Swal.fire({
+				icon: 'error'
+				, title: "Error!"
+				, text: "문서번호를 입력해주세요."
+				, confirmButtonText: "확인"
+			});
 		}
 	} else {
-		swal('Deal 정보를 조회해주세요');
+		Swal.fire({
+			icon: 'error'
+			, title: "Error!"
+			, text: "Deal 정보를 조회해주세요."
+			, confirmButtonText: "확인"
+		});
 	}
 	
 	function businessFunction() {
@@ -1284,18 +1334,22 @@ function tab2BtnSave() {
 			data: paramData,
 			dataType: "json",
 			success: function() {
-				swal({
-					title: "Success!"
+				Swal.fire({
+					icon: 'success'
+					, title: "Success!"
 					, text: "문서정보를 저장하였습니다."
-					, icon: "success"
-				}, function(isConfirm) {
-					if (isConfirm) {
-						getDocInfo(ibDealNo);
-					}
+					, confirmButtonText: "확인"
+				}).then((result) => {
+					getDocInfo(ibDealNo);
 				});
 			},
 			error: function() {
-				swal("Error!", "문서정보를 저장하는데 실패하였습니다.", "error", "confirm");
+				Swal.fire({
+					icon: 'error'
+					, title: "Error!"
+					, text: "문서정보를 저장하는데 실패하였습니다."
+					, confirmButtonText: "확인"
+				});
 			}
 		});
 	}

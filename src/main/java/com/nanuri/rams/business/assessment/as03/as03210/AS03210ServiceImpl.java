@@ -402,9 +402,9 @@ public class AS03210ServiceImpl implements AS03210Service {
 		raa18bDTO.setHndlPEno(facade.getDetails().getEno());						// 처리자사번
 
 		if (!StringUtil.isAllWhitespace(itemSq)) {
-			return raa18bMapper.updateDocInfo(raa18bDTO);
+			return raa18bMapper.updateDocInfo(raa18bDTO);							// 문서정보 갱신
 		} else {
-			return raa18bMapper.registDocInfo(raa18bDTO);
+			return raa18bMapper.registDocInfo(raa18bDTO);							// 문서정보 생성
 		}
 	};
 
