@@ -25,6 +25,7 @@ public class RAA02BVO {
 		private String dprtNm;					//	부서
 		private String chrgpEno;				//	직원
 		private String coprtnTypCd;				//	협업 유형
+		private String inspctPrgrsStCd;			//	진행상태
 	}
 	
 	
