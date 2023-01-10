@@ -188,9 +188,11 @@
     </update>
     
   	<update id="updateSubHgRnkMenuId" parameterType="com.nanuri.rams.business.common.vo.RAA93BVO$MainMenuVo">
+    	<if test="menuId != null and menuId !=''">
         	UPDATE RAA93B
         	   SET HG_RNK_MENU_ID = #{menuId}
         	 WHERE HG_RNK_MENU_ID = #{oldMenuId}
+        </if>
     </update>
     
     

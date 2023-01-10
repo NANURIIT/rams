@@ -492,9 +492,6 @@ public class AC01ServiceImpl implements AC01Service {
             } else {
             	requestDto.setHndlPEno(hndlPEno);
                 count += raa93BMapper.updateMainMenuInfo(requestDto);
-                if(!requestDto.getMenuId().isEmpty()) {
-                	count += raa93BMapper.updateSubHgRnkMenuId(requestDto);
-                }
             }
         }
         return count > 0;
