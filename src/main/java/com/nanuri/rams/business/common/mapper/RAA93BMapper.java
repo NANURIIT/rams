@@ -37,5 +37,6 @@ public interface RAA93BMapper {
 
 	public int updateSubMenuInfo(SubMenuVo requestDto);
 
+	public int updateSubHgRnkMenuId(MainMenuVo requestDto); 
 
 }

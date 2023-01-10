@@ -234,8 +234,8 @@
 			 , #{hgRnkMenuId} 
 			 , 'S'
 			 , #{srtNo} 
-			 , #{urlDvdCd}  
 			 , 2  
+			 , #{urlDvdCd}  
 			 , #{urlNm} 
 			 , SUBSTRING(MENU_ID,3,5) 
  			 , 'Y'

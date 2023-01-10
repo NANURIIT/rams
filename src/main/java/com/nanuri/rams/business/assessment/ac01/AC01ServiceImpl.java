@@ -482,7 +482,10 @@ public class AC01ServiceImpl implements AC01Service {
 		String hndlPEno = facade.getDetails().getEno();
 		
         for (MainMenuVo requestDto : requestDtos) {
-            if (raa93BMapper.getMainMenuInfo(requestDto.getMenuId()).isPresent()) {
+        	
+        	String menuId =requestDto.getMenuId();
+        	
+            if (raa93BMapper.getMainMenuInfo(menuId).isPresent()) {
                 throw new IllegalArgumentException("해당 그룹코드가 존재합니다. " + requestDto.getMenuId());
             }
 
@@ -491,8 +494,13 @@ public class AC01ServiceImpl implements AC01Service {
                 count += raa93BMapper.insertMainMenuInfo(requestDto);
             } else {
             	requestDto.setHndlPEno(hndlPEno);
-                count += raa93BMapper.updateMainMenuInfo(requestDto);
+            	count += raa93BMapper.updateMainMenuInfo(requestDto);
+            	if ( menuId != null && menuId !="" ) {
+                	count += raa93BMapper.updateSubHgRnkMenuId(requestDto);
+            	} 
+            	
             }
+            
         }
         return count > 0;
 	}
@@ -525,6 +533,7 @@ public class AC01ServiceImpl implements AC01Service {
 		}
         return count > 0;
 	}
+	
 	
 	
  	// ============ End AC01410S( 메뉴관리 ) ============//
