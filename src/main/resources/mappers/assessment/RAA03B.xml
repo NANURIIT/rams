@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanuri.rams.business.common.mapper.RAA03BMapper">
+
+	<!-- 기초자산정보 취득 -->
+    <select id="getAssetInfo" parameterType="com.nanuri.rams.business.common.vo.RAA03BVO" resultType="com.nanuri.rams.business.common.vo.RAA03BVO">
+    	SELECT raa03b.IB_DEAL_NO
+    	     , raa03b.RISK_INSPCT_CCD
+    	     , raa03b.LST_C_CASE_CCD
+    	     , raa03b.ITEM_SQ
+    	     , raa03b.BSC_ASTS_KND_CD
+    	     , raa03b.BSC_ASTS_CNTNT
+    	     , raa03b.OPN_PRC_VAL_AMT
+    	     , raa03b.BSC_ASTS_ISNG_CORP_NO
+    	     , raa03b.INVST_CRNCY_CD
+    	     , raa03b.CRNCY_AMT
+    	     , raa03b.APLC_EXCH_R
+    	     , raa03b.RNMCNO
+    	     , raa03b.HNDL_DY_TM
+    	     , raa03b.HNDL_DPRT_CD
+    	     , raa03b.HNDL_P_ENO
+    	     , cd.CD_VL_NM AS BSC_ASTS_KND_CD_NM 
+    	  FROM RAA03B raa03b
+    	     , (
+    	        SELECT rb2.CD_VL_ID 
+				     , rb2.CD_VL_NM 
+				  from RAA90B rb1 , RAA91B rb2
+				 WHERE rb1.CMNS_CD_GRP = rb2.CMNS_CD_GRP 
+		  		   and rb1.CMNS_CD_NM = 'BSC_ASTS_KND_CD'		<!-- 기초자산유형코드 -->
+    	       ) cd
+    	 WHERE 1=1
+    	   AND IB_DEAL_NO = #{ibDealNo}
+    	   AND raa03b.BSC_ASTS_KND_CD = cd.CD_VL_ID
+    	 ORDER BY ITEM_SQ
+    </select>
+    
+    <update id="updateAssetInfo" parameterType="com.nanuri.rams.business.common.dto.RAA03BDTO">
+    	UPDATE RAA03B
+    	   SET BSC_ASTS_KND_CD			= #{bscAstsKndCd     }		<!-- 기초자산종류코드 -->
+			 , BSC_ASTS_CNTNT			= #{bscAstsCntnt     }		<!-- 기초자산내용 -->
+			 , OPN_PRC_VAL_AMT			= #{opnPrcValAmt     }		<!-- 시가평가금액 -->
+			 , BSC_ASTS_ISNG_CORP_NO	= #{bscAstsIsngCorpNo}		<!-- 기초자산발행법인번호 -->
+			 <!-- , INVST_CRNCY_CD			= #{invstCrncyCd     } -->
+			 <!--, CRNCY_AMT				= #{crncyAmt         } -->
+			 <!--, APLC_EXCH_R				= #{aplcExchR        } -->
+			 , RNMCNO					= #{rnmcno           }		<!-- 실명확인번호 -->
+			 , HNDL_DY_TM				= CURRENT_TIMESTAMP()
+			 , HNDL_DPRT_CD				= #{hndlDprtCd       }
+			 , HNDL_P_ENO				= #{hndlPEno         }
+		 WHERE 1=1
+		   AND IB_DEAL_NO				= #{ibDealNo         }
+		   AND RISK_INSPCT_CCD			= #{riskInspctCcd    }
+		   AND LST_C_CASE_CCD			= #{lstCCaseCcd      }
+		   AND ITEM_SQ					= #{itemSq           }
+    </update>
+    
+    <insert id="registAssetInfo" parameterType="com.nanuri.rams.business.common.dto.RAA03BDTO">
+    	INSERT INTO RAA03B
+    		   (
+    		    IB_DEAL_NO							<!-- IBDEAL번호 -->
+				, RISK_INSPCT_CCD					<!-- 리스크심사구분코드 -->
+				, LST_C_CASE_CCD					<!-- 부수안건구분코드 -->
+				, ITEM_SQ							<!-- 항목일련번호 -->
+				, BSC_ASTS_KND_CD					<!-- 기초자산종류코드 -->
+				, BSC_ASTS_CNTNT					<!-- 기초자산내용 -->
+				, OPN_PRC_VAL_AMT					<!-- 시가평가금액 -->
+				, BSC_ASTS_ISNG_CORP_NO				<!-- 기초자산발행법인번호 -->
+				, INVST_CRNCY_CD					<!-- 투자통화코드 -->
+				, CRNCY_AMT							<!-- 통화금액 -->
+				, APLC_EXCH_R						<!-- 적용환율 -->
+				, RNMCNO							<!-- 실명확인번호 -->
+				, HNDL_DY_TM						<!-- 처리일시 -->
+				, HNDL_DPRT_CD						<!-- 처리부점코드 -->
+				, HNDL_P_ENO						<!-- 처리자번 -->
+    		   )
+		VALUES (
+				#{ibDealNo         }				<!-- IBDEAL번호 -->
+				, #{riskInspctCcd    }				<!-- 리스크심사구분코드 -->
+				, #{lstCCaseCcd      }				<!-- 부수안건구분코드 -->
+				, NEXT VALUE FOR RAA03B_SQ			<!-- 항목일련번호 -->
+				, #{bscAstsKndCd    }				<!-- 기초자산종류코드 -->
+				, #{bscAstsCntnt     }				<!-- 기초자산내용 -->
+				, IFNULL(#{opnPrcValAmt}, 0)		<!-- 시가평가금액 -->
+				, #{bscAstsIsngCorpNo}				<!-- 기초자산발행법인번호 -->
+				, #{invstCrncyCd     }				<!-- 투자통화코드 -->
+				, IFNULL(#{crncyAmt}, 0)			<!-- 통화금액 -->
+				, IFNULL(#{aplcExchR}, 0)			<!-- 적용환율 -->
+				, #{rnmcno           }				<!-- 실명확인번호 -->
+				, CURRENT_TIMESTAMP()				<!-- 처리일시 -->
+				, #{hndlDprtCd       }				<!-- 처리부점코드 -->
+				, #{hndlPEno         }				<!-- 처리자번 -->
+			   )
+    </insert>
+    
+</mapper>

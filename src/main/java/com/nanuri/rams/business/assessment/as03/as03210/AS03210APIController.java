@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nanuri.rams.business.common.dto.RAA02BDTO;
 import com.nanuri.rams.business.common.vo.RAA01BVO;
 import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
+import com.nanuri.rams.business.common.vo.RAA03BVO;
 import com.nanuri.rams.business.common.vo.RAA18BVO.DocInfo;
 
 import lombok.RequiredArgsConstructor;
@@ -117,5 +118,21 @@ public class AS03210APIController {
 	public int registDocInfo(DocInfo docInfo) {
 		return as03210Service.registDocInfo(docInfo);
 	}
+	
+	// ---------------tab3 start------------------
+	
+	// 기초자산정보 취득
+	@GetMapping(value = "/getAssetInfo")
+	public List<RAA03BVO> getAssetInfo(RAA03BVO assetInfo) {
+		return as03210Service.getAssetInfo(assetInfo);
+	}
+	
+	// 기초자산정보 생성
+	@PostMapping(value = "/registAssetInfo")
+	public int registAssetInfo(RAA03BVO assetInfo) {
+		return as03210Service.registAssetInfo(assetInfo);
+	}
+	
+	
 
 }

@@ -122,7 +122,7 @@ function getDealList(){
 		Swal.fire({
 			icon: 'error'
 			, title: "Error!"
-			, text: "심사요청취소 상태로 변경하였습니다."
+			, text: "Deal번호를 입력해 주세요."
 			, confirmButtonText: "확인"
 		});
 	}
@@ -182,6 +182,7 @@ function setTabContents(e) {
 
 	setTab1(ibDealNo);
 	setTab2(ibDealNo);
+	setTab3(ibDealNo);
 
 }
 
@@ -362,8 +363,72 @@ function docInfoDetails(e){
 	var raFnlDocF = td.eq(1).text();	// 최종문서여부
 	
 	$('#AS03210S_raDocNo').val(raDocNo);
-	$('#AS03210S_itemSq').val(itemSq);
+	$('#AS03210S_tab2_itemSq').val(itemSq);
 	$('#AS03210S_raFnlDocF').val(raFnlDocF).prop('selected', true);
+}
+
+// 기초자산정보 탭
+function setTab3(ibDealNo) {
+	getAssetInfo(ibDealNo)
+}
+
+// 기초자산정보 취득
+function getAssetInfo(ibDealNo) {
+	var paramData = {
+		"ibDealNo": ibDealNo
+	}
+
+	$.ajax({
+		type: "GET",
+		url: "/getAssetInfo",
+		data: paramData,
+		dataType: "json",
+		success: function(data) {
+			var html = "";
+			$('#AS03210S_assetInfo').html(html);
+
+			var codeList = data;
+			if (codeList.length > 0) {
+				$.each(codeList, function(key, value) {
+					html += '<tr onclick="assetInfoDetails(this);">';
+					html += '<td>' + value.bscAstsKndCdNm + '</td>';
+					html += '<td style="display:none;">' + value.bscAstsKndCd + '</td>';
+					html += '<td>' + value.bscAstsCntnt + '</td>';
+					html += '<td>' + value.opnPrcValAmt + '</td>';
+					html += '<td>' + value.bscAstsIsngCorpNo + '</td>';
+					html += '<td>' + value.rnmcno + '</td>';
+					html += '<td style="display:none;">' + value.itemSq + '</td>';
+					html += '</tr>';
+				});
+			} else {
+				html += '<tr>';
+				html += '<td colspan=5" style="text-align: center">데이터가 없습니다.</td>';
+				html += '</tr>';
+			}
+			$('#AS03210S_assetInfo').html(html);
+		}
+	});
+}
+
+function assetInfoDetails(e){
+	var tr = $(e);						// function을 호출한 곳의 값을 가져온다. (this)
+	// console.log(tr.html());
+	// var tr = event.currentTarget;	// event가 deprecated된 같은 기능
+	var td = $(tr).children();
+	
+	var bscAstsKndCd = td.eq(1).text();				// 기초자산유형
+	var bscAstsCntnt = td.eq(2).text();				// 기초자산명
+	var opnPrcValAmt = td.eq(3).text();				// 기초자산평가액
+	var bscAstsIsngCorpNo = td.eq(4).text();		// 법인번호
+	var rnmcno = td.eq(5).text();					// 법인명
+	var itemSq = td.eq(6).text();					// 항목일련번호
+	
+	$('#AS03210S_bscAstsKndCd').val(bscAstsKndCd).prop('selected', true);		// 기초자산유형
+	$('#AS03210S_bscAstsCntnt').val(bscAstsCntnt);								// 기초자산명
+	$('#AS03210S_opnPrcValAmt').val(opnPrcValAmt);								// 기초자산평가액
+	$('#AS03210S_bscAstsIsngCorpNo').val(bscAstsIsngCorpNo);					// 법인번호
+	$('#AS03210S_rnmcno').val(rnmcno);											// 법인명
+	$('#AS03210S_tab3_itemSq').val(itemSq);										// 항목일련번호
 }
 
 // RADEAL 구분코드 
@@ -1075,7 +1140,7 @@ function tab1save() {
 		var crncyAmt = $('#crncyAmt').val();											// 부의금액
 		var invstNtnCd = $('#AS03210S_cntyCd').val();									// 투자국가
 		var aplcExchR = $('#aplcExchR').val();											// 적용환율
-		var crncyAmtWn = $('#crncyAmtWn').val();											// 부의금액(원)
+		var crncyAmtWn = $('#crncyAmtWn').val();										// 부의금액(원)
 		var tlErnAmt = $('#tlErnAmt').val();											// 전체수익
 		var rcvblErnAmt = $('#rcvblErnAmt').val();										// 수수료수익
 		var wrtErnAmt = $('#wrtErnAmt').val();											// 투자수익 
@@ -1226,15 +1291,15 @@ function tab1reset() {
 // 관련문서 초기화버튼 function
 function tab2BtnReset() {
 	$('#AS03210S_raDocNo').val('');
-	$('#AS03210S_raFnlDocF').val('Y').prop('selected, true');
-	$('#AS03210S_itemSq').val('');
+	$("#AS03210S_raFnlDocF option:eq(0)").prop("selected", true);
+	$('#AS03210S_tab2_itemSq').val('');
 }
 
 // 관련문서 삭제버튼 function
 function tab2BtnDelete() {
 	var ibDealNo = $('#AS03210S_selectedDealNo').val();
 	var raDocNo = $('#AS03210S_raDocNo').val();
-	var itemSq = $('#AS03210S_itemSq').val();
+	var itemSq = $('#AS03210S_tab2_itemSq').val();
 
 	if (!isEmpty(ibDealNo)) {
 		if(!isEmpty(raDocNo) && !isEmpty(itemSq)){
@@ -1294,10 +1359,10 @@ function tab2BtnDelete() {
 
 // 관련문서 저장버튼 function
 function tab2BtnSave() {
-	var ibDealNo = $('#AS03210S_selectedDealNo').val();
-	var raDocNo = $('#AS03210S_raDocNo').val();
-	var raFnlDocF = $('#AS03210S_raFnlDocF').val();
-	var itemSq = $('#AS03210S_itemSq').val();
+	var ibDealNo = $('#AS03210S_selectedDealNo').val();			// IBDEAL번호
+	var raDocNo = $('#AS03210S_raDocNo').val();					// 문서번호
+	var raFnlDocF = $('#AS03210S_raFnlDocF').val();				// 최종문서여부
+	var itemSq = $('#AS03210S_tab2_itemSq').val();				// 일련번호
 	
 	if (!isEmpty(ibDealNo)) {
 		if(!isEmpty(raDocNo)){
@@ -1355,6 +1420,8 @@ function tab2BtnSave() {
 	}
 }
 
+/*tab3****************************************************/
+
 // 기초자산종류
 function loadBscAstsKndCd() {
 	$.ajax({
@@ -1375,6 +1442,86 @@ function loadBscAstsKndCd() {
 		}
 	});
 };
+
+function tab3BtnReset() {
+	$("#AS03210S_bscAstsKndCd option:eq(0)").prop("selected", true);
+	$('#AS03210S_bscAstsCntnt').val('');
+	$('#AS03210S_opnPrcValAmt').val('');
+	$('#AS03210S_bscAstsIsngCorpNo').val('');
+	$('#AS03210S_rnmcno').val('');
+	$('#AS03210S_tab3_itemSq').val('');
+}
+
+function tab3BtnSave() {
+	var ibDealNo = $('#AS03210S_selectedDealNo').val();								// IBDEAL번호
+	
+	var bscAstsKndCd = $('#AS03210S_bscAstsKndCd').val();							// 기초자산종류코드
+	var bscAstsCntnt = $('#AS03210S_bscAstsCntnt').val();							// 기초자산내용
+	var opnPrcValAmt = $('#AS03210S_opnPrcValAmt').val();							// 시가평가금액
+	var bscAstsIsngCorpNo = $('#AS03210S_bscAstsIsngCorpNo').val();					// 기초자산발행법인번호
+	var rnmcno = $('#AS03210S_rnmcno').val();										// 실명확인번호
+	var itemSq = $('#AS03210S_tab3_itemSq').val();									// 항목일련번호
+	
+	if (!isEmpty(ibDealNo)) {
+		if(!isEmpty(bscAstsKndCd) && !isEmpty(bscAstsCntnt) && !isEmpty(opnPrcValAmt) && !isEmpty(bscAstsIsngCorpNo) && !isEmpty(rnmcno)){
+			businessFunction();
+		}else{
+			Swal.fire({
+				icon: 'error'
+				, title: "Error!"
+				, text: "기초자산정보를 확인해주세요."
+				, confirmButtonText: "확인"
+			});
+		}
+	} else {
+		Swal.fire({
+			icon: 'error'
+			, title: "Error!"
+			, text: "Deal 정보를 조회해주세요."
+			, confirmButtonText: "확인"
+		});
+	}
+	
+	function businessFunction() {
+
+		var paramData = {
+			"ibDealNo": ibDealNo
+			, "bscAstsKndCd": bscAstsKndCd
+			, "bscAstsCntnt": bscAstsCntnt
+			, "opnPrcValAmt": opnPrcValAmt
+			, "bscAstsIsngCorpNo": bscAstsIsngCorpNo
+			, "rnmcno": rnmcno
+			, "itemSq": itemSq
+		}
+
+		$.ajax({
+			type: "POST",
+			url: "/registAssetInfo",
+			data: paramData,
+			dataType: "json",
+			success: function() {
+				Swal.fire({
+					icon: 'success'
+					, title: "Success!"
+					, text: "기초자산정보를 저장하였습니다."
+					, confirmButtonText: "확인"
+				}).then((result) => {
+					getAssetInfo(ibDealNo);
+				});
+			},
+			error: function() {
+				Swal.fire({
+					icon: 'error'
+					, title: "Error!"
+					, text: "기초자산정보를 저장하는데 실패하였습니다."
+					, confirmButtonText: "확인"
+				});
+			}
+		});
+	}
+}
+
+
 
 // 법인형태
 function loadCncCmpnyClsfCd() {
