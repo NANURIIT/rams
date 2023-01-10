@@ -495,7 +495,7 @@
 						                            <label class="col-sm-4 col-form-label">문서번호</label>
 						                            <div class="col-sm-8">
 						                            	<input type="text" class="form-control" id="AS03210S_raDocNo">
-						                            	<input type="hidden" id="AS03210S_itemSq">
+						                            	<input type="hidden" id="AS03210S_tab2_itemSq">
 						                            </div>
 					                            </div>
 					                            <div class="form-group row">
@@ -543,7 +543,7 @@
 															<th>법인명</th>
 														</tr>
 													</thead>
-													<tbody id="">
+													<tbody id="AS03210S_assetInfo">
 													</tbody>
 												</table>
 						    				</div>
@@ -563,23 +563,24 @@
 						                            </div>
 						                            <label class="col-sm-2 col-form-label">기초자산발행사법인번호</label>
 						                            <div class="col-sm-4">
-						                            	<input type="text" class="form-control" id="">
+						                            	<input type="text" class="form-control" id="AS03210S_bscAstsIsngCorpNo" oninput="this.value = this.value.replace(/[^0-9-]/g, '');">
 						                            </div>
 					                            </div>
 					                            <div class="form-group row">
 						                            <label class="col-sm-2 col-form-label">기초자산명</label>
 						                            <div class="col-sm-4">
-						                            	<input type="text" class="form-control" id="">
+						                            	<input type="text" class="form-control" id="AS03210S_bscAstsCntnt">
+						                            	<input type="hidden" id="AS03210S_tab3_itemSq">
 						                            </div>
 						                            <label class="col-sm-2 col-form-label">법인명</label>
 						                            <div class="col-sm-4">
-						                            	<input type="text" class="form-control" id="">
+						                            	<input type="text" class="form-control" id="AS03210S_rnmcno">
 						                            </div>
 					                            </div>
 					                            <div class="form-group row">
 						                            <label class="col-sm-2 col-form-label">기초자산 평가액</label>
 						                            <div class="col-sm-4">
-						                            	<input type="text" class="form-control" id="">
+						                            	<input type="text" class="form-control" id="AS03210S_opnPrcValAmt" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
 						                            </div>
 					                            </div>
 					                            <!-- button -->

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.nanuri.rams.business.common.dto.RAA02BDTO;
 import com.nanuri.rams.business.common.vo.RAA01BVO;
 import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
+import com.nanuri.rams.business.common.vo.RAA03BVO;
 import com.nanuri.rams.business.common.vo.RAA18BVO.DocInfo;
 
 @Service
@@ -64,5 +65,13 @@ public interface AS03210Service {
 
 	// 관련문서정보 생성
 	public int registDocInfo(DocInfo docInfo);
+	
+	// ---------------tab3 start------------------
+
+	// 기초자산정보 취득
+	public List<RAA03BVO> getAssetInfo(RAA03BVO assetInfo);
+
+	// 기초자산정보 생성
+	public int registAssetInfo(RAA03BVO assetInfo);
 
 }

@@ -10,17 +10,19 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import com.nanuri.rams.business.common.dto.RAA01BDTO;
 import com.nanuri.rams.business.common.dto.RAA02BDTO;
+import com.nanuri.rams.business.common.dto.RAA03BDTO;
 import com.nanuri.rams.business.common.dto.RAA18BDTO;
 import com.nanuri.rams.business.common.mapper.RAA01BMapper;
 import com.nanuri.rams.business.common.mapper.RAA02BMapper;
 import com.nanuri.rams.business.common.mapper.RAA02HMapper;
+import com.nanuri.rams.business.common.mapper.RAA03BMapper;
 import com.nanuri.rams.business.common.mapper.RAA18BMapper;
 import com.nanuri.rams.business.common.vo.RAA01BVO;
 import com.nanuri.rams.business.common.vo.RAA01BVO.DealInfo;
+import com.nanuri.rams.business.common.vo.RAA03BVO;
 import com.nanuri.rams.business.common.vo.RAA18BVO.DocInfo;
 import com.nanuri.rams.com.security.AuthenticationFacade;
 import com.nanuri.rams.com.utils.StringUtil;
@@ -38,6 +40,7 @@ public class AS03210ServiceImpl implements AS03210Service {
 	private final RAA01BMapper raa01bMapper;
 	private final RAA02BMapper raa02bMapper;
 	private final RAA02HMapper raa02hMapper;
+	private final RAA03BMapper raa03bMapper;
 	private final RAA18BMapper raa18bMapper;
 
 	@Autowired
@@ -405,6 +408,54 @@ public class AS03210ServiceImpl implements AS03210Service {
 			return raa18bMapper.updateDocInfo(raa18bDTO);							// 문서정보 갱신
 		} else {
 			return raa18bMapper.registDocInfo(raa18bDTO);							// 문서정보 생성
+		}
+	}
+	
+	// ---------------tab3 start------------------
+	
+	// 기초자산정보 취득
+	@Override
+	public List<RAA03BVO> getAssetInfo(RAA03BVO assetInfo) {
+		return raa03bMapper.getAssetInfo(assetInfo);
+	}
+
+	// 기초자산정보 생성
+	@Override
+	public int registAssetInfo(RAA03BVO assetInfo) {
+		
+		String ibDealNo = assetInfo.getIbDealNo();
+		String itemSq = assetInfo.getItemSq();
+		String str_opnPrcValAmt = assetInfo.getOpnPrcValAmt();
+		int int_opnPrcValAmt = 0;
+		if(!StringUtil.isAllWhitespace(str_opnPrcValAmt)) {
+			int_opnPrcValAmt = Integer.valueOf(str_opnPrcValAmt);
+		}
+		
+		RAA02BDTO raa02bDTO = raa02bMapper.copyDealInfO(ibDealNo);
+		RAA03BDTO raa03bDTO = new RAA03BDTO();
+		
+		raa03bDTO.setIbDealNo(assetInfo.getIbDealNo());								// IBDEAL번호
+		raa03bDTO.setRiskInspctCcd(raa02bDTO.getRiskInspctCcd());					// 리스크심사구분코드
+		raa03bDTO.setLstCCaseCcd(raa02bDTO.getLstCCaseCcd());						// 부수안건구분코드
+		if (!StringUtil.isAllWhitespace(itemSq)) {
+			raa03bDTO.setItemSq(Integer.valueOf(itemSq));							// 항목일련번호
+		}
+		raa03bDTO.setBscAstsKndCd(assetInfo.getBscAstsKndCd());						// 기초자산종류코드
+		raa03bDTO.setBscAstsCntnt(assetInfo.getBscAstsCntnt());						// 기초자산내용
+		raa03bDTO.setOpnPrcValAmt(int_opnPrcValAmt);								// 시가평가금액
+		raa03bDTO.setBscAstsIsngCorpNo(assetInfo.getBscAstsIsngCorpNo());			// 기초자산발행법인번호
+		// INVST_CRNCY_CD
+		// CRNCY_AMT
+		// APLC_EXCH_R
+		raa03bDTO.setRnmcno(assetInfo.getRnmcno());									// 실명확인번호
+		// HNDL_DY_TM
+		raa03bDTO.setHndlDprtCd(facade.getDetails().getDprtCd());					// 처리부점코드
+		raa03bDTO.setHndlPEno(facade.getDetails().getEno());						// 처리자번
+		
+		if (!StringUtil.isAllWhitespace(itemSq)) {
+			return raa03bMapper.updateAssetInfo(raa03bDTO);							// 기초자산정보 갱신
+		} else {
+			return raa03bMapper.registAssetInfo(raa03bDTO);							// 기초자산정보 생성
 		}
 	};
 
