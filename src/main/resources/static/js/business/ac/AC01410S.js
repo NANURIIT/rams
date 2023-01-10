@@ -58,7 +58,7 @@ function rebuildMenuListTable(data){
 	if (menuList.length > 0) {
 		$.each(menuList, function (key, value){
 			html += '<tr>';
-			html += '	<td><input type="checkbox" id="'+ value.menuId +'"></td>';		//삭제
+			html += '	<td><input type="checkbox" id="'+ value.menuId +'" style="width:100%"></td>';		//삭제
 			html += '	<td class="update_column menuId">'+ value.menuId + '</td>';	//메뉴ID
 			html += '	<td class="update_column">'+ value.srtNo+ '</td>'; 	//정렬번호
 			html += '	<td class="update_column">'+ value.urlPrmtrCntnt+ '</td>';	//화면번호
@@ -644,6 +644,7 @@ function clickSaveSubMenu() {
 		
 		subMenu.oldSubMenuId = oldSubMenuId;
 		subMenu.hgRnkMenuId = mainMenuId;  //상위메뉴ID
+		subMenu.urlDvdCd
 		subMenuList.push(subMenu);
 	}
 
