@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class AS03010ServiceImpl implements AS03010Service{
 	
-	private final RAA01BMapper raa01Mapper;
+	private final RAA01BMapper raa01bMapper;
 	
 	//	심사안건조회
 	@Override
@@ -27,7 +27,7 @@ public class AS03010ServiceImpl implements AS03010Service{
 		dealInfo.setStart(Utils.changeDateFormat(dealInfo.getStart(), "yyyy-MM-dd"));
 		dealInfo.setEnd(Utils.changeDateFormat(dealInfo.getEnd(), "yyyy-MM-dd"));
 		
-		return raa01bMapper.checkDealSearch(dealInfo)
+		return raa01bMapper.checkDealSearch(dealInfo);
 	}
 
 }

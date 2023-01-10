@@ -21,7 +21,7 @@ public class RAA01BVO {
 		private String start;				//	조회시작날짜 
 		private String end;					//	조회종료날짜 
 		private String dprtCd;				//	부서코드
-		private String currency;			//	통화
+		private String invstCrncyCd;		//	통화
 		private String unit;				//	단위
 		private String dealNm;				//	딜명
 	}

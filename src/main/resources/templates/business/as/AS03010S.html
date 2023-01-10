@@ -7,6 +7,7 @@
 	<script th:src="@{js/common.js}"></script>
 	<script th:src="@{js/business/as/AS03010S.js}"></script>
 	<script th:src="@{js/business/popup/AC01120P.js}"></script>
+	
 </th:block>
 
 <th:block layout:fragment="modalpopup">
@@ -41,7 +42,7 @@
 	    			<div class="ibox-title text-right">
 	    				<form method="get">
 	    					<div class="form-group row">
-	    						<label class="col-sm-1 col-form-label">DSC일자</label>
+	    						<label class="col-sm-1 col-form-label"><span class="req">*</span>DSC일자</label>
 	                            <div class="col-sm-4 input-group">
 	                            	<span class="col-sm-5 input-group date">
                                     	<input type="text" class="form-control" id="AS03010S_FromDate" name="FromDate" value="">
@@ -55,25 +56,40 @@
                                 </div>
 	                        	<label class="col-sm-1 col-form-label">부서</label>
 	                            <div class="col-sm-2">
-	                            	<select class="form-control m-b" id="AS03010S_부서명">	                                        
+	                            	<select class="form-control m-b" id="AS03010S_dprtCd">	    
+	                            		<option value="">전체</option>
+	                            		<option value="BS1">영업부</option>
+	                            		<option value="AS1">심사부</option>
+	                            		<option value="MG1">관리부</option>
+	                            		<option value="IT1">IT개발부</option>
+	                            		<option value="JG1">감사부</option>
 	                                </select>
 	                            </div>
-	                        
+	                            
 	                        	<label class="col-sm-1 col-form-label">통화</label>
 	                            <div class="col-sm-2">
-	                            	<select class="form-control m-b" id="AS03010S_통화명">	
-	                                     
+	                            	<select class="form-control m-b" id="AS03010S_invstCrncyCd">	
+	                                     <option value="">전체</option>
+	                                     <option value="AUD">호주</option>
+	                                     <option value="BEF">벨기에</option>
+	                                     <option value="ZZZ">원천미보유사항</option>
+	                                </select>
+	                            </div>
+	                           </div>
+	                            <div class="form-group row">
+	                        	<label class="col-sm-1 col-form-label">단위</label>
+	                        	
+	                            <div class="col-sm-2">
+	                            	<select class="form-control m-b" id="AS03010S_unit">
+	                            		<option value="">전체</option>
+	                            		<option value="1">원</option>
+	                            		<option value="2">천원</option>
+	                            		<option value="3">백만원</option>
+	                            		<option value="4">천만원</option>
+	                            		<option value="5">억원</option>
 	                                </select>
 	                            </div>
 	                        
-	                        	<div class="col-sm-3"></div>
-	                       
-	                        	<label class="col-sm-1 col-form-label">단위</label>
-	                            <div class="col-sm-2">
-	                            	<select class="form-control m-b" id="AS03010S_단위명">
-	                                </select>
-	                            </div>
-	                        	
 	                        	<label class="col-sm-1 col-form-label">딜명</label>
 	                            <div class="col-sm-2">
 	                            <!-- <div class="col-sm-5 input-group m-b"> -->
@@ -83,17 +99,20 @@
                                         
                                     </span>
                             	</div>
-						                            	
+						        <div class="hiddenInfo">
+									<input type="hidden" id="AS03010S_selectedDealNo"/>
+								</div>                    	
 	                        	<div class="col-sm-3 text-left">
 	                        		<button class="btn btn-primary" type="button" onclick="checkDealSearch();">조회</button>
 	                        	</div>
 	                        </div>
 	    				</form>
 	    			</div>
-	    			
+	   
+	    
 	    			<!-- 조회결과 -->
-	    			<div class="ibox-content">
-	    				<table class="table table-bordered">
+	    			<div class="ibox-content" style="overflow-x:scroll; " >
+	    				<table class="table table-bordered" style="width:130%">
 								<thead>
 									<tr>
 										<th>deal번호</th>
@@ -122,11 +141,12 @@
 								</thead>
 								<tbody id="AS03010S_checkDealList">
 								</tbody>
+								
 							</table>
 	    				
 	    			</div>
 	    		</div>
-	    	
+	    		
 	    	<!-- 상세보기 -->
 				<div class="col-lg-12">
 					<div class="white-bg dashboard-header">
@@ -226,5 +246,6 @@
     		</div>
 		</div>
 	</div>
+	
 </th:block>
 </html>

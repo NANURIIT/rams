@@ -21,5 +21,5 @@ public interface RAA01BMapper {
 	public void updateDealInfo(RAA01BDTO raa01bDTO);
 	
 	// 심사안건조회
-	List<checkDealInfo> assignmentSearch(checkDealInfo dealInfo);
+	List<RAA01BDTO> checkDealSearch(checkDealInfo dealInfo);
 }
