@@ -69,7 +69,7 @@ function assesmentRequest() {
 	
 }
 
-// 심사요청 버튼 function
+// 심사요청취소 버튼 function
 function assesmentRequestCancel() {
 	let ibDealNo = $('#AS03210S_selectedDealNo').val();
 
@@ -1584,6 +1584,8 @@ function tab3BtnDelete() {
 	}
 	
 }
+
+/*tab4****************************************************/
 
 // 법인형태
 function loadCncCmpnyClsfCd() {

@@ -34,6 +34,7 @@
     	 ORDER BY ITEM_SQ
     </select>
     
+    <!-- 기초자산정보 갱신 -->
     <update id="updateAssetInfo" parameterType="com.nanuri.rams.business.common.dto.RAA03BDTO">
     	UPDATE RAA03B
     	   SET BSC_ASTS_KND_CD			= #{bscAstsKndCd     }		<!-- 기초자산종류코드 -->
@@ -54,6 +55,7 @@
 		   AND ITEM_SQ					= #{itemSq           }
     </update>
     
+    <!-- 기초자산정보 추가 -->
     <insert id="registAssetInfo" parameterType="com.nanuri.rams.business.common.dto.RAA03BDTO">
     	INSERT INTO RAA03B
     		   (
@@ -92,6 +94,7 @@
 			   )
     </insert>
     
+    <!-- 기초자산정보 삭제 -->
     <delete id="deleteAssetInfo" parameterType="com.nanuri.rams.business.common.vo.RAA03BVO">
     	DELETE FROM RAA03B 
     	 WHERE 1=1
