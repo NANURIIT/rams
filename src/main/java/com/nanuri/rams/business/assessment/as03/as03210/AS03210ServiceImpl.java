@@ -434,7 +434,7 @@ public class AS03210ServiceImpl implements AS03210Service {
 		RAA02BDTO raa02bDTO = raa02bMapper.copyDealInfO(ibDealNo);
 		RAA03BDTO raa03bDTO = new RAA03BDTO();
 		
-		raa03bDTO.setIbDealNo(assetInfo.getIbDealNo());								// IBDEAL번호
+		raa03bDTO.setIbDealNo(ibDealNo);											// IBDEAL번호
 		raa03bDTO.setRiskInspctCcd(raa02bDTO.getRiskInspctCcd());					// 리스크심사구분코드
 		raa03bDTO.setLstCCaseCcd(raa02bDTO.getLstCCaseCcd());						// 부수안건구분코드
 		if (!StringUtil.isAllWhitespace(itemSq)) {
@@ -457,6 +457,12 @@ public class AS03210ServiceImpl implements AS03210Service {
 		} else {
 			return raa03bMapper.registAssetInfo(raa03bDTO);							// 기초자산정보 생성
 		}
+	}
+
+	// 기초자산정보 제거
+	@Override
+	public int deleteAssetInfo(RAA03BVO assetInfo) {
+		return raa03bMapper.deleteAssetInfo(assetInfo);								// 기초자산정보 제거
 	};
 
 }

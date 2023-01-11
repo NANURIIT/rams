@@ -132,6 +132,12 @@ public class AS03210APIController {
 	public int registAssetInfo(RAA03BVO assetInfo) {
 		return as03210Service.registAssetInfo(assetInfo);
 	}
+
+	// 기초자산정보 제거
+	@PostMapping(value = "/deleteAssetInfo")
+	public int deleteAssetInfo(RAA03BVO assetInfo) {
+		return as03210Service.deleteAssetInfo(assetInfo);
+	}
 	
 	
 

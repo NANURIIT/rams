@@ -16,4 +16,6 @@ public interface RAA03BMapper {
 
 	public int registAssetInfo(RAA03BDTO raa03bDTO);								// 기초자산정보 생성
 
+	public int deleteAssetInfo(RAA03BVO assetInfo);									// 기초자산정보 제거
+
 }
