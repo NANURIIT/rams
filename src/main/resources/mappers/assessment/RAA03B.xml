@@ -92,4 +92,11 @@
 			   )
     </insert>
     
+    <delete id="deleteAssetInfo" parameterType="com.nanuri.rams.business.common.vo.RAA03BVO">
+    	DELETE FROM RAA03B 
+    	 WHERE 1=1
+    	   AND IB_DEAL_NO = #{ibDealNo}
+    	   AND ITEM_SQ = #{itemSq}
+    </delete>
+    
 </mapper>

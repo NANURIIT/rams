@@ -74,4 +74,7 @@ public interface AS03210Service {
 	// 기초자산정보 생성
 	public int registAssetInfo(RAA03BVO assetInfo);
 
+	// 기초자산정보 제거
+	public int deleteAssetInfo(RAA03BVO assetInfo);
+
 }

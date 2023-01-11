@@ -374,6 +374,8 @@ function setTab3(ibDealNo) {
 
 // 기초자산정보 취득
 function getAssetInfo(ibDealNo) {
+	tab3BtnReset();
+	
 	var paramData = {
 		"ibDealNo": ibDealNo
 	}
@@ -1288,14 +1290,14 @@ function tab1reset() {
 
 /*tab2****************************************************/
 
-// 관련문서 초기화버튼 function
+// 관련문서정보 초기화
 function tab2BtnReset() {
 	$('#AS03210S_raDocNo').val('');
 	$("#AS03210S_raFnlDocF option:eq(0)").prop("selected", true);
 	$('#AS03210S_tab2_itemSq').val('');
 }
 
-// 관련문서 삭제버튼 function
+// 관련문서저장 삭제
 function tab2BtnDelete() {
 	var ibDealNo = $('#AS03210S_selectedDealNo').val();
 	var raDocNo = $('#AS03210S_raDocNo').val();
@@ -1357,7 +1359,7 @@ function tab2BtnDelete() {
 
 }
 
-// 관련문서 저장버튼 function
+// 관련문서정보 저장
 function tab2BtnSave() {
 	var ibDealNo = $('#AS03210S_selectedDealNo').val();			// IBDEAL번호
 	var raDocNo = $('#AS03210S_raDocNo').val();					// 문서번호
@@ -1443,6 +1445,7 @@ function loadBscAstsKndCd() {
 	});
 };
 
+// 기초자산정보 초기화
 function tab3BtnReset() {
 	$("#AS03210S_bscAstsKndCd option:eq(0)").prop("selected", true);
 	$('#AS03210S_bscAstsCntnt').val('');
@@ -1452,6 +1455,7 @@ function tab3BtnReset() {
 	$('#AS03210S_tab3_itemSq').val('');
 }
 
+// 기초자산정보 저장
 function tab3BtnSave() {
 	var ibDealNo = $('#AS03210S_selectedDealNo').val();								// IBDEAL번호
 	
@@ -1521,7 +1525,65 @@ function tab3BtnSave() {
 	}
 }
 
+// 기초자산정보 삭제
+function tab3BtnDelete() {
+	var ibDealNo = $('#AS03210S_selectedDealNo').val();								// IBDEAL번호
+	var itemSq = $('#AS03210S_tab3_itemSq').val();									// 항목일련번호
+	
+	if (!isEmpty(ibDealNo)) {
+		if(!isEmpty(itemSq)){
+			businessFunction();
+		}else{
+			Swal.fire({
+				icon: 'error'
+				, title: "Error!"
+				, text: "기초자산정보를 선택해주세요."
+				, confirmButtonText: "확인"
+			});
+		}
+	} else {
+		Swal.fire({
+			icon: 'error'
+			, title: "Error!"
+			, text: "Deal 정보를 조회해주세요."
+			, confirmButtonText: "확인"
+		});
+	}
 
+	function businessFunction() {
+
+		var paramData = {
+			"ibDealNo": ibDealNo
+			, "itemSq": itemSq
+		}
+
+		$.ajax({
+			type: "POST",
+			url: "/deleteAssetInfo",
+			data: paramData,
+			dataType: "json",
+			success: function() {
+				Swal.fire({
+					icon: 'success'
+					, title: "Success!"
+					, text: "기초자산정보를 삭제하였습니다."
+					, confirmButtonText: "확인"
+				}).then((result) => {
+					getAssetInfo(ibDealNo);
+				});
+			},
+			error: function() {
+				Swal.fire({
+					icon: 'error'
+					, title: "Error!"
+					, text: "기초자산정보를 삭제하는데 실패하였습니다."
+					, confirmButtonText: "확인"
+				});
+			}
+		});
+	}
+	
+}
 
 // 법인형태
 function loadCncCmpnyClsfCd() {

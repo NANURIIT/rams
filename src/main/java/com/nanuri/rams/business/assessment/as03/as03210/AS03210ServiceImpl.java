@@ -457,6 +457,12 @@ public class AS03210ServiceImpl implements AS03210Service {
 		} else {
 			return raa03bMapper.registAssetInfo(raa03bDTO);							// 기초자산정보 생성
 		}
+	}
+
+	// 기초자산정보 제거
+	@Override
+	public int deleteAssetInfo(RAA03BVO assetInfo) {
+		return raa03bMapper.deleteAssetInfo(assetInfo);								// 기초자산정보 제거
 	};
 
 }
