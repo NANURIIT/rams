@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
 	setKeyFunction_AS03110S();
+	trDoubleClick();
 
 });
 
@@ -76,3 +77,66 @@ function assignmentSearch() {
 		});
 	}
 };
+
+/* 더블클릭 했을시 이동*/
+function trDoubleClick() {
+	$("#AS03110S_ibDealList").on('dblclick', 'tr', function () {
+		var tr = $(this);
+		var td = tr.children();		
+		var ibDealNo = td.eq(1).text();
+
+		var ibDealNoSearch = function (ibDealNo) {
+			
+			$.ajax({
+				method: 'GET',
+				url: '/ibDealNoSearch?ibDealNo=' + ibDealNo,
+				data: JSON.stringify(ibDealNo),
+				contentType: 'application/json; charset=UTF-8',
+				dataType: 'json',
+				success: function (data) {
+					var inspctPrgrsStCdList = data;
+						if (inspctPrgrsStCdList.length > 0) {
+							$.each(inspctPrgrsStCdList, function(key, value) {
+								inspctPrgrsStCd = value.inspctPrgrsStCd;
+								//console.log(inspctPrgrsStCd);
+							})
+						} 
+						
+/*						if(inspctPrgrsStCd => 100 && inspctPrgrsStCd < 200){
+							location.href = "AS03210S"; //IB/PI안건 심사요청
+						} else if(inspctPrgrsStCd => 200 && inspctPrgrsStCd < 300){
+							//
+						} else if (inspctPrgrsStCd => 300 && inspctPrgrsStCd < 400){
+							location.href = "AS04010S";	//협의체 부의 및 결과
+						}*/	
+						
+						console.log(inspctPrgrsStCd);
+						switch(inspctPrgrsStCd){
+							case '100' :
+							case '110' :
+							case '120' :
+								console.log(inspctPrgrsStCd);
+								location.href = "AS03210S";
+								break;
+							case '200':
+								//location.href = "AS03210S";
+								break;
+							case '300':
+								location.href = "AS03210S";
+								break;
+						}
+						
+				},
+				error: function (response) {
+		
+				}
+			});
+		};
+		
+		ibDealNoSearch(ibDealNo);
+		
+	})
+	
+};
+
+

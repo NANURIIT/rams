@@ -562,6 +562,7 @@
 		   AND rb1.RISK_INSPCT_CCD    = rb2.CD_VL_ID
 		   AND rb1.LST_C_CASE_CCD     = rb3.CD_VL_ID
 		   AND rb1.COPRTN_TYP_CD	  = rb4.CD_VL_ID
+		   AND rb1.INSPCT_PRGRS_ST_CD	  = rb6.CD_VL_ID
 		<if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(start)">
 		   AND rb1.FST_RGST_DT <![CDATA[>=]]> #{start}
 		</if>
@@ -571,6 +572,11 @@
 		   AND rb1.FST_RGST_DT <![CDATA[<=]]> #{end}
 		</if>
 	</select>
-
+	
+	<select id="ibDealNoSearch" parameterType="String" resultType="com.nanuri.rams.business.common.dto.RAA02BDTO">
+		SELECT INSPCT_PRGRS_ST_CD 
+		  FROM RAA02B
+		 WHERE IB_DEAL_NO = #{ibDealNo}
+	</select>
 
 </mapper>
