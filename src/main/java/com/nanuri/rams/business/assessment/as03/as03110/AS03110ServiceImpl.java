@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nanuri.rams.business.common.dto.RAA02BDTO;
+import com.nanuri.rams.business.common.dto.RAA93BDTO;
 import com.nanuri.rams.business.common.mapper.RAA02BMapper;
 import com.nanuri.rams.business.common.vo.RAA02BVO.AssignInfo;
 import com.nanuri.rams.com.utils.Utils;
@@ -28,4 +30,12 @@ public class AS03110ServiceImpl implements AS03110Service {
 
 		return raa02bMapper.assignmentSearch(dealInfo);
 	}
+
+	@Override
+	public List<RAA02BDTO> ibDealNoSearch(String ibDealNo) {
+		List<RAA02BDTO> dtoList = raa02bMapper.ibDealNoSearch(ibDealNo);
+		return dtoList;
+	}
+
+
 }

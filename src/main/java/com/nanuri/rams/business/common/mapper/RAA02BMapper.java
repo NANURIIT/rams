@@ -33,5 +33,7 @@ public interface RAA02BMapper {
 
 	// 배정안건조회
 	List<AssignInfo> assignmentSearch(AssignInfo assignInfo);
+	
+	List<RAA02BDTO> ibDealNoSearch(String ibDealNo);
 
 }
